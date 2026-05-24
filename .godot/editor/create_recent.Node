@@ -1,0 +1,14 @@
+CollisionShape3D
+Area3D
+MeshInstance3D
+Node3D
+SubViewportContainer
+SubViewport
+Camera3D
+AudioStreamPlayer
+NavigationObstacle3D
+Node2D
+Button
+RayCast3D
+AnimationPlayer
+TextureRect

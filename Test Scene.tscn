@@ -1,0 +1,305 @@
+[gd_scene format=3 uid="uid://dj06sfv7vgcjg"]
+
+[ext_resource type="Script" uid="uid://okvmpkngna77" path="res://scripts/navmesh.gd" id="1_hhusy"]
+[ext_resource type="PackedScene" uid="uid://c7dy7pkfuf3ht" path="res://house_test.tscn" id="3_tpnuq"]
+[ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Prefabs/actor.tscn" id="4_3bmqa"]
+[ext_resource type="PackedScene" uid="uid://7pflsibliusv" path="res://assets/Prefabs/guard.tscn" id="5_020ig"]
+[ext_resource type="PackedScene" uid="uid://b466cok0vg882" path="res://assets/Prefabs/camera.tscn" id="6_3bmqa"]
+[ext_resource type="PackedScene" uid="uid://3gyms6q5pdyh" path="res://assets/Prefabs/Switch.tscn" id="6_cuge4"]
+[ext_resource type="Script" uid="uid://bmtvl7vq83max" path="res://scripts/timer_label.gd" id="7_acjuf"]
+[ext_resource type="Script" uid="uid://lm0feo4m4ye4" path="res://scripts/h_slider.gd" id="8_cr2qn"]
+[ext_resource type="PackedScene" uid="uid://m23axn7qvbnv" path="res://assets/Prefabs/register.tscn" id="8_cuge4"]
+[ext_resource type="PackedScene" uid="uid://6esvbnvlcl0p" path="res://assets/Prefabs/camera_base.tscn" id="9_36x3p"]
+[ext_resource type="PackedScene" uid="uid://ecom23v8akgk" path="res://assets/Prefabs/Car.tscn" id="9_sooqa"]
+[ext_resource type="Texture2D" uid="uid://dei7hg6kagy8u" path="res://assets/Textures/Play_Button.png" id="10_27hxy"]
+[ext_resource type="PackedScene" uid="uid://6d2x8taut6af" path="res://assets/Prefabs/window.tscn" id="10_cr2qn"]
+[ext_resource type="Texture2D" uid="uid://bwcc83nl38xgm" path="res://assets/Textures/Pause_Button.png" id="11_2x2bu"]
+[ext_resource type="PackedScene" uid="uid://bonkiymgimfru" path="res://assets/Prefabs/Door.tscn" id="11_hhusy"]
+[ext_resource type="PackedScene" uid="uid://3a3tg5vcb4vm" path="res://assets/Prefabs/tool.tscn" id="12_m2u0h"]
+[ext_resource type="PackedScene" uid="uid://b06xn62ue263l" path="res://assets/Prefabs/DoorInside.tscn" id="13_641hl"]
+[ext_resource type="Script" uid="uid://budh7mw8mbe3d" path="res://CashLabel.gd" id="14_27hxy"]
+[ext_resource type="Texture2D" uid="uid://dm3rl83whdktr" path="res://assets/Textures/MagnifyingGlasses.png" id="21_2x2bu"]
+[ext_resource type="Texture2D" uid="uid://bk1vx1ufcbth5" path="res://assets/Textures/SpeechBubble.png" id="21_sooqa"]
+[ext_resource type="Script" uid="uid://bpgu8xnkde53b" path="res://InteractButtons.gd" id="21_tpnuq"]
+[ext_resource type="Texture2D" uid="uid://qy525lcon3ks" path="res://assets/Textures/Hand.png" id="22_tpnuq"]
+[ext_resource type="AudioStream" uid="uid://csaih60ceibvr" path="res://assets/Music/80s Radiant Infatuation Main.wav" id="23_sooqa"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ps07l"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_baxfs"]
+sky_material = SubResource("ProceduralSkyMaterial_ps07l")
+
+[sub_resource type="Environment" id="Environment_c0if4"]
+background_mode = 2
+sky = SubResource("Sky_baxfs")
+tonemap_white = 6.0
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_qp33c"]
+vertices = PackedVector3Array(-2.9859867, 2.3443031, 35.21984, -2.9859867, 2.3443031, 35.96984, -2.4859867, 2.3443031, 36.21984, -2.4859867, 2.3443031, 34.96984, 41.764015, 2.3443031, 114.46984, -2.7359867, 2.3443031, 114.46984, 41.764015, 2.3443031, -44.53016, -2.7359867, 2.3443031, -44.53016, -22.985987, 8.094303, 15.469841, -22.985987, 8.094303, 26.469841, -16.735987, 8.094303, 26.469841, -16.485987, 8.094303, 28.719841, -3.4859867, 8.094303, 28.719841, -3.4859867, 8.094303, 15.469841, -16.985987, 2.3443031, 23.219841, -16.985987, 2.3443031, 22.469841, -17.485987, 2.3443031, 22.219841, -17.485987, 2.3443031, 23.469841, -22.735987, 2.3443031, 26.219841, -17.485987, 2.3443031, 26.219841, -17.485987, 2.3443031, 15.719841, -18.735987, 2.3443031, 15.719841, -18.985987, 2.3443031, 17.719841, -22.735987, 2.3443031, 17.719841, -9.235987, 2.3443031, 19.219841, -8.985987, 2.3443031, 20.719841, -6.9859867, 2.3443031, 20.719841, -6.7359867, 2.3443031, 19.219841, -6.7359867, 2.3443031, 17.969841, -9.235987, 2.3443031, 17.969841, -12.985987, 2.3443031, 19.219841, -12.985987, 2.3443031, 17.969841, -6.9859867, 2.3443031, 15.719841, -8.985987, 2.3443031, 15.719841, -13.235987, 2.3443031, 15.719841, -16.235987, 2.3443031, 15.719841, -16.235987, 2.3443031, 21.469841, -13.235987, 2.3443031, 21.469841, -3.7359867, 2.3443031, 19.219841, -3.7359867, 2.3443031, 17.719841, -22.735987, 2.5943031, 15.969841, -22.735987, 2.5943031, 16.469841, -22.235987, 2.5943031, 16.469841, -22.235987, 2.5943031, 15.969841, -20.485987, 2.5943031, 15.969841, -20.485987, 2.5943031, 16.469841, -19.985987, 2.5943031, 16.469841, -19.985987, 2.5943031, 15.969841, -12.235987, 5.844303, 15.969841, -12.235987, 5.844303, 16.719841, -9.985987, 5.844303, 16.719841, -9.985987, 5.844303, 15.969841, -5.9859867, 5.844303, 15.969841, -5.9859867, 5.844303, 16.719841, -3.7359867, 5.844303, 16.719841, -3.7359867, 5.844303, 15.969841, -12.235987, 5.844303, 20.219841, -12.235987, 5.844303, 20.969841, -9.985987, 5.844303, 20.969841, -9.985987, 5.844303, 20.219841, -5.9859867, 5.844303, 20.219841, -5.9859867, 5.844303, 20.969841, -3.7359867, 5.844303, 20.969841, -3.7359867, 5.844303, 20.219841, -16.485987, 2.3443031, 23.219841, -16.235987, 2.3443031, 22.219841, -8.985987, 2.3443031, 27.469841, -8.985987, 2.3443031, 29.969841, -6.9859867, 2.3443031, 29.969841, -6.9859867, 2.3443031, 27.469841, -16.235987, 2.3443031, 23.969841, -11.235987, 2.3443031, 30.219841, -11.235987, 2.3443031, 30.969841, -9.235987, 2.3443031, 30.969841, -3.7359867, 2.3443031, 27.469841, -3.7359867, 2.3443031, 26.469841, -6.7359867, 2.3443031, 26.469841, -11.235987, 2.3443031, 26.469841, -11.235987, 2.3443031, 27.469841, -8.985987, 2.3443031, 26.219841, -12.985987, 2.3443031, 21.969841, -13.235987, 2.3443031, 23.969841, -12.985987, 2.3443031, 23.469841, -8.985987, 2.3443031, 32.46984, -6.9859867, 2.3443031, 32.46984, -6.7359867, 2.3443031, 30.969841, -6.7359867, 2.3443031, 21.969841, -9.235987, 2.3443031, 21.969841, -8.985987, 2.3443031, 23.719841, -6.9859867, 2.3443031, 23.719841, -3.7359867, 2.3443031, 30.969841, -3.7359867, 2.3443031, 30.219841, -3.7359867, 2.3443031, 23.469841, -3.7359867, 2.3443031, 21.969841, -13.235987, 2.3443031, 31.219841, -13.235987, 2.3443031, 29.969841, -16.235987, 2.3443031, 33.21984, -13.235987, 2.3443031, 27.469841, -13.235987, 2.3443031, 26.219841, -13.235987, 2.3443031, 33.21984, -12.235987, 5.844303, 24.469841, -12.235987, 5.844303, 25.469841, -9.985987, 5.844303, 25.469841, -9.985987, 5.844303, 24.469841, -5.9859867, 5.844303, 24.469841, -5.9859867, 5.844303, 25.469841, -3.7359867, 5.844303, 25.469841, -3.7359867, 5.844303, 24.469841, -12.235987, 5.844303, 28.469841, -12.235987, 5.844303, 29.219841, -9.985987, 5.844303, 29.219841, -9.985987, 5.844303, 28.469841, -5.9859867, 5.844303, 28.469841, -5.9859867, 5.844303, 29.219841, -3.7359867, 5.844303, 29.219841, -3.7359867, 5.844303, 28.469841, -16.485987, 8.094303, 43.46984, -3.4859867, 8.094303, 43.46984, -12.235987, 5.844303, 31.969841, -12.235987, 5.844303, 32.71984, -9.985987, 5.844303, 32.71984, -9.985987, 5.844303, 31.969841, -5.9859867, 5.844303, 31.969841, -5.9859867, 5.844303, 32.71984, -3.7359867, 5.844303, 32.71984, -3.7359867, 5.844303, 31.969841, -3.7359867, 2.3443031, 36.21984, -3.7359867, 2.3443031, 34.96984, -8.735987, 2.3443031, 38.96984, -8.485987, 2.3443031, 40.71984, -3.7359867, 2.3443031, 40.46984, -6.7359867, 2.3443031, 33.71984, -9.235987, 2.3443031, 33.71984, -10.985987, 2.3443031, 33.71984, -10.735987, 2.3443031, 38.96984, -3.7359867, 2.3443031, 33.71984, -12.985987, 2.3443031, 33.71984, -14.985987, 2.3443031, 38.96984, -8.735987, 2.3443031, 42.21984, -3.7359867, 2.3443031, 43.21984, -16.235987, 2.3443031, 43.21984, -15.235987, 2.3443031, 41.96984, -14.235987, 4.344303, 39.96984, -14.235987, 4.344303, 41.21984, -9.485987, 4.344303, 41.21984, -9.485987, 4.344303, 39.96984, -13.985987, 2.3443031, 40.21984, -13.985987, 2.3443031, 40.96984, -9.735987, 2.3443031, 40.96984, -9.735987, 2.3443031, 40.21984)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 4), PackedInt32Array(4, 5, 2), PackedInt32Array(7, 6, 3), PackedInt32Array(3, 6, 4), PackedInt32Array(10, 9, 8), PackedInt32Array(12, 11, 10), PackedInt32Array(12, 10, 13), PackedInt32Array(13, 10, 8), PackedInt32Array(14, 17, 15), PackedInt32Array(15, 17, 16), PackedInt32Array(17, 19, 18), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 16), PackedInt32Array(16, 17, 22), PackedInt32Array(22, 17, 23), PackedInt32Array(23, 17, 18), PackedInt32Array(24, 29, 25), PackedInt32Array(25, 29, 26), PackedInt32Array(26, 29, 27), PackedInt32Array(27, 29, 28), PackedInt32Array(31, 29, 30), PackedInt32Array(30, 29, 24), PackedInt32Array(32, 28, 33), PackedInt32Array(33, 28, 29), PackedInt32Array(31, 30, 34), PackedInt32Array(34, 30, 35), PackedInt32Array(35, 30, 37), PackedInt32Array(35, 37, 36), PackedInt32Array(27, 28, 38), PackedInt32Array(38, 28, 39), PackedInt32Array(43, 42, 40), PackedInt32Array(40, 42, 41), PackedInt32Array(47, 46, 44), PackedInt32Array(44, 46, 45), PackedInt32Array(51, 50, 48), PackedInt32Array(48, 50, 49), PackedInt32Array(55, 54, 52), PackedInt32Array(52, 54, 53), PackedInt32Array(59, 58, 56), PackedInt32Array(56, 58, 57), PackedInt32Array(63, 62, 60), PackedInt32Array(60, 62, 61), PackedInt32Array(14, 15, 64), PackedInt32Array(64, 15, 65), PackedInt32Array(69, 68, 66), PackedInt32Array(66, 68, 67), PackedInt32Array(70, 64, 65), PackedInt32Array(72, 71, 73), PackedInt32Array(73, 71, 67), PackedInt32Array(75, 74, 76), PackedInt32Array(76, 74, 69), PackedInt32Array(78, 77, 66), PackedInt32Array(66, 77, 79), PackedInt32Array(82, 81, 80), PackedInt32Array(80, 81, 37), PackedInt32Array(37, 81, 65), PackedInt32Array(65, 81, 70), PackedInt32Array(73, 67, 83), PackedInt32Array(83, 67, 68), PackedInt32Array(83, 68, 85), PackedInt32Array(83, 85, 84), PackedInt32Array(26, 86, 25), PackedInt32Array(25, 86, 87), PackedInt32Array(87, 86, 89), PackedInt32Array(87, 89, 88), PackedInt32Array(88, 89, 79), PackedInt32Array(79, 89, 76), PackedInt32Array(69, 66, 76), PackedInt32Array(76, 66, 79), PackedInt32Array(80, 87, 82), PackedInt32Array(82, 87, 88), PackedInt32Array(65, 36, 37), PackedInt32Array(90, 85, 91), PackedInt32Array(91, 85, 68), PackedInt32Array(93, 92, 86), PackedInt32Array(86, 92, 89), PackedInt32Array(72, 94, 71), PackedInt32Array(71, 94, 95), PackedInt32Array(95, 96, 97), PackedInt32Array(97, 96, 70), PackedInt32Array(78, 97, 77), PackedInt32Array(77, 97, 98), PackedInt32Array(70, 98, 97), PackedInt32Array(94, 99, 96), PackedInt32Array(70, 81, 98), PackedInt32Array(95, 94, 96), PackedInt32Array(103, 102, 100), PackedInt32Array(100, 102, 101), PackedInt32Array(107, 106, 104), PackedInt32Array(104, 106, 105), PackedInt32Array(111, 110, 108), PackedInt32Array(108, 110, 109), PackedInt32Array(115, 114, 112), PackedInt32Array(112, 114, 113), PackedInt32Array(117, 116, 12), PackedInt32Array(12, 116, 11), PackedInt32Array(121, 120, 118), PackedInt32Array(118, 120, 119), PackedInt32Array(125, 124, 122), PackedInt32Array(122, 124, 123), PackedInt32Array(1, 126, 0), PackedInt32Array(0, 126, 127), PackedInt32Array(129, 128, 130), PackedInt32Array(130, 128, 126), PackedInt32Array(126, 128, 131), PackedInt32Array(131, 128, 132), PackedInt32Array(84, 131, 83), PackedInt32Array(83, 131, 132), PackedInt32Array(133, 132, 134), PackedInt32Array(134, 132, 128), PackedInt32Array(131, 135, 127), PackedInt32Array(131, 127, 126), PackedInt32Array(99, 136, 96), PackedInt32Array(96, 136, 137), PackedInt32Array(129, 130, 138), PackedInt32Array(138, 130, 139), PackedInt32Array(141, 140, 137), PackedInt32Array(137, 140, 96), PackedInt32Array(133, 134, 136), PackedInt32Array(136, 134, 137), PackedInt32Array(141, 138, 140), PackedInt32Array(140, 138, 139), PackedInt32Array(145, 144, 142), PackedInt32Array(142, 144, 143), PackedInt32Array(149, 148, 146), PackedInt32Array(146, 148, 147)]
+agent_radius = 0.3
+agent_max_climb = 0.5
+agent_max_slope = 60.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rnqfu"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_tpnuq"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Theme" id="Theme_27hxy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdjfv"]
+bg_color = Color(0.29411766, 0.6784314, 0.11372549, 1)
+
+[node name="Control" type="Node3D" unique_id=1409619661 node_paths=PackedStringArray("selected_tool")]
+physics_interpolation_mode = 2
+script = ExtResource("1_hhusy")
+min_loot = 9
+number_of_burglars = 3
+number_of_guards = 1
+selected_tool = NodePath("Crowbar")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1057339107]
+environment = SubResource("Environment_c0if4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=400381635]
+transform = Transform3D(-0.723713, -0.678436, -0.12635, -0.277002, 0.11789, 0.95361, -0.632068, 0.725139, -0.273247, 10.0773, 5.02381, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 35.0
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=65299734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03861332, -3.33786e-06, 0.05091095)
+navigation_mesh = SubResource("NavigationMesh_qp33c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=1922111216]
+transform = Transform3D(22.608444, 0, 0, 0, 5.362308, 0, 0, 0, 80.02127, 19.589252, 1.9436948, 34.99111)
+mesh = SubResource("PlaneMesh_rnqfu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D" unique_id=1864943223]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D" unique_id=2141878647]
+shape = SubResource("ConcavePolygonShape3D_tpnuq")
+
+[node name="HouseTest" parent="NavigationRegion3D" unique_id=594874861 instance=ExtResource("3_tpnuq")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.119971, 1.961339, 35.51091)
+
+[node name="InteractableObjects" type="Node3D" parent="." unique_id=1611607886]
+
+[node name="Switch" parent="InteractableObjects" unique_id=323881162 node_paths=PackedStringArray("related_object") instance=ExtResource("6_cuge4")]
+transform = Transform3D(-0.5515734, 0, 0.83412665, 0, 1, 0, -0.83412665, 0, -0.5515734, -22.286972, 1.9764476, 25.714403)
+related_object = NodePath("../Camera")
+
+[node name="Door" parent="InteractableObjects" unique_id=612355611 node_paths=PackedStringArray("related_object") instance=ExtResource("11_hhusy")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.0002909, 1.6538782, 35.63294)
+related_object = NodePath("../../NavigationRegion3D/HouseTest")
+
+[node name="Camera" parent="InteractableObjects" unique_id=504916685 instance=ExtResource("6_3bmqa")]
+transform = Transform3D(-0.503631, 0.4709022, -0.7242974, 0.07134108, 0.8581921, 0.50834733, 0.86096805, 0.2043473, -0.46580693, -16.629105, 6.515656, 37.85245)
+
+[node name="Camera3" parent="InteractableObjects" unique_id=1060649190 instance=ExtResource("6_3bmqa")]
+transform = Transform3D(0.055208445, 0.6283965, -0.7759317, 0.012685341, 0.7766129, 0.62985045, 0.99839413, -0.04461609, 0.034903914, -23.43309, 6.515656, 18.247412)
+
+[node name="Camera2" parent="InteractableObjects" unique_id=2055511853 instance=ExtResource("6_3bmqa")]
+transform = Transform3D(-0.503631, 0.4709022, -0.7242974, 0.07134108, 0.8581921, 0.50834733, 0.86096805, 0.2043473, -0.46580693, -2.9004428, 6.515656, 24.998764)
+
+[node name="Register" parent="InteractableObjects" unique_id=1663770729 instance=ExtResource("8_cuge4")]
+transform = Transform3D(0.49997965, 0, -0.004511591, 0, 0.5, 0, 0.004511591, 0, 0.49997965, -11.212622, 4.5091295, 41.103893)
+
+[node name="Window" parent="InteractableObjects" unique_id=849077172 node_paths=PackedStringArray("related_object") instance=ExtResource("10_cr2qn")]
+transform = Transform3D(-4.371139e-08, 0, 0.99999994, 0, 1, 0, -1, 0, -4.3711385e-08, -3.0904608, 4.5817327, 39.434753)
+related_object = NodePath("../../NavigationRegion3D/HouseTest")
+
+[node name="Door2" parent="InteractableObjects" unique_id=1127081043 node_paths=PackedStringArray("related_object") instance=ExtResource("13_641hl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.872032, 1.9992039, 22.962084)
+related_object = NodePath("../../NavigationRegion3D/HouseTest")
+
+[node name="SM_Car_01" parent="InteractableObjects" unique_id=183807974 instance=ExtResource("9_sooqa")]
+transform = Transform3D(1.425, 0, 0, 0, 1.425, 0, 0, 0, 1.425, 10.411806, 1.9436915, 34.248756)
+
+[node name="Burglar1" parent="." unique_id=1699920868 instance=ExtResource("4_3bmqa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5042152, 2.306, 34.688)
+selected_interaction = 1
+character_speed = 1.0
+show_path = false
+filepath_addon = "1"
+skills = Array[int]([55, 50, 50])
+unique_name = "Matt"
+
+[node name="Burglar2" parent="." unique_id=1275374383 instance=ExtResource("4_3bmqa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4527674, 2.306, 32.32082)
+selected_interaction = 1
+character_speed = 1.2
+show_path = false
+filepath_addon = "2"
+skills = Array[int]([12, 67, 89])
+unique_name = "Bingo"
+
+[node name="Burglar3" parent="." unique_id=1870098897 instance=ExtResource("4_3bmqa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54832, 2.306, 29.985573)
+selected_interaction = 1
+character_speed = 0.8
+show_path = false
+filepath_addon = "3"
+skills = Array[int]([50, 5, 15])
+unique_name = "Frank Stein"
+
+[node name="Burglar4" parent="." unique_id=545061931 instance=ExtResource("5_020ig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.116451, 2.3055716, 41.932415)
+selected_interaction = 3
+character_speed = 1.0
+show_path = false
+filepath_addon = "4"
+unique_name = "Dan Roy"
+hearing = 0.75
+
+[node name="TimerBackground" type="ColorRect" parent="." unique_id=1152426163]
+offset_left = 924.0
+offset_top = 1085.0
+offset_right = 991.0
+offset_bottom = 1112.0
+scale = Vector2(1.3199999, 1)
+color = Color(0.31431612, 0.31431612, 0.3143161, 1)
+
+[node name="Label3D" type="Label" parent="." unique_id=1910906968]
+offset_left = 929.0
+offset_top = 1085.0
+offset_right = 985.0
+offset_bottom = 1114.0
+text = "Time: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_acjuf")
+
+[node name="CashBackground" type="ColorRect" parent="." unique_id=2092318805]
+offset_left = 924.0
+offset_top = 1054.0
+offset_right = 991.0
+offset_bottom = 1081.0
+scale = Vector2(1.3199999, 1)
+color = Color(0.31431612, 0.31431612, 0.3143161, 1)
+
+[node name="Label3D2" type="Label" parent="." unique_id=260316241]
+offset_left = 929.0
+offset_top = 1054.0
+offset_right = 994.0
+offset_bottom = 1083.0
+theme = SubResource("Theme_27hxy")
+text = "Cash: 0$"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("14_27hxy")
+
+[node name="NoiseLevelProgessBar" type="ProgressBar" parent="." unique_id=1937916222]
+visible = false
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 211.0
+offset_bottom = 31.0
+mouse_filter = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_gdjfv")
+max_value = 1000.0
+show_percentage = false
+
+[node name="SliderBackground" type="ColorRect" parent="." unique_id=200549532]
+offset_left = 735.0
+offset_top = 1011.0
+offset_right = 1189.0
+offset_bottom = 1051.0
+
+[node name="HSlider" type="HSlider" parent="SliderBackground" unique_id=668528688]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -3.0
+offset_right = 449.0
+offset_bottom = 44.0
+min_value = -8.0
+max_value = 8.0
+scrollable = false
+script = ExtResource("8_cr2qn")
+
+[node name="CameraBase" parent="." unique_id=947344319 instance=ExtResource("9_36x3p")]
+physics_interpolation_mode = 2
+
+[node name="PlayButton" type="Button" parent="." unique_id=1604528890]
+offset_left = 1280.0
+offset_top = 1007.0
+offset_right = 1322.0
+offset_bottom = 1057.0
+focus_mode = 1
+icon = ExtResource("10_27hxy")
+expand_icon = true
+
+[node name="PauseButton" type="Button" parent="." unique_id=1032801927]
+offset_left = 1217.0
+offset_top = 1007.0
+offset_right = 1259.0
+offset_bottom = 1057.0
+focus_mode = 1
+icon = ExtResource("11_2x2bu")
+expand_icon = true
+
+[node name="Crowbar" parent="." unique_id=1263994086 instance=ExtResource("12_m2u0h")]
+tool_efficencies = Array[int]([15, 50, 50])
+loudness = Array[int]([50, 50, 25])
+damaging = true
+
+[node name="InteractionButtons" type="Node2D" parent="." unique_id=1461847495]
+position = Vector2(946, 810)
+script = ExtResource("21_tpnuq")
+
+[node name="Talk" type="Button" parent="InteractionButtons" unique_id=81201918]
+offset_left = -68.0
+offset_top = -4.0
+offset_right = -13.0
+offset_bottom = 51.0
+icon = ExtResource("21_sooqa")
+expand_icon = true
+
+[node name="Interact" type="Button" parent="InteractionButtons" unique_id=411383163]
+offset_left = -11.0
+offset_top = -23.0
+offset_right = 44.0
+offset_bottom = 32.0
+icon = ExtResource("22_tpnuq")
+expand_icon = true
+
+[node name="Inspect" type="Button" parent="InteractionButtons" unique_id=1511236886]
+offset_left = 46.0
+offset_top = -4.0
+offset_right = 101.0
+offset_bottom = 51.0
+icon = ExtResource("21_2x2bu")
+expand_icon = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1696494635]
+stream = ExtResource("23_sooqa")
+autoplay = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1250952005]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1422548093]
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 0
+
+[node name="HoverOverCamera" type="Camera3D" parent="SubViewportContainer/SubViewport" unique_id=1543286312]
+
+[connection signal="drag_ended" from="SliderBackground/HSlider" to="SliderBackground/HSlider" method="_on_drag_ended"]
+[connection signal="value_changed" from="SliderBackground/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
+[connection signal="button_up" from="PauseButton" to="." method="_on_pause_button_button_up"]
+[connection signal="mouse_entered" from="InteractionButtons/Talk" to="InteractionButtons" method="_on_talk_mouse_entered"]
+[connection signal="mouse_exited" from="InteractionButtons/Talk" to="InteractionButtons" method="_on_talk_mouse_exited"]
+[connection signal="button_up" from="InteractionButtons/Interact" to="InteractionButtons" method="_on_interact_button_up"]
+[connection signal="mouse_entered" from="InteractionButtons/Interact" to="InteractionButtons" method="_on_interact_mouse_entered"]
+[connection signal="mouse_exited" from="InteractionButtons/Interact" to="InteractionButtons" method="_on_interact_mouse_exited"]
+[connection signal="button_up" from="InteractionButtons/Inspect" to="InteractionButtons" method="_on_inspect_button_up"]
+[connection signal="mouse_entered" from="InteractionButtons/Inspect" to="InteractionButtons" method="_on_inspect_mouse_entered"]
+[connection signal="mouse_exited" from="InteractionButtons/Inspect" to="InteractionButtons" method="_on_inspect_mouse_exited"]

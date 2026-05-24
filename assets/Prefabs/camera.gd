@@ -1,0 +1,21 @@
+extends Node3D
+
+@onready var spotlight = $Spotlight
+
+var camera_pos_node:Node3D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	camera_pos_node = $CameraPosNode
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	if(area.get_parent().is_in_group("Actor") && !get_parent().get_parent().backwards):
+		if(!area.get_parent().is_guard):
+			print(area.get_parent().name + " caught at " +str(get_parent().get_parent().ticks) + " by " + name)
+	

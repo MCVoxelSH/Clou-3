@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://3gyms6q5pdyh"]
+
+[ext_resource type="PackedScene" uid="uid://ixjykk5n03n2" path="res://assets/Meshes/Switch.blend" id="1_vwj3n"]
+[ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://scripts/Interactable/interactable.gd" id="2_r4fim"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_verl3"]
+radius = 0.7734375
+
+[node name="Switch" unique_id=1353067391 groups=["Interactable"] instance=ExtResource("1_vwj3n")]
+script = ExtResource("2_r4fim")
+lock_type = 3
+object_type = 2
+
+[node name="Area3D" type="Area3D" parent="." index="2" unique_id=1304582401]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1990121223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0661842, 0)
+shape = SubResource("CylinderShape3D_verl3")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

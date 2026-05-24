@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://6esvbnvlcl0p"]
+
+[ext_resource type="Shader" uid="uid://cogujfd1o0duh" path="res://assets/Shaders/distance_fog.gdshader" id="1_d18g4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_020ig"]
+render_priority = 0
+shader = ExtResource("1_d18g4")
+shader_parameter/enable_fog = true
+shader_parameter/fog_color = Color(0.73300546, 0.7330054, 0.7330054, 1)
+shader_parameter/noise_color = Color(0, 0, 0, 1)
+shader_parameter/fog_distance = 30.0000013775
+shader_parameter/fog_fade_range = 1.0
+shader_parameter/enable_noise = false
+shader_parameter/noise_time_fac = 4.0
+shader_parameter/enable_color_limitation = false
+shader_parameter/color_levels = 256
+shader_parameter/enable_dithering = false
+shader_parameter/dither_strength = 0.3
+
+[sub_resource type="QuadMesh" id="QuadMesh_h3vao"]
+material = SubResource("ShaderMaterial_020ig")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="CameraBase" type="Node3D" unique_id=244039010]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1978336891]
+physics_interpolation_mode = 1
+transform = Transform3D(-0.99988365, -0.008146291, -0.012896127, -0.013633338, 0.85646385, 0.51602703, 0.006841359, 0.5161428, -0.8564753, 0, 11.555359, -11.664345)
+near = 0.1
+far = 100.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D" unique_id=1674752206]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1175871e-08, -1.4901161e-08, -0.45864335)
+visible = false
+mesh = SubResource("QuadMesh_h3vao")

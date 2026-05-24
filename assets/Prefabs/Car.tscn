@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://ecom23v8akgk"]
+
+[ext_resource type="PackedScene" uid="uid://yl2tvwj13nm2" path="res://assets/Meshes/SM_Car_01.fbx" id="1_oq6f8"]
+[ext_resource type="Script" uid="uid://nkca03ngy7k1" path="res://scripts/Interactable/Container.gd" id="2_a0wu4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0wu4"]
+albedo_color = Color(2.0527765e-05, 0.13745508, 0.44836646, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ln1u"]
+albedo_color = Color(0.46254948, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4w7mu"]
+albedo_color = Color(0.33511636, 0.3351162, 0.33511636, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ln1u"]
+size = Vector3(2.4609375, 1.5283203, 4.703369)
+
+[node name="SM_Car_01" unique_id=183807974 groups=["Interactable"] instance=ExtResource("1_oq6f8")]
+script = ExtResource("2_a0wu4")
+lock_type = 3
+object_type = 6
+
+[node name="Car_01" parent="." index="0" unique_id=926281931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07979202, 0.8527168, -0.32185996)
+surface_material_override/0 = SubResource("StandardMaterial3D_a0wu4")
+surface_material_override/1 = SubResource("StandardMaterial3D_0ln1u")
+
+[node name="Wheel_013" parent="Car_01" index="0" unique_id=616364087]
+surface_material_override/0 = SubResource("StandardMaterial3D_4w7mu")
+
+[node name="Wheel_014" parent="Car_01" index="1" unique_id=996734195]
+surface_material_override/0 = SubResource("StandardMaterial3D_4w7mu")
+
+[node name="Wheel_015" parent="Car_01" index="2" unique_id=1533847664]
+surface_material_override/0 = SubResource("StandardMaterial3D_4w7mu")
+
+[node name="Wheel_015_001" parent="Car_01" index="3" unique_id=1216519124]
+surface_material_override/0 = SubResource("StandardMaterial3D_4w7mu")
+
+[node name="Area3D" type="Area3D" parent="." index="1" unique_id=1246644309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07979202, 0.8527168, -0.32185996)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1267103586]
+shape = SubResource("BoxShape3D_0ln1u")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

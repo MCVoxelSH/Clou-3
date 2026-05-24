@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ba8hlq3kvpoma"]
+
+[ext_resource type="PackedScene" uid="uid://b6ccp5nenspcp" path="res://assets/Meshes/Table.blend" id="1_g2kg3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fw21i"]
+size = Vector3(5.0785522, 2.0336914, 2.7043152)
+
+[node name="Table" unique_id=742926774 instance=ExtResource("1_g2kg3")]
+
+[node name="Area3D" type="Area3D" parent="Cube" index="0" unique_id=80737427]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube/Area3D" index="0" unique_id=778394475]
+transform = Transform3D(0.40047324, 0, 0, 0, 0.999965, 0, 0, 0, 0.757806, -0.0054385536, 0.006590006, 0.017564503)
+shape = SubResource("BoxShape3D_fw21i")

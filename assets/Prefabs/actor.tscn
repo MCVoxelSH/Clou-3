@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dvnhkeyunxa80"]
+
+[ext_resource type="Script" uid="uid://bh6i84pbsmlsx" path="res://scripts/character.gd" id="1_tqr47"]
+[ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="2_40a2n"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wo13b"]
+height = 1.3818359
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wo13b"]
+bg_color = Color(0.7833561, 0.6799758, 0.11207495, 1)
+
+[node name="RobotBase" type="Marker3D" unique_id=916284773 groups=["Actor"]]
+script = ExtResource("1_tqr47")
+character_speed = 0.1
+
+[node name="Robot" type="MeshInstance3D" parent="." unique_id=1093158534]
+transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 1, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
+gi_mode = 2
+mesh = ExtResource("2_40a2n")
+
+[node name="RayCast3D" type="RayCast3D" parent="Robot" unique_id=1334004488]
+target_position = Vector3(0, 0, 3.1)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1219912384]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=828623892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.192772e-08, 0.35645762, 0.008050896)
+shape = SubResource("CapsuleShape3D_wo13b")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1091042113]
+path_desired_distance = 0.1
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=28944806]
+offset_left = 751.0
+offset_top = 513.0
+offset_right = 1206.0
+offset_bottom = 540.0
+mouse_filter = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_wo13b")
+max_value = 10000.0
+show_percentage = false
+
+[node name="TextBubbleBackground" type="ColorRect" parent="." unique_id=170798426]
+visible = false
+offset_left = 926.0
+offset_top = 359.0
+offset_right = 1199.0
+offset_bottom = 424.0
+mouse_filter = 2
+color = Color(0.427493, 0.42749307, 0.42749307, 1)
+
+[node name="TextBubble" type="Label" parent="TextBubbleBackground" unique_id=1432405381]
+layout_mode = 0
+offset_right = 186.0
+offset_bottom = 107.0

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://d3jyoxsorw54h"]
+
+[ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Prefabs/camera.gd" id="1_p2hk4"]
+[ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="2_cpmpq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p2hk4"]
+size = Vector3(1, 1, 5.203491)
+
+[node name="LightBarrier" type="Node3D" unique_id=719711699]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("1_p2hk4")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=2058705584]
+transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 1, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
+gi_mode = 2
+mesh = ExtResource("2_cpmpq")
+
+[node name="Area3D" type="Area3D" parent="Mesh" unique_id=1099508075]
+transform = Transform3D(1, 2.9802322e-08, 0, -1.4901161e-08, 1, 1.3038516e-08, 0, 2.2351742e-08, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Area3D" unique_id=630155016]
+transform = Transform3D(1, 1.7749067e-16, -7.1054274e-13, 1.0806177e-15, 1.0000606, -1.6520119e-13, -2.643219e-12, 0, 1.0000526, -5.684342e-14, 0.70491916, 3.6295078)
+shape = SubResource("BoxShape3D_p2hk4")
+
+[node name="CameraMesh2" type="MeshInstance3D" parent="." unique_id=230956944]
+transform = Transform3D(0.49999997, 0, 0, 0, 1, 0, 0, 0, 0.49999997, -4.8223194e-07, 0, -3.193678)
+gi_mode = 2
+mesh = ExtResource("2_cpmpq")
+
+[node name="CameraPosNode" type="Node3D" parent="." unique_id=1381064270]
+transform = Transform3D(0.99268377, 2.9802322e-08, -0.12074314, 0.06982049, 0.815855, 0.5740257, 0.098508865, -0.5782563, 0.8098859, 0.63343203, 6.7050195, -5.0919747)
+
+[connection signal="area_shape_entered" from="Mesh/Area3D" to="." method="_on_area_3d_area_shape_entered"]

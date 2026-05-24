@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://b466cok0vg882"]
+
+[ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Prefabs/camera.gd" id="1_pwlxj"]
+[ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="1_sbruj"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pwlxj"]
+points = PackedVector3Array(10, 0, 29.999998, -0.0019578934, 0, 0, -10, 0, 29.999998)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ljuip"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.14117648)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jn2v2"]
+_surfaces = [{
+"aabb": AABB(-10, 0, 0, 20, 1e-05, 30),
+"format": 34896613377,
+"index_count": 3,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 3,
+"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_e71kx"]
+resource_name = "SpotlightCamera_Plane"
+_surfaces = [{
+"aabb": AABB(-10, 0, 0, 20, 1e-05, 30),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 3,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
+"material": SubResource("StandardMaterial3D_ljuip"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 3,
+"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 255, 63, 0, 0, 0, 0, 255, 255, 255, 63, 255, 127, 0, 0, 0, 0, 255, 63, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_jn2v2")
+
+[node name="Camera" type="Node3D" unique_id=1060649190]
+transform = Transform3D(0.31822312, 0.68591535, -0.6544114, -0.07735984, 0.70678186, 0.70318913, 0.94485414, -0.17314586, 0.27797666, 0, 0, 0)
+script = ExtResource("1_pwlxj")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1665056100]
+transform = Transform3D(1, 0, 0, 1.4901161e-08, 1, 2.9802322e-08, -2.9802322e-08, -2.2351742e-08, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=206607191]
+transform = Transform3D(-0.9942223, 0, 0.1073401, 0, 1, -1.8626451e-09, -0.1073401, -2.6077032e-08, -0.99422234, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_pwlxj")
+
+[node name="CameraMesh" type="MeshInstance3D" parent="." unique_id=2058705584]
+transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 1, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
+gi_mode = 2
+mesh = ExtResource("1_sbruj")
+
+[node name="Spotlight" type="MeshInstance3D" parent="." unique_id=1461383171]
+transform = Transform3D(-0.99422234, 0, 0.10734008, 0, 1, 0, -0.10734008, 0, -0.99422234, 0, 0, 0)
+mesh = SubResource("ArrayMesh_e71kx")
+skeleton = NodePath("")
+
+[node name="CameraPosNode" type="Node3D" parent="." unique_id=2095706538]
+transform = Transform3D(-0.93655074, -0.30757606, 0.1681377, 0.14321767, 0.102045536, 0.9844168, -0.319941, 0.94603604, -0.05152026, 1.6945443, 5.9056735, -3.7991343)
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

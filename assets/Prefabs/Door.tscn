@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bonkiymgimfru"]
+
+[ext_resource type="PackedScene" uid="uid://26ayjdql8koy" path="res://assets/Meshes/Door.blend" id="1_qjtyp"]
+[ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://scripts/Interactable/interactable.gd" id="2_pso2s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ufl1m"]
+size = Vector3(2.081543, 2.047573, 15.098957)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fe3b1"]
+size = Vector3(2.081543, 2.047573, 15.54899)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pso2s"]
+size = Vector3(2.081543, 4.073662, 0.13995689)
+
+[node name="Door2" unique_id=612355611 groups=["Interactable"] instance=ExtResource("1_qjtyp")]
+script = ExtResource("2_pso2s")
+is_breakable = true
+lock_type = 0
+object_type = 0
+object_material = 0
+
+[node name="Door" parent="." index="0" unique_id=755316163]
+transform = Transform3D(-1.1211131e-08, 0, -1, 0, 2.010108, 0, 0.06881343, 0, -1.6292068e-07, -0.8693336, 1.9338678, 0.05480974)
+
+[node name="Area3D" type="Area3D" parent="Door" index="0" unique_id=1422362431]
+transform = Transform3D(-2.308688e-06, 0, 1, 0, 1, 0, -1, 0, -2.308688e-06, -0.7964997, -0.9620716, -0.8693336)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door/Area3D" index="0" unique_id=260253587]
+transform = Transform3D(1, 0, 6.82121e-13, 0, 1, 0, -1.9291235e-12, 0, 0.9999995, 0.098, 1, -1.3886409)
+shape = SubResource("BoxShape3D_ufl1m")
+
+[node name="Area3D" type="Area3D" parent="DoorFrame" parent_id_path=PackedInt32Array(2051818248) index="0" unique_id=1320269022]
+transform = Transform3D(-2.308688e-06, 0, 1, 0, 1, 0, -1, 0, -2.308688e-06, 0.6386504, -0.9620716, 0.059171107)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorFrame/Area3D" index="0" unique_id=588339433]
+transform = Transform3D(1, 0, 6.82121e-13, 0, 1, 0, -1.1368684e-12, 0, 0.9999995, 0.098, 1, -1.1636244)
+shape = SubResource("BoxShape3D_fe3b1")
+
+[node name="OutsideCheck" type="Area3D" parent="." index="2" unique_id=1191086551]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OutsideCheck" index="0" unique_id=992811701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 2.0140486, 0.02949965)
+shape = SubResource("BoxShape3D_pso2s")
+
+[node name="InsideCheck" type="Area3D" parent="." index="3" unique_id=2101058853]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InsideCheck" index="0" unique_id=1432203158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 2.0140486, -0.11860493)
+shape = SubResource("BoxShape3D_pso2s")
+
+[node name="AnimationPlayer" parent="." index="4" unique_id=359653166]
+playback_auto_capture = false
+
+[connection signal="mouse_entered" from="Door/Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Door/Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="mouse_entered" from="DoorFrame/Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="DoorFrame/Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="area_entered" from="OutsideCheck" to="." method="_on_outside_check_area_entered"]
+[connection signal="mouse_entered" from="OutsideCheck" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="OutsideCheck" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="area_entered" from="InsideCheck" to="." method="_on_inside_check_area_entered"]
+[connection signal="mouse_entered" from="InsideCheck" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="InsideCheck" to="." method="_on_area_3d_mouse_exited"]
