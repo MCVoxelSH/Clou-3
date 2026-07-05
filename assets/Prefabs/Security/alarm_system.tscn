@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://fcr4gciqu4va"]
+
+[ext_resource type="PackedScene" uid="uid://bfyijh0tdrnmg" path="res://assets/Prefabs/Interactable.tscn" id="1_mfnhw"]
+[ext_resource type="PackedScene" uid="uid://bl5t1x48i1q2a" path="res://assets/Meshes/Alarm.blend" id="2_r3t3j"]
+[ext_resource type="Script" uid="uid://dou5oabgl2bp8" path="res://assets/scripts/Interactable/Alarm.gd" id="2_xl00a"]
+
+[node name="Alarm System" unique_id=467983730 groups=["Alarm"] instance=ExtResource("1_mfnhw")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("2_xl00a")
+is_breakable = true
+lock_type = 2
+object_type = 8
+object_material = 1
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(698272675) index="0" unique_id=949089932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.891653e-05, 0.018454246, 0.0004799366)
+
+[node name="Alarm" parent="." index="1" unique_id=1330526775 instance=ExtResource("2_r3t3j")]
+transform = Transform3D(0.049343396, 0, 0, 0, 0.049343396, 0, 0, 0, 0.049343396, 0, 0, 0)
+
+[node name="CameraPosNode" type="Node3D" parent="." index="2" unique_id=291855855]
+transform = Transform3D(1, 0, 0, 0, 0.9933808, 0.1148678, 0, -0.1148678, 0.9933808, -0.0039914357, 0.3757334, 0.87641263)
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

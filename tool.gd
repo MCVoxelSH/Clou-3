@@ -1,10 +1,10 @@
 extends Node3D
 
-## lockpicking, safecracking,alarms efficency
-@export var tool_efficencies:Array[int] = [0,0,0]
+## lockpicking, safecracking,alarms efficency as fractional percentage (e.g. 0.5)
+@export var tool_efficencies:Array[float] = [0.0,0.0,0.0]
 
-## loudness for wood, metal and glass
-@export var loudness:Array[int] = [0,0,0]
+## loudness for wood, metal and glass as fractional percentage (e.g. 0.5)
+@export var loudness:Array[float] = [0.0,0.0,0.0]
 
 @export var damaging = false
 

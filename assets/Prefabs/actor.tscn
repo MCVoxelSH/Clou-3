@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dvnhkeyunxa80"]
 
-[ext_resource type="Script" uid="uid://bh6i84pbsmlsx" path="res://scripts/character.gd" id="1_tqr47"]
+[ext_resource type="Script" uid="uid://bh6i84pbsmlsx" path="res://assets/scripts/character.gd" id="1_tqr47"]
 [ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="2_40a2n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wo13b"]
@@ -43,16 +43,19 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_wo13b")
 max_value = 10000.0
 show_percentage = false
 
-[node name="TextBubbleBackground" type="ColorRect" parent="." unique_id=170798426]
-visible = false
+[node name="TextBubble" type="Label" parent="." unique_id=1432405381]
 offset_left = 926.0
 offset_top = 359.0
-offset_right = 1199.0
-offset_bottom = 424.0
+offset_right = 927.0
+offset_bottom = 382.0
+
+[node name="Background" type="ColorRect" parent="TextBubble" unique_id=170798426]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.427493, 0.42749307, 0.42749307, 1)
-
-[node name="TextBubble" type="Label" parent="TextBubbleBackground" unique_id=1432405381]
-layout_mode = 0
-offset_right = 186.0
-offset_bottom = 107.0

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ecom23v8akgk"]
 
 [ext_resource type="PackedScene" uid="uid://yl2tvwj13nm2" path="res://assets/Meshes/SM_Car_01.fbx" id="1_oq6f8"]
-[ext_resource type="Script" uid="uid://nkca03ngy7k1" path="res://scripts/Interactable/Container.gd" id="2_a0wu4"]
+[ext_resource type="Script" uid="uid://bfn54yg2cbs38" path="res://assets/scripts/Interactable/Vehicle.gd" id="2_a0wu4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0wu4"]
 albedo_color = Color(2.0527765e-05, 0.13745508, 0.44836646, 1)
@@ -17,7 +17,6 @@ size = Vector3(2.4609375, 1.5283203, 4.703369)
 
 [node name="SM_Car_01" unique_id=183807974 groups=["Interactable"] instance=ExtResource("1_oq6f8")]
 script = ExtResource("2_a0wu4")
-lock_type = 3
 object_type = 6
 
 [node name="Car_01" parent="." index="0" unique_id=926281931]
@@ -43,5 +42,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07979202, 0.8527168, -0.32
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1267103586]
 shape = SubResource("BoxShape3D_0ln1u")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1540104961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07979202, 0.8527168, -0.32185996)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=279847481]
+shape = SubResource("BoxShape3D_0ln1u")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="3" unique_id=356332370]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07979202, -0.012283206, -0.32185996)
+vertices = PackedVector3Array(1.04, 0, -2.6, -1.178, 0, -2.6, -1.178, 0, 2.38, 1.04, 0, 2.38)
+carve_navigation_mesh = true
+
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="mouse_entered" from="StaticBody3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="StaticBody3D" to="." method="_on_area_3d_mouse_exited"]

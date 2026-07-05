@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bfyijh0tdrnmg"]
 
-[ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://scripts/Interactable/interactable.gd" id="1_3kyl0"]
+[ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://assets/scripts/Interactable/interactable.gd" id="1_3kyl0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i8waw"]
-size = Vector3(2.1494923, 2.031272, 1.2925317)
+size = Vector3(0.16601563, 0.19335938, 0.13049316)
 
 [node name="Interactable" type="Node3D" unique_id=467983730 groups=["Interactable"]]
 script = ExtResource("1_3kyl0")

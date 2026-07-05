@@ -1,11 +1,14 @@
 {
 	"asset":{
-		"generator":"Khronos glTF Blender I/O v5.1.19",
+		"generator":"Khronos glTF Blender I/O v5.1.20",
 		"version":"2.0"
 	},
 	"scene":0,
 	"scenes":[
 		{
+			"extras":{
+				"psx_export":{}
+			},
 			"name":"Scene",
 			"nodes":[
 				0,
@@ -79,6 +82,10 @@
 	"materials":[
 		{
 			"doubleSided":true,
+			"extras":{
+				"mmd_material":{},
+				"psk":{}
+			},
 			"name":"Wood",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
@@ -201,19 +208,19 @@
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":15,
+			"count":30,
 			"max":[
-				0.625
+				0.5
 			],
 			"min":[
-				0.041666666666666664
+				0.016666666666666666
 			],
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":10,
 			"componentType":5126,
-			"count":15,
+			"count":30,
 			"type":"VEC4"
 		}
 	],
@@ -274,18 +281,18 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":60,
+			"byteLength":120,
 			"byteOffset":3512
 		},
 		{
 			"buffer":0,
-			"byteLength":240,
-			"byteOffset":3572
+			"byteLength":480,
+			"byteOffset":3632
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":3812,
+			"byteLength":4112,
 			"uri":"Door-a4d82342a3277ce4fc166f6dddb92d10.bin"
 		}
 	]

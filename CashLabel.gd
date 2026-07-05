@@ -8,8 +8,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	text =  "Cash: "+ str(get_parent().cash) +"$"
-	if(get_parent().cash >= get_parent().min_loot):
+	text =  "Cash: "+ str(get_node("/root/Control/").cash) +"$"
+	if(get_node("/root/Control/").cash >= get_node("/root/Control/").min_loot):
 		var green = Color(0.0,1.0,0.0,1.0)
 		set("theme_override_colors/font_color",green)
 	else:

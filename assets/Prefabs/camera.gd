@@ -2,6 +2,8 @@ extends Node3D
 
 @onready var spotlight = $Spotlight
 
+@export_enum("Door", "Window", "Switch", "Container","Loot","other", "Car", "Camera", "Alarm") var object_type
+
 var camera_pos_node:Node3D
 
 # Called when the node enters the scene tree for the first time.
@@ -15,7 +17,7 @@ func _process(delta: float) -> void:
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
-	if(area.get_parent().is_in_group("Actor") && !get_parent().get_parent().backwards):
+	if(area.get_parent().is_in_group("Actor") && !get_node("/root/Control/").backwards):
 		if(!area.get_parent().is_guard):
-			print(area.get_parent().name + " caught at " +str(get_parent().get_parent().ticks) + " by " + name)
+			print(area.get_parent().name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
 	

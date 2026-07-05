@@ -43,9 +43,11 @@ shadow_mesh = SubResource("ArrayMesh_jn2v2")
 [node name="Camera" type="Node3D" unique_id=1060649190]
 transform = Transform3D(0.31822312, 0.68591535, -0.6544114, -0.07735984, 0.70678186, 0.70318913, 0.94485414, -0.17314586, 0.27797666, 0, 0, 0)
 script = ExtResource("1_pwlxj")
+object_type = 7
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1665056100]
 transform = Transform3D(1, 0, 0, 1.4901161e-08, 1, 2.9802322e-08, -2.9802322e-08, -2.2351742e-08, 1, 0, 0, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=206607191]
 transform = Transform3D(-0.9942223, 0, 0.1073401, 0, 1, -1.8626451e-09, -0.1073401, -2.6077032e-08, -0.99422234, 0, 0, 0)
@@ -62,6 +64,6 @@ mesh = SubResource("ArrayMesh_e71kx")
 skeleton = NodePath("")
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=2095706538]
-transform = Transform3D(-0.93655074, -0.30757606, 0.1681377, 0.14321767, 0.102045536, 0.9844168, -0.319941, 0.94603604, -0.05152026, 1.6945443, 5.9056735, -3.7991343)
+transform = Transform3D(-0.9365508, -0.30757606, 0.16813764, 0.14321773, 0.102045536, 0.9844168, -0.31994113, 0.94603604, -0.05152034, 1.8414936, 3.6923356, -5.6772656)
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

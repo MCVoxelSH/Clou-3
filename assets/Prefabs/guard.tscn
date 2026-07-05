@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Prefabs/actor.tscn" id="1_l30q5"]
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l30q5"]
+points = PackedVector3Array(4, 0, 20, -0.66718864, 0, -5.4433336, -4, 0, 20)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01mds"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3j12q"]
@@ -38,24 +41,27 @@ shadow_mesh = SubResource("ArrayMesh_3j12q")
 transparency = 1
 albedo_color = Color(1, 1, 1, 0.14117648)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l30q5"]
-points = PackedVector3Array(4, 0, 20, -0.66718864, 0, -5.4433336, -4, 0, 20)
-
 [node name="RobotBase" unique_id=468724566 instance=ExtResource("1_l30q5")]
 is_guard = true
 
 [node name="Area3D2" type="Area3D" parent="Robot" parent_id_path=PackedInt32Array(1093158534) index="0" unique_id=2106648720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0458031e-07, 0, 0.69260406)
+visible = false
 
-[node name="Spotlight" type="MeshInstance3D" parent="Robot/Area3D2" index="0" unique_id=406023474]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6204657, 0.7814132, 5.2904606)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/Area3D2" index="0" unique_id=1890430363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6204657, 0.6717707, 5.2904606)
+shape = SubResource("ConvexPolygonShape3D_l30q5")
+
+[node name="Spotlight" type="MeshInstance3D" parent="Robot" parent_id_path=PackedInt32Array(1093158534) index="2" unique_id=406023474]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6204656, 0.7814132, 5.9830647)
 mesh = SubResource("ArrayMesh_l30q5")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_ljuip")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/Area3D2" index="1" unique_id=1890430363]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6204657, 0.6717707, 5.2904606)
-shape = SubResource("ConvexPolygonShape3D_l30q5")
+[node name="TextBubble" parent="." index="4" unique_id=1432405381]
+visible = false
 
 [connection signal="area_entered" from="Robot/Area3D2" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Robot/Area3D2" to="." method="_on_area_3d_area_exited"]
+[connection signal="body_entered" from="Robot/Area3D2" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Robot/Area3D2" to="." method="_on_area_3d_body_exited"]
