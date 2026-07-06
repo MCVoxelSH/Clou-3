@@ -1,5 +1,6 @@
 extends HSlider
 
+var reset_slider = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,10 +12,12 @@ func _process(delta: float) -> void:
 	if(get_parent().get_parent().execute_plan):
 		if(value < 0):
 			value = 0
-
-
+			
+	if(reset_slider):
+		if (value != 0):
+			value = 0
+		else:
+			reset_slider = false
 
 func _on_drag_ended(value_changed: bool) -> void:
-	value = 0
-	if(!get_parent().get_parent().execute_plan):
-		get_parent().get_parent().pause = true
+	reset_slider = true

@@ -76,11 +76,8 @@ func _ready() -> void:
 			sum = move_toward(sum, anim_player.current_animation_length, 1.0/60.0)
 		animation_rest_time = delta
 		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func update_interactable(delta):
-	
-	#if(damage == 0):
-		#damaged = false
+		
+func _physics_process(delta: float) -> void:
 	if(is_being_hovered_over):
 		get_node("/root/Control").hover_over_timer += delta
 		if(get_node("/root/Control").hover_over_timer > related_objects.size()):
@@ -89,6 +86,11 @@ func update_interactable(delta):
 		get_node("/root/Control").hover_over_camera.global_transform = get_node(str(related_objects[index])).camera_pos_node.global_transform
 		get_node("/root/Control/SubViewportContainer/SubViewport/CurrentObject").size = Vector2.ZERO
 		get_node("/root/Control/SubViewportContainer/SubViewport/CurrentObject").text = str(index+1) + "/" + str(related_objects.size()) 
+
+func update_interactable(delta):
+	
+	#if(damage == 0):
+		#damaged = false
 	
 			#print(str(get_node("/root/Control").ticks) + ", " + str(anim_player.current_animation_position) + ", " + str(get_node("/root/Control").backwards)+ ", " + str(anim_player.get_playing_speed()))
 			
@@ -122,6 +124,7 @@ func update_interactable(delta):
 					if (global_position.distance_squared_to(actor.global_position) < min_distance):
 						min_distance = global_position.distance_squared_to(actor.global_position)
 			
+			
 			if(min_distance > 10 && is_breakable && (get_node("/root/Control").burglar_moved || get_node("/root/Control").play || get_node("/root/Control").load_replay || get_node("/root/Control").forwards|| get_node("/root/Control").active_burglar.is_opening) && !get_node("/root/Control").backwards && !get_node("/root/Control").was_backwards && !get_node("/root/Control").pause):
 				close_door = true
 				append = true
@@ -134,19 +137,8 @@ func update_interactable(delta):
 	if(anim_player && (object_type == 0 ||  object_type == 1)):	
 		if(previous_animation_position != anim_player.current_animation_length  && anim_player.current_animation_position == anim_player.current_animation_length  && !get_node("/root/Control").pause && !get_node("/root/Control").backwards):
 			append_door_opening("forwards")
-	
-	#TODO this whole thing doesnt work yet	
-	if(door_closed_at_ticks.size() > 0 && (object_type == 0 ||  object_type == 1)):	
-		if(get_node("/root/Control").ticks == door_closed_at_ticks[door_closed_at_ticks.size()-1][0] && get_node("/root/Control").backwards && door_closed_at_ticks[door_closed_at_ticks.size()-1][1] == "backwards"):
-			play_animation("Action", false, true, get_stack())
-			door_closed_at_ticks.erase(door_closed_at_ticks.back())
-			index -=1
-		elif(get_node("/root/Control").ticks == door_closed_at_ticks[door_closed_at_ticks.size()-1][0] && get_node("/root/Control").backwards && door_closed_at_ticks[door_closed_at_ticks.size()-1][1] == "forwards"): #+opening_time
-			play_animation("Action", true, true, get_stack())
-			door_closed_at_ticks.erase(door_closed_at_ticks.back())
-			index -=1
 			
-	
+			
 	if(anim_player):	
 		if(!get_node("/root/Control").pause):
 			previous_animation_position = anim_player.current_animation_position			
@@ -219,6 +211,33 @@ func _on_outside_check_area_entered(area: Area3D) -> void:
 		get_node("/root/Control").enable_spring_arm()
 		if(area.get_parent() == get_node("/root/Control").active_burglar):
 			disable_floor()
+			
+func replay_door_animation():	
+	#TODO this whole thing doesnt work yet	
+	if(get_node("/root/Control").backwards): 
+		if(door_closed_at_ticks.size() > 0 && (object_type == 0 ||  object_type == 1)):	
+			#if(get_node("/root/Control").ticks == door_closed_at_ticks[door_closed_at_ticks.size()-1][0]):
+				#print("backwards? " + str(owner.backwards))	
+			if(get_node("/root/Control").ticks == door_closed_at_ticks[door_closed_at_ticks.size()-1][0] && door_closed_at_ticks[door_closed_at_ticks.size()-1][1] == "backwards"):
+				play_animation("Action", false, true, get_stack())
+				door_closed_at_ticks.erase(door_closed_at_ticks.back())
+				index -=1
+			elif(get_node("/root/Control").ticks < door_closed_at_ticks[door_closed_at_ticks.size()-1][0] && door_closed_at_ticks[door_closed_at_ticks.size()-1][1] == "backwards"):
+				play_animation("Action", false, true, get_stack())
+				anim_player.advance(1.0/30.0)
+				door_closed_at_ticks.erase(door_closed_at_ticks.back())
+				index -=1
+			elif(get_node("/root/Control").ticks == door_closed_at_ticks[door_closed_at_ticks.size()-1][0] && door_closed_at_ticks[door_closed_at_ticks.size()-1][1] == "forwards"): #+opening_time
+				play_animation("Action", true, true, get_stack())
+				door_closed_at_ticks.erase(door_closed_at_ticks.back())
+				index -=1
+			elif(get_node("/root/Control").ticks < door_closed_at_ticks[door_closed_at_ticks.size()-1][0] && door_closed_at_ticks[door_closed_at_ticks.size()-1][1] == "forwards"):
+				play_animation("Action", true, true, get_stack())
+				anim_player.advance(1.0/30.0)
+				door_closed_at_ticks.erase(door_closed_at_ticks.back())
+				index -=1		
+				
+				
 	
 func enable_floor():
 	for i in range (get_node("/root/Control").active_burglar.current_floor, get_node("/root/Control").number_of_floors +1):

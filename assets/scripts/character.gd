@@ -121,9 +121,8 @@ func _physics_process(_delta):
 					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 					if(result):
 						if(result.collider.owner.is_in_group("Actor")):
-							owner.print_caught_message(object.name + " caught at " + str(get_node("/root/Control").ticks) + " by " + unique_name)
-							owner.print_caught_message(object.name + " caught at " + get_node("/root/Control/TimerLabel").get_time_as_string() + " by " + unique_name)
-							print("burglar position: " + str(result.collider.owner.global_position)+ ", own position: " + str(global_position))
+							owner.print_caught_message(object.unique_name + " caught at " + get_node("/root/Control/TimerLabel").get_time_as_string() +  " ("+str(get_node("/root/Control").ticks)+" ticks)" + " by " + unique_name)
+							print("burglar position: " + str(result.collider.owner.global_position)+ ",id: " + str(result.collider.owner.id) + ", own position: " + str(global_position) + ", id: " + str(id))
 							objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))
 					
 			if(object.is_in_group("Interactable")):
@@ -220,17 +219,31 @@ func set_target_position(target_position: Vector3, record: bool):
 			var vec = mesh.global_position
 			
 			var ticks_plus_one = false
+			var ticks_plus_one_overwrite = false
+			
+			if(!replay.is_empty()):
+				if(replay[id][0] != -1 && replay[id][0] > owner.ticks):
+					replay.remove_at(id)
+					ticks_plus_one_overwrite = true
+					
 			
 			if(true):#id != maxid -1 && id != 0):
 				#REMINDER I readded +1, this fixes an issue, does it cause other issues though?
 				var diff:int
-				if(get_parent().ticks != 0 && id != 0):
+				#if(owner.was_backwards && !(get_parent().ticks != 0 && id != 0)):
+					#diff = maxid - id + 1
+				#else:
+				if((get_parent().ticks != 0 && id != 0) || id != maxid - 1):
 					diff = maxid - id
 				else:
 					diff = maxid - id + 1
-				for i in range(maxid -1, maxid -diff,-1):
-					replay.remove_at(i)
-					ticks_plus_one = true
+				
+				var range_start = maxid - 1		
+				
+				for i in range(range_start, maxid -diff,-1):
+					replay.erase(replay.back())
+					if(!ticks_plus_one_overwrite):
+						ticks_plus_one = true
 					pass
 				#if(currentid == maxid):
 					#currentid-= diff -1
@@ -643,10 +656,15 @@ func set_target_position(target_position: Vector3, record: bool):
 					#actor.add_wait_ticks(ticks_at_position)
 		#id -=1
 		maxid = replay.size()
+		
+		var waiting_positions_to_delte = []
+		
 		for w in waiting_positions:
 			if(w[0] >= get_node("/root/Control").ticks):
-				waiting_positions.erase(w)
-
+				waiting_positions_to_delte.append(w)
+		
+		for w in waiting_positions_to_delte:
+			waiting_positions.erase(w)
 		
 		if(show_path):
 			_nav_path_line.draw_path(path)
@@ -698,7 +716,7 @@ func _on_body_or_area_entered(body_area):
 				if(result):
 					if(result.collider.owner.is_in_group("Actor")):
 						#owner.print_caught_message(body_area.owner.name,str(get_parent().ticks),unique_name)
-						owner.print_caught_message(body_area.owner.name + " caught at " +str(get_parent().ticks) + " by " + unique_name)
+						owner.print_caught_message(body_area.owner.unique_name + " caught at " +str(get_parent().ticks) + " by " + unique_name)
 				
 		if(body_area.owner.is_in_group("Interactable")):
 			var space_state = get_world_3d().direct_space_state

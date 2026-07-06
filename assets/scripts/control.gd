@@ -5,6 +5,9 @@ extends Node3D
 #REMINDER add navigation obstacles for interactables
 #REMINDER there is currently a bug where for example doors don't get processed when active burglar is not on the floor with them causing them to play the animation as soon as the active burglar enters the floor if they were supposed to play it
 #FIXME if you move while opening something the replay gets bugged, so need to prevent that, this is important, I am currently working on this but the current solution causes issues
+#FIXME when using the play button the replay sometimes gets scewed, this includes the play_until_ticks feature... this bug doesn't seem to occur anymore, so maybe it's fixed
+#FIXME when going through a window rewinding and switching to another burglar, burglar 1 gets stuck at the window, might have to do with is_waiting
+#to replicate the bug: go through window with burglar1, go through window with burglar2, move burglar1, rewind and fast forward until burglar1 just went through window, try to move somewhere
 
 @export var debug_mode = false
 @onready var engine_speed:float = Engine.physics_ticks_per_second
@@ -95,6 +98,8 @@ var debug_file = FileAccess.open("user://debug.txt", FileAccess.WRITE)
 
 var first_person_mode = false
 
+var direction_changed = false
+
 #var debug_file2 = FileAccess.open("user://debug2.txt", FileAccess.WRITE)
 
 func _ready() -> void:
@@ -137,6 +142,23 @@ func _ready() -> void:
 		
 func _process(delta: float) -> void:
 	
+	if(debug_mode):
+		if(Input.is_action_just_pressed("debug_speed_toggle")):
+			if(engine_speed != 15.0):
+				engine_speed = 15.0
+			else:
+				engine_speed = 60.0
+			change_game_speed(previous_slider_value)
+			
+	if(Input.is_action_just_pressed("switch_to_burglar1")):
+		switch_to_actor(1)
+	if(Input.is_action_just_pressed("switch_to_burglar2")):
+		switch_to_actor(2)		
+	if(Input.is_action_just_pressed("switch_to_burglar3")):
+		switch_to_actor(3)		
+	if(Input.is_action_just_pressed("switch_to_burglar4")):
+		switch_to_actor(4)				
+	
 	if(Input.is_action_just_pressed("first_person_mode")):
 		spring_arm_length_before_zoom_in = spring_arm.spring_length
 		spring_arm.spring_length = 0.0
@@ -147,32 +169,8 @@ func _process(delta: float) -> void:
 		first_person_mode = false
 
 	if(Input.is_action_just_released("ui_focus_next")):
-		if(!execute_plan):
-			play = false
-			pause = true
-			pause_animations()
-		var child_node = get_node(active_burglar.name + "/CameraBase")
-		active_burglar.remove_child(child_node)
-		active_burglar_index += 1
-		if(active_burglar_index > number_of_burglars+number_of_guards):
-			active_burglar_index = 1
-			
-		if((guards_are_recording || can_switch_to_guards) && active_burglar_index > number_of_burglars):
-			while(!get_node("Burglar"+str(active_burglar_index)).record_guard && !can_switch_to_guards):
-				active_burglar_index += 1
-		else:
-			if(active_burglar_index > number_of_burglars):
-				active_burglar_index = 1
-		active_burglar = get_node("Burglar"+str(active_burglar_index))
-		active_burglar.add_child(child_node)
-		_camera = get_node(active_burglar.name+"/CameraBase/SpringArm3D/Camera3D")
-		
-		floor_visibility_check.change_visibility(active_burglar, false)
-		if(active_burglar.inside):
-			disable_spring_arm()
-		else:
-			enable_spring_arm()		
-		
+		switch_to_actor(active_burglar_index + 1)
+	
 	if(Input.is_action_just_pressed("fast_forward")):
 		#REMINDER need to change this later, this is just a temporary solution
 		selected_tool = $Crowbar
@@ -206,25 +204,39 @@ func _physics_process(delta: float) -> void:
 			#do_replay()
 		load_replay = false
 		
-		
+			
 	#FIXME this is not currently working aswell as in line 324
 	if(play_until_ticks != -1):
 		if(ticks == play_until_ticks):
 			play_until_ticks = -1
 			_on_pause_button_button_up()
 			return
-			
-						
+								
 	
 	if(!pause):
+		#print("ticks before doing replay: " + str(ticks))
 		do_replay()	
 		#REMINDER I changed this from !pause to true, does this cause issues
 		if(!pause):
-			resume_animations()	
 			update_interactables(delta)
-			if(active_burglar.is_waiting):
-				print(active_burglar.name + " waiting at id " + str(active_burglar.id))
-				#print(object_being_waited_for.name + ", ticks: " + str(ticks) + ", anim position: " + str(object_being_waited_for.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value))
+			resume_animations()	
+			#if(active_burglar.is_waiting):
+				#
+				#var found_index = 0
+				#for i in range(0,ticks):
+					#if(i == active_burglar.waiting_positions.size()):
+						#break
+					##REMINDER changed from ticks + 2
+					#if(active_burglar.waiting_positions[i][0] == ticks):
+						#found_index = i
+				#var object_being_waited_for = get_node(active_burglar.waiting_positions[found_index][1])
+				#print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards) + ", ticks: " + str(ticks) + ", waiting for object: " + object_being_waited_for.name +", anim position: " + str(object_being_waited_for.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value) + ", playing: "+ str(object_being_waited_for.anim_player.is_playing()))
+				#if (ticks ==  1138 && object_being_waited_for.anim_player.current_animation_position * 2.0 == 1.0):
+					#breakpoint
+					##debug_previous_animation_position = object_being_waited_for.anim_player.current_animation_position
+			#else:
+				#print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards)+ ", ticks: " + str(ticks))		
+				 
 		else:
 			pause_animations()
 	else:
@@ -265,8 +277,7 @@ func _unhandled_input(event: InputEvent):
 		if(active_burglar.replay.size() > 0):
 			if(active_burglar.replay[active_burglar.id][2] == "moveinsidecar"):
 				return
-				
-				
+		
 		var closest_point_on_navmesh:Vector3
 		
 		if(highlighted_object != null):
@@ -322,15 +333,15 @@ func _unhandled_input(event: InputEvent):
 			
 			if (play_until_ticks != -1):
 				return
-				
-			if((active_burglar.replay[active_burglar.id][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use") && (active_burglar.replay[active_burglar.id][0] == -1 ||active_burglar.replay[active_burglar.id][0] != ticks)):
+			if((active_burglar.replay[active_burglar.id][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow" || is_waiting(active_burglar)) && (active_burglar.replay[active_burglar.id][0] == -1 || active_burglar.id != active_burglar.maxid -1) && active_burglar.replay[active_burglar.id][0] != ticks):
 				play_until_ticks = ticks - 1
 				for i in range (active_burglar.id, active_burglar.replay.size()):
-					if(active_burglar.replay[i][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use"):
+					if(active_burglar.replay[i][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow" || is_waiting(active_burglar)):
 						play_until_ticks += 1
 							
 				_on_play_button_button_up()
-				return
+				return				
+#						
 
 		if(highlighted_object != null):
 			pause = true
@@ -470,17 +481,20 @@ func do_replay():
 			for actor in get_tree().get_nodes_in_group("Actor"):
 				if((actor != active_burglar && actor.maxid > actor.currentid)||(forwards || play) && actor.id != actor.maxid):
 					actor.currentid = actor.id
-	
+					
+		
+	if(backwards):
+		for obj in get_tree().get_nodes_in_group("Interactable"):
+			obj.replay_door_animation()
 			
 	#REMINDER I split this and unsplit it again, hopefully it doesn't cause issues, then I can merge it again		
 	if(!pause):
 		if(backwards && ticks > 0):
-			ticks -=1
+			ticks -= 1
 		elif((burglar_moved || play || load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
 			ticks += 1
 		else:
-			pause = true
-			pause_animations()
+			_on_pause_button_button_up()
 	#TODO is this correct?
 	else:
 		pause_animations()
@@ -983,6 +997,9 @@ func do_replay():
 								for i in range(0,ticks):
 									if(i == actor.waiting_positions.size()):
 										break
+									if(actor.waiting_positions[i][0] >= ticks):
+										add_waiting_position = false
+										break
 									if(actor.waiting_positions[i][0] == ticks):
 										add_waiting_position = false
 								
@@ -991,6 +1008,7 @@ func do_replay():
 									array.append(ticks)
 									array.append(found_object.get_path())
 									actor.waiting_positions.append(array.duplicate())
+									print("added waiting position for actor "+ actor.name + " while at position " + str(actor.global_position) + ", id: " + str(actor.id))
 									
 								move = false
 								#var array = []
@@ -1109,7 +1127,7 @@ func do_replay():
 			#ticks +=1
 		#else:
 			#ticks -=1
-
+	
 	for actor in get_tree().get_nodes_in_group("Actor"):
 		if(actor.replay.size()>0):
 			if(backwards && actor.id != -1): #&&  actor.global_position.is_equal_approx(actor.replay[actor.id][1])):
@@ -1145,6 +1163,8 @@ func do_replay():
 							#print("ticks: "+ str(ticks))
 							
 					
+
+	
 	
 	$NoiseLevelProgessBar.visible = false		
 			
@@ -1225,32 +1245,23 @@ func check_and_fix_id():
 
 func _on_h_slider_value_changed(value: float) -> void:
 	
-	#if(abs(value - previous_slider_value) > 1):
-		#if(value < previous_slider_value):
-			#value = previous_slider_value - 1
-		#else:
-			#value = previous_slider_value + 1
-		#$SliderBackground/HSlider.set_value_no_signal(value) 
+	#REMINDER HMMMM
+	#if(!execute_plan && play):
+		#_on_pause_button_button_up()
 	
-	if(value != 0):
-		#for i in range (0,abs(previous_slider_value),+1):	
-		#TODO think about "<0", is this correct or should it be "<=" maybe?
-		if(execute_plan && floor(value) <=0):
-			actual_timescale = 1.0
-			Engine.time_scale = 1.0
+	if(abs(value - previous_slider_value) > 1):
+		if(value < previous_slider_value):
+			value = previous_slider_value - 1
 		else:
-			actual_timescale = floor(value)
-			Engine.time_scale = max(1.0,abs(floor(value)))
-			timescale = Engine.time_scale
-		Engine.physics_ticks_per_second = engine_speed * Engine.time_scale
-	else:
-		actual_timescale = 1.0
-		Engine.time_scale = 1.0
-		Engine.physics_ticks_per_second = engine_speed * Engine.time_scale
+			value = previous_slider_value + 1
+		$SliderBackground/HSlider.set_value_no_signal(value) 
+		
+	change_game_speed(value)
 	#if((previous_slider_value > 0 && value < 0)|| (previous_slider_value < 0 && value > 0)):
 		#$SliderBackground/HSlider.value = 0
 		#value = 0
 	if((value < 0 && !backwards) || (value >= 0 && backwards)):
+		direction_changed = true
 		for obj in get_tree().get_nodes_in_group("Interactable"):
 			if(obj.anim_player):
 				if(obj.anim_player.is_active()):
@@ -1269,17 +1280,19 @@ func _on_h_slider_value_changed(value: float) -> void:
 		camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
 		camera_base.global_rotation = active_burglar.camera_rotation_before_zoom_onto_object
 	
-	#if(!execute_plan):
-		#play = false
-	
-	#value went from positive to 0 or below
-	if(value <= 0 && previous_slider_value > 0):
+	#value went from negative to 0 or above
+	if(value >= 0 && previous_slider_value < 0 && backwards):
 		if(!execute_plan):
-			was_forwards = true
-			forwards = false
-		
-		
-		
+			backwards = false
+			for actor in get_tree().get_nodes_in_group("Actor"):
+				actor.currentid =actor.id#+=1
+				actor.id += 0
+				if(actor.id <= -1):
+					actor.id = 0
+					actor.currentid = 0
+					
+					
+				
 	#value changed to positive 	
 	if(value > 0 && previous_slider_value <= 0 && active_burglar.id != active_burglar.maxid -1):
 		if(!execute_plan):
@@ -1287,22 +1300,16 @@ func _on_h_slider_value_changed(value: float) -> void:
 			was_backwards = false
 			forwards = true
 			backwards = false
-			for actor in get_tree().get_nodes_in_group("Actor"):
-				actor.is_waiting = false
 			pause = false
 			resume_animations()
 	
-	#value went from negative to 0 or above
-	if(value >= 0 && previous_slider_value < 0 && backwards):
+	#value went from positive to 0 or below
+	if(value <= 0 && previous_slider_value > 0 &&!backwards):
 		if(!execute_plan):
-			backwards = false
-			for actor in get_tree().get_nodes_in_group("Actor"):
-				actor.currentid =actor.id#+=1
-				actor.is_waiting = false
-				actor.id += 0
-				if(actor.id <= -1):
-					actor.id = 0
-					actor.currentid = 0
+			was_forwards = true
+			forwards = false
+		
+		
 
 	#value changed to negative
 	if(value < 0 && previous_slider_value >= 0 && !backwards && ticks > 0):
@@ -1316,8 +1323,10 @@ func _on_h_slider_value_changed(value: float) -> void:
 			backwards = true
 			forwards = false
 			pause = false
+			#for actor in get_tree().get_nodes_in_group("Actor"):
+				#actor.is_waiting = false
 			resume_animations()
-			
+				
 	
 		
 	
@@ -1325,7 +1334,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 		#pause = false
 		
 	if(value == 0 && !execute_plan && !play):
-		pause = true
+		_on_pause_button_button_up()
 		pause_animations()
 		forwards = false
 		backwards = false
@@ -1406,10 +1415,11 @@ func check_if_there_are_last_ticks_in_the_future_infront(actor):
 
 func caught(message):
 	caught_message = message
-	if(previous_caught_message != caught_message):
-		print(caught_message) 
-	was_caught = true
-	previous_caught_message = caught_message
+	if(typeof(caught_message)!= TYPE_BOOL):
+		if(previous_caught_message != caught_message):
+			print(caught_message) 
+		was_caught = true
+		previous_caught_message = caught_message
 
 func check_success():
 	var all_burglars_are_in_car = true
@@ -1468,4 +1478,68 @@ func update_interactables(delta):
 
 func print_caught_message(message):
 	if(!backwards):
-		print(message)
+		caught(message)
+
+func change_game_speed(value: float):	
+	if(value != 0):
+		#for i in range (0,abs(previous_slider_value),+1):	
+		#TODO think about "<0", is this correct or should it be "<=" maybe?
+		if(execute_plan && floor(value) <=0):
+			actual_timescale = 1.0
+			Engine.time_scale = 1.0
+		else:
+			actual_timescale = floor(value)
+			Engine.time_scale = max(1.0,abs(floor(value)))
+			timescale = Engine.time_scale
+		Engine.physics_ticks_per_second = engine_speed * Engine.time_scale
+	else:
+		actual_timescale = 1.0
+		Engine.time_scale = 1.0
+		Engine.physics_ticks_per_second = engine_speed * Engine.time_scale
+		
+func is_waiting(actor:Node3D):
+	var actual_ticks = ticks
+	#if (!backwards):
+		#actual_ticks += 1
+	#else:
+		#actual_ticks -= 1
+	if(actor.waiting_positions.size() > 0):
+		var found_waiting_position = false
+		for i in range(0,actual_ticks):
+			if(i == actor.waiting_positions.size()):
+				break
+			#REMINDER changed from ticks + 2
+			if(actor.waiting_positions[i][0] == actual_ticks):
+				found_waiting_position = true
+		if(!found_waiting_position):
+			return false
+		else:
+			return true
+
+func switch_to_actor(index: int):
+
+	if(!execute_plan):
+		play = false
+		pause = true
+		pause_animations()
+	var child_node = get_node(active_burglar.name + "/CameraBase")
+	active_burglar.remove_child(child_node)
+	active_burglar_index = index
+	if(active_burglar_index > number_of_burglars+number_of_guards):
+		active_burglar_index = 1
+		
+	if((guards_are_recording || debug_mode) && active_burglar_index > number_of_burglars):
+		while(!get_node("Burglar"+str(active_burglar_index)).record_guard && !debug_mode):
+			active_burglar_index += 1
+	else:
+		if(active_burglar_index > number_of_burglars):
+			active_burglar_index = 1
+	active_burglar = get_node("Burglar"+str(active_burglar_index))
+	active_burglar.add_child(child_node)
+	_camera = get_node(active_burglar.name+"/CameraBase/SpringArm3D/Camera3D")
+	
+	floor_visibility_check.change_visibility(active_burglar, false)
+	if(active_burglar.inside):
+		disable_spring_arm()
+	else:
+		enable_spring_arm()		

@@ -181,6 +181,24 @@ data = PackedVector3Array(0.003, 0.0018, -0.006, 0.0023, 0.0018, -0.006, 0.0023,
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_tpnuq"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7xc"]
+transparency = 1
+diffuse_mode = 3
+albedo_color = Color(1, 0, 0.14733289, 1)
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2c21t"]
+transparency = 1
+diffuse_mode = 3
+albedo_color = Color(0.23174253, 0.6390387, 0, 1)
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlm6b"]
+transparency = 1
+diffuse_mode = 3
+albedo_color = Color(0.7581376, 0.45589232, 1.92523e-07, 1)
+metallic_specular = 0.0
+
 [sub_resource type="Theme" id="Theme_27hxy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdjfv"]
@@ -192,7 +210,6 @@ bg_color = Color(0.29411766, 0.6784314, 0.11372549, 1)
 physics_interpolation_mode = 2
 script = ExtResource("1_hhusy")
 debug_mode = true
-can_switch_to_guards = true
 burglary_target = NodePath("NavigationRegion3D/HouseTest")
 min_loot = 59
 number_of_floors = 2
@@ -509,6 +526,9 @@ show_path = false
 skills = Array[int]([55, 50, 50])
 unique_name = "Matt"
 
+[node name="Robot" parent="Burglar1" index="0" unique_id=1093158534]
+surface_material_override/0 = SubResource("StandardMaterial3D_ig7xc")
+
 [node name="Burglar2" parent="." unique_id=1275374383 instance=ExtResource("4_3bmqa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4527674, 2.306, 32.32082)
 selected_interaction = 1
@@ -518,6 +538,9 @@ show_path = false
 skills = Array[int]([12, 67, 89])
 unique_name = "Bingo"
 
+[node name="Robot" parent="Burglar2" index="0" unique_id=1093158534]
+surface_material_override/0 = SubResource("StandardMaterial3D_2c21t")
+
 [node name="Burglar3" parent="." unique_id=1870098897 instance=ExtResource("4_3bmqa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54832, 2.306, 29.985573)
 selected_interaction = 1
@@ -526,6 +549,9 @@ max_capacity = 80.0
 show_path = false
 skills = Array[int]([50, 5, 15])
 unique_name = "Frank Stein"
+
+[node name="Robot" parent="Burglar3" index="0" unique_id=1093158534]
+surface_material_override/0 = SubResource("StandardMaterial3D_rlm6b")
 
 [node name="Burglar4" parent="." unique_id=468724566 instance=ExtResource("5_020ig")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4444838, 2.3055716, 36.4873)
@@ -737,3 +763,6 @@ skeleton = NodePath("../NavigationRegion3D/HouseTest/Stairs")
 [editable path="NavigationRegion3D/HouseTest/Floor0/InteractableObjects/Locker"]
 [editable path="NavigationRegion3D/HouseTest/Floor0/Floor0Objects/CeilingLamp"]
 [editable path="NavigationRegion3D/HouseTest/Floor0/Floor0Objects/CeilingLamp2"]
+[editable path="Burglar1"]
+[editable path="Burglar2"]
+[editable path="Burglar3"]
