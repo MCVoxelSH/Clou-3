@@ -333,10 +333,10 @@ func _unhandled_input(event: InputEvent):
 			
 			if (play_until_ticks != -1):
 				return
-			if((active_burglar.replay[active_burglar.id][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow" || is_waiting(active_burglar)) && (active_burglar.replay[active_burglar.id][0] == -1 || active_burglar.id != active_burglar.maxid -1) && active_burglar.replay[active_burglar.id][0] != ticks):
+			if((active_burglar.replay[active_burglar.id][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow") && (active_burglar.replay[active_burglar.id][0] == -1 || active_burglar.id != active_burglar.maxid -1) && active_burglar.replay[active_burglar.id][0] != ticks):
 				play_until_ticks = ticks - 1
 				for i in range (active_burglar.id, active_burglar.replay.size()):
-					if(active_burglar.replay[i][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow" || is_waiting(active_burglar)):
+					if(active_burglar.replay[i][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow"):
 						play_until_ticks += 1
 							
 				_on_play_button_button_up()
