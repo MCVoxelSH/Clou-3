@@ -190,19 +190,19 @@
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":25,
+			"count":30,
 			"max":[
-				1.0416666666666667
+				0.5
 			],
 			"min":[
-				0.041666666666666664
+				0.016666666666666666
 			],
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":10,
 			"componentType":5126,
-			"count":25,
+			"count":30,
 			"type":"VEC4"
 		}
 	],
@@ -263,18 +263,18 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":100,
+			"byteLength":120,
 			"byteOffset":5164
 		},
 		{
 			"buffer":0,
-			"byteLength":400,
-			"byteOffset":5264
+			"byteLength":480,
+			"byteOffset":5284
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":5664,
+			"byteLength":5764,
 			"uri":"Locker-f4d325f7d6c938b0484a228c9999bc6f.bin"
 		}
 	]

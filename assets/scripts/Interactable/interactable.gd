@@ -64,7 +64,7 @@ func _ready() -> void:
 		anim_player.current_animation = "Action"
 		#do I need to make this longer like before (add a factor like 1.1 to it?)
 		#FIXME for less physics ticks this results in less opening_time which makes no sense, I kinda fixed this with the constant 60.0
-		opening_time = 30.0 #* Engine.physics_ticks_per_second)
+		opening_time = anim_player.current_animation_length * 60.0
 		anim_player.pause()
 		
 		var sum = 0.0

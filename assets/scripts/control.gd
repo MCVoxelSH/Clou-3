@@ -776,14 +776,17 @@ func do_replay():
 					if(actor.replay[actor.id][2] == "take"):
 						var can_pick_up = true
 						if(!get_node(str(actor.replay[actor.id][1])).visible):
-							can_pick_up = false
-							actor.show_text_bubble("someone already picked it up")
+							pass
+							#can_pick_up = false
+							#actor.show_text_bubble("someone already picked it up")
 						if((actor.currently_carrying_weight + get_node(str(actor.replay[actor.id][1])).weight) > actor.max_capacity):
 							can_pick_up = false
-							actor.show_text_bubble("it doesn't fit in my bag anymore")
+							if(get_node(str(actor.replay[actor.id][1])).visible):
+								actor.show_text_bubble("it doesn't fit in my bag anymore")
 						if((selected_car.current_load + get_node(str(actor.replay[actor.id][1])).weight) > selected_car.max_capacity):
 							can_pick_up = false
-							actor.show_text_bubble("it doesn't fit in the car anymore")
+							if(get_node(str(actor.replay[actor.id][1])).visible):
+								actor.show_text_bubble("it doesn't fit in the car anymore")
 						if(can_pick_up):
 							cash += get_node(str(actor.replay[actor.id][1])).value
 							actor.currently_carrying_weight += get_node(str(actor.replay[actor.id][1])).weight

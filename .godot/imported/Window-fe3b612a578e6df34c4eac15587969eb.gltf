@@ -179,6 +179,9 @@
 	"materials":[
 		{
 			"doubleSided":true,
+			"extras":{
+				"mmd_material":{}
+			},
 			"name":"Material"
 		}
 	],
@@ -351,10 +354,10 @@
 			"componentType":5126,
 			"count":2,
 			"max":[
-				1.0416666666666667
+				0.5
 			],
 			"min":[
-				0.041666666666666664
+				0.016666666666666666
 			],
 			"type":"SCALAR"
 		},
@@ -367,19 +370,19 @@
 		{
 			"bufferView":15,
 			"componentType":5126,
-			"count":25,
+			"count":30,
 			"max":[
-				1.0416666666666667
+				0.5
 			],
 			"min":[
-				0.041666666666666664
+				0.016666666666666666
 			],
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":16,
 			"componentType":5126,
-			"count":25,
+			"count":30,
 			"type":"VEC4"
 		},
 		{
@@ -397,7 +400,7 @@
 		{
 			"bufferView":19,
 			"componentType":5126,
-			"count":25,
+			"count":30,
 			"type":"VEC4"
 		},
 		{
@@ -504,43 +507,43 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":100,
+			"byteLength":120,
 			"byteOffset":6952
 		},
 		{
 			"buffer":0,
-			"byteLength":400,
-			"byteOffset":7052
+			"byteLength":480,
+			"byteOffset":7072
 		},
 		{
 			"buffer":0,
 			"byteLength":24,
-			"byteOffset":7452
+			"byteOffset":7552
 		},
 		{
 			"buffer":0,
 			"byteLength":24,
-			"byteOffset":7476
+			"byteOffset":7576
 		},
 		{
 			"buffer":0,
-			"byteLength":400,
-			"byteOffset":7500
+			"byteLength":480,
+			"byteOffset":7600
 		},
 		{
 			"buffer":0,
 			"byteLength":24,
-			"byteOffset":7900
+			"byteOffset":8080
 		},
 		{
 			"buffer":0,
 			"byteLength":128,
-			"byteOffset":7924
+			"byteOffset":8104
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":8052,
+			"byteLength":8232,
 			"uri":"Window-fe3b612a578e6df34c4eac15587969eb.bin"
 		}
 	]

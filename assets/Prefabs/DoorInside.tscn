@@ -80,7 +80,7 @@ size = Vector3(2.081543, 2.1624584, 15.445841)
 
 [sub_resource type="Animation" id="Animation_3j6vy"]
 resource_name = "Action"
-length = 0.5
+length = 0.50000334
 tracks/0/type = "rotation_3d"
 tracks/0/imported = true
 tracks/0/enabled = true

@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_4kvd6"]
 size = Vector3(1.9778595, 2.261283, 2.9040964)
 
-[node name="Register" unique_id=1663770729 groups=["Interactable"] instance=ExtResource("1_g1q6h")]
+[node name="Register" unique_id=1426440189 groups=["Interactable"] instance=ExtResource("1_g1q6h")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("2_g1q6h")
 is_breakable = true
@@ -21,16 +21,13 @@ object_material = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05518341, 0.109481335, 0.370499)
 shape = SubResource("BoxShape3D_4kvd6")
 
-[node name="Register" parent="." index="2" unique_id=795157048]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0, -0.73)
-
-[node name="Coins" parent="Register" index="0" unique_id=1834645063 instance=ExtResource("3_8kego")]
+[node name="Coins" parent="Register" parent_id_path=PackedInt32Array(845130415) index="0" unique_id=1834645063 instance=ExtResource("3_8kego")]
 transform = Transform3D(0, 0, 0.69, 0, 0.69, 0, -0.69, 0, 0, 0.48475444, -0.93420845, 0.0044084787)
 
-[node name="Coins2" parent="Register" index="1" unique_id=889252012 instance=ExtResource("3_8kego")]
+[node name="Coins2" parent="Register" parent_id_path=PackedInt32Array(845130415) index="1" unique_id=889252012 instance=ExtResource("3_8kego")]
 transform = Transform3D(0, 0, 0.69, 0, 0.69, 0, -0.69, 0, 0, 0.66948414, -0.93420845, 0.41537964)
 
-[node name="Coins3" parent="Register" index="2" unique_id=1694904048 instance=ExtResource("3_8kego")]
+[node name="Coins3" parent="Register" parent_id_path=PackedInt32Array(845130415) index="2" unique_id=1694904048 instance=ExtResource("3_8kego")]
 transform = Transform3D(0, 0, 0.69, 0, 0.69, 0, -0.69, 0, 0, 0.66948414, -0.93420845, -0.26187313)
 
 [node name="CameraPos" type="Node3D" parent="." index="4" unique_id=503331404]
