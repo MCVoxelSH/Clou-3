@@ -3,16 +3,15 @@ extends Node3D
 #REMINDER using navigation obstacles might be another solution to fix roofs being included in the navmesh 
 #REMINDER using nodepath instead of nodes might be useful for accessing nodes like interactable objects
 #REMINDER add navigation obstacles for interactables
-#REMINDER there is currently a bug where for example doors don't get processed when active burglar is not on the floor with them causing them to play the animation as soon as the active burglar enters the floor if they were supposed to play it
 #FIXME if you move while opening something the replay gets bugged, so need to prevent that, this is important, I am currently working on this but the current solution causes issues
 #FIXME when using the play button the replay sometimes gets scewed, this includes the play_until_ticks feature... this bug doesn't seem to occur anymore, so maybe it's fixed
 #FIXME when going through a window rewinding and switching to another burglar, burglar 1 gets stuck at the window, might have to do with is_waiting
 #to replicate the bug: go through window with burglar1, go through window with burglar2, move burglar1, rewind and fast forward until burglar1 just went through window, try to move somewhere
+#FIXME when quickly going back and forth while an actor goes through a door the replay gets scewed
 
 @export var debug_mode = false
 @onready var engine_speed:float = Engine.physics_ticks_per_second
 @export var engine_speed_overwrite:float = 60.0
-@export var can_switch_to_guards = false
 
 @export var play = false
 @export var execute_plan = false
@@ -209,6 +208,7 @@ func _physics_process(delta: float) -> void:
 	if(play_until_ticks != -1):
 		if(ticks == play_until_ticks):
 			play_until_ticks = -1
+			_on_h_slider_value_changed(0.0)
 			_on_pause_button_button_up()
 			return
 								
@@ -220,22 +220,22 @@ func _physics_process(delta: float) -> void:
 		if(!pause):
 			update_interactables(delta)
 			resume_animations()	
-			#if(active_burglar.is_waiting):
-				#
-				#var found_index = 0
-				#for i in range(0,ticks):
-					#if(i == active_burglar.waiting_positions.size()):
-						#break
-					##REMINDER changed from ticks + 2
-					#if(active_burglar.waiting_positions[i][0] == ticks):
-						#found_index = i
-				#var object_being_waited_for = get_node(active_burglar.waiting_positions[found_index][1])
-				#print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards) + ", ticks: " + str(ticks) + ", waiting for object: " + object_being_waited_for.name +", anim position: " + str(object_being_waited_for.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value) + ", playing: "+ str(object_being_waited_for.anim_player.is_playing()))
-				#if (ticks ==  1138 && object_being_waited_for.anim_player.current_animation_position * 2.0 == 1.0):
-					#breakpoint
-					##debug_previous_animation_position = object_being_waited_for.anim_player.current_animation_position
-			#else:
-				#print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards)+ ", ticks: " + str(ticks))		
+			if(active_burglar.is_waiting):
+				
+				var found_index = 0
+				for i in range(0,ticks):
+					if(i == active_burglar.waiting_positions.size()):
+						break
+					#REMINDER changed from ticks + 2
+					if(active_burglar.waiting_positions[i][0] == ticks):
+						found_index = i
+				var object_being_waited_for = get_node(active_burglar.waiting_positions[found_index][1])
+				print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards) + ", ticks: " + str(ticks) + ", waiting for object: " + object_being_waited_for.name +", anim position: " + str(object_being_waited_for.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value) + ", playing: "+ str(object_being_waited_for.anim_player.is_playing()))
+				if (ticks ==  1138 && object_being_waited_for.anim_player.current_animation_position * 2.0 == 1.0):
+					breakpoint
+					#debug_previous_animation_position = object_being_waited_for.anim_player.current_animation_position
+			else:
+				print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards)+ ", ticks: " + str(ticks))		
 				 
 		else:
 			pause_animations()
@@ -987,7 +987,10 @@ func do_replay():
 							
 						if(object_is_passable):							
 							if(!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length):
+								print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
 								found_object.play_animation("Action", false, true, get_stack())
+								if(found_waiting_position):
+									found_object.anim_player.seek(actor.waiting_positions[found_index][2])
 								if(!actor.is_guard):
 									found_object.was_opened_by_burglar = true
 								else:
@@ -1010,6 +1013,7 @@ func do_replay():
 									var array = []
 									array.append(ticks)
 									array.append(found_object.get_path())
+									array.append(found_object.anim_player.current_animation_position)
 									actor.waiting_positions.append(array.duplicate())
 									print("added waiting position for actor "+ actor.name + " while at position " + str(actor.global_position) + ", id: " + str(actor.id))
 									
@@ -1054,6 +1058,7 @@ func do_replay():
 									var array = []
 									array.append(ticks)
 									array.append(found_object.get_path())
+									array.append(found_object.anim_player.current_animation_position)
 									actor.waiting_positions.append(array.duplicate())
 								
 								actor.is_waiting = true
@@ -1251,14 +1256,14 @@ func _on_h_slider_value_changed(value: float) -> void:
 	#REMINDER HMMMM
 	#if(!execute_plan && play):
 		#_on_pause_button_button_up()
-	
-	if(abs(value - previous_slider_value) > 1):
-		if(value < previous_slider_value):
-			value = previous_slider_value - 1
-		else:
-			value = previous_slider_value + 1
-		$SliderBackground/HSlider.set_value_no_signal(value) 
-		
+	#
+	#if(abs(value - previous_slider_value) > 1):
+		#if(value < previous_slider_value):
+			#value = previous_slider_value - 1
+		#else:
+			#value = previous_slider_value + 1
+		#$SliderBackground/HSlider.set_value_no_signal(value) 
+		#
 	change_game_speed(value)
 	#if((previous_slider_value > 0 && value < 0)|| (previous_slider_value < 0 && value > 0)):
 		#$SliderBackground/HSlider.value = 0
@@ -1353,10 +1358,11 @@ func _on_play_button_button_up() -> void:
 
 
 func _on_pause_button_button_up() -> void:
-	if(!execute_plan):
-		play = false
-		pause = true
-		pause_animations()
+	if(play_until_ticks == -1):
+		if(!execute_plan):
+			play = false
+			pause = true
+			pause_animations()
 	
 				
 func rotate_actor(actor,offset):	
@@ -1383,18 +1389,18 @@ func resume_animations():
 				if(!backwards):
 					#var play_backwards = false if interactable.previous_animation_dir > 0 else true
 					if (interactable.previous_animation_dir > 0):
-						interactable.play_animation("Action", false, false, get_stack())
+						interactable.play_animation("Action", false, true, get_stack())
 					elif(interactable.previous_animation_dir < 0):
-						interactable.play_animation("Action", true, false, get_stack()) #interactable.anim_player.play("Action",-1,1,backwards)
+						interactable.play_animation("Action", true, true, get_stack()) #interactable.anim_player.play("Action",-1,1,backwards)
 				#FIXME this is not working currently when alternatign between forwards and backwards play the animation doesn't always play in the correct direction, this is why the door also doesn't play the animation when opening backwards
 				#if(interactable.previous_animation_position < interactable.anim_player.current_animation_position):
 				#print("sign = " + str(sign(interactable.previous_animation_speed)))
 				else:
 					#var play_backwards = false if interactable.previous_animation_dir > 0 else true
 					if (interactable.previous_animation_dir > 0):
-						interactable.play_animation("Action", false, false, get_stack())
+						interactable.play_animation("Action", false, true, get_stack())
 					elif(interactable.previous_animation_dir < 0):
-						interactable.play_animation("Action", true, false, get_stack()) #interactable.anim_player.play("Action",-1,1,backwards)	
+						interactable.play_animation("Action", true, true, get_stack()) #interactable.anim_player.play("Action",-1,1,backwards)	
 					#else:
 						#interactable.play_animation("Action", true)
 				#else:
@@ -1546,3 +1552,13 @@ func switch_to_actor(index: int):
 		disable_spring_arm()
 	else:
 		enable_spring_arm()		
+
+
+func _on_skip_to_start_button_button_up() -> void:
+	_on_h_slider_value_changed(-128.0)
+	play_until_ticks = 0
+
+func _on_skip_to_end_button_button_up() -> void:
+	_on_play_button_button_up()
+	_on_h_slider_value_changed(128.0)
+	play_until_ticks = active_burglar.last_ticks

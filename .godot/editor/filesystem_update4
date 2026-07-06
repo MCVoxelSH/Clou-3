@@ -1,7 +1,6 @@
-res://assets/Prefabs/Door.tscn
-res://assets/Shaders/distance_fog.gdshader
-res://assets/scripts/Interactable/interactable.gd
-res://assets/Prefabs/DoorInside.tscn
-res://assets/Prefabs/Containers/register.tscn
 res://Test Scene.tscn
+res://assets/Shaders/distance_fog.gdshader
+res://assets/scripts/control.gd
 res://guard_replays/replay4.txt
+res://assets/Prefabs/guard.tscn
+res://assets/scripts/character.gd

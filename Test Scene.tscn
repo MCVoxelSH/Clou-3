@@ -45,6 +45,8 @@
 [ext_resource type="PackedScene" uid="uid://cs3hkydvjqk8" path="res://assets/Meshes/Low Poly Interior Pack/WallMountedTV.fbx" id="37_sjel5"]
 [ext_resource type="PackedScene" uid="uid://dvxtu2yhpprdg" path="res://assets/Meshes/Low Poly Interior Pack/Toilet.fbx" id="38_7mmj4"]
 [ext_resource type="PackedScene" uid="uid://bxgyrh7rkxkdg" path="res://assets/Meshes/Low Poly Interior Pack/BathroomSink.fbx" id="39_x2x6f"]
+[ext_resource type="Texture2D" uid="uid://bompkq7nbe2gd" path="res://assets/Textures/SkipToEnd_Button.png" id="44_2c21t"]
+[ext_resource type="Texture2D" uid="uid://y1katdifje3v" path="res://assets/Textures/SkipToStart_Button.png" id="45_rlm6b"]
 [ext_resource type="PackedScene" uid="uid://dw0qn8s0ifjpp" path="res://assets/Prefabs/Environment/lantern.tscn" id="46_hrnk1"]
 [ext_resource type="PackedScene" uid="uid://bxjpbc8sioki3" path="res://assets/Meshes/Weinglas.glb" id="47_wp7ki"]
 [ext_resource type="PackedScene" uid="uid://fcr4gciqu4va" path="res://assets/Prefabs/Security/alarm_system.tscn" id="48_u8as7"]
@@ -190,13 +192,13 @@ metallic_specular = 0.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2c21t"]
 transparency = 1
 diffuse_mode = 3
-albedo_color = Color(0.23174253, 0.6390387, 0, 1)
+albedo_color = Color(0.36666667, 1, 0, 1)
 metallic_specular = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlm6b"]
 transparency = 1
 diffuse_mode = 3
-albedo_color = Color(0.7581376, 0.45589232, 1.92523e-07, 1)
+albedo_color = Color(1, 0.6, 0, 1)
 metallic_specular = 0.0
 
 [sub_resource type="Theme" id="Theme_27hxy"]
@@ -209,6 +211,7 @@ bg_color = Color(0.29411766, 0.6784314, 0.11372549, 1)
 [node name="Control" type="Node3D" unique_id=1409619661 node_paths=PackedStringArray("burglary_target", "selected_car", "selected_tool")]
 physics_interpolation_mode = 2
 script = ExtResource("1_hhusy")
+debug_mode = true
 burglary_target = NodePath("NavigationRegion3D/HouseTest")
 min_loot = 59
 number_of_floors = 2
@@ -649,18 +652,36 @@ script = ExtResource("8_cr2qn")
 physics_interpolation_mode = 2
 
 [node name="PlayButton" type="Button" parent="." unique_id=1604528890]
-offset_left = 1280.0
+offset_left = 1328.0
 offset_top = 1007.0
-offset_right = 1322.0
+offset_right = 1370.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("10_27hxy")
 expand_icon = true
 
-[node name="PauseButton" type="Button" parent="." unique_id=1032801927]
-offset_left = 1217.0
+[node name="SkipToEndButton" type="Button" parent="." unique_id=1922527974]
+offset_left = 1392.0
 offset_top = 1007.0
-offset_right = 1259.0
+offset_right = 1434.0
+offset_bottom = 1057.0
+focus_mode = 1
+icon = ExtResource("44_2c21t")
+expand_icon = true
+
+[node name="SkipToStartButton" type="Button" parent="." unique_id=337356126]
+offset_left = 1196.0
+offset_top = 1007.0
+offset_right = 1238.0
+offset_bottom = 1057.0
+focus_mode = 1
+icon = ExtResource("45_rlm6b")
+expand_icon = true
+
+[node name="PauseButton" type="Button" parent="." unique_id=1032801927]
+offset_left = 1264.0
+offset_top = 1007.0
+offset_right = 1306.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("11_2x2bu")
@@ -737,6 +758,8 @@ skeleton = NodePath("../NavigationRegion3D/HouseTest/Stairs")
 [connection signal="drag_ended" from="SliderBackground/HSlider" to="SliderBackground/HSlider" method="_on_drag_ended"]
 [connection signal="value_changed" from="SliderBackground/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
+[connection signal="button_up" from="SkipToEndButton" to="." method="_on_skip_to_end_button_button_up"]
+[connection signal="button_up" from="SkipToStartButton" to="." method="_on_skip_to_start_button_button_up"]
 [connection signal="button_up" from="PauseButton" to="." method="_on_pause_button_button_up"]
 [connection signal="mouse_entered" from="InteractionButtons/Talk" to="InteractionButtons" method="_on_talk_mouse_entered"]
 [connection signal="mouse_exited" from="InteractionButtons/Talk" to="InteractionButtons" method="_on_talk_mouse_exited"]

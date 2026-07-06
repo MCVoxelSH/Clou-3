@@ -183,7 +183,7 @@ func _process(delta: float) -> void:
 			else:
 				g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
 			for l in waiting_positions:
-				g.store_line(str(l[0]) + "|" + str(l[1]))
+				g.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2]))
 			g.close()
 				
 		if(int(filepath_addon) == get_parent().number_of_burglars):
@@ -800,6 +800,7 @@ func load_replay():
 				var temp:Array
 				temp.append(int(parts[0]))
 				temp.append(parts[1])
+				temp.append(float(parts[2]))
 				waiting_positions.append(temp.duplicate())
 			g.close()
 			
