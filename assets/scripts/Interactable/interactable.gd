@@ -46,7 +46,7 @@ var animation_rest_time = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if($CameraPosNode):
+	if(get_node_or_null("CameraPosNode")):
 		camera_pos_node = $CameraPosNode
 	
 	for path in related_objects:

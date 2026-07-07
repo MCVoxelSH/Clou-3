@@ -67,6 +67,7 @@ var was_forwards = false
 
 var previous_slider_value = 0
 
+var recording = false
 var pause = true
 var play_until_ticks = -1
 
@@ -99,6 +100,7 @@ var first_person_mode = false
 
 var direction_changed = false
 
+var skip_to_start_or_end = false
 #var debug_file2 = FileAccess.open("user://debug2.txt", FileAccess.WRITE)
 
 func _ready() -> void:
@@ -168,7 +170,8 @@ func _process(delta: float) -> void:
 		first_person_mode = false
 
 	if(Input.is_action_just_released("ui_focus_next")):
-		switch_to_actor(active_burglar_index + 1)
+		switch_to_actor(active_burglar_index + 1)	
+			
 	
 	if(Input.is_action_just_pressed("fast_forward")):
 		#REMINDER need to change this later, this is just a temporary solution
@@ -209,36 +212,43 @@ func _physics_process(delta: float) -> void:
 		if(ticks == play_until_ticks):
 			play_until_ticks = -1
 			_on_h_slider_value_changed(0.0)
-			_on_pause_button_button_up()
+			pause_recording()
 			return
 								
 	
 	if(!pause):
+		while(true):
 		#print("ticks before doing replay: " + str(ticks))
-		do_replay()	
-		#REMINDER I changed this from !pause to true, does this cause issues
-		if(!pause):
-			update_interactables(delta)
-			resume_animations()	
-			if(active_burglar.is_waiting):
-				
-				var found_index = 0
-				for i in range(0,ticks):
-					if(i == active_burglar.waiting_positions.size()):
-						break
-					#REMINDER changed from ticks + 2
-					if(active_burglar.waiting_positions[i][0] == ticks):
-						found_index = i
-				var object_being_waited_for = get_node(active_burglar.waiting_positions[found_index][1])
-				print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards) + ", ticks: " + str(ticks) + ", waiting for object: " + object_being_waited_for.name +", anim position: " + str(object_being_waited_for.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value) + ", playing: "+ str(object_being_waited_for.anim_player.is_playing()))
-				if (ticks ==  1138 && object_being_waited_for.anim_player.current_animation_position * 2.0 == 1.0):
-					breakpoint
-					#debug_previous_animation_position = object_being_waited_for.anim_player.current_animation_position
-			else:
-				print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards)+ ", ticks: " + str(ticks))		
+			do_replay()	
+			#REMINDER I changed this from !pause to true, does this cause issues
+			if(!pause):
+				update_interactables(delta)
+				resume_animations()	
+				#if(active_burglar.is_waiting):
+					#
+					#var found_index = 0
+					#for i in range(0,ticks):
+						#if(i == active_burglar.waiting_positions.size()):
+							#break
+						##REMINDER changed from ticks + 2
+						#if(active_burglar.waiting_positions[i][0] == ticks):
+							#found_index = i
+					#var object_being_waited_for = get_node(active_burglar.waiting_positions[found_index][1])
+					#print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards) + ", ticks: " + str(ticks) + ", waiting for object: " + object_being_waited_for.name +", anim position: " + str(object_being_waited_for.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value) + ", playing: "+ str(object_being_waited_for.anim_player.is_playing()))
+					#if (ticks ==  1138 && object_being_waited_for.anim_player.current_animation_position * 2.0 == 1.0):
+						#breakpoint
+						##debug_previous_animation_position = object_being_waited_for.anim_player.current_animation_position
+				#else:
+					#print(active_burglar.name + " waiting at id " + str(active_burglar.id) + ", backwards: " + str(backwards)+ ", ticks: " + str(ticks))		
 				 
-		else:
-			pause_animations()
+			else:
+				pause_animations()
+			
+			if(skip_to_start_or_end && ticks == play_until_ticks):
+				skip_to_start_or_end = false
+				
+			if(!skip_to_start_or_end):
+				break
 	else:
 		pause_animations()
 	
@@ -271,7 +281,7 @@ func _unhandled_input(event: InputEvent):
 	#REMINDER this is for when selecting an option while hovering over an interactable
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 		
-		if(execute_plan):
+		if(execute_plan || !recording):
 			return
 		
 		if(active_burglar.replay.size() > 0):
@@ -324,7 +334,7 @@ func _unhandled_input(event: InputEvent):
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 		
-		if(execute_plan):
+		if(execute_plan || !recording):
 			return
 		
 		if(active_burglar.replay.size() > 0):
@@ -494,7 +504,7 @@ func do_replay():
 		elif((burglar_moved || play || load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
 			ticks += 1
 		else:
-			_on_pause_button_button_up()
+			pause_recording()
 	#TODO is this correct?
 	else:
 		pause_animations()
@@ -954,6 +964,7 @@ func do_replay():
 						if(i == actor.waiting_positions.size()):
 							break
 						if(actor.waiting_positions[i][0] == ticks):
+							#print("found waiting position at " + str(ticks))
 							found_waiting_position = true
 							found_index = i
 					
@@ -986,7 +997,7 @@ func do_replay():
 								object_is_passable = true
 							
 						if(object_is_passable):							
-							if(!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length):
+							if((!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length) || found_waiting_position):
 								print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
 								found_object.play_animation("Action", false, true, get_stack())
 								if(found_waiting_position):
@@ -1003,10 +1014,10 @@ func do_replay():
 								for i in range(0,ticks):
 									if(i == actor.waiting_positions.size()):
 										break
-									if(actor.waiting_positions[i][0] >= ticks):
+									if(actor.waiting_positions[i][0] >= ticks%(actor.maxticks+1)):
 										add_waiting_position = false
 										break
-									if(actor.waiting_positions[i][0] == ticks):
+									if(actor.waiting_positions[i][0] == ticks%(actor.maxticks+1)):
 										add_waiting_position = false
 								
 								if (add_waiting_position):
@@ -1035,7 +1046,8 @@ func do_replay():
 							elif(found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length):
 								#actor.is_opening = true
 								#debug_file.store_line(str(ticks) + " ," + str(backwards))
-								
+								if(found_waiting_position):
+									found_object.anim_player.seek(actor.waiting_positions[found_index][2])
 								#var compute = true
 								#if(actor.waiting_positions.size() == 0):
 									#compute = true
@@ -1086,7 +1098,7 @@ func do_replay():
 							if(!forwards && !play):
 								#REMINDER this solution is not optimal, if you go press play or fast forward and then rewind the actor will move through doors
 								if(actor == active_burglar):
-									_on_pause_button_button_up()
+									pause_recording()
 							#if(actor == active_burglar):
 								#pause = true
 								#pause_animations()
@@ -1195,7 +1207,7 @@ func do_replay():
 			if(actor.replay[actor.id][0] == -1):
 				actor.replay[actor.id][0] = ticks
 				if(actor == active_burglar):
-					_on_pause_button_button_up()
+					pause_recording()
 				
 			
 		if(actor.is_guard && actor.id == actor.maxid -1 && !actor.record_guard):
@@ -1212,7 +1224,7 @@ func do_replay():
 		if(active_burglar.finished_working):
 			#pause
 			if(!backwards && !forwards && !play):
-				_on_pause_button_button_up()
+				pause_recording()
 			#REMINDER think this through
 			active_burglar.finished_working = false
 			
@@ -1255,14 +1267,14 @@ func _on_h_slider_value_changed(value: float) -> void:
 	
 	#REMINDER HMMMM
 	#if(!execute_plan && play):
-		#_on_pause_button_button_up()
+		#pause_recording()
 	#
-	#if(abs(value - previous_slider_value) > 1):
-		#if(value < previous_slider_value):
-			#value = previous_slider_value - 1
-		#else:
-			#value = previous_slider_value + 1
-		#$SliderBackground/HSlider.set_value_no_signal(value) 
+	if(abs(value - previous_slider_value) > 1):
+		if(value < previous_slider_value):
+			value = previous_slider_value - 1
+		else:
+			value = previous_slider_value + 1
+		$SliderBackground/HSlider.set_value_no_signal(value) 
 		#
 	change_game_speed(value)
 	#if((previous_slider_value > 0 && value < 0)|| (previous_slider_value < 0 && value > 0)):
@@ -1342,7 +1354,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 		#pause = false
 		
 	if(value == 0 && !execute_plan && !play):
-		_on_pause_button_button_up()
+		pause_recording()
 		pause_animations()
 		forwards = false
 		backwards = false
@@ -1358,12 +1370,22 @@ func _on_play_button_button_up() -> void:
 
 
 func _on_pause_button_button_up() -> void:
+	
+	recording = !recording
+	
+	if(!recording):
+		$PauseButton.set_button_icon(load("res://assets/Textures/Record_Button.png"))
+		pause_recording()
+	else:
+		$PauseButton.set_button_icon(load("res://assets/Textures/Pause_Button.png"))
+	
+
+func pause_recording():
 	if(play_until_ticks == -1):
 		if(!execute_plan):
 			play = false
 			pause = true
 			pause_animations()
-	
 				
 func rotate_actor(actor,offset):	
 	offset.y = 0
@@ -1555,10 +1577,33 @@ func switch_to_actor(index: int):
 
 
 func _on_skip_to_start_button_button_up() -> void:
-	_on_h_slider_value_changed(-128.0)
+	_on_h_slider_value_changed(-1.0)
 	play_until_ticks = 0
+	skip_to_start_or_end = true
 
 func _on_skip_to_end_button_button_up() -> void:
 	_on_play_button_button_up()
-	_on_h_slider_value_changed(128.0)
+	_on_h_slider_value_changed(1.0)
 	play_until_ticks = active_burglar.last_ticks
+	skip_to_start_or_end = true
+
+
+func _on_skip_to_previous_action_button_button_up() -> void:
+	if(active_burglar.id != 0):
+		_on_h_slider_value_changed(-1.0)
+		for i in range(active_burglar.id -1, -1, -1):
+			if(active_burglar.replay[i][0] != -1  && i != active_burglar.id - 1):
+				play_until_ticks = active_burglar.replay[i][0]
+				break
+		skip_to_start_or_end = true
+
+
+func _on_skip_to_next_action_button_button_up() -> void:
+	if(active_burglar.id != active_burglar.maxid -1):
+		_on_play_button_button_up()
+		_on_h_slider_value_changed(1.0)
+		for i in range(active_burglar.id + 1, active_burglar.maxid, 1):
+			if(active_burglar.replay[i][0] != -1 && i != active_burglar.id + 1):
+				play_until_ticks = active_burglar.replay[i][0]
+				break
+		skip_to_start_or_end = true

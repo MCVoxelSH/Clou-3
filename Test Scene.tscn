@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://pgda8eh2npk3" path="res://assets/Meshes/Low Poly Interior Pack/GameBoard.fbx" id="10_4b077"]
 [ext_resource type="Texture2D" uid="uid://dei7hg6kagy8u" path="res://assets/Textures/Play_Button.png" id="10_27hxy"]
 [ext_resource type="PackedScene" uid="uid://dqmi3aujq0cia" path="res://assets/Prefabs/window.tscn" id="10_cr2qn"]
-[ext_resource type="Texture2D" uid="uid://bwcc83nl38xgm" path="res://assets/Textures/Pause_Button.png" id="11_2x2bu"]
 [ext_resource type="PackedScene" uid="uid://drjtxg78yquv3" path="res://assets/Prefabs/Loot/bag.tscn" id="11_eptic"]
 [ext_resource type="PackedScene" uid="uid://brpb4i3pvgahy" path="res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Base.glb" id="11_h5xqo"]
 [ext_resource type="PackedScene" uid="uid://bonkiymgimfru" path="res://assets/Prefabs/Door.tscn" id="11_hhusy"]
@@ -48,6 +47,9 @@
 [ext_resource type="Texture2D" uid="uid://bompkq7nbe2gd" path="res://assets/Textures/SkipToEnd_Button.png" id="44_2c21t"]
 [ext_resource type="Texture2D" uid="uid://y1katdifje3v" path="res://assets/Textures/SkipToStart_Button.png" id="45_rlm6b"]
 [ext_resource type="PackedScene" uid="uid://dw0qn8s0ifjpp" path="res://assets/Prefabs/Environment/lantern.tscn" id="46_hrnk1"]
+[ext_resource type="Texture2D" uid="uid://bm0qpctff6h1k" path="res://assets/Textures/SkipToPreviousAction_Button.png" id="46_qlpnk"]
+[ext_resource type="Texture2D" uid="uid://da6q2g16o00q5" path="res://assets/Textures/Record_Button.png" id="46_rlm6b"]
+[ext_resource type="Texture2D" uid="uid://bvocot38fl74y" path="res://assets/Textures/SkipToNextAction_Button.png" id="47_ftytq"]
 [ext_resource type="PackedScene" uid="uid://bxjpbc8sioki3" path="res://assets/Meshes/Weinglas.glb" id="47_wp7ki"]
 [ext_resource type="PackedScene" uid="uid://fcr4gciqu4va" path="res://assets/Prefabs/Security/alarm_system.tscn" id="48_u8as7"]
 [ext_resource type="PackedScene" uid="uid://qtg03eexgg3h" path="res://assets/Prefabs/Containers/locker.tscn" id="49_oyf2v"]
@@ -534,6 +536,10 @@ unique_name = "Matt"
 [node name="Robot" parent="Burglar1" index="0" unique_id=1093158534]
 surface_material_override/0 = SubResource("StandardMaterial3D_ig7xc")
 
+[node name="ProgressBar" parent="Burglar1" index="3" unique_id=28944806]
+offset_left = 783.0
+offset_right = 1238.0
+
 [node name="Burglar2" parent="." unique_id=1275374383 instance=ExtResource("4_3bmqa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4527674, 2.306, 32.32082)
 selected_interaction = 1
@@ -545,6 +551,10 @@ unique_name = "Bingo"
 
 [node name="Robot" parent="Burglar2" index="0" unique_id=1093158534]
 surface_material_override/0 = SubResource("StandardMaterial3D_2c21t")
+
+[node name="ProgressBar" parent="Burglar2" index="3" unique_id=28944806]
+offset_left = 783.0
+offset_right = 1238.0
 
 [node name="Burglar3" parent="." unique_id=1870098897 instance=ExtResource("4_3bmqa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54832, 2.306, 29.985573)
@@ -558,6 +568,10 @@ unique_name = "Frank Stein"
 [node name="Robot" parent="Burglar3" index="0" unique_id=1093158534]
 surface_material_override/0 = SubResource("StandardMaterial3D_rlm6b")
 
+[node name="ProgressBar" parent="Burglar3" index="3" unique_id=28944806]
+offset_left = 783.0
+offset_right = 1238.0
+
 [node name="Burglar4" parent="." unique_id=468724566 instance=ExtResource("5_020ig")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4444838, 2.3055716, 36.4873)
 selected_interaction = 3
@@ -569,17 +583,17 @@ hearing = 0.5
 guard_sight_check_collision_mask = 3
 
 [node name="TimerBackground" type="ColorRect" parent="." unique_id=1152426163]
-offset_left = 924.0
+offset_left = 956.0
 offset_top = 1085.0
-offset_right = 991.0
+offset_right = 1023.0
 offset_bottom = 1112.0
 scale = Vector2(1.5199902, 1)
 color = Color(0.31431612, 0.31431612, 0.3143161, 1)
 
 [node name="TimerLabel" type="Label" parent="." unique_id=1910906968]
-offset_left = 929.0
+offset_left = 961.0
 offset_top = 1085.0
-offset_right = 985.0
+offset_right = 1017.0
 offset_bottom = 1114.0
 text = "Time: 0"
 horizontal_alignment = 1
@@ -587,17 +601,17 @@ vertical_alignment = 1
 script = ExtResource("7_acjuf")
 
 [node name="CashBackground" type="ColorRect" parent="." unique_id=2092318805]
-offset_left = 924.0
+offset_left = 956.0
 offset_top = 1054.0
-offset_right = 991.0
+offset_right = 1023.0
 offset_bottom = 1081.0
 scale = Vector2(1.5199902, 1)
 color = Color(0.31431612, 0.31431612, 0.3143161, 1)
 
 [node name="CashLabel" type="Label" parent="." unique_id=260316241]
-offset_left = 929.0
+offset_left = 961.0
 offset_top = 1054.0
-offset_right = 994.0
+offset_right = 1026.0
 offset_bottom = 1083.0
 theme = SubResource("Theme_27hxy")
 text = "Cash: 0$"
@@ -632,9 +646,9 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="SliderBackground" type="ColorRect" parent="." unique_id=200549532]
-offset_left = 735.0
+offset_left = 767.0
 offset_top = 1011.0
-offset_right = 1189.0
+offset_right = 1221.0
 offset_bottom = 1051.0
 
 [node name="HSlider" type="HSlider" parent="SliderBackground" unique_id=668528688]
@@ -645,6 +659,8 @@ offset_right = 449.0
 offset_bottom = 44.0
 min_value = -4.0
 max_value = 4.0
+allow_greater = true
+allow_lesser = true
 scrollable = false
 script = ExtResource("8_cr2qn")
 
@@ -652,39 +668,57 @@ script = ExtResource("8_cr2qn")
 physics_interpolation_mode = 2
 
 [node name="PlayButton" type="Button" parent="." unique_id=1604528890]
-offset_left = 1328.0
+offset_left = 1376.0
 offset_top = 1007.0
-offset_right = 1370.0
+offset_right = 1418.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("10_27hxy")
 expand_icon = true
 
 [node name="SkipToEndButton" type="Button" parent="." unique_id=1922527974]
-offset_left = 1392.0
+offset_left = 1568.0
 offset_top = 1007.0
-offset_right = 1434.0
+offset_right = 1610.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("44_2c21t")
 expand_icon = true
 
 [node name="SkipToStartButton" type="Button" parent="." unique_id=337356126]
-offset_left = 1196.0
+offset_left = 1244.0
 offset_top = 1007.0
-offset_right = 1238.0
+offset_right = 1286.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("45_rlm6b")
 expand_icon = true
 
-[node name="PauseButton" type="Button" parent="." unique_id=1032801927]
-offset_left = 1264.0
+[node name="SkipToPreviousActionButton" type="Button" parent="." unique_id=1610228948]
+offset_left = 1308.0
 offset_top = 1007.0
-offset_right = 1306.0
+offset_right = 1350.0
 offset_bottom = 1057.0
 focus_mode = 1
-icon = ExtResource("11_2x2bu")
+icon = ExtResource("46_qlpnk")
+expand_icon = true
+
+[node name="SkipToNextActionButton" type="Button" parent="." unique_id=186399897]
+offset_left = 1504.0
+offset_top = 1007.0
+offset_right = 1546.0
+offset_bottom = 1057.0
+focus_mode = 1
+icon = ExtResource("47_ftytq")
+expand_icon = true
+
+[node name="PauseButton" type="Button" parent="." unique_id=1032801927]
+offset_left = 1440.0
+offset_top = 1007.0
+offset_right = 1482.0
+offset_bottom = 1057.0
+focus_mode = 1
+icon = ExtResource("46_rlm6b")
 expand_icon = true
 
 [node name="Crowbar" parent="." unique_id=1263994086 instance=ExtResource("12_m2u0h")]
@@ -693,7 +727,7 @@ loudness = Array[float]([0.5, 0.5, 0.25])
 damaging = true
 
 [node name="InteractionButtons" type="Node2D" parent="." unique_id=1461847495]
-position = Vector2(946, 810)
+position = Vector2(978, 810)
 script = ExtResource("21_tpnuq")
 
 [node name="Talk" type="Button" parent="InteractionButtons" unique_id=81201918]
@@ -760,6 +794,8 @@ skeleton = NodePath("../NavigationRegion3D/HouseTest/Stairs")
 [connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
 [connection signal="button_up" from="SkipToEndButton" to="." method="_on_skip_to_end_button_button_up"]
 [connection signal="button_up" from="SkipToStartButton" to="." method="_on_skip_to_start_button_button_up"]
+[connection signal="button_up" from="SkipToPreviousActionButton" to="." method="_on_skip_to_previous_action_button_button_up"]
+[connection signal="button_up" from="SkipToNextActionButton" to="." method="_on_skip_to_next_action_button_button_up"]
 [connection signal="button_up" from="PauseButton" to="." method="_on_pause_button_button_up"]
 [connection signal="mouse_entered" from="InteractionButtons/Talk" to="InteractionButtons" method="_on_talk_mouse_entered"]
 [connection signal="mouse_exited" from="InteractionButtons/Talk" to="InteractionButtons" method="_on_talk_mouse_exited"]
