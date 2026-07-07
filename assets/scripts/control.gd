@@ -575,7 +575,7 @@ func do_replay():
 			var offset:Vector3
 			
 			if(backwards):
-				if(typeof(actor.replay[actor.id][1]) == TYPE_STRING ||typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME && (ticks <= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
+				if((typeof(actor.replay[actor.id][1]) == TYPE_STRING || typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks <= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
 					var is_object_occupied = false
 					if(actor.replay[actor.id][2] == "use"):
 						#FIXME is_object_occupied is always false here, because it gets set further below
@@ -762,7 +762,7 @@ func do_replay():
 					actor.object_that_is_being_interacted_with = null
 			#forward direction		
 			else:
-				if(typeof(actor.replay[actor.id][1]) == TYPE_STRING ||typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME && (ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
+				if((typeof(actor.replay[actor.id][1]) == TYPE_STRING ||typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
 					#FIXME this is currently under construction
 					var is_object_occupied = false
 					if(actor.replay[actor.id][2] == "use"):

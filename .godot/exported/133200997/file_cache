@@ -13,7 +13,7 @@ res://AmbientCG/Extracted/WoodFloor043_1K-JPG.tres::29a1a240f3b1c794e445f6146621
 res://assets/Materials/glass_material.tres::b9ca20a23a7ca27bcbd7b41d439dec5d::1779822899::res://.godot/exported/133200997/export-c012184ceb24d44659d7d99804bdaeb9-glass_material.res
 res://assets/Meshes/Clou original models/Clou 2 World/toolshop.tscn::f5cbf23245498e6331b2e9dffc4f72db::1777729767::res://.godot/exported/133200997/export-50334a516b47cd9d30803ece9bf60a9e-toolshop.scn
 res://assets/Meshes/Clou original models/Clou 2 World/wld.tscn::0d3070abf86871173d3cce6a014b1512::1777574477::res://.godot/exported/133200997/export-57ab0ec44809fc951bc775e745b578c2-wld.scn
-res://assets/Prefabs/Containers/register.tscn::24714257de4a89b994c71372bf55a69f::1783170974::res://.godot/exported/133200997/export-eb52b936481db400cfe0c50759ab9232-register.scn
+res://assets/Prefabs/Containers/register.tscn::aa47fe3d57fce3ddf0d1fed84b98a60e::1783357472::res://.godot/exported/133200997/export-eb52b936481db400cfe0c50759ab9232-register.scn
 res://assets/Prefabs/Environment/lantern.tscn::e3060a0899ba207efbd84e336d610059::1782837523::res://.godot/exported/133200997/export-d203fe8838fc640527a84d140df0248a-lantern.scn
 res://assets/Prefabs/Loot/bag.tscn::450721d03c0f29ce1c4b31264de5051b::1779738342::res://.godot/exported/133200997/export-3c9a0d121b9285da21888850352aa3fa-bag.scn
 res://assets/Prefabs/Loot/Chateu de France.tscn::49b6332f3ede22162b5ae3a2e9bc5baa::1779801392::res://.godot/exported/133200997/export-ebc8ad81968c8ca604c482cc6353fbae-Chateu de France.scn
@@ -25,9 +25,9 @@ res://assets/Prefabs/Beverage store.tscn::eb29e777d022ce1f2d5d0e89d2abfe8a::1777
 res://assets/Prefabs/camera.tscn::1ef9f66148f533db70f62839938a0fc7::1780082819::res://.godot/exported/133200997/export-63834ed81eec9b864f8e6a738db44c9f-camera.scn
 res://assets/Prefabs/camera_base.tscn::b9ce11c7a28571cc85db1a9705722048::1783089492::res://.godot/exported/133200997/export-e4c1c525e0721c7d736d04fbc77b8d79-camera_base.scn
 res://assets/Prefabs/Car.tscn::05f03c4c54a926c0879a67d4f8be502e::1782921375::res://.godot/exported/133200997/export-438f00137fa2a1e303cd59fc2966d3a8-Car.scn
-res://assets/Prefabs/Door.tscn::fbef95fbdda380bd70cec521de49f15a::1783279901::res://.godot/exported/133200997/export-8d38893976f03239c20f4135fe83b687-Door.scn
-res://assets/Prefabs/DoorInside.tscn::9fc23083fde3d1249226e0d7801e652f::1783280140::res://.godot/exported/133200997/export-7e9ae2d02df3e56492fb3943f25c9ccd-DoorInside.scn
-res://assets/Prefabs/guard.tscn::a636ddd5166b869be5ef82a275cf821d::1783351236::res://.godot/exported/133200997/export-7ff7d6a1da0a4afedf024d505624c92f-guard.scn
+res://assets/Prefabs/Door.tscn::fbef95fbdda380bd70cec521de49f15a::1783357284::res://.godot/exported/133200997/export-8d38893976f03239c20f4135fe83b687-Door.scn
+res://assets/Prefabs/DoorInside.tscn::e42ff3f92cc7d00ad279942511009518::1783375621::res://.godot/exported/133200997/export-7e9ae2d02df3e56492fb3943f25c9ccd-DoorInside.scn
+res://assets/Prefabs/guard.tscn::a636ddd5166b869be5ef82a275cf821d::1783367886::res://.godot/exported/133200997/export-7ff7d6a1da0a4afedf024d505624c92f-guard.scn
 res://assets/Prefabs/house_test.tscn::6618cc1d63d3fd0d5db588ac782b3cb0::1777311778::res://.godot/exported/133200997/export-dc3651001cf65f6b2da05b53fde86f27-house_test.scn
 res://assets/Prefabs/Interactable.tscn::78ac792663190473755c7f5eb75fb372::1783090227::res://.godot/exported/133200997/export-f34878a9a35a4efdd5ad441370999d1b-Interactable.scn
 res://assets/Prefabs/LightBarrier.tscn::5ee7ec742862af948569a5ab82038a8a::1777370957::res://.godot/exported/133200997/export-f1afc59b43a812f2c5676209d63d38c6-LightBarrier.scn
@@ -37,7 +37,7 @@ res://assets/Prefabs/tool.tscn::dfa89702596f727df447dae56ac18d02::1776461117::re
 res://assets/Prefabs/window.tscn::7813cf8a5074aad6895583e2c62d91df::1783089936::res://.godot/exported/133200997/export-ba8cc9ba9005e1e688fe0fb70080693b-window.scn
 res://psx_camera/camera_example.tscn::aeb915911d08b585f57ce54115bbed31::1776618372::res://.godot/exported/133200997/export-a0f2186421e0b652e8527230ca2462eb-camera_example.scn
 res://house_test.tscn::a932b7bcd56598c9dda2fb61475857f8::1782921375::res://.godot/exported/133200997/export-d03d928893cf602338997e6c39ab7e34-house_test.scn
-res://Test Scene.tscn::f6420624efd6b99755079cbe85dad4bb::1783351768::res://.godot/exported/133200997/export-c0339fd08ba9c022153f49a3a658bd28-Test Scene.scn
+res://Test Scene.tscn::806fdb61167ac77b3b117a95a3447cb3::1783426875::res://.godot/exported/133200997/export-c0339fd08ba9c022153f49a3a658bd28-Test Scene.scn
 res://Test SceneNew.tscn::c3ba88c864e58fe5c40d2a5d4320afed::1783178526::res://.godot/exported/133200997/export-6a737ee6f174200fa238ed3723945f87-Test SceneNew.scn
 res://assets/Prefabs/Containers/locker.tscn::0c48580660f9bb64242e5b6470c2ba06::1782921375::res://.godot/exported/133200997/export-9f78a6511572d49ea1f5c5ba3d9fb1da-locker.scn
 res://assets/Prefabs/Environment/ceiling_lamp.tscn::c18aee1b186e0966d6f87ece496f3506::1783254107::res://.godot/exported/133200997/export-4bcaf3db07ab5f3c6fb49080be464de8-ceiling_lamp.scn

@@ -668,9 +668,9 @@ script = ExtResource("8_cr2qn")
 physics_interpolation_mode = 2
 
 [node name="PlayButton" type="Button" parent="." unique_id=1604528890]
-offset_left = 1376.0
+offset_left = 1440.0
 offset_top = 1007.0
-offset_right = 1418.0
+offset_right = 1482.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("10_27hxy")
@@ -713,9 +713,9 @@ icon = ExtResource("47_ftytq")
 expand_icon = true
 
 [node name="PauseButton" type="Button" parent="." unique_id=1032801927]
-offset_left = 1440.0
+offset_left = 1376.0
 offset_top = 1007.0
-offset_right = 1482.0
+offset_right = 1418.0
 offset_bottom = 1057.0
 focus_mode = 1
 icon = ExtResource("46_rlm6b")
