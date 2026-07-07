@@ -105,7 +105,7 @@ switch_to_burglar4={
 
 [physics]
 
-common/max_physics_steps_per_frame=64
+common/max_physics_steps_per_frame=100
 common/physics_jitter_fix=0.0
 
 [rendering]

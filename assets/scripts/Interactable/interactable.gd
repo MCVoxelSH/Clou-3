@@ -201,14 +201,16 @@ func append_door_opening(direction:String):
 func _on_inside_check_area_entered(area: Area3D) -> void:
 	if(area.get_parent().is_in_group("Actor")):
 		area.get_parent().inside = true
-		get_node("/root/Control").disable_spring_arm()
+		if(area.owner == owner.active_burglar):
+			get_node("/root/Control").disable_spring_arm()
 		if(area.get_parent() == get_node("/root/Control").active_burglar):
 			disable_floor()
 	
 func _on_outside_check_area_entered(area: Area3D) -> void:
 	if(area.get_parent().is_in_group("Actor")):
 		area.get_parent().inside = false
-		get_node("/root/Control").enable_spring_arm()
+		if(area.owner == owner.active_burglar):
+			get_node("/root/Control").enable_spring_arm()
 		if(area.get_parent() == get_node("/root/Control").active_burglar):
 			disable_floor()
 			

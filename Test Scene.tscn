@@ -214,6 +214,7 @@ bg_color = Color(0.29411766, 0.6784314, 0.11372549, 1)
 physics_interpolation_mode = 2
 script = ExtResource("1_hhusy")
 debug_mode = true
+engine_speed_overwrite = 15.0
 burglary_target = NodePath("NavigationRegion3D/HouseTest")
 min_loot = 59
 number_of_floors = 2

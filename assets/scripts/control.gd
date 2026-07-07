@@ -3,11 +3,9 @@ extends Node3D
 #REMINDER using navigation obstacles might be another solution to fix roofs being included in the navmesh 
 #REMINDER using nodepath instead of nodes might be useful for accessing nodes like interactable objects
 #REMINDER add navigation obstacles for interactables
-#FIXME if you move while opening something the replay gets bugged, so need to prevent that, this is important, I am currently working on this but the current solution causes issues
-#FIXME when using the play button the replay sometimes gets scewed, this includes the play_until_ticks feature... this bug doesn't seem to occur anymore, so maybe it's fixed
-#FIXME when going through a window rewinding and switching to another burglar, burglar 1 gets stuck at the window, might have to do with is_waiting
-#to replicate the bug: go through window with burglar1, go through window with burglar2, move burglar1, rewind and fast forward until burglar1 just went through window, try to move somewhere
 #FIXME when quickly going back and forth while an actor goes through a door the replay gets scewed
+#FIXME stair checks get skipped when using the skip backwards or forwards buttons
+#I disabled skip_to_start_or_end because of this and instead enabled "skipping steps" for the slider and froze the frame for a moment, this works pretty well right now aswell 
 
 @export var debug_mode = false
 @onready var engine_speed:float = Engine.physics_ticks_per_second
@@ -107,7 +105,6 @@ func _ready() -> void:
 	
 	if(debug_mode):
 		$DebugSphere.visible = true
-		engine_speed = engine_speed_overwrite
 	
 	if(execute_plan):
 		play = true
@@ -145,8 +142,8 @@ func _process(delta: float) -> void:
 	
 	if(debug_mode):
 		if(Input.is_action_just_pressed("debug_speed_toggle")):
-			if(engine_speed != 15.0):
-				engine_speed = 15.0
+			if(engine_speed != engine_speed_overwrite):
+				engine_speed = engine_speed_overwrite 
 			else:
 				engine_speed = 60.0
 			change_game_speed(previous_slider_value)
@@ -213,6 +210,7 @@ func _physics_process(delta: float) -> void:
 			play_until_ticks = -1
 			_on_h_slider_value_changed(0.0)
 			pause_recording()
+			RenderingServer.render_loop_enabled = true
 			return
 								
 	
@@ -998,7 +996,7 @@ func do_replay():
 							
 						if(object_is_passable):							
 							if((!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length) || found_waiting_position):
-								print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
+								#print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
 								found_object.play_animation("Action", false, true, get_stack())
 								if(found_waiting_position):
 									found_object.anim_player.seek(actor.waiting_positions[found_index][2])
@@ -1269,12 +1267,12 @@ func _on_h_slider_value_changed(value: float) -> void:
 	#if(!execute_plan && play):
 		#pause_recording()
 	#
-	if(abs(value - previous_slider_value) > 1):
-		if(value < previous_slider_value):
-			value = previous_slider_value - 1
-		else:
-			value = previous_slider_value + 1
-		$SliderBackground/HSlider.set_value_no_signal(value) 
+	#if(abs(value - previous_slider_value) > 1):
+		#if(value < previous_slider_value):
+			#value = previous_slider_value - 1
+		#else:
+			#value = previous_slider_value + 1
+		#$SliderBackground/HSlider.set_value_no_signal(value) 
 		#
 	change_game_speed(value)
 	#if((previous_slider_value > 0 && value < 0)|| (previous_slider_value < 0 && value > 0)):
@@ -1577,33 +1575,38 @@ func switch_to_actor(index: int):
 
 
 func _on_skip_to_start_button_button_up() -> void:
-	_on_h_slider_value_changed(-1.0)
+	_on_h_slider_value_changed(-100.0)
 	play_until_ticks = 0
-	skip_to_start_or_end = true
+	RenderingServer.render_loop_enabled = false
+	#skip_to_start_or_end = true
 
 func _on_skip_to_end_button_button_up() -> void:
-	_on_play_button_button_up()
-	_on_h_slider_value_changed(1.0)
-	play_until_ticks = active_burglar.last_ticks
-	skip_to_start_or_end = true
+	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0):
+		_on_play_button_button_up()
+		_on_h_slider_value_changed(100.0)
+		play_until_ticks = active_burglar.last_ticks
+		RenderingServer.render_loop_enabled = false
+	#skip_to_start_or_end = true
 
 
 func _on_skip_to_previous_action_button_button_up() -> void:
 	if(active_burglar.id != 0):
-		_on_h_slider_value_changed(-1.0)
+		_on_h_slider_value_changed(-100.0)
 		for i in range(active_burglar.id -1, -1, -1):
 			if(active_burglar.replay[i][0] != -1  && i != active_burglar.id - 1):
 				play_until_ticks = active_burglar.replay[i][0]
+				RenderingServer.render_loop_enabled = false
 				break
-		skip_to_start_or_end = true
+		#skip_to_start_or_end = true
 
 
 func _on_skip_to_next_action_button_button_up() -> void:
-	if(active_burglar.id != active_burglar.maxid -1):
+	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0):
 		_on_play_button_button_up()
-		_on_h_slider_value_changed(1.0)
+		_on_h_slider_value_changed(100.0)
 		for i in range(active_burglar.id + 1, active_burglar.maxid, 1):
 			if(active_burglar.replay[i][0] != -1 && i != active_burglar.id + 1):
 				play_until_ticks = active_burglar.replay[i][0]
+				RenderingServer.render_loop_enabled = false
 				break
-		skip_to_start_or_end = true
+		#skip_to_start_or_end = true
