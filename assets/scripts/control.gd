@@ -332,6 +332,8 @@ func _unhandled_input(event: InputEvent):
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 		
+		_on_h_slider_value_changed(1.0)
+		
 		if(execute_plan || !recording):
 			return
 		
