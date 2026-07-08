@@ -339,7 +339,7 @@ func _unhandled_input(event: InputEvent):
 		if(execute_plan || !recording):
 			return
 
-		_on_h_slider_value_changed(1.0)
+		#_on_h_slider_value_changed(1.0)
 	
 		if(active_burglar.replay.size() > 0):
 			if(active_burglar.replay[active_burglar.id][2] == "moveinsidecar"):
@@ -618,7 +618,7 @@ func do_replay():
 						if(object.lock_type != 3):
 							for other in get_tree().get_nodes_in_group("Actor"):
 								if(other != actor):
-									if(other.object_that_is_being_interacted_with == object):	
+									if(other.object_that_is_being_interacted_with == object && other.object_that_is_being_interacted_with.damage != max_damage):
 										is_object_occupied = true
 							if(!is_object_occupied):
 								if(actor.is_waiting):
@@ -822,7 +822,7 @@ func do_replay():
 							#check if someones is already working on this object
 							for other in get_tree().get_nodes_in_group("Actor"):
 								if(other != actor):
-									if(other.object_that_is_being_interacted_with == object):	
+									if(other.object_that_is_being_interacted_with == object && other.object_that_is_being_interacted_with.damage != max_damage):
 										is_object_occupied = true
 							if(actor.replay[actor.id][2] == "break"):
 								for alarm in get_tree().get_nodes_in_group("Alarm"):
@@ -1030,7 +1030,7 @@ func do_replay():
 									array.append(found_object.get_path())
 									array.append(found_object.anim_player.current_animation_position)
 									actor.waiting_positions.append(array.duplicate())
-									print("added waiting position for actor "+ actor.name + " while at position " + str(actor.global_position) + ", id: " + str(actor.id))
+									#print("added waiting position for actor "+ actor.name + " while at position " + str(actor.global_position) + ", id: " + str(actor.id))
 									
 								move = false
 								#var array = []
@@ -1209,7 +1209,7 @@ func do_replay():
 		if(!backwards):
 			var found_changed_ticks = find_changed_ticks_at_current_ticks(actor)
 			if((actor.id == actor.maxid - 1 || (found_changed_ticks && actor.replay[actor.id][0] != actor.last_ticks)) && (actor.replay[actor.id][0] != actor.last_ticks || actor == active_burglar) && !actor.replay.is_empty()):
-				print(str(found_changed_ticks) + ", " + str(actor.id) + ", " + str(actor.maxid - 1) + ", " + str(actor.replay[actor.id][0]) + ", " + str(actor.last_ticks))
+				#print(str(found_changed_ticks) + ", " + str(actor.id) + ", " + str(actor.maxid - 1) + ", " + str(actor.replay[actor.id][0]) + ", " + str(actor.last_ticks))
 				actor.last_ticks = ticks
 				if(actor.replay[actor.id][0] == -1 || (found_changed_ticks && actor.replay[actor.id][0] < ticks)):
 					if(!found_changed_ticks):
@@ -1307,7 +1307,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 				if(object.object_type == 0):
 					get_node(str(object.get_path())+"/Door/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
 				elif(object.object_type == 1):
-					get_node(str(object.get_path())+"/Window/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
+					get_node(str(object.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
 				else:
 					get_node(str(object.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
 		camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
@@ -1590,13 +1590,14 @@ func switch_to_actor(index: int):
 
 
 func _on_skip_to_start_button_button_up() -> void:
-	_on_h_slider_value_changed(-100.0)
-	play_until_ticks = 0
-	RenderingServer.render_loop_enabled = false
-	#skip_to_start_or_end = true
+	if(pause):
+		_on_h_slider_value_changed(-100.0)
+		play_until_ticks = 0
+		RenderingServer.render_loop_enabled = false
+		#skip_to_start_or_end = true
 
 func _on_skip_to_end_button_button_up() -> void:
-	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0):
+	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause):
 		_on_play_button_button_up()
 		_on_h_slider_value_changed(100.0)
 		play_until_ticks = active_burglar.last_ticks
@@ -1605,7 +1606,7 @@ func _on_skip_to_end_button_button_up() -> void:
 
 
 func _on_skip_to_previous_action_button_button_up() -> void:
-	if(active_burglar.id != 0):
+	if(active_burglar.id != 0  && pause):
 		_on_h_slider_value_changed(-100.0)
 		for i in range(active_burglar.id -1, -1, -1):
 			if(active_burglar.replay[i][0] != -1  && i != active_burglar.id - 1):
@@ -1616,7 +1617,7 @@ func _on_skip_to_previous_action_button_button_up() -> void:
 
 
 func _on_skip_to_next_action_button_button_up() -> void:
-	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0):
+	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0 && pause):
 		_on_play_button_button_up()
 		_on_h_slider_value_changed(100.0)
 		for i in range(active_burglar.id + 1, active_burglar.maxid, 1):

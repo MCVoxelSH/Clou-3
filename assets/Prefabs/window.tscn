@@ -17,16 +17,16 @@ lock_type = 0
 object_type = 1
 object_material = 2
 
-[node name="Skeleton3D" parent="Window" parent_id_path=PackedInt32Array(667988663) index="0" unique_id=1637913239]
+[node name="Skeleton3D" parent="Window" parent_id_path=PackedInt32Array(1011437697) index="0" unique_id=1886013504]
 bones/0/rotation = Quaternion(0, -0.70710486, 0, 0.7071087)
 
-[node name="Bone_001" parent="Window/Skeleton3D" index="0" unique_id=365302356]
+[node name="Bone_001" parent="Window/Skeleton3D" index="0" unique_id=420581152]
 transform = Transform3D(5.4240227e-06, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, 5.4240227e-06, -0.7866855, -0.8483208, -0.024758434)
 
-[node name="WindowLeft" parent="Window/Skeleton3D/Bone_001" index="0" unique_id=995789622]
+[node name="WindowLeft" parent="Window/Skeleton3D/Bone_001" index="0" unique_id=555218842]
 surface_material_override/0 = ExtResource("3_2ixni")
 
-[node name="WindowRight" parent="Window/Skeleton3D/Bone" parent_id_path=PackedInt32Array(904623550) index="0" unique_id=1180551496]
+[node name="WindowRight" parent="Window/Skeleton3D/Bone" parent_id_path=PackedInt32Array(1829474657) index="0" unique_id=1602347547]
 surface_material_override/0 = ExtResource("3_2ixni")
 
 [node name="Area3D" type="StaticBody3D" parent="." index="2" unique_id=446227335]
