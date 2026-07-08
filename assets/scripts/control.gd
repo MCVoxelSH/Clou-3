@@ -6,6 +6,7 @@ extends Node3D
 #FIXME when quickly going back and forth while an actor goes through a door the replay gets scewed
 #FIXME stair checks get skipped when using the skip backwards or forwards buttons
 #I disabled skip_to_start_or_end because of this and instead enabled "skipping steps" for the slider and froze the frame for a moment, this works pretty well right now aswell 
+#FIXME when going through doors then scrolling back and the door suddenly is not open anymore the system doesn't account for this case yet
 
 @export var debug_mode = false
 @onready var engine_speed:float = Engine.physics_ticks_per_second
@@ -102,6 +103,9 @@ var skip_to_start_or_end = false
 #var debug_file2 = FileAccess.open("user://debug2.txt", FileAccess.WRITE)
 
 func _ready() -> void:
+	
+	if(!OS.has_feature("editor")):
+		debug_mode = false
 	
 	if(debug_mode):
 		$DebugSphere.visible = true
@@ -331,12 +335,12 @@ func _unhandled_input(event: InputEvent):
 
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-		
-		_on_h_slider_value_changed(1.0)
-		
+
 		if(execute_plan || !recording):
 			return
-		
+
+		_on_h_slider_value_changed(1.0)
+	
 		if(active_burglar.replay.size() > 0):
 			if(active_burglar.replay[active_burglar.id][2] == "moveinsidecar"):
 				return
@@ -742,7 +746,7 @@ func do_replay():
 									actor.is_waiting = true
 									move = false
 									#print("waiting...\n")
-								#actor.waiting_positions.remove_at(actor.waiting_positions.size()-1)
+								actor.waiting_positions.pop_back()
 								#debug_file.store_line(str(ticks) + " ," + str(backwards))
 							
 								#FIXME this was not thought through
@@ -1164,7 +1168,7 @@ func do_replay():
 				
 						
 				#TODO is <= correct or is == better?
-				if(ticks <= actor.last_ticks && (ticks <= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)||(actor.is_guard && ((ticks%(actor.maxticks+1) <=  actor.replay[actor.id][0]) || (-1 ==  actor.replay[actor.id][0])))):#(ticks == actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)
+				if(ticks <= actor.last_ticks && (ticks <= actor.replay[actor.id][0] -1 || actor.replay[actor.id][0] == -1)||(actor.is_guard && ((ticks%(actor.maxticks+1) <=  actor.replay[actor.id][0] -1) || (-1 ==  actor.replay[actor.id][0])))):#(ticks == actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)
 
 					if(actor.name == "Burglar1"):
 						if(actor.id == 620):
@@ -1202,12 +1206,21 @@ func do_replay():
 	
 	for actor in get_tree().get_nodes_in_group("Actor"):
 		
-		if(actor.id == actor.maxid - 1 && !actor.replay.is_empty()):
-			actor.last_ticks = ticks
-			if(actor.replay[actor.id][0] == -1):
-				actor.replay[actor.id][0] = ticks
-				if(actor == active_burglar):
-					pause_recording()
+		if(!backwards):
+			var found_changed_ticks = find_changed_ticks_at_current_ticks(actor)
+			if((actor.id == actor.maxid - 1 || (found_changed_ticks && actor.replay[actor.id][0] != actor.last_ticks)) && (actor.replay[actor.id][0] != actor.last_ticks || actor == active_burglar) && !actor.replay.is_empty()):
+				print(str(found_changed_ticks) + ", " + str(actor.id) + ", " + str(actor.maxid - 1) + ", " + str(actor.replay[actor.id][0]) + ", " + str(actor.last_ticks))
+				actor.last_ticks = ticks
+				if(actor.replay[actor.id][0] == -1 || (found_changed_ticks && actor.replay[actor.id][0] < ticks)):
+					if(!found_changed_ticks):
+						actor.changed_replay_ids.append(actor.id)
+					elif(actor.replay[actor.id][0] != -1 && actor.replay[actor.id][0] != ticks):
+						if(actor.id != actor.maxid -1):
+							actor.replay[actor.id +1][0] = ticks + actor.replay[actor.id +1][0]-actor.replay[actor.id][0]
+					actor.replay[actor.id][0] = ticks
+					if(actor == active_burglar && actor.id == actor.maxid - 1 ):
+						if(!play && ! execute_plan):
+							pause_recording()
 				
 			
 		if(actor.is_guard && actor.id == actor.maxid -1 && !actor.record_guard):
@@ -1612,3 +1625,10 @@ func _on_skip_to_next_action_button_button_up() -> void:
 				RenderingServer.render_loop_enabled = false
 				break
 		#skip_to_start_or_end = true
+
+func find_changed_ticks_at_current_ticks(actor:Node3D):
+	if(!actor.replay.is_empty()):
+		for id in actor.changed_replay_ids:
+			if(id == actor.id && actor.replay):
+				return true
+		return false

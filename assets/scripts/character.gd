@@ -70,6 +70,8 @@ var objects_in_sight_of_guard:Array
 
 #positions where burglar waited
 var waiting_positions = []
+#ids which ticks where changed at the end of an action which have been set to a certain time point
+var changed_replay_ids = []
 
 var last_ticks = 0
 
@@ -228,6 +230,10 @@ func set_target_position(target_position: Vector3, record: bool):
 					
 			
 			if(true):#id != maxid -1 && id != 0):
+				
+				if(!replay.is_empty()):
+					replay[id][0] = owner.ticks
+					changed_replay_ids.append(id)
 				#REMINDER I readded +1, this fixes an issue, does it cause other issues though?
 				var diff:int
 				#if(owner.was_backwards && !(get_parent().ticks != 0 && id != 0)):
