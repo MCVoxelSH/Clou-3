@@ -231,9 +231,10 @@ func set_target_position(target_position: Vector3, record: bool):
 			
 			if(true):#id != maxid -1 && id != 0):
 				
-				if(!replay.is_empty()):
-					replay[id][0] = owner.ticks
-					changed_replay_ids.append(id)
+				if(!replay.is_empty() && id != maxid - 1):
+					if(typeof(replay[id][1]) == TYPE_VECTOR3):
+						replay[id][0] = owner.ticks
+						changed_replay_ids.append(id)
 				#REMINDER I readded +1, this fixes an issue, does it cause other issues though?
 				var diff:int
 				#if(owner.was_backwards && !(get_parent().ticks != 0 && id != 0)):

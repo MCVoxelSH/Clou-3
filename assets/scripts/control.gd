@@ -1206,9 +1206,9 @@ func do_replay():
 	
 	for actor in get_tree().get_nodes_in_group("Actor"):
 		
-		if(!backwards):
+		if(!backwards && !actor.replay.is_empty()):
 			var found_changed_ticks = find_changed_ticks_at_current_ticks(actor)
-			if((actor.id == actor.maxid - 1 || (found_changed_ticks && actor.replay[actor.id][0] != actor.last_ticks)) && (actor.replay[actor.id][0] != actor.last_ticks || actor == active_burglar) && !actor.replay.is_empty()):
+			if(((actor.id == actor.maxid - 1 && actor.replay[actor.id][0] == -1) || (found_changed_ticks && actor.replay[actor.id][0] != actor.last_ticks)) && (actor.replay[actor.id][0] != actor.last_ticks || actor == active_burglar)):
 				#print(str(found_changed_ticks) + ", " + str(actor.id) + ", " + str(actor.maxid - 1) + ", " + str(actor.replay[actor.id][0]) + ", " + str(actor.last_ticks))
 				actor.last_ticks = ticks
 				if(actor.replay[actor.id][0] == -1 || (found_changed_ticks && actor.replay[actor.id][0] < ticks)):
