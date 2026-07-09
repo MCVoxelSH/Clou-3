@@ -23,8 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://bk1vx1ufcbth5" path="res://assets/Textures/SpeechBubble.png" id="21_6sje5"]
 [ext_resource type="Texture2D" uid="uid://qy525lcon3ks" path="res://assets/Textures/Hand.png" id="22_moic6"]
 [ext_resource type="Texture2D" uid="uid://dm3rl83whdktr" path="res://assets/Textures/MagnifyingGlasses.png" id="23_j0xfp"]
-[ext_resource type="AudioStream" uid="uid://doy0033mjobd" path="res://assets/Music/Track03.ogg" id="24_5xgty"]
-[ext_resource type="PackedScene" uid="uid://ca7bvace4karn" path="res://assets/Meshes/Clou original models/WindowClou.blend" id="25_8td8p"]
+[ext_resource type="AudioStream" uid="uid://doy0033mjobd" path="res://assets/Clou original files/Audio/Music/Track03.ogg" id="24_5xgty"]
+[ext_resource type="PackedScene" uid="uid://ca7bvace4karn" path="res://assets/Clou original files/WindowClou.blend" id="25_8td8p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ps07l"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)

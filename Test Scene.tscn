@@ -53,7 +53,7 @@
 [ext_resource type="PackedScene" uid="uid://bxjpbc8sioki3" path="res://assets/Meshes/Weinglas.glb" id="47_wp7ki"]
 [ext_resource type="PackedScene" uid="uid://fcr4gciqu4va" path="res://assets/Scenes/Security/alarm_system.tscn" id="48_u8as7"]
 [ext_resource type="PackedScene" uid="uid://qtg03eexgg3h" path="res://assets/Scenes/Containers/locker.tscn" id="49_oyf2v"]
-[ext_resource type="AudioStream" uid="uid://doy0033mjobd" path="res://assets/Music/Track03.ogg" id="50_ig7xc"]
+[ext_resource type="AudioStream" uid="uid://doy0033mjobd" path="res://assets/Clou original files/Audio/Music/Track03.ogg" id="50_ig7xc"]
 [ext_resource type="PackedScene" uid="uid://ckehugd8h2al8" path="res://assets/Scenes/UI/pause_menu.tscn" id="55_ftytq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ps07l"]
@@ -434,13 +434,13 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.34338, 4.2807403, 17.090324)
 value = 20
 
-[node name="Bag" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1495412697 instance=ExtResource("11_eptic")]
+[node name="Bag" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1342787328 instance=ExtResource("11_eptic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6448193, 1.9615494, 16.034895)
 
-[node name="Bag3" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=523367094 instance=ExtResource("11_eptic")]
+[node name="Bag3" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1519015174 instance=ExtResource("11_eptic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.539407, 1.9615494, 16.034895)
 
-[node name="Bag2" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1805613633 instance=ExtResource("11_eptic")]
+[node name="Bag2" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=261899043 instance=ExtResource("11_eptic")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.001627, 1.9613358, 35.381565)
 
 [node name="Bottle" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1221348770 instance=ExtResource("12_641hl")]
@@ -757,6 +757,7 @@ icon = ExtResource("21_2x2bu")
 expand_icon = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1696494635]
+process_mode = 3
 stream = ExtResource("50_ig7xc")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1250952005]

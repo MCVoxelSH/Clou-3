@@ -40,7 +40,7 @@ var _camera: Camera3D
 var hover_over_timer = 0.0
 @onready var subviewport_container = $SubViewportContainer
 
-
+@onready var audio_player = $AudioStreamPlayer
 #@onready var _robot := $RobotBase as Character
 
 var active_burglar_index = 1
@@ -124,6 +124,9 @@ func _ready() -> void:
 	
 	if(Global.execute_plan):
 		play = true
+		play_music("res://assets/Clou original files/Audio/Music/Track04.ogg")
+	else:
+		play_music("res://assets/Clou original files/Audio/Music/Track03.ogg")
 	
 	if(play):
 		pause = false
@@ -189,11 +192,13 @@ func _process(delta: float) -> void:
 	if(Input.is_action_just_pressed("fast_forward")):
 		#REMINDER need to change this later, this is just a temporary solution
 		selected_tool = $Crowbar
+		pass
 	
 			
 	if(Input.is_action_just_pressed("rewind")):
 		#REMINDER need to change this later, this is just a temporary solution
 		selected_tool = null
+		pass
 
 func _physics_process(delta: float) -> void:
 	
@@ -1482,14 +1487,15 @@ func check_success():
 	for actor in get_tree().get_nodes_in_group("Actor"):
 		if(!actor.is_guard):
 			if(!actor.replay.is_empty()):
-				if(!actor.replay[actor.replay.size()-1][2] == "moveinsidecar"):
+				if(!actor.replay[actor.id][2] == "moveinsidecar"):
 					all_burglars_are_in_car = false
 			else:
 				all_burglars_are_in_car = false
 					
 	if(all_burglars_are_in_car && cash >= min_loot):
 		was_success = true
-		print("you won!")
+		print_caught_message("you won!")
+		play_music("res://assets/Clou original files/Audio/SFX/Sfx_Burglary_Success.wav")
 		
 func enable_spring_arm():
 	spring_arm.collision_mask = 1|2
@@ -1539,6 +1545,7 @@ func print_caught_message(message):
 			if(Global.execute_plan):
 				$CaughtMessage.visible = true
 				$CaughtMessage.text = message
+				play_music("res://assets/Clou original files/Audio/SFX/Sfx_Burglary_Failure.wav")
 				get_tree().paused = true
 				
 
@@ -1672,7 +1679,10 @@ func _on_restart_mission_button_up() -> void:
 	get_tree().reload_current_scene()
 
 func _on_quit_mission_button_up() -> void:
-	$PauseMenu/QuitMission/QuitMissionConfirmationDialog.visible = true
+	if(!Global.execute_plan):
+		$PauseMenu/QuitMission/QuitMissionConfirmationDialog.visible = true
+	else:
+		quit_plan()
 	
 func _on_quit_mission_confirmation_dialog_confirmed_button_up():
 	_on_save_plan_button_up()	
@@ -1692,3 +1702,7 @@ func _on_close_mission_menu_button_up() -> void:
 func quit_plan():
 	debug_file.close()
 	get_tree().quit()
+
+func play_music(name: String):
+	audio_player.stream = load(name)
+	audio_player.play()

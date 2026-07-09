@@ -746,7 +746,12 @@ func load_replay():
 					else:
 						temp.append(int(parts[3]))
 				if(parts.size() == 5):
-					temp.append(parts[4])
+					if(parts[4] == "true"):
+						temp.append(true)
+					elif(parts[4] == "false"):
+						temp.append(false)
+					else:
+						temp.append(parts[4])	
 				replay.append(temp.duplicate())
 			f.close()
 		

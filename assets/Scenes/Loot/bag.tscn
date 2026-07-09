@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://drjtxg78yquv3"]
 
 [ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Loot/loot.tscn" id="1_nxrme"]
-[ext_resource type="PackedScene" uid="uid://dd81lljsagahh" path="res://assets/Meshes/Clou original models/Sack.blend" id="2_jnnvv"]
+[ext_resource type="PackedScene" uid="uid://dd81lljsagahh" path="res://assets/Clou original files/Sack.blend" id="2_jnnvv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nxrme"]
 size = Vector3(1.4841309, 1.5080886, 1.1447754)
@@ -21,7 +21,7 @@ shape = SubResource("BoxShape3D_nxrme")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0019981032, 0.74574935, -0.0008371134)
 shape = SubResource("BoxShape3D_nxrme")
 
-[node name="Sack" parent="." index="2" unique_id=502969221 instance=ExtResource("2_jnnvv")]
+[node name="Sack" parent="." index="2" unique_id=308964100 instance=ExtResource("2_jnnvv")]
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="3" unique_id=1441170739]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102576435, 0)

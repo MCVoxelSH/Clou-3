@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bhgxf1l1bddvn"]
+
+[ext_resource type="PackedScene" uid="uid://bdc0armv4dnr5" path="res://assets/Clou original files/Clou 2 World/Wld.glb" id="1_3gm3u"]
+
+[node name="Wld" unique_id=1506371274 instance=ExtResource("1_3gm3u")]

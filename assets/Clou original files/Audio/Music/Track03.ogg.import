@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://doy0033mjobd"
+path="res://.godot/imported/Track03.ogg-8211165023c4cfaea52c5618824f53cf.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Clou original files/Audio/Music/Track03.ogg"
+dest_files=["res://.godot/imported/Track03.ogg-8211165023c4cfaea52c5618824f53cf.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
