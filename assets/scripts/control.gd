@@ -1534,7 +1534,13 @@ func update_interactables(delta):
 
 func print_caught_message(message):
 	if(!backwards):
-		caught(message)
+		if(message):
+			caught(message)
+			if(Global.execute_plan):
+				$CaughtMessage.visible = true
+				$CaughtMessage.text = message
+				get_tree().paused = true
+				
 
 func change_game_speed(value: float):	
 	if(value != 0):

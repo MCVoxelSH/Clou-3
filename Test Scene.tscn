@@ -797,6 +797,33 @@ offset_top = -226.0
 offset_right = 275.0
 offset_bottom = 253.0
 
+[node name="CaughtMessage" type="Label" parent="." unique_id=558931268]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -11.5
+offset_right = 0.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Background" type="ColorRect" parent="CaughtMessage" unique_id=1457454542]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.427493, 0.42749307, 0.42749307, 1)
+
 [connection signal="drag_ended" from="SliderBackground/HSlider" to="SliderBackground/HSlider" method="_on_drag_ended"]
 [connection signal="value_changed" from="SliderBackground/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]

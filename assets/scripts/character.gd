@@ -759,7 +759,8 @@ func load_replay():
 					maxticks = replay[i][0]
 				else:
 					maxticks +=1
-					
+		
+		last_ticks = maxticks			
 					
 		var g:FileAccess
 		if(!is_guard):
