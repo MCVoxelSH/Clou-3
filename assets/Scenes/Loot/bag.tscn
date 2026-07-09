@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://drjtxg78yquv3"]
 
-[ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Prefabs/Loot/loot.tscn" id="1_nxrme"]
+[ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Loot/loot.tscn" id="1_nxrme"]
 [ext_resource type="PackedScene" uid="uid://dd81lljsagahh" path="res://assets/Meshes/Clou original models/Sack.blend" id="2_jnnvv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nxrme"]

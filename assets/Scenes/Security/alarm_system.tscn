@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fcr4gciqu4va"]
 
-[ext_resource type="PackedScene" uid="uid://bfyijh0tdrnmg" path="res://assets/Prefabs/Interactable.tscn" id="1_mfnhw"]
+[ext_resource type="PackedScene" uid="uid://bfyijh0tdrnmg" path="res://assets/Scenes/Interactable.tscn" id="1_mfnhw"]
 [ext_resource type="PackedScene" uid="uid://bl5t1x48i1q2a" path="res://assets/Meshes/Alarm.blend" id="2_r3t3j"]
 [ext_resource type="Script" uid="uid://dou5oabgl2bp8" path="res://assets/scripts/Interactable/Alarm.gd" id="2_xl00a"]
 

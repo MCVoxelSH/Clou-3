@@ -125,7 +125,7 @@ func update_interactable(delta):
 						min_distance = global_position.distance_squared_to(actor.global_position)
 			
 			
-			if(min_distance > 10 && is_breakable && (get_node("/root/Control").burglar_moved || get_node("/root/Control").play || get_node("/root/Control").load_replay || get_node("/root/Control").forwards|| get_node("/root/Control").active_burglar.is_opening) && !get_node("/root/Control").backwards && !get_node("/root/Control").was_backwards && !get_node("/root/Control").pause):
+			if(min_distance > 10 && is_breakable && (get_node("/root/Control").burglar_moved || get_node("/root/Control").play || Global.load_replay || get_node("/root/Control").forwards|| get_node("/root/Control").active_burglar.is_opening) && !get_node("/root/Control").backwards && !get_node("/root/Control").was_backwards && !get_node("/root/Control").pause):
 				close_door = true
 				append = true
 				

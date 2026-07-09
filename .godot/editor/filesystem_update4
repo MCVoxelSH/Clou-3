@@ -1,5 +1,15 @@
 res://Test Scene.tscn
 res://assets/Shaders/distance_fog.gdshader
 res://assets/scripts/control.gd
-res://assets/Prefabs/actor.tscn
+res://assets/Prefabs/Containers/register.tscn
+res://assets/Prefabs/Loot/coins.tscn
+res://assets/Prefabs/Loot/bag.tscn
+res://assets/Prefabs/Security/alarm_system.tscn
 res://assets/scripts/character.gd
+res://assets/Scenes/actor.tscn
+res://assets/Scenes/UI/pause_menu.tscn
+res://assets/Scenes/DoorInside.tscn
+res://assets/scripts/global.gd
+res://assets/scripts/h_slider.gd
+res://assets/Scenes/UI/pause_menu.gd
+res://assets/scripts/Interactable/interactable.gd

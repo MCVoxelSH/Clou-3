@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b466cok0vg882"]
 
-[ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Prefabs/camera.gd" id="1_pwlxj"]
+[ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Scenes/camera.gd" id="1_pwlxj"]
 [ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="1_sbruj"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pwlxj"]

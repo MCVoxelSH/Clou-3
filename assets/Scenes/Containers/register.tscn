@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c5gho6pmn58kh" path="res://assets/Meshes/Register.blend" id="1_g1q6h"]
 [ext_resource type="Script" uid="uid://nkca03ngy7k1" path="res://assets/scripts/Interactable/Container.gd" id="2_g1q6h"]
-[ext_resource type="PackedScene" uid="uid://lxoekc14dhjj" path="res://assets/Prefabs/Loot/coins.tscn" id="3_8kego"]
+[ext_resource type="PackedScene" uid="uid://lxoekc14dhjj" path="res://assets/Scenes/Loot/coins.tscn" id="3_8kego"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4kvd6"]
 size = Vector3(1.9778595, 2.261283, 2.9040964)

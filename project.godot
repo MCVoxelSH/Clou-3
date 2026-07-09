@@ -34,6 +34,7 @@ AmbientParser="*uid://dcdrqnwmpgvk4"
 AmbientFileHandler="*uid://dnh8sqjyu74hs"
 AmbientMaterialMaker="*uid://nig0lamfd3mv"
 floor_visibility_check="*uid://dco4d5u57b37y"
+Global="*uid://13be7ph1pe8n"
 
 [debug]
 
@@ -41,7 +42,6 @@ shapes/collision/shape_color=Color(0.78686124, 0.42805904, 0.16226679, 0.4196078
 
 [display]
 
-window/size/mode=2
 window/stretch/aspect="expand"
 
 [editor_plugins]

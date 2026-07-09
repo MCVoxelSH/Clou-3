@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://ckehugd8h2al8"]
+
+[ext_resource type="Script" uid="uid://bdqe8lqvbvclm" path="res://assets/Scenes/UI/pause_menu.gd" id="1_rg1ny"]
+
+[node name="PauseMenu" type="VBoxContainer" unique_id=436120385]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.5
+offset_top = -289.0
+offset_right = 288.5
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+script = ExtResource("1_rg1ny")
+
+[node name="RestartMission" type="Button" parent="." unique_id=1712704091]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_normal_color = Color(0.68804306, 0.6880431, 0.6880427, 0.1764706)
+text = "Restart Mission"
+
+[node name="ExecutePlan" type="Button" parent="." unique_id=2129663538]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_normal_color = Color(0.68804306, 0.6880431, 0.6880427, 0.1764706)
+text = "Execute Plan"
+
+[node name="LoadPlan" type="Button" parent="." unique_id=900734593]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_normal_color = Color(0.68804306, 0.6880431, 0.6880427, 0.1764706)
+text = "Load Plan"
+
+[node name="SavePlan" type="Button" parent="." unique_id=1592235724]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_normal_color = Color(0.68804306, 0.6880431, 0.6880427, 0.1764706)
+text = "Save Plan"
+
+[node name="CloseMissionMenu" type="Button" parent="." unique_id=1021453656]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_normal_color = Color(0.68804306, 0.6880431, 0.6880427, 0.1764706)
+text = "Cancel"
+
+[node name="QuitMission" type="Button" parent="." unique_id=1224208697]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_normal_color = Color(0.68804306, 0.6880431, 0.6880427, 0.1764706)
+text = "Quit"
+
+[node name="QuitMissionConfirmationDialog" type="ConfirmationDialog" parent="QuitMission" unique_id=1092141858]
+oversampling_override = 1.0
+title = "Quit"
+initial_position = 2
+size = Vector2i(258, 100)
+ok_button_text = "Yes"
+dialog_text = "Do you want to save your plan?"
+cancel_button_text = "No"

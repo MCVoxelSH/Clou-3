@@ -9,7 +9,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if(get_parent().get_parent().execute_plan):
+	if(Global.execute_plan):
 		if(value < 0):
 			value = 0
 			

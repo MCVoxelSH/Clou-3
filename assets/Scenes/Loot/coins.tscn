@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://lxoekc14dhjj"]
 
-[ext_resource type="Script" uid="uid://mxilmvvlncsr" path="res://assets/Prefabs/Loot/loot.gd" id="2_br5d8"]
+[ext_resource type="Script" uid="uid://mxilmvvlncsr" path="res://assets/Scenes/Loot/loot.gd" id="2_br5d8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i8waw"]
 size = Vector3(0.44589233, 0.07922949, 0.28925842)

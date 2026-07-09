@@ -159,39 +159,8 @@ func _physics_process(_delta):
 	#var next_position := _nav_agent.get_next_path_position()
 
 func _process(delta: float) -> void:
-	if(Input.is_action_pressed("ui_cancel")):
-		if(!get_parent().execute_plan && (!is_guard || record_guard)):
-			var f:FileAccess
-			if(!is_guard):
-				f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.WRITE)
-			else:
-				f = FileAccess.open("res://guard_replays/replay" + filepath_addon+".txt", FileAccess.WRITE)
-			
-			#for e in replay:
-			#	f.store_line("%d %s" % [e.tick, e.action])
-			for l in replay:
-				if(l.size() == 5):
-					f.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2])+"|" + str(l[3])+"|" + str(l[4]))
-				elif(l.size() == 4):
-					f.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2])+"|" + str(l[3]))
-				elif(l.size() == 3):
-					f.store_line(str(l[0]) + "|" + str(l[1])+ "|" + str(l[2]))
-				else:
-					f.store_line(str(l[0]) + "|" + str(l[1]))
-			f.close()
-			var g:FileAccess
-			if(!is_guard):
-				g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
-			else:
-				g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
-			for l in waiting_positions:
-				g.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2]))
-			g.close()
-				
-		if(int(filepath_addon) == get_parent().number_of_burglars):
-			get_parent().debug_file.close()
-			get_tree().quit()
-
+	pass
+	
 func set_target_position(target_position: Vector3, record: bool):
 	
 	#if(get_parent().ticks == 0 && last_ticks.is_empty()):
@@ -748,7 +717,7 @@ func _on_body_or_area_exited(body_area):
 
 func load_replay():
 	
-	if(get_parent().play || get_parent().load_replay ||  (is_guard && !record_guard)):
+	if(get_parent().play || Global.load_replay ||  (is_guard && !record_guard)):
 		var f:FileAccess
 		if(!is_guard):
 			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.READ)
@@ -870,3 +839,36 @@ func add_wait_ticks(ticks_at_position):
 	replay.append(parts.duplicate())
 	
 	maxid = replay.size()
+
+
+func save_replay():
+	
+	if(!Global.execute_plan && (!is_guard || record_guard)):
+		var f:FileAccess
+		if(!is_guard):
+			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.WRITE)
+		else:
+			f = FileAccess.open("res://guard_replays/replay" + filepath_addon+".txt", FileAccess.WRITE)
+		
+		#for e in replay:
+		#	f.store_line("%d %s" % [e.tick, e.action])
+		for l in replay:
+			if(l.size() == 5):
+				f.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2])+"|" + str(l[3])+"|" + str(l[4]))
+			elif(l.size() == 4):
+				f.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2])+"|" + str(l[3]))
+			elif(l.size() == 3):
+				f.store_line(str(l[0]) + "|" + str(l[1])+ "|" + str(l[2]))
+			else:
+				f.store_line(str(l[0]) + "|" + str(l[1]))
+		f.close()
+		var g:FileAccess
+		if(!is_guard):
+			g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
+		else:
+			g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
+		for l in waiting_positions:
+			g.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2]))
+		g.close()
+			
+	#if(int(filepath_addon) == get_parent().number_of_burglars):

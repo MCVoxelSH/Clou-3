@@ -13,8 +13,8 @@ extends Node3D
 @export var engine_speed_overwrite:float = 60.0
 
 @export var play = false
-@export var execute_plan = false
-@export var load_replay = false
+#@export execute_plan = false
+#@export load_replay = false
 
 @export var burglary_target:Node3D
 
@@ -104,13 +104,25 @@ var skip_to_start_or_end = false
 
 func _ready() -> void:
 	
+	#connect signals
+	$PauseMenu/CloseMissionMenu.button_up.connect(_on_close_mission_menu_button_up)
+	$PauseMenu/QuitMission.button_up.connect(_on_quit_mission_button_up)
+	$PauseMenu/RestartMission.button_up.connect(_on_restart_mission_button_up)
+	$PauseMenu/LoadPlan.button_up.connect(_on_load_plan_button_up)
+	$PauseMenu/SavePlan.button_up.connect(_on_save_plan_button_up)
+	$PauseMenu/ExecutePlan.button_up.connect(_on_execute_plan_button_up)
+	$PauseMenu/QuitMission/QuitMissionConfirmationDialog.confirmed.connect(_on_quit_mission_confirmation_dialog_confirmed_button_up)
+	$PauseMenu/QuitMission/QuitMissionConfirmationDialog.canceled.connect(_on_quit_mission_confirmation_dialog_canceled_button_up)
+
+
+	
 	if(!OS.has_feature("editor")):
 		debug_mode = false
 	
 	if(debug_mode):
 		$DebugSphere.visible = true
 	
-	if(execute_plan):
+	if(Global.execute_plan):
 		play = true
 	
 	if(play):
@@ -195,7 +207,7 @@ func _physics_process(delta: float) -> void:
 		#query_set_target_position = false
 	
 	#TODO I disabled it because it didn't work anymore, maybe I want to reenable it later if I fix it
-	if(load_replay):
+	if(Global.load_replay):
 		#var highest_ticks = 0
 		#for actor in get_tree().get_nodes_in_group("Actor"):
 			#if(actor.replay.size() > 0 && !actor.is_guard):
@@ -205,7 +217,7 @@ func _physics_process(delta: float) -> void:
 		#pass
 		#while(ticks != highest_ticks):
 			#do_replay()
-		load_replay = false
+		Global.load_replay = false
 		
 			
 	#FIXME this is not currently working aswell as in line 324
@@ -283,7 +295,7 @@ func _unhandled_input(event: InputEvent):
 	#REMINDER this is for when selecting an option while hovering over an interactable
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 		
-		if(execute_plan || !recording):
+		if(Global.execute_plan || !recording):
 			return
 		
 		if(active_burglar.replay.size() > 0):
@@ -336,7 +348,7 @@ func _unhandled_input(event: InputEvent):
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 
-		if(execute_plan || !recording):
+		if(Global.execute_plan || !recording):
 			return
 
 		#_on_h_slider_value_changed(1.0)
@@ -505,7 +517,7 @@ func do_replay():
 	if(!pause):
 		if(backwards && ticks > 0):
 			ticks -= 1
-		elif((burglar_moved || play || load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
+		elif((burglar_moved || play || Global.load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
 			ticks += 1
 		else:
 			pause_recording()
@@ -904,7 +916,7 @@ func do_replay():
 									#get_node(str(actor.replay[actor.id][1])).anim_player.advance(delta)
 					
 							elif(actor.replay[actor.id][2] == "inspect"):
-								if(!play && !load_replay && !forwards && !actor.is_guard):
+								if(!play && !Global.load_replay && !forwards && !actor.is_guard):
 									if(get_node(str(actor.replay[actor.id][1])).object_type == 4):
 										actor.show_text_bubble(get_node(str(actor.replay[actor.id][1])).unique_name + "\nvalue: " + str(get_node(str(actor.replay[actor.id][1])).value) + "$" + "\nweight: " + str(get_node(str(actor.replay[actor.id][1])).weight) + "kg")
 									elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
@@ -1219,7 +1231,7 @@ func do_replay():
 							actor.replay[actor.id +1][0] = ticks + actor.replay[actor.id +1][0]-actor.replay[actor.id][0]
 					actor.replay[actor.id][0] = ticks
 					if(actor == active_burglar && actor.id == actor.maxid - 1 ):
-						if(!play && ! execute_plan):
+						if(!play && ! Global.execute_plan):
 							pause_recording()
 				
 			
@@ -1315,7 +1327,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 	
 	#value went from negative to 0 or above
 	if(value >= 0 && previous_slider_value < 0 && backwards):
-		if(!execute_plan):
+		if(!Global.execute_plan):
 			backwards = false
 			for actor in get_tree().get_nodes_in_group("Actor"):
 				actor.currentid =actor.id#+=1
@@ -1328,7 +1340,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 				
 	#value changed to positive 	
 	if(value > 0 && previous_slider_value <= 0 && active_burglar.id != active_burglar.maxid -1):
-		if(!execute_plan):
+		if(!Global.execute_plan):
 			was_forwards = false
 			was_backwards = false
 			forwards = true
@@ -1338,7 +1350,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 	
 	#value went from positive to 0 or below
 	if(value <= 0 && previous_slider_value > 0 &&!backwards):
-		if(!execute_plan):
+		if(!Global.execute_plan):
 			was_forwards = true
 			forwards = false
 		
@@ -1346,7 +1358,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 
 	#value changed to negative
 	if(value < 0 && previous_slider_value >= 0 && !backwards && ticks > 0):
-		if(!execute_plan):
+		if(!Global.execute_plan):
 			was_forwards = false
 			was_backwards = true
 			#for actor in get_tree().get_nodes_in_group("Actor"):
@@ -1366,7 +1378,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 	#if(active_burglar.id != active_burglar.maxid):
 		#pause = false
 		
-	if(value == 0 && !execute_plan && !play):
+	if(value == 0 && !Global.execute_plan && !play):
 		pause_recording()
 		pause_animations()
 		forwards = false
@@ -1395,7 +1407,7 @@ func _on_pause_button_button_up() -> void:
 
 func pause_recording():
 	if(play_until_ticks == -1):
-		if(!execute_plan):
+		if(!Global.execute_plan):
 			play = false
 			pause = true
 			pause_animations()
@@ -1528,7 +1540,7 @@ func change_game_speed(value: float):
 	if(value != 0):
 		#for i in range (0,abs(previous_slider_value),+1):	
 		#TODO think about "<0", is this correct or should it be "<=" maybe?
-		if(execute_plan && floor(value) <=0):
+		if(Global.execute_plan && floor(value) <=0):
 			actual_timescale = 1.0
 			Engine.time_scale = 1.0
 		else:
@@ -1562,7 +1574,7 @@ func is_waiting(actor:Node3D):
 
 func switch_to_actor(index: int):
 
-	if(!execute_plan):
+	if(!Global.execute_plan):
 		play = false
 		pause = true
 		pause_animations()
@@ -1633,3 +1645,44 @@ func find_changed_ticks_at_current_ticks(actor:Node3D):
 			if(id == actor.id && actor.replay):
 				return true
 		return false
+
+
+func _on_load_plan_button_up() -> void:
+	get_tree().paused = false
+	Global.load_replay = true
+	Global.execute_plan = false
+	get_tree().reload_current_scene()
+	
+func _on_execute_plan_button_up() -> void:
+	get_tree().paused = false
+	Global.execute_plan = true
+	Global.load_replay = false
+	get_tree().reload_current_scene()
+
+func _on_restart_mission_button_up() -> void:
+	get_tree().paused = false
+	Global.load_replay = false
+	Global.execute_plan = false
+	get_tree().reload_current_scene()
+
+func _on_quit_mission_button_up() -> void:
+	$PauseMenu/QuitMission/QuitMissionConfirmationDialog.visible = true
+	
+func _on_quit_mission_confirmation_dialog_confirmed_button_up():
+	_on_save_plan_button_up()	
+	quit_plan()
+
+func _on_quit_mission_confirmation_dialog_canceled_button_up():
+	quit_plan()
+	
+func _on_save_plan_button_up() -> void:
+	for actor in get_tree().get_nodes_in_group("Actor"):
+		actor.save_replay()
+
+func _on_close_mission_menu_button_up() -> void:
+	$PauseMenu.visible = false
+	get_tree().paused = false
+		
+func quit_plan():
+	debug_file.close()
+	get_tree().quit()

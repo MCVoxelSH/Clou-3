@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://3a3tg5vcb4vm"]
+
+[ext_resource type="Script" uid="uid://de4bv3cna3bye" path="res://assets/scripts/tool.gd" id="1_4fwgd"]
+
+[node name="Crowbar" type="Node3D"]
+script = ExtResource("1_4fwgd")
+tool_efficencies = Array[int]([50, 50, 50])

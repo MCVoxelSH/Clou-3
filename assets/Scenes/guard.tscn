@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7pflsibliusv"]
 
-[ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Prefabs/actor.tscn" id="1_l30q5"]
+[ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Scenes/actor.tscn" id="1_l30q5"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l30q5"]
 points = PackedVector3Array(4, 0, 20, -0.66718864, 0, -5.4433336, -4, 0, 20)
