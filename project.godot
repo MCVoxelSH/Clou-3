@@ -23,7 +23,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Clou! 3"
 config/tags=PackedStringArray("3d")
 run/main_scene="uid://dj06sfv7vgcjg"
-config/features=PackedStringArray("4.6")
+config/features=PackedStringArray("4.7")
 config/icon="uid://bie5mp4wgqgrr"
 
 [autoload]

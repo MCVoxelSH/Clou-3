@@ -1,9 +1,9 @@
+MeshInstance3D
 VBoxContainer
 HBoxContainer
 ConfirmationDialog
 Button
 ColorRect
-MeshInstance3D
 Node3D
 Container
 StaticBody3D
@@ -12,4 +12,3 @@ Panel
 Label
 NavigationObstacle3D
 OmniLight3D
-CollisionShape3D

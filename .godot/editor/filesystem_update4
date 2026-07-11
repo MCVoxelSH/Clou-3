@@ -1,3 +1,2 @@
-res://Test Scene.tscn
+res://assets/Scenes/Missions/Construction Sight.tscn
 res://assets/Shaders/distance_fog.gdshader
-res://assets/scripts/control.gd

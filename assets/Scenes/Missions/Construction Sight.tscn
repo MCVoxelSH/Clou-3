@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dck0emneq8u5g"]
+
+[ext_resource type="PackedScene" uid="uid://dsxhep477y4yk" path="res://assets/Meshes/Low Poly Survival Tools/SM_CARGO_CONTAINER.glb" id="1_fe3jd"]
+[ext_resource type="PackedScene" uid="uid://dlvwt415fi5ub" path="res://assets/Meshes/Low Poly Survival Tools/SM_Cargo_Barrel.glb" id="2_ppwqr"]
+[ext_resource type="PackedScene" uid="uid://cnn6co4k8finp" path="res://assets/Meshes/Low Poly Survival Tools/SM_Wheelbarrow.glb" id="3_4al4l"]
+[ext_resource type="PackedScene" uid="uid://basyfwf2g00kb" path="res://assets/Meshes/Low Poly Survival Tools/SM_Small_Wood_Box_Closed.glb" id="4_ppwqr"]
+[ext_resource type="PackedScene" uid="uid://s82q1covj1bf" path="res://assets/Meshes/Low Poly Survival Tools/SM_Ladder.glb" id="5_11ewu"]
+[ext_resource type="PackedScene" uid="uid://fqbxk0hfyv3p" path="res://assets/Meshes/Low Poly Survival Tools/SM_Hacksaw_For_Metal.glb" id="6_n3gm0"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_11ewu"]
+
+[node name="ConstructionSight" type="Node3D" unique_id=1030509812]
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1383014602]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 19.766552, 0, 12.525833)
+mesh = SubResource("PlaneMesh_11ewu")
+
+[node name="SM_CARGO_CONTAINER2" parent="." unique_id=1664980840 instance=ExtResource("1_fe3jd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.611864, 0, 9.528816)
+
+[node name="SM_Cargo_Barrel2" parent="." unique_id=252509738 instance=ExtResource("2_ppwqr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.76967, 0, 5.299353)
+
+[node name="SM_Wheelbarrow2" parent="." unique_id=1047095805 instance=ExtResource("3_4al4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.293495, 0.461352, 2.6879246)
+
+[node name="SM_Small_Wood_Box_Closed2" parent="." unique_id=197245384 instance=ExtResource("4_ppwqr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.68453, 0, 5.0733433)
+
+[node name="SM_Ladder2" parent="." unique_id=870272518 instance=ExtResource("5_11ewu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.319704, 0, 7.692364)
+
+[node name="SM_Hacksaw_For_Metal2" parent="." unique_id=579364119 instance=ExtResource("6_n3gm0")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 26.995127, 0.799517, 5.0288234)
