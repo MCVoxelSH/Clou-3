@@ -59,7 +59,7 @@ var change_ticks = false
 
 var pickup_time = 25
 
-var maxticks = 0
+var max_ticks = 0
 
 var objects_in_sight_of_guard:Array
 
@@ -761,11 +761,11 @@ func load_replay():
 			#TODO this is not very inefficient, but also not really bad
 			for i in range(replay.size()-1):
 				if(replay[i][0] != -1):
-					maxticks = replay[i][0]
+					max_ticks = replay[i][0]
 				else:
-					maxticks +=1
+					max_ticks +=1
 		
-		last_ticks = maxticks			
+		last_ticks = max_ticks			
 					
 		var g:FileAccess
 		if(!is_guard):

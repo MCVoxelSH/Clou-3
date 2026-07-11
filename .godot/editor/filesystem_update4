@@ -1,3 +1,4 @@
 res://Test Scene.tscn
 res://assets/Shaders/distance_fog.gdshader
 res://assets/scripts/control.gd
+res://assets/scripts/character.gd

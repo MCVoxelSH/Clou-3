@@ -84,8 +84,6 @@ var noise_threshold = 500.0
 #current loudest sound made by burglar
 var max_loudness = 0.0
 
-var max_damage = 10000
-
 var cash = 0
 
 var was_caught = false
@@ -493,7 +491,7 @@ func do_replay():
 				if(actor.id < actor.maxid):
 					if(actor.id < actor.replay.size()-1):
 						#TODO think about the >=, I changed it from == so that when a burglar is late they also move
-						if(((ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1) && !was_forwards)|| (actor.is_guard && (ticks%(actor.maxticks+1) >=  actor.replay[actor.id][0]) || (-1 ==  actor.replay[actor.id][0]))):
+						if(((ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1) && !was_forwards)|| (actor.is_guard && (ticks%(actor.max_ticks+1) >=  actor.replay[actor.id][0]) || (-1 ==  actor.replay[actor.id][0]))):
 							if(actor == active_burglar && !forwards):
 								burglar_moved = true
 							#print("id: " + str(active_burglar.id))
@@ -629,7 +627,7 @@ func do_replay():
 				
 						
 				#TODO is <= correct or is == better?
-				if(ticks <= actor.last_ticks && (ticks <= actor.replay[actor.id][0] -1 || actor.replay[actor.id][0] == -1)||(actor.is_guard && ((ticks%(actor.maxticks+1) <=  actor.replay[actor.id][0] -1) || (-1 ==  actor.replay[actor.id][0])))):#(ticks == actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)
+				if(ticks <= actor.last_ticks && (ticks <= actor.replay[actor.id][0] -1 || actor.replay[actor.id][0] == -1)||(actor.is_guard && ((ticks%(actor.max_ticks+1) <=  actor.replay[actor.id][0] -1) || (-1 ==  actor.replay[actor.id][0])))):#(ticks == actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)
 
 					if(actor.name == "Burglar1"):
 						if(actor.id == 620):
@@ -1069,7 +1067,7 @@ func _on_skip_to_end_button_button_up() -> void:
 	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause):
 		_on_play_button_button_up()
 		_on_h_slider_value_changed(100.0)
-		play_until_ticks = active_burglar.last_ticks
+		play_until_ticks = active_burglar.max_ticks
 		RenderingServer.render_loop_enabled = false
 	#skip_to_start_or_end = true
 
@@ -1236,27 +1234,26 @@ func replay_backwards(actor:Node3D):
 							object.damaged = false
 						actor.progress_bar.value = object.damage
 						#print("backwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
-					elif(actor.replay[actor.id][2] == "open"):
-						#TODO I disabled most of this, is this a good idea?
-						if(object_occupied(actor, object) && (object.anim_player.current_animation_position != 0.0 && object.anim_player.current_animation_position != object.anim_player.current_animation_length)):
-							actor.object_that_is_being_interacted_with = null
-						else:
-							actor.object_that_is_being_interacted_with = object
-						#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-						#TODO ??? why does it check for object type 1 and 2, I added to allow it when going through windows from the inside, does it work?
-							if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard): #&& get_node(str(actor.replay[actor.id][1])).object_type != 0 &&get_node(str(actor.replay[actor.id][1])).object_type != 1):
-								if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):#if(get_node(str(actor.replay[actor.id][1])).anim_player.is_playing()): 
-									get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
-								elif(actor.replay[actor.id][3]== "last"):
-									if(get_node(str(actor.replay[actor.id][1])).object_type != 0):
-										get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
-							#REMINDER what is this for?
-							elif(get_node(str(actor.replay[actor.id][1])).damage != 10000 && !(get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
-								actor.show_text_bubble("the object is locked!")
-							#get_node(str(actor.replay[actor.id][1])).anim_player.advance(-delta)
-				else:
-					actor.show_text_bubble("someone is already working here!")
-					#actor.is_opening = true
+				elif(actor.replay[actor.id][2] == "open"):
+					#TODO I disabled most of this, is this a good idea?
+					if(object_occupied(actor, object) && (object.anim_player.current_animation_position != 0.0 && object.anim_player.current_animation_position != object.anim_player.current_animation_length)):
+						actor.object_that_is_being_interacted_with = null
+						actor.show_text_bubble("someone is already working here!")
+					else:
+						actor.object_that_is_being_interacted_with = object
+					#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
+					#TODO ??? why does it check for object type 1 and 2, I added to allow it when going through windows from the inside, does it work?
+						if(get_node(str(actor.replay[actor.id][1])).damage == object_durability || actor.is_guard): #&& get_node(str(actor.replay[actor.id][1])).object_type != 0 &&get_node(str(actor.replay[actor.id][1])).object_type != 1):
+							if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):#if(get_node(str(actor.replay[actor.id][1])).anim_player.is_playing()): 
+								get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
+							elif(actor.replay[actor.id][3]== "last"):
+								if(get_node(str(actor.replay[actor.id][1])).object_type != 0):
+									get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
+						#REMINDER what is this for?
+						elif(get_node(str(actor.replay[actor.id][1])).damage != object_durability && !(get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
+							actor.show_text_bubble("the object is locked!")
+						#get_node(str(actor.replay[actor.id][1])).anim_player.advance(-delta)
+				#actor.is_opening = true
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
 				
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
@@ -1412,12 +1409,12 @@ func replay_forwards(actor:Node3D):
 			if(true):#object.lock_type != 3):
 				if(actor.replay[actor.id][2] == "break"):
 					for alarm in get_tree().get_nodes_in_group("Alarm"):
-						if(alarm.damage != max_damage && !alarm.is_off):
+						if(alarm.damage != object_durability && !alarm.is_off):
 							for obj_path in alarm.related_objects_string_array:
 								if(str(obj_path) == str(actor.replay[actor.id][1])):
 									caught("caught by " +alarm.name)
-					if(!object_occupied(actor, object)):
-						if(object.damage == 10000):
+					if(!object_occupied(actor, object) && object.damage != object_durability):
+						if(object.damage == object_durability):
 							actor.finished_working = true
 							actor.progress_bar.visible = false
 						else:
@@ -1450,8 +1447,8 @@ func replay_forwards(actor:Node3D):
 							actor.progress_bar.value = object.damage
 							object.damage += actor.replay[actor.id][3]
 							object.damaged = get_node(str(actor.replay[actor.id][4])).damaging	
-							if(object.damage > 10000):
-								object.damage = 10000
+							if(object.damage > object_durability):
+								object.damage = object_durability
 							actor.progress_bar.value = object.damage
 							#print("forwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
 					else:
@@ -1624,10 +1621,10 @@ func replay_forwards(actor:Node3D):
 					for i in range(0,ticks):
 						if(i == actor.waiting_positions.size()):
 							break
-						if(actor.waiting_positions[i][0] >= ticks%(actor.maxticks+1)):
+						if(actor.waiting_positions[i][0] >= ticks%(actor.max_ticks+1)):
 							add_waiting_position = false
 							break
-						if(actor.waiting_positions[i][0] == ticks%(actor.maxticks+1)):
+						if(actor.waiting_positions[i][0] == ticks%(actor.max_ticks+1)):
 							add_waiting_position = false
 					
 					if (add_waiting_position):
