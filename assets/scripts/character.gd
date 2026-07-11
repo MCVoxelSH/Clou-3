@@ -4,7 +4,7 @@ extends Marker3D
 const Line3D = preload("res://assets/scripts/line3d.gd")
 
 var finalize_guard_replay = false
-#Which interaction was selected while interacting with an object
+##Which interaction was selected while interacting with an object
 @export_enum("Talk", "Interact", "Inspect", "none", "Look at", "Break") var selected_interaction
 
 @export var character_speed := 10.0

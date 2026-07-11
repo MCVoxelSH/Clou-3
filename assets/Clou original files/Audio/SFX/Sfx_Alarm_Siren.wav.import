@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d3ak08bmajryj"
+path="res://.godot/imported/Sfx_Alarm_Siren.wav-48d09c55639991bb7a1a8a21fb83b6c1.sample"
+
+[deps]
+
+source_file="res://assets/Clou original files/Audio/SFX/Sfx_Alarm_Siren.wav"
+dest_files=["res://.godot/imported/Sfx_Alarm_Siren.wav-48d09c55639991bb7a1a8a21fb83b6c1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,6 +1,3 @@
 res://Test Scene.tscn
 res://assets/Shaders/distance_fog.gdshader
-res://assets/Scenes/Loot/bag.tscn
 res://assets/scripts/control.gd
-res://assets/scripts/character.gd
-res://assets/Scenes/actor.tscn

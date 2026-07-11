@@ -81,6 +81,8 @@ var object_parent_node:String = ""
 var object_durability = 10000
 
 var noise_threshold = 500.0
+#current loudest sound made by burglar
+var max_loudness = 0.0
 
 var max_damage = 10000
 
@@ -546,9 +548,7 @@ func do_replay():
 		#active_burglar.id = active_burglar.replay.size()-1
 		#if(active_burglar.id < 0):
 			#active_burglar.id = 0
-	
-	
-	var max_loudness = 0.0
+	max_loudness = 0.0
 	
 	#main part, this is where according to the current actor id (index in replay array) actions are performed
 	for actor in get_tree().get_nodes_in_group("Actor"):		
@@ -592,572 +592,16 @@ func do_replay():
 			#else:
 			if(actor.name == "Burglar1"):
 				pass
-		
-			var offset:Vector3
 			
+					
 			if(backwards):
-				if((typeof(actor.replay[actor.id][1]) == TYPE_STRING || typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks <= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
-					var is_object_occupied = false
-					if(actor.replay[actor.id][2] == "use"):
-						#FIXME is_object_occupied is always false here, because it gets set further below
-						actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
-						#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-						if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
-							get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
-						elif(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
-							get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
-						if(actor.replay[actor.id][3]== "last"):
-							for related_object in get_node(str(actor.replay[actor.id][1])).related_objects_string_array:
-								#is camera
-								if(get_node(related_object).object_type == 7):
-									get_node(related_object).process_mode = Node.PROCESS_MODE_INHERIT
-									get_node(related_object).spotlight.visible = true		
-								#is alarm
-								if(get_node(related_object).object_type == 8):
-									get_node(related_object).is_off = false	
-					if(actor.replay[actor.id][2]== "take"):
-						if(!get_node(str(actor.replay[actor.id][1])).visible):
-							get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_ALWAYS
-							get_node(str(actor.replay[actor.id][1])).visible = true
-							cash -= get_node(str(actor.replay[actor.id][1])).value
-							actor.currently_carrying_weight -= get_node(str(actor.replay[actor.id][1])).weight
-							selected_car.current_load -= get_node(str(actor.replay[actor.id][1])).weight
-					else:
-						var object:Node3D
-						#FIXME this makes no sense, as "movethroughwindow" has vectors on index [1], so this never gets called
-						if(actor.replay[actor.id][2]== "movethroughwindow"):
-							object = get_node(str(actor.replay[actor.id][3]))
-							offset = actor.global_position - get_node(str(actor.replay[actor.id][3])).global_position
-						else:
-							object = get_node(str(actor.replay[actor.id][1]))
-							offset = actor.global_position - get_node(str(actor.replay[actor.id][1])).global_position
-						rotate_actor(actor,offset)
-						if(object.lock_type != 3):
-							for other in get_tree().get_nodes_in_group("Actor"):
-								if(other != actor):
-									if(other.object_that_is_being_interacted_with == object && other.object_that_is_being_interacted_with.damage != max_damage):
-										is_object_occupied = true
-							if(!is_object_occupied):
-								if(actor.is_waiting):
-									actor.is_waiting = false
-									#REMINDER I disabled this without testing, maybe it is needed
-									#actor.id += 1
-									#actor.currentid = actor.id +1
-								if(actor.replay[actor.id][2] == "break"):
-									if(object.damage == 0):
-										actor.finished_working = true
-										actor.progress_bar.visible = false
-									else:
-										actor.finished_working = false
-									if(!actor.finished_working):
-										if(!is_object_occupied):
-											actor.object_that_is_being_interacted_with = object
-										actor.progress_bar.visible = true
-										var guard_that_hears_the_most:Node3D
-										for guard in get_tree().get_nodes_in_group("Actor"):
-											if (guard.is_guard):
-												var tool = get_node(str(actor.replay[actor.id][4]))
-												var loudness = 10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing) * (tool.loudness[object.object_material]))
-												if(loudness > max_loudness):
-													max_loudness = loudness
-													guard_that_hears_the_most = guard
-													
-										$NoiseLevelProgessBar.value = get_node(str(actor.replay[actor.id][4])).loudness[object.object_material]*max_loudness
-										if($NoiseLevelProgessBar.value > noise_threshold):
-											$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(1,0,0)
-										else:
-											$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
-										#TODO do this stuff
-										#var guard_that_hears_the_most:Node3D
-										actor.progress_bar.value = object.damage
-										object.damage -= actor.replay[actor.id][3]
-										if(object.damage <= 0):
-											object.damage = 0
-											object.damaged = false
-										actor.progress_bar.value = object.damage
-										#print("backwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
-								elif(actor.replay[actor.id][2] == "open"):
-									#TODO I disabled most of this, is this a good idea?
-									actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
-									#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-									#TODO ??? why does it check for object type 1 and 2, I added to allow it when going through windows from the inside, does it work?
-									if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard): #&& get_node(str(actor.replay[actor.id][1])).object_type != 0 &&get_node(str(actor.replay[actor.id][1])).object_type != 1):
-										if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):#if(get_node(str(actor.replay[actor.id][1])).anim_player.is_playing()): 
-											get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
-										elif(actor.replay[actor.id][3]== "last"):
-											if(get_node(str(actor.replay[actor.id][1])).object_type != 0):
-												get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
-									#REMINDER what is this for?
-									elif(get_node(str(actor.replay[actor.id][1])).damage != 10000 && !(get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
-										actor.show_text_bubble("the object is locked!")
-									#get_node(str(actor.replay[actor.id][1])).anim_player.advance(-delta)
-							else:
-								actor.show_text_bubble("someone is already working here!")
-								#actor.is_opening = true
-				elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
-					actor.text_bubble.visible = false
-					#REMINDER I commented this out, dunno if it is needed
-					#if(actor.is_waiting):
-						#actor.is_waiting = false
-						#actor.id -=1
-						#actor.currentid = actor.id- 1
-					actor.finished_working = false
-					#actor.is_opening = false
-					
-					
-					for i in range(actor.id, 0, -1):
-						if(typeof(actor.replay[i][1]) == TYPE_VECTOR3):
-							if(!(actor.global_position.is_equal_approx(actor.replay[i][1]))):
-								offset = actor.replay[i][1] - actor.mesh.global_position
-								break
-						else:
-							offset = actor.replay[actor.id][1] - actor.mesh.global_position
-							break
-					
-					var move = true
-					var space_state = get_world_3d().direct_space_state
-					
-					var found_door_or_window = false
-					
-					var query:PhysicsRayQueryParameters3D
-					
-					var found_index = -1
-					
-					if(actor.id != actor.replay.size()-1):
-						#if(typeof(actor.replay[actor.id+1][1]) == TYPE_VECTOR3):
-						if(actor.waiting_positions.size() > 0):
-							var found_waiting_position = false
-							for i in range(0,ticks):
-								if(i == actor.waiting_positions.size()):
-									break
-								#REMINDER changed from ticks + 2
-								if(actor.waiting_positions[i][0] == ticks):
-									found_waiting_position = true
-									found_index = i
-							if(found_waiting_position):
-								#query = PhysicsRayQueryParameters3D.create(actor.global_position,actor.replay[actor.id+1][1])
-								#query.collide_with_areas = true
-								#for a in get_tree().get_nodes_in_group("Actor"):
-									#query.exclude = [a]
-								#query.set_collide_with_bodies(false)
-								found_door_or_window = true								
-								#print(backwards)
-								#print("found door at " + str(ticks) + " ticks" + "\n" + " while on position " +  str(actor.global_position))
-									
-									
-							
-					actor.ray.force_raycast_update()
-					#var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
-					#if(result):
-						##TODO currently it seems like actors arent correctly filtered out, so this might block the door from being detected in some cases
-						#if(result.collider.get_parent().get_parent().is_in_group("Interactable")):
-							#if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent().object_type == 0):
-								#found_door_or_window = true
-					if(found_door_or_window):
-						if(actor.waiting_positions.size() > 0):
-							var object_being_waited_for = get_node(actor.waiting_positions[found_index][1])
-							if((object_being_waited_for.damage == object_durability && !actor.is_guard) || (actor.is_guard && !object_being_waited_for.was_opened_by_burglar)):
-								#if(get_node(actor.waiting_positions[actor.waiting_positions.size()-1][1]).anim_player.current_animation_position != 0 && get_node(actor.waiting_positions[actor.waiting_positions.size()-1][1]).anim_player.is_playing):
-								#actor.is_opening = true
-								if(actor.waiting_positions.size()> 0):
-									actor.is_waiting = true
-									move = false
-									#print("waiting...\n")
-								actor.waiting_positions.pop_back()
-								#debug_file.store_line(str(ticks) + " ," + str(backwards))
-							
-								#FIXME this was not thought through
-								
-					
-					if(move):	
-						if(actor.is_waiting):
-							actor.is_waiting = false
-							#actor.id -=1
-							#actor.currentid = actor.id- 1
-						#actor.is_opening = false
-						actor.is_opening = false		
-						actor.global_position = actor.replay[actor.id][1]
-						rotate_actor(actor,offset)
-					actor.progress_bar.visible = false
-					#$NoiseLevelProgessBar.visible = false
-					actor.object_that_is_being_interacted_with = null
+				replay_backwards(actor)
 			#forward direction		
 			else:
-				if((typeof(actor.replay[actor.id][1]) == TYPE_STRING ||typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
-					#FIXME this is currently under construction
-					var is_object_occupied = false
-					if(actor.replay[actor.id][2] == "use"):
-						if(!is_object_occupied):
-							actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
-							if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
-								get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
-								#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
-							if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
-									get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
-							if(actor.replay[actor.id][3]== "last"):
-								for related_object in get_node(str(actor.replay[actor.id][1])).related_objects_string_array:
-									#is camera
-									if(get_node(related_object).object_type == 7):
-										get_node(related_object).process_mode = Node.PROCESS_MODE_DISABLED
-										get_node(related_object).spotlight.visible = false		
-									#is alarm
-									if(get_node(related_object).object_type == 8):
-										get_node(related_object).is_off = true	
-									#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
-					if(actor.replay[actor.id][2] == "take"):
-						var can_pick_up = true
-						if(!get_node(str(actor.replay[actor.id][1])).visible):
-							pass
-							#can_pick_up = false
-							#actor.show_text_bubble("someone already picked it up")
-						if((actor.currently_carrying_weight + get_node(str(actor.replay[actor.id][1])).weight) > actor.max_capacity):
-							can_pick_up = false
-							if(get_node(str(actor.replay[actor.id][1])).visible):
-								actor.show_text_bubble("it doesn't fit in my bag anymore")
-						if((selected_car.current_load + get_node(str(actor.replay[actor.id][1])).weight) > selected_car.max_capacity):
-							can_pick_up = false
-							if(get_node(str(actor.replay[actor.id][1])).visible):
-								actor.show_text_bubble("it doesn't fit in the car anymore")
-						if(can_pick_up):
-							cash += get_node(str(actor.replay[actor.id][1])).value
-							actor.currently_carrying_weight += get_node(str(actor.replay[actor.id][1])).weight
-							selected_car.current_load += get_node(str(actor.replay[actor.id][1])).weight
-							get_node(str(actor.replay[actor.id][1])).visible = false
-							get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_DISABLED
-							
-					else:
-					#FIXME this needs to be changed for loot as it is can be a child of interactables
-						var object:Node3D
-						if(actor.replay[actor.id][2]== "movethroughwindow"):
-							object = get_node(str(actor.replay[actor.id][3]))
-							offset = actor.global_position - object.global_position
-						else:
-							object = get_node(str(actor.replay[actor.id][1]))
-							offset = actor.global_position - object.global_position
-						rotate_actor(actor, offset)
-						if(true):#object.lock_type != 3):
-							#check if someones is already working on this object
-							for other in get_tree().get_nodes_in_group("Actor"):
-								if(other != actor):
-									if(other.object_that_is_being_interacted_with == object && other.object_that_is_being_interacted_with.damage != max_damage):
-										is_object_occupied = true
-							if(actor.replay[actor.id][2] == "break"):
-								for alarm in get_tree().get_nodes_in_group("Alarm"):
-									if(alarm.damage != max_damage && !alarm.is_off):
-										for obj_path in alarm.related_objects_string_array:
-											if(str(obj_path) == str(actor.replay[actor.id][1])):
-												caught("caught by " +alarm.name)
-								if(!is_object_occupied):
-									if(object.damage == 10000):
-										actor.finished_working = true
-										actor.progress_bar.visible = false
-									else:
-										actor.finished_working = false
-									if(!actor.finished_working):
-										actor.object_that_is_being_interacted_with = object
-										
-										#TODO this has to probably be adjusted for multiple burglars, so that the actual loudest value is shown
-										actor.progress_bar.visible = true
-										var guard_that_hears_the_most:Node3D
-										for guard in get_tree().get_nodes_in_group("Actor"):
-											if (guard.is_guard):
-												var tool = get_node(str(actor.replay[actor.id][4]))
-												var loudness = 10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing) * (tool.loudness[object.object_material]))
-												if(loudness > max_loudness):
-													max_loudness = loudness
-													guard_that_hears_the_most = guard
-																
-										$NoiseLevelProgessBar.value = get_node(str(actor.replay[actor.id][4])).loudness[object.object_material]*max_loudness
-										if($NoiseLevelProgessBar.value > noise_threshold):
-											if(guard_that_hears_the_most):
-												$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(1,0,0)
-												print_caught_message("you have been heard by " + guard_that_hears_the_most.unique_name + " at " + $TimerLabel.get_time_as_string())
-										else:
-											$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
-										actor.progress_bar.value = object.damage
-										object.damage += actor.replay[actor.id][3]
-										object.damaged = get_node(str(actor.replay[actor.id][4])).damaging	
-										if(object.damage > 10000):
-											object.damage = 10000
-										actor.progress_bar.value = object.damage
-										#print("forwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
-								else:
-									actor.show_text_bubble("someone is already working here!")
-									#for i in range(actor.replay.size()-1-actor.id):
-										###actor.change_ticks = true
-										#actor.replay[actor.id+i][0] += 1
-							#TODO this is currently skipped, aka the first tick is skipped
-							elif(actor.replay[actor.id][2] == "open"):
-								if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard || (get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
-									#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-									if(!is_object_occupied):
-										actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
-										if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
-											get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
-											if(!actor.is_guard):
-												get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = true
-											else:
-												get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = false
-											#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
-										#TODO add object closing when open
-										elif(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length && (get_node(str(actor.replay[actor.id][1])).object_type == 0 || get_node(str(actor.replay[actor.id][1])).object_type == 3)):
-												get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
-												#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
-										#elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
-									#if door is already open or being opened while trying to go trough it, delete the opening record
-									#TODO this is not working currently
-									#elif(is_object_occupied || get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
-										#for i in range(25):
-											#actor.replay.remove_at(actor.id)
-										#actor.maxid -= 25
-										#for i in range(actor.replay.size()-actor.id):
-											##actor.replay.remove_at(actor.id+i)
-											##FIXME this whole code in this section is very questionable, I didn't think about it very much
-											#actor.replay[actor.id + i][0] = ticks +i +1
-										#TODO this fixes some issues (the id being to low for the burglar to move) but introduces others
-										#actor.id += 1
-								else:
-									actor.show_text_bubble("the object is locked!")
-									#get_node(str(actor.replay[actor.id][1])).anim_player.advance(delta)
-					
-							elif(actor.replay[actor.id][2] == "inspect"):
-								if(!play && !Global.load_replay && !forwards && !actor.is_guard):
-									if(get_node(str(actor.replay[actor.id][1])).object_type == 4):
-										actor.show_text_bubble(get_node(str(actor.replay[actor.id][1])).unique_name + "\nvalue: " + str(get_node(str(actor.replay[actor.id][1])).value) + "$" + "\nweight: " + str(get_node(str(actor.replay[actor.id][1])).weight) + "kg")
-									elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
-										actor.is_zoomed_onto_object = true
-										for obj in get_tree().get_nodes_in_group("Interactable"):
-											if(obj.object_type != 4):
-												if(obj.object_type == 0):
-													get_node(str(obj.get_path())+"/Door/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
-												#elif(obj.object_type == 1):
-													#get_node(obj.name+"/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
-												else:
-													get_node(str(obj.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
-													
-										if(!camera_base.global_position.is_equal_approx(get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position)):
-											actor.camera_position_before_zoom_onto_object = camera_base.global_position
-											actor.camera_rotation_before_zoom_onto_object = camera_base.global_rotation
-											spring_arm_length_before_zoom_in = spring_arm.spring_length
-										spring_arm.spring_length = zoom_in_spring_arm_length
-										camera_base.global_position = get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position
-										camera_base.global_rotation = get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_rotation
-										
-									else:
-										actor.show_text_bubble("The object is not opened!")
-								elif(actor.is_guard):
-									#TODO not done, need to differnetiate two interaction types
-									if(!get_node(str(actor.replay[actor.id][1])).visible):
-										caught("missing object found at " + str(ticks)+" by "+ actor.unique_name)
-									if(get_node(str(actor.replay[actor.id][1])).damaged):
-										caught("opened object found at " + str(ticks)+" by "+ actor.unique_name)
-							elif(actor.replay[actor.id][2] == "look at"):
-								if(get_node(str(actor.replay[actor.id][1])).damage > 0):
-										caught("damaged object found at " + str(ticks)+" by "+ actor.unique_name)
-								
-				
-				elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
-					actor.text_bubble.visible = false
-					actor.finished_working = false
-					offset = actor.mesh.global_position - actor.replay[actor.id][1]
-					
-					var space_state = get_world_3d().direct_space_state
-						
-					var query = PhysicsRayQueryParameters3D.create(actor.global_position,actor.replay[actor.id][1])
-					query.collide_with_areas = true
-					for a in get_tree().get_nodes_in_group("Actor"):
-						query.exclude = [a]
-					#query.set_collide_with_bodies(false)
-					
-					var move = true
-					var found_door_or_window = false
-					
-					var found_object:Node3D
-					
-					actor.ray.force_raycast_update()
-					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
-					
-					var found_waiting_position = false
-					
-					var found_index = -1
-					
-					for i in range(0,ticks):
-						if(i == actor.waiting_positions.size()):
-							break
-						if(actor.waiting_positions[i][0] == ticks):
-							#print("found waiting position at " + str(ticks))
-							found_waiting_position = true
-							found_index = i
-					
-					if(result):
-						#TODO currently it seems like actors arent correctly filtered out, so this might block the door from being detected in some cases
-						if(result.collider.get_parent().get_parent().is_in_group("Interactable")):
-							if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent().object_type == 0):
-								found_door_or_window = true
-								found_object = result.collider.get_parent().get_parent()
-								#print(backwards)
-								#print("found door at " + str(ticks) + " ticks" + "\n" + " while on position " + str(actor.global_position))
-					
-					if(found_waiting_position):
-						found_door_or_window = true
-						found_object = get_node(actor.waiting_positions[found_index][1])
-					
-					if(actor.replay[actor.id][2] == "movethroughwindow"):
-						found_door_or_window = true
-						found_object = get_node(str(actor.replay[actor.id][3]))
-					
-					if(found_door_or_window):
-						#print("found door at: " + str(ticks))
-						var object_is_passable = false
-						if(actor.is_guard):
-							object_is_passable = true
-						if(found_object.damage == object_durability):
-							object_is_passable = true
-						elif(found_object.object_type == 1):
-							if(actor.replay[actor.id][4] == true):
-								object_is_passable = true
-							
-						if(object_is_passable):							
-							if((!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length) || found_waiting_position):
-								#print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
-								found_object.play_animation("Action", false, true, get_stack())
-								if(found_waiting_position):
-									found_object.anim_player.seek(actor.waiting_positions[found_index][2])
-								if(!actor.is_guard):
-									found_object.was_opened_by_burglar = true
-								else:
-									found_object.was_opened_by_burglar = false
-								#found_object.append_door_opening("forwards")
-								#actor.is_opening = true
-								actor.is_waiting = true
-								#print("waiting...\n")
-								var add_waiting_position = true
-								for i in range(0,ticks):
-									if(i == actor.waiting_positions.size()):
-										break
-									if(actor.waiting_positions[i][0] >= ticks%(actor.maxticks+1)):
-										add_waiting_position = false
-										break
-									if(actor.waiting_positions[i][0] == ticks%(actor.maxticks+1)):
-										add_waiting_position = false
-								
-								if (add_waiting_position):
-									var array = []
-									array.append(ticks)
-									array.append(found_object.get_path())
-									array.append(found_object.anim_player.current_animation_position)
-									actor.waiting_positions.append(array.duplicate())
-									#print("added waiting position for actor "+ actor.name + " while at position " + str(actor.global_position) + ", id: " + str(actor.id))
-									
-								move = false
-								#var array = []
-								#array.append(ticks)
-								#array.append(actor.global_position)
-								#actor.replay.insert(actor.id,array)
-								#TODO need to check if the ticks have already been moved
-								#TODO I commented this out to test setting it to is_waiting instead etc.
-								#for i in range(actor.replay.size()-1-actor.id):
-									#if(actor.replay[actor.id][0] == ticks || actor.change_ticks):
-										#actor.change_ticks = true
-										#actor.replay[actor.id+i][0] += 1
-								#actor.maxid +=1
-								#debug_file.store_line(str(ticks) + " ," + str(backwards))
-								
-									
-							elif(found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length):
-								#actor.is_opening = true
-								#debug_file.store_line(str(ticks) + " ," + str(backwards))
-								if(found_waiting_position):
-									found_object.anim_player.seek(actor.waiting_positions[found_index][2])
-								#var compute = true
-								#if(actor.waiting_positions.size() == 0):
-									#compute = true
-								#if (ticks != actor.waiting_positions[actor.waiting_positions.size()-1][0]):
-									#compute = true
-								#for i in range(0,actor.waiting_positions.size()):
-									#if(actor.waiting_positions[i][0]== ticks):
-										#print("ticks at index " + str(i)+ " do already exist")
-										#actor.waiting_positions.remove_at(i)
-										#break
-								
-								var add_waiting_position = true
-								for i in range(0,ticks):
-									if(i == actor.waiting_positions.size()):
-										break
-									if(actor.waiting_positions[i][0]== ticks):
-										add_waiting_position = false
-								
-								if (add_waiting_position):
-									var array = []
-									array.append(ticks)
-									array.append(found_object.get_path())
-									array.append(found_object.anim_player.current_animation_position)
-									actor.waiting_positions.append(array.duplicate())
-								
-								actor.is_waiting = true
-								move = false
-								#var array = []
-								#array.append(ticks)
-								#array.append(actor.globafensterl_position)
-								#actor.replay.insert(actor.id,array)
-								#TODO need to check if the ticks have already been moved
-								#TODO I commented this out to test setting it to is_waiting instead etc.
-								#for i in range(actor.replay.size()-1-actor.id):
-									#if(actor.replay[actor.id][0] == ticks || actor.change_ticks):
-										#actor.change_ticks = true
-										#actor.replay[actor.id+i][0] += 1
-								#actor.maxid +=1
-							elif(found_object.anim_player.current_animation_position == found_object.anim_player.current_animation_length):
-								#if(actor.change_ticks):
-								pass
-						else:
-							actor.show_text_bubble("the object is locked!")
-							#push_ticks_forward_while_waiting(actor)
-							move = false
-							#REMINDER this is probably not optimal, but actors need to be stopped from proceeding in some cases meaning the id (index) should not change
-							actor.is_waiting = true
-							if(!forwards && !play):
-								#REMINDER this solution is not optimal, if you go press play or fast forward and then rewind the actor will move through doors
-								if(actor == active_burglar):
-									pause_recording()
-							#if(actor == active_burglar):
-								#pause = true
-								#pause_animations()
-								
-					
-					if(move):
-						if(actor.is_waiting):
-							actor.is_waiting = false
-							#REMINDER I disabled this without testing, maybe it is needed
-							#actor.id += 1
-							#actor.currentid = actor.id + 1
-						if(actor.change_ticks):
-							actor.change_ticks = false
-							#if(!actor.is_opening):
-								#actor.id +=1
-								#actor.currentid = actor.id + 1
-						if(actor.is_opening):
-							actor.is_opening = false
-							actor.id +=1
-							actor.currentid = actor.id + 1
-						actor.global_position = actor.replay[actor.id][1]
-						rotate_actor(actor,offset)
-
-						
-					actor.progress_bar.visible = false
-					#TODO how should I code this
-					#$NoiseLevelProgessBar.visible = false
-					actor.object_that_is_being_interacted_with = null
+				replay_forwards(actor)
 			
-			#global_position = global_position.move_toward(next_position, delta * character_speed)
-
-			# Make the robot look at the direction we're traveling.
-			# Clamp y to 0 so the robot only looks left and right, not up/down.
-			
-			#offset.x *= -1
-			
-			#if(backwards || play):
-
+			#if(actor.object_that_is_being_interacted_with):
+				#print(actor.name + ", object in interaction: " + actor.object_that_is_being_interacted_with.name)
 			
 	#if((backwards && ticks > 0) || active_burglar.id != active_burglar.currentid && active_burglar.id != -1):		
 		#counter += 1
@@ -1545,7 +989,7 @@ func print_caught_message(message):
 			if(Global.execute_plan):
 				$CaughtMessage.visible = true
 				$CaughtMessage.text = message
-				play_music("res://assets/Clou original files/Audio/SFX/Sfx_Burglary_Failure.wav")
+				play_music("res://assets/Clou original files/Audio/SFX/Sfx_Alarm_Siren.wav")
 				get_tree().paused = true
 				
 
@@ -1706,3 +1150,598 @@ func quit_plan():
 func play_music(name: String):
 	audio_player.stream = load(name)
 	audio_player.play()
+
+func object_occupied(actor:Node3D, object):
+	if(object):
+		for other in get_tree().get_nodes_in_group("Actor"):
+			if(other != actor):
+				if(other.object_that_is_being_interacted_with == object):
+					return true
+	return false
+
+func replay_backwards(actor:Node3D):
+	var offset:Vector3
+	if((typeof(actor.replay[actor.id][1]) == TYPE_STRING || typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks <= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
+		if(actor.replay[actor.id][2] == "use"):
+			if(!object_occupied(actor, get_node(str(actor.replay[actor.id][1])))):
+				actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
+			else:
+				actor.object_that_is_being_interacted_with = null
+			#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
+			if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
+				get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
+			elif(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
+				get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
+			if(actor.replay[actor.id][3]== "last"):
+				for related_object in get_node(str(actor.replay[actor.id][1])).related_objects_string_array:
+					#is camera
+					if(get_node(related_object).object_type == 7):
+						get_node(related_object).process_mode = Node.PROCESS_MODE_INHERIT
+						get_node(related_object).spotlight.visible = true		
+					#is alarm
+					if(get_node(related_object).object_type == 8):
+						get_node(related_object).is_off = false	
+		if(actor.replay[actor.id][2]== "take"):
+			if(!get_node(str(actor.replay[actor.id][1])).visible):
+				get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_ALWAYS
+				get_node(str(actor.replay[actor.id][1])).visible = true
+				cash -= get_node(str(actor.replay[actor.id][1])).value
+				actor.currently_carrying_weight -= get_node(str(actor.replay[actor.id][1])).weight
+				selected_car.current_load -= get_node(str(actor.replay[actor.id][1])).weight
+		else:
+			var object:Node3D
+			object = get_node(str(actor.replay[actor.id][1]))
+			offset = actor.global_position - get_node(str(actor.replay[actor.id][1])).global_position
+			rotate_actor(actor,offset)
+			#if(object.lock_type != 3):
+			if(!object_occupied(actor, object)):
+				if(actor.is_waiting):
+					actor.is_waiting = false
+					#REMINDER I disabled this without testing, maybe it is needed
+					#actor.id += 1
+					#actor.currentid = actor.id +1
+				if(actor.replay[actor.id][2] == "break"):
+					if(object.damage == 0):
+						actor.finished_working = true
+						actor.progress_bar.visible = false
+					else:
+						actor.finished_working = false
+					if(!actor.finished_working):
+						if(!object_occupied(actor, object)):
+							actor.object_that_is_being_interacted_with = object
+						else:
+							actor.object_that_is_being_interacted_with = null
+							
+						actor.progress_bar.visible = true
+						var guard_that_hears_the_most:Node3D
+						for guard in get_tree().get_nodes_in_group("Actor"):
+							if (guard.is_guard):
+								var tool = get_node(str(actor.replay[actor.id][4]))
+								var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing) * (tool.loudness[object.object_material])))* get_node(str(actor.replay[actor.id][4])).loudness[object.object_material]
+								if(loudness > max_loudness):
+									max_loudness = loudness
+									guard_that_hears_the_most = guard				
+								$NoiseLevelProgessBar.value = max_loudness
+								
+						if($NoiseLevelProgessBar.value > noise_threshold):
+							$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(1,0,0)
+						else:
+							$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
+						#TODO do this stuff
+						#var guard_that_hears_the_most:Node3D
+						actor.progress_bar.value = object.damage
+						object.damage -= actor.replay[actor.id][3]
+						if(object.damage <= 0):
+							object.damage = 0
+							object.damaged = false
+						actor.progress_bar.value = object.damage
+						#print("backwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
+					elif(actor.replay[actor.id][2] == "open"):
+						#TODO I disabled most of this, is this a good idea?
+						if(object_occupied(actor, object) && (object.anim_player.current_animation_position != 0.0 && object.anim_player.current_animation_position != object.anim_player.current_animation_length)):
+							actor.object_that_is_being_interacted_with = null
+						else:
+							actor.object_that_is_being_interacted_with = object
+						#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
+						#TODO ??? why does it check for object type 1 and 2, I added to allow it when going through windows from the inside, does it work?
+							if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard): #&& get_node(str(actor.replay[actor.id][1])).object_type != 0 &&get_node(str(actor.replay[actor.id][1])).object_type != 1):
+								if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):#if(get_node(str(actor.replay[actor.id][1])).anim_player.is_playing()): 
+									get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
+								elif(actor.replay[actor.id][3]== "last"):
+									if(get_node(str(actor.replay[actor.id][1])).object_type != 0):
+										get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
+							#REMINDER what is this for?
+							elif(get_node(str(actor.replay[actor.id][1])).damage != 10000 && !(get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
+								actor.show_text_bubble("the object is locked!")
+							#get_node(str(actor.replay[actor.id][1])).anim_player.advance(-delta)
+				else:
+					actor.show_text_bubble("someone is already working here!")
+					#actor.is_opening = true
+	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
+				
+		if(actor.replay[actor.id][2] == "movethroughwindow"):
+			var found_object = get_node(str(actor.replay[actor.id][3]))
+			if(actor.id == actor.maxid-1):
+				actor.object_that_is_being_interacted_with = null
+			elif(actor.replay[actor.id + 1][2] != "movethroughwindow"):
+				actor.object_that_is_being_interacted_with = null
+			else:
+				if(!object_occupied(actor, found_object)):
+					actor.object_that_is_being_interacted_with = found_object
+				else:
+					actor.object_that_is_being_interacted_with = null
+		else:
+			actor.object_that_is_being_interacted_with = null
+		
+		actor.text_bubble.visible = false
+		#REMINDER I commented this out, dunno if it is needed
+		#if(actor.is_waiting):
+			#actor.is_waiting = false
+			#actor.id -=1
+			#actor.currentid = actor.id- 1
+		actor.finished_working = false
+		#actor.is_opening = false
+		
+		
+		for i in range(actor.id, 0, -1):
+			if(typeof(actor.replay[i][1]) == TYPE_VECTOR3):
+				if(!(actor.global_position.is_equal_approx(actor.replay[i][1]))):
+					offset = actor.replay[i][1] - actor.mesh.global_position
+					break
+			else:
+				offset = actor.replay[actor.id][1] - actor.mesh.global_position
+				break
+		
+		var move = true
+		var space_state = get_world_3d().direct_space_state
+		
+		var found_door_or_window = false
+		
+		var query:PhysicsRayQueryParameters3D
+		
+		var found_index = -1
+		
+		if(actor.id != actor.replay.size()-1):
+			#if(typeof(actor.replay[actor.id+1][1]) == TYPE_VECTOR3):
+			if(actor.waiting_positions.size() > 0):
+				var found_waiting_position = false
+				for i in range(0,ticks):
+					if(i == actor.waiting_positions.size()):
+						break
+					#REMINDER changed from ticks + 2
+					if(actor.waiting_positions[i][0] == ticks):
+						found_waiting_position = true
+						found_index = i
+				if(found_waiting_position):
+					#query = PhysicsRayQueryParameters3D.create(actor.global_position,actor.replay[actor.id+1][1])
+					#query.collide_with_areas = true
+					#for a in get_tree().get_nodes_in_group("Actor"):
+						#query.exclude = [a]
+					#query.set_collide_with_bodies(false)
+					found_door_or_window = true								
+					#print(backwards)
+					#print("found door at " + str(ticks) + " ticks" + "\n" + " while on position " +  str(actor.global_position))
+						
+						
+				
+		actor.ray.force_raycast_update()
+		#var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
+		#if(result):
+			##TODO currently it seems like actors arent correctly filtered out, so this might block the door from being detected in some cases
+			#if(result.collider.get_parent().get_parent().is_in_group("Interactable")):
+				#if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent().object_type == 0):
+					#found_door_or_window = true
+		if(found_door_or_window):
+			if(actor.waiting_positions.size() > 0):
+				var object_being_waited_for = get_node(actor.waiting_positions[found_index][1])
+				if((object_being_waited_for.damage == object_durability && !actor.is_guard) || (actor.is_guard && !object_being_waited_for.was_opened_by_burglar)):
+					#if(get_node(actor.waiting_positions[actor.waiting_positions.size()-1][1]).anim_player.current_animation_position != 0 && get_node(actor.waiting_positions[actor.waiting_positions.size()-1][1]).anim_player.is_playing):
+					#actor.is_opening = true
+					if(actor.waiting_positions.size()> 0):
+						actor.is_waiting = true
+						move = false
+						#print("waiting...\n")
+					actor.waiting_positions.pop_back()
+					#debug_file.store_line(str(ticks) + " ," + str(backwards))
+				
+					#FIXME this was not thought through
+					
+		
+		if(move):	
+			if(actor.is_waiting):
+				actor.is_waiting = false
+				#actor.id -=1
+				#actor.currentid = actor.id- 1
+			#actor.is_opening = false
+			actor.is_opening = false		
+			actor.global_position = actor.replay[actor.id][1]
+			rotate_actor(actor,offset)
+		actor.progress_bar.visible = false
+		#$NoiseLevelProgessBar.visible = false
+	
+func replay_forwards(actor:Node3D):
+	var offset:Vector3
+	if((typeof(actor.replay[actor.id][1]) == TYPE_STRING ||typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
+		var object = get_node(str(actor.replay[actor.id][1]))
+		if(actor.replay[actor.id][2] == "use"):
+			if(!object_occupied(actor, object)):
+				actor.object_that_is_being_interacted_with = object
+			else:
+				actor.object_that_is_being_interacted_with = null
+				if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
+					get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
+					#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
+				if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
+						get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
+				if(actor.replay[actor.id][3]== "last"):
+					for related_object in get_node(str(actor.replay[actor.id][1])).related_objects_string_array:
+						#is camera
+						if(get_node(related_object).object_type == 7):
+							get_node(related_object).process_mode = Node.PROCESS_MODE_DISABLED
+							get_node(related_object).spotlight.visible = false		
+						#is alarm
+						if(get_node(related_object).object_type == 8):
+							get_node(related_object).is_off = true	
+						#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
+		if(actor.replay[actor.id][2] == "take"):
+			var can_pick_up = true
+			if(!get_node(str(actor.replay[actor.id][1])).visible):
+				pass
+				#can_pick_up = false
+				#actor.show_text_bubble("someone already picked it up")
+			if((actor.currently_carrying_weight + get_node(str(actor.replay[actor.id][1])).weight) > actor.max_capacity):
+				can_pick_up = false
+				if(get_node(str(actor.replay[actor.id][1])).visible):
+					actor.show_text_bubble("it doesn't fit in my bag anymore")
+			if((selected_car.current_load + get_node(str(actor.replay[actor.id][1])).weight) > selected_car.max_capacity):
+				can_pick_up = false
+				if(get_node(str(actor.replay[actor.id][1])).visible):
+					actor.show_text_bubble("it doesn't fit in the car anymore")
+			if(can_pick_up):
+				cash += get_node(str(actor.replay[actor.id][1])).value
+				actor.currently_carrying_weight += get_node(str(actor.replay[actor.id][1])).weight
+				selected_car.current_load += get_node(str(actor.replay[actor.id][1])).weight
+				get_node(str(actor.replay[actor.id][1])).visible = false
+				get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_DISABLED
+				
+		else:
+		#FIXME this needs to be changed for loot as it is can be a child of interactables
+			object = get_node(str(actor.replay[actor.id][1]))
+			offset = actor.global_position - object.global_position
+			rotate_actor(actor, offset)
+			if(true):#object.lock_type != 3):
+				if(actor.replay[actor.id][2] == "break"):
+					for alarm in get_tree().get_nodes_in_group("Alarm"):
+						if(alarm.damage != max_damage && !alarm.is_off):
+							for obj_path in alarm.related_objects_string_array:
+								if(str(obj_path) == str(actor.replay[actor.id][1])):
+									caught("caught by " +alarm.name)
+					if(!object_occupied(actor, object)):
+						if(object.damage == 10000):
+							actor.finished_working = true
+							actor.progress_bar.visible = false
+						else:
+							actor.finished_working = false
+						if(!actor.finished_working):
+							if(!object_occupied(actor, object)):
+								actor.object_that_is_being_interacted_with = object
+							else:
+								actor.object_that_is_being_interacted_with = null
+							
+							#TODO this has to probably be adjusted for multiple burglars, so that the actual loudest value is shown
+							actor.progress_bar.visible = true
+							var guard_that_hears_the_most:Node3D
+							for guard in get_tree().get_nodes_in_group("Actor"):
+								if (guard.is_guard):
+									var tool = get_node(str(actor.replay[actor.id][4]))
+									var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing) * (tool.loudness[object.object_material])))* get_node(str(actor.replay[actor.id][4])).loudness[object.object_material]
+									if(loudness > max_loudness):
+										max_loudness = loudness
+										guard_that_hears_the_most = guard	
+													
+									$NoiseLevelProgessBar.value = max_loudness
+										
+							if($NoiseLevelProgessBar.value > noise_threshold):
+								if(guard_that_hears_the_most):
+									$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(1,0,0)
+									print_caught_message("you have been heard by " + guard_that_hears_the_most.unique_name + " at " + $TimerLabel.get_time_as_string())
+							else:
+								$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
+							actor.progress_bar.value = object.damage
+							object.damage += actor.replay[actor.id][3]
+							object.damaged = get_node(str(actor.replay[actor.id][4])).damaging	
+							if(object.damage > 10000):
+								object.damage = 10000
+							actor.progress_bar.value = object.damage
+							#print("forwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
+					else:
+						actor.show_text_bubble("someone is already working here!")
+						#for i in range(actor.replay.size()-1-actor.id):
+							###actor.change_ticks = true
+							#actor.replay[actor.id+i][0] += 1
+				#TODO this is currently skipped, aka the first tick is skipped
+				elif(actor.replay[actor.id][2] == "open"):
+					if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard || (get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
+						#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
+						if(object_occupied(actor,object) && (object.anim_player.current_animation_position != 0.0 && object.anim_player.current_animation_position != object.anim_player.current_animation_length)):
+							actor.object_that_is_being_interacted_with = null
+						else:
+							actor.object_that_is_being_interacted_with = object 
+							if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
+								get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
+								if(!actor.is_guard):
+									get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = true
+								else:
+									get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = false
+								#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
+							#TODO add object closing when open
+							elif(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length && (get_node(str(actor.replay[actor.id][1])).object_type == 0 || get_node(str(actor.replay[actor.id][1])).object_type == 3)):
+									get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
+									#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
+							#elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
+						#if door is already open or being opened while trying to go trough it, delete the opening record
+						#TODO this is not working currently
+						#elif(is_object_occupied || get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
+							#for i in range(25):
+								#actor.replay.remove_at(actor.id)
+							#actor.maxid -= 25
+							#for i in range(actor.replay.size()-actor.id):
+								##actor.replay.remove_at(actor.id+i)
+								##FIXME this whole code in this section is very questionable, I didn't think about it very much
+								#actor.replay[actor.id + i][0] = ticks +i +1
+							#TODO this fixes some issues (the id being to low for the burglar to move) but introduces others
+							#actor.id += 1
+					else:
+						actor.show_text_bubble("the object is locked!")
+						#get_node(str(actor.replay[actor.id][1])).anim_player.advance(delta)
+		
+				elif(actor.replay[actor.id][2] == "inspect"):
+					if(!play && !Global.load_replay && !forwards && !actor.is_guard):
+						if(get_node(str(actor.replay[actor.id][1])).object_type == 4):
+							actor.show_text_bubble(get_node(str(actor.replay[actor.id][1])).unique_name + "\nvalue: " + str(get_node(str(actor.replay[actor.id][1])).value) + "$" + "\nweight: " + str(get_node(str(actor.replay[actor.id][1])).weight) + "kg")
+						elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
+							actor.is_zoomed_onto_object = true
+							for obj in get_tree().get_nodes_in_group("Interactable"):
+								if(obj.object_type != 4):
+									if(obj.object_type == 0):
+										get_node(str(obj.get_path())+"/Door/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
+									#elif(obj.object_type == 1):
+										#get_node(obj.name+"/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
+									else:
+										get_node(str(obj.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
+										
+							if(!camera_base.global_position.is_equal_approx(get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position)):
+								actor.camera_position_before_zoom_onto_object = camera_base.global_position
+								actor.camera_rotation_before_zoom_onto_object = camera_base.global_rotation
+								spring_arm_length_before_zoom_in = spring_arm.spring_length
+							spring_arm.spring_length = zoom_in_spring_arm_length
+							camera_base.global_position = get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position
+							camera_base.global_rotation = get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_rotation
+							
+						else:
+							actor.show_text_bubble("The object is not opened!")
+					elif(actor.is_guard):
+						#TODO not done, need to differnetiate two interaction types
+						if(!get_node(str(actor.replay[actor.id][1])).visible):
+							caught("missing object found at " + str(ticks)+" by "+ actor.unique_name)
+						if(get_node(str(actor.replay[actor.id][1])).damaged):
+							caught("opened object found at " + str(ticks)+" by "+ actor.unique_name)
+				elif(actor.replay[actor.id][2] == "look at"):
+					if(get_node(str(actor.replay[actor.id][1])).damage > 0):
+							caught("damaged object found at " + str(ticks)+" by "+ actor.unique_name)
+	
+	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
+		actor.text_bubble.visible = false
+		actor.finished_working = false
+		offset = actor.mesh.global_position - actor.replay[actor.id][1]
+		
+		var space_state = get_world_3d().direct_space_state
+			
+		var query = PhysicsRayQueryParameters3D.create(actor.global_position,actor.replay[actor.id][1])
+		query.collide_with_areas = true
+		for a in get_tree().get_nodes_in_group("Actor"):
+			query.exclude = [a]
+		#query.set_collide_with_bodies(false)
+		
+		var move = true
+		var found_door_or_window = false
+		
+		var found_object:Node3D
+			
+		actor.ray.force_raycast_update()
+		var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
+		
+		var found_waiting_position = false
+		
+		var found_index = -1
+		
+		for i in range(0,ticks):
+			if(i == actor.waiting_positions.size()):
+				break
+			if(actor.waiting_positions[i][0] == ticks):
+				#print("found waiting position at " + str(ticks))
+				found_waiting_position = true
+				found_index = i
+		
+		if(result):
+			#TODO currently it seems like actors arent correctly filtered out, so this might block the door from being detected in some cases
+			if(result.collider.get_parent().get_parent().is_in_group("Interactable")):
+				if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent().object_type == 0):
+					found_door_or_window = true
+					found_object = result.collider.get_parent().get_parent()
+					#print(backwards)
+					#print("found door at " + str(ticks) + " ticks" + "\n" + " while on position " + str(actor.global_position))
+		
+		if(found_waiting_position):
+			found_door_or_window = true
+			found_object = get_node(actor.waiting_positions[found_index][1])
+		
+		var window_is_occupied = false
+		
+		if(actor.replay[actor.id][2] == "movethroughwindow"):
+			found_door_or_window = true
+			found_object = get_node(str(actor.replay[actor.id][3]))
+			if(actor.id == actor.maxid-1):
+				actor.object_that_is_being_interacted_with = null
+			elif(actor.replay[actor.id + 1][2] != "movethroughwindow"):
+				actor.object_that_is_being_interacted_with = null
+			else:
+				if(!object_occupied(actor, found_object)):
+					actor.object_that_is_being_interacted_with = found_object
+				else:
+					actor.object_that_is_being_interacted_with = null
+			window_is_occupied = object_occupied(actor, found_object)
+		else:
+			actor.object_that_is_being_interacted_with = null
+		
+
+		if(found_door_or_window):
+			#print("found door at: " + str(ticks))
+			var object_is_passable = false
+			if(actor.is_guard):
+				object_is_passable = true
+			if(found_object.damage == object_durability):
+				object_is_passable = true
+			elif(found_object.object_type == 1):
+				if(actor.replay[actor.id][4] == true):
+					object_is_passable = true
+				
+			if(object_is_passable):							
+				if((!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length) || found_waiting_position):
+					#print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
+					found_object.play_animation("Action", false, true, get_stack())
+					if(found_waiting_position):
+						found_object.anim_player.seek(actor.waiting_positions[found_index][2])
+					if(!actor.is_guard):
+						found_object.was_opened_by_burglar = true
+					else:
+						found_object.was_opened_by_burglar = false
+					#found_object.append_door_opening("forwards")
+					#actor.is_opening = true
+					actor.is_waiting = true
+					#print("waiting...\n")
+					var add_waiting_position = true
+					for i in range(0,ticks):
+						if(i == actor.waiting_positions.size()):
+							break
+						if(actor.waiting_positions[i][0] >= ticks%(actor.maxticks+1)):
+							add_waiting_position = false
+							break
+						if(actor.waiting_positions[i][0] == ticks%(actor.maxticks+1)):
+							add_waiting_position = false
+					
+					if (add_waiting_position):
+						var array = []
+						array.append(ticks)
+						array.append(found_object.get_path())
+						array.append(found_object.anim_player.current_animation_position)
+						actor.waiting_positions.append(array.duplicate())
+						#print("added waiting position for actor "+ actor.name + " while at position " + str(actor.global_position) + ", id: " + str(actor.id))
+						
+					move = false
+					#var array = []
+					#array.append(ticks)
+					#array.append(actor.global_position)
+					#actor.replay.insert(actor.id,array)
+					#TODO need to check if the ticks have already been moved
+					#TODO I commented this out to test setting it to is_waiting instead etc.
+					#for i in range(actor.replay.size()-1-actor.id):
+						#if(actor.replay[actor.id][0] == ticks || actor.change_ticks):
+							#actor.change_ticks = true
+							#actor.replay[actor.id+i][0] += 1
+					#actor.maxid +=1
+					#debug_file.store_line(str(ticks) + " ," + str(backwards))
+					
+						
+				elif(found_object.anim_player.current_animation_position != found_object.anim_player.current_animation_length || window_is_occupied):
+					#actor.is_opening = true
+					#debug_file.store_line(str(ticks) + " ," + str(backwards))
+					if(found_waiting_position):
+						found_object.anim_player.seek(actor.waiting_positions[found_index][2])
+					#var compute = true
+					#if(actor.waiting_positions.size() == 0):
+						#compute = true
+					#if (ticks != actor.waiting_positions[actor.waiting_positions.size()-1][0]):
+						#compute = true
+					#for i in range(0,actor.waiting_positions.size()):
+						#if(actor.waiting_positions[i][0]== ticks):
+							#print("ticks at index " + str(i)+ " do already exist")
+							#actor.waiting_positions.remove_at(i)
+							#break
+					
+					var add_waiting_position = true
+					for i in range(0,ticks):
+						if(i == actor.waiting_positions.size()):
+							break
+						if(actor.waiting_positions[i][0]== ticks):
+							add_waiting_position = false
+					
+					if (add_waiting_position):
+						var array = []
+						array.append(ticks)
+						array.append(found_object.get_path())
+						array.append(found_object.anim_player.current_animation_position)
+						actor.waiting_positions.append(array.duplicate())
+					
+					actor.is_waiting = true
+					move = false
+					#var array = []
+					#array.append(ticks)
+					#array.append(actor.globafensterl_position)
+					#actor.replay.insert(actor.id,array)
+					#TODO need to check if the ticks have already been moved
+					#TODO I commented this out to test setting it to is_waiting instead etc.
+					#for i in range(actor.replay.size()-1-actor.id):
+						#if(actor.replay[actor.id][0] == ticks || actor.change_ticks):
+							#actor.change_ticks = true
+							#actor.replay[actor.id+i][0] += 1
+					#actor.maxid +=1
+				elif(found_object.anim_player.current_animation_position == found_object.anim_player.current_animation_length):
+					#if(actor.change_ticks):
+					pass
+			else:
+				actor.show_text_bubble("the object is locked!")
+				#push_ticks_forward_while_waiting(actor)
+				move = false
+				#REMINDER this is probably not optimal, but actors need to be stopped from proceeding in some cases meaning the id (index) should not change
+				actor.is_waiting = true
+				if(!forwards && !play):
+					#REMINDER this solution is not optimal, if you go press play or fast forward and then rewind the actor will move through doors
+					if(actor == active_burglar):
+						pause_recording()
+				#if(actor == active_burglar):
+					#pause = true
+					#pause_animations()
+					
+		
+		if(move):
+			if(actor.is_waiting):
+				actor.is_waiting = false
+				#REMINDER I disabled this without testing, maybe it is needed
+				#actor.id += 1
+				#actor.currentid = actor.id + 1
+			if(actor.change_ticks):
+				actor.change_ticks = false
+				#if(!actor.is_opening):
+					#actor.id +=1
+					#actor.currentid = actor.id + 1
+			if(actor.is_opening):
+				actor.is_opening = false
+				actor.id +=1
+				actor.currentid = actor.id + 1
+			actor.global_position = actor.replay[actor.id][1]
+			rotate_actor(actor,offset)
+
+			
+		actor.progress_bar.visible = false
+		#TODO how should I code this
+		#$NoiseLevelProgessBar.visible = false
+		
+#global_position = global_position.move_toward(next_position, delta * character_speed)
+
+# Make the robot look at the direction we're traveling.
+# Clamp y to 0 so the robot only looks left and right, not up/down.
+
+#offset.x *= -1
+
+#if(backwards || play):

@@ -1,7 +1,7 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1783619168
-CashLabel.gd::GDScript::3796873519851598771::1779911883::0::1::::<>Label<><>0<>0<><>::
-export_presets.cfg::TextFile::-1::1783611318::0::1::::<><><>0<>0<><>::
+::res://::1783780203
+CashLabel.gd::GDScript::3796873519851598771::1783627767::0::1::::<>Label<><>0<>0<><>::
+export_presets.cfg::TextFile::-1::1783625266::0::1::::<><><>0<>0<><>::
 house_test.tscn::PackedScene::7026592653849198841::1782921375::0::1::::<><><>0<>0<><>::uid://by7mq246uyeor::::res://assets/Meshes/HouseTest.blend<>uid://dco4d5u57b37y::::res://assets/scripts/Interactable/floor_visibility_check.gd
 icon.webp::CompressedTexture2D::3626017087650301524::1775922205::1775922218::1::::<><><>0<>0<>589028de9034123a3c6890116d339791<>res://.godot/imported/icon.webp-e94f9a68b0f625a567a797079e4d325f.ctex::
 InteractButtons.gd::GDScript::3452914104420203137::1777057738::0::1::::<>Node2D<><>0<>0<><>::
@@ -10,7 +10,7 @@ navmesh.res::NavigationMesh::579972848534123483::1776020627::0::1::::<><><>0<>0<
 README.md::TextFile::-1::1783525231::0::1::::<><><>0<>0<><>::
 robot.res::ArrayMesh::1089271634669088469::1783343488::0::1::::<><><>0<>0<><>::
 set_animations_to_nearest_interpolation.gd::GDScript::695764261347250319::1783171571::0::1::::<>EditorScript<><>0<>1<><>::
-Test Scene.tscn::PackedScene::7844485755279016064::1783619164::0::1::::<><><>0<>0<><>::uid://okvmpkngna77::::res://assets/scripts/control.gd<>uid://c7dy7pkfuf3ht::::res://house_test.tscn<>uid://2jr2xly72wqs::::res://assets/Meshes/Low Poly Interior Pack/SingleBed1.fbx<>uid://dvnhkeyunxa80::::res://assets/Scenes/actor.tscn<>uid://7pflsibliusv::::res://assets/Scenes/guard.tscn<>uid://b466cok0vg882::::res://assets/Scenes/camera.tscn<>uid://3gyms6q5pdyh::::res://assets/Scenes/Switch.tscn<>uid://bmtvl7vq83max::::res://assets/scripts/timer_label.gd<>uid://lm0feo4m4ye4::::res://assets/scripts/h_slider.gd<>uid://m23axn7qvbnv::::res://assets/Scenes/Containers/register.tscn<>uid://6esvbnvlcl0p::::res://assets/Scenes/camera_base.tscn<>uid://ecom23v8akgk::::res://assets/Scenes/Car.tscn<>uid://pgda8eh2npk3::::res://assets/Meshes/Low Poly Interior Pack/GameBoard.fbx<>uid://dei7hg6kagy8u::::res://assets/Textures/Play_Button.png<>uid://dqmi3aujq0cia::::res://assets/Scenes/window.tscn<>uid://drjtxg78yquv3::::res://assets/Scenes/Loot/bag.tscn<>uid://brpb4i3pvgahy::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Base.glb<>uid://bonkiymgimfru::::res://assets/Scenes/Door.tscn<>uid://chchwddy7dv0u::::res://assets/Scenes/Loot/Wine Bottle.tscn<>uid://3a3tg5vcb4vm::::res://assets/Scenes/tool.tscn<>uid://dtsd0h6nsu8f3::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Sauce_Bottom.glb<>uid://b06xn62ue263l::::res://assets/Scenes/DoorInside.tscn<>uid://ug06e1n7ht5k::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Mushrooms.glb<>uid://budh7mw8mbe3d::::res://CashLabel.gd<>uid://c8njr3ext8j8f::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Sausage.glb<>uid://7nbyag8oduvv::::res://assets/Meshes/Low Poly Interior Pack/WoodenChair.fbx<>uid://dm3rl83whdktr::::res://assets/Textures/MagnifyingGlasses.png<>uid://bk1vx1ufcbth5::::res://assets/Textures/SpeechBubble.png<>uid://bpgu8xnkde53b::::res://InteractButtons.gd<>uid://qy525lcon3ks::::res://assets/Textures/Hand.png<>uid://bke3k7nl3t283::::res://assets/Scenes/Environment/ceiling_lamp.tscn<>uid://btlcsi0a07viu::::res://assets/Scenes/Loot/Chateu de France.tscn<>uid://ddkjkg0yr6y0n::::res://assets/Meshes/Low Poly Interior Pack/Bookshelf.fbx<>uid://bcbua0lm0gxw3::::res://assets/Meshes/Low Poly Interior Pack/Plane.fbx<>uid://dmn8brywksa6d::::res://assets/Meshes/Low Poly Interior Pack/LargeVase.fbx<>uid://deuo2vpd5gi4f::::res://assets/Meshes/Low Poly Interior Pack/CookerUnit.fbx<>uid://dylnhbxejar5r::::res://assets/Meshes/Low Poly Interior Pack/AmericanFridge.fbx<>uid://cooodnujpficy::::res://assets/Meshes/Low Poly Interior Pack/Armchair1.fbx<>uid://lxoekc14dhjj::::res://assets/Scenes/Loot/coins.tscn<>uid://cgaa7utnn5dho::::res://assets/Meshes/Low Poly Interior Pack/WashingMachine.fbx<>uid://dafwd7x05oat7::::res://assets/Meshes/Low Poly Interior Pack/WoodenDinnerTable.fbx<>uid://cs3hkydvjqk8::::res://assets/Meshes/Low Poly Interior Pack/WallMountedTV.fbx<>uid://dvxtu2yhpprdg::::res://assets/Meshes/Low Poly Interior Pack/Toilet.fbx<>uid://bxgyrh7rkxkdg::::res://assets/Meshes/Low Poly Interior Pack/BathroomSink.fbx<>uid://bompkq7nbe2gd::::res://assets/Textures/SkipToEnd_Button.png<>uid://y1katdifje3v::::res://assets/Textures/SkipToStart_Button.png<>uid://dw0qn8s0ifjpp::::res://assets/Scenes/Environment/lantern.tscn<>uid://bm0qpctff6h1k::::res://assets/Textures/SkipToPreviousAction_Button.png<>uid://da6q2g16o00q5::::res://assets/Textures/Record_Button.png<>uid://bvocot38fl74y::::res://assets/Textures/SkipToNextAction_Button.png<>uid://bxjpbc8sioki3::::res://assets/Meshes/Weinglas.glb<>uid://fcr4gciqu4va::::res://assets/Scenes/Security/alarm_system.tscn<>uid://qtg03eexgg3h::::res://assets/Scenes/Containers/locker.tscn<>uid://doy0033mjobd::::res://assets/Clou original files/Audio/Music/Track03.ogg<>uid://ckehugd8h2al8::::res://assets/Scenes/UI/pause_menu.tscn
+Test Scene.tscn::PackedScene::7844485755279016064::1783780191::0::1::::<><><>0<>0<><>::uid://okvmpkngna77::::res://assets/scripts/control.gd<>uid://c7dy7pkfuf3ht::::res://house_test.tscn<>uid://2jr2xly72wqs::::res://assets/Meshes/Low Poly Interior Pack/SingleBed1.fbx<>uid://dvnhkeyunxa80::::res://assets/Scenes/actor.tscn<>uid://7pflsibliusv::::res://assets/Scenes/guard.tscn<>uid://b466cok0vg882::::res://assets/Scenes/camera.tscn<>uid://3gyms6q5pdyh::::res://assets/Scenes/Switch.tscn<>uid://bmtvl7vq83max::::res://assets/scripts/timer_label.gd<>uid://lm0feo4m4ye4::::res://assets/scripts/h_slider.gd<>uid://m23axn7qvbnv::::res://assets/Scenes/Containers/register.tscn<>uid://6esvbnvlcl0p::::res://assets/Scenes/camera_base.tscn<>uid://ecom23v8akgk::::res://assets/Scenes/Car.tscn<>uid://pgda8eh2npk3::::res://assets/Meshes/Low Poly Interior Pack/GameBoard.fbx<>uid://dei7hg6kagy8u::::res://assets/Textures/Play_Button.png<>uid://dqmi3aujq0cia::::res://assets/Scenes/window.tscn<>uid://drjtxg78yquv3::::res://assets/Scenes/Loot/bag.tscn<>uid://brpb4i3pvgahy::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Base.glb<>uid://bonkiymgimfru::::res://assets/Scenes/Door.tscn<>uid://chchwddy7dv0u::::res://assets/Scenes/Loot/Wine Bottle.tscn<>uid://3a3tg5vcb4vm::::res://assets/Scenes/tool.tscn<>uid://dtsd0h6nsu8f3::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Sauce_Bottom.glb<>uid://b06xn62ue263l::::res://assets/Scenes/DoorInside.tscn<>uid://ug06e1n7ht5k::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Mushrooms.glb<>uid://budh7mw8mbe3d::::res://CashLabel.gd<>uid://c8njr3ext8j8f::::res://assets/Meshes/Low Poly Food/Pizza/SM_Pizza_Sausage.glb<>uid://7nbyag8oduvv::::res://assets/Meshes/Low Poly Interior Pack/WoodenChair.fbx<>uid://dm3rl83whdktr::::res://assets/Textures/MagnifyingGlasses.png<>uid://bk1vx1ufcbth5::::res://assets/Textures/SpeechBubble.png<>uid://bpgu8xnkde53b::::res://InteractButtons.gd<>uid://qy525lcon3ks::::res://assets/Textures/Hand.png<>uid://bke3k7nl3t283::::res://assets/Scenes/Environment/ceiling_lamp.tscn<>uid://btlcsi0a07viu::::res://assets/Scenes/Loot/Chateu de France.tscn<>uid://ddkjkg0yr6y0n::::res://assets/Meshes/Low Poly Interior Pack/Bookshelf.fbx<>uid://bcbua0lm0gxw3::::res://assets/Meshes/Low Poly Interior Pack/Plane.fbx<>uid://dmn8brywksa6d::::res://assets/Meshes/Low Poly Interior Pack/LargeVase.fbx<>uid://deuo2vpd5gi4f::::res://assets/Meshes/Low Poly Interior Pack/CookerUnit.fbx<>uid://dylnhbxejar5r::::res://assets/Meshes/Low Poly Interior Pack/AmericanFridge.fbx<>uid://cooodnujpficy::::res://assets/Meshes/Low Poly Interior Pack/Armchair1.fbx<>uid://lxoekc14dhjj::::res://assets/Scenes/Loot/coins.tscn<>uid://cgaa7utnn5dho::::res://assets/Meshes/Low Poly Interior Pack/WashingMachine.fbx<>uid://dafwd7x05oat7::::res://assets/Meshes/Low Poly Interior Pack/WoodenDinnerTable.fbx<>uid://cs3hkydvjqk8::::res://assets/Meshes/Low Poly Interior Pack/WallMountedTV.fbx<>uid://dvxtu2yhpprdg::::res://assets/Meshes/Low Poly Interior Pack/Toilet.fbx<>uid://bxgyrh7rkxkdg::::res://assets/Meshes/Low Poly Interior Pack/BathroomSink.fbx<>uid://b1mav0ieyh22a::::res://assets/scripts/weight_label.gd<>uid://bompkq7nbe2gd::::res://assets/Textures/SkipToEnd_Button.png<>uid://y1katdifje3v::::res://assets/Textures/SkipToStart_Button.png<>uid://dw0qn8s0ifjpp::::res://assets/Scenes/Environment/lantern.tscn<>uid://bm0qpctff6h1k::::res://assets/Textures/SkipToPreviousAction_Button.png<>uid://da6q2g16o00q5::::res://assets/Textures/Record_Button.png<>uid://bvocot38fl74y::::res://assets/Textures/SkipToNextAction_Button.png<>uid://bxjpbc8sioki3::::res://assets/Meshes/Weinglas.glb<>uid://fcr4gciqu4va::::res://assets/Scenes/Security/alarm_system.tscn<>uid://qtg03eexgg3h::::res://assets/Scenes/Containers/locker.tscn<>uid://doy0033mjobd::::res://assets/Clou original files/Audio/Music/Track03.ogg<>uid://ckehugd8h2al8::::res://assets/Scenes/UI/pause_menu.tscn
 Test SceneNew.tscn::PackedScene::4360050248326019360::1783619164::0::1::::<><><>0<>0<><>::uid://okvmpkngna77::::res://assets/scripts/control.gd<>uid://gmytdjp2bcsq::::res://level_mesh.res<>uid://cmo20bpkalwwj::::res://assets/Scenes/Beverage store.tscn<>uid://3gyms6q5pdyh::::res://assets/Scenes/Switch.tscn<>uid://bonkiymgimfru::::res://assets/Scenes/Door.tscn<>uid://b466cok0vg882::::res://assets/Scenes/camera.tscn<>uid://m23axn7qvbnv::::res://assets/Scenes/Containers/register.tscn<>uid://dqmi3aujq0cia::::res://assets/Scenes/window.tscn<>uid://cwsvg7jduswjd::::res://assets/Meshes/HouseTestRoof.blend<>uid://b06xn62ue263l::::res://assets/Scenes/DoorInside.tscn<>uid://dvnhkeyunxa80::::res://assets/Scenes/actor.tscn<>uid://7pflsibliusv::::res://assets/Scenes/guard.tscn<>uid://bmtvl7vq83max::::res://assets/scripts/timer_label.gd<>uid://budh7mw8mbe3d::::res://CashLabel.gd<>uid://lm0feo4m4ye4::::res://assets/scripts/h_slider.gd<>uid://6esvbnvlcl0p::::res://assets/Scenes/camera_base.tscn<>uid://dei7hg6kagy8u::::res://assets/Textures/Play_Button.png<>uid://bwcc83nl38xgm::::res://assets/Textures/Pause_Button.png<>uid://3a3tg5vcb4vm::::res://assets/Scenes/tool.tscn<>uid://bpgu8xnkde53b::::res://InteractButtons.gd<>uid://bk1vx1ufcbth5::::res://assets/Textures/SpeechBubble.png<>uid://qy525lcon3ks::::res://assets/Textures/Hand.png<>uid://dm3rl83whdktr::::res://assets/Textures/MagnifyingGlasses.png<>uid://doy0033mjobd::::res://assets/Clou original files/Audio/Music/Track03.ogg<>uid://ca7bvace4karn::::res://assets/Clou original files/WindowClou.blend
 Thumbnail.png::CompressedTexture2D::2958032716781265867::1779978583::1779978585::1::::<><><>0<>0<>d7016050cfa133df92ab03ce40a9b9f1<>res://.godot/imported/Thumbnail.png-143cb7006b8edd1e0eebaf68023ba4ed.ctex::
 ::res://addons/::1779908842
@@ -47,7 +47,7 @@ plugin.gd::GDScript::3548639042737116390::1776254061::0::1::::<>EditorPlugin<><>
 ::res://addons/snappy/::1779908842
 plugin.cfg::TextFile::-1::1779908842::0::1::::<><><>0<>0<><>::
 snappy.gd::GDScript::1672304593586398681::1779908842::0::1::::<>EditorPlugin<><>0<>1<><>::
-::res://addons/Todo_Manager/::1783617703
+::res://addons/Todo_Manager/::1783708881
 ColourPicker.gd::GDScript::7423189413155139485::1775999431::0::1::::<>HBoxContainer<><>0<>1<><>::
 Current.gd::GDScript::8272394960458563341::1775999431::0::1::::<>Control<><>0<>1<><>::
 Dock.gd::GDScript::6049340484349524101::1775999431::0::1::::<>Control<><>0<>1<><>::
@@ -55,7 +55,7 @@ PatternEdit.gd::GDScript::2706809576279000064::1775999431::0::1::::<>PanelContai
 plugin.cfg::TextFile::-1::1775999431::0::1::::<><><>0<>0<><>::
 plugin.gd::GDScript::5219353738924224943::1775999431::0::1::::<>EditorPlugin<><>0<>1<><>::
 Project.gd::GDScript::3348460405673864794::1775999431::0::1::::<>Control<><>0<>1<><>::
-todo.cfg::TextFile::-1::1783617703::0::1::::<><><>0<>0<><>::
+todo.cfg::TextFile::-1::1783708881::0::1::::<><><>0<>0<><>::
 todoItem_class.gd::GDScript::1685429052206527426::1775999431::0::1::::<>RefCounted<><>0<>1<><>::
 todo_class.gd::GDScript::6294551047687995997::1775999431::0::1::::<>RefCounted<><>0<>1<><>::
 ::res://addons/Todo_Manager/doc/::1779459784
@@ -109,7 +109,8 @@ WindowClou.blend::PackedScene::4838999677491382127::1777400773::1783619132::1:::
 ::res://assets/Clou original files/Audio/Music/::1783619165
 Track03.ogg::AudioStreamOggVorbis::240971029771826661::1777322748::1783619165::1::::<><><>0<>0<>3f1ffed0944954d4d3a0807cc31e0e95<>res://.godot/imported/Track03.ogg-8211165023c4cfaea52c5618824f53cf.oggvorbisstr::
 Track04.ogg::AudioStreamOggVorbis::5358447631918712053::1783616335::1783619165::1::::<><><>0<>0<>86c56dda94dc75c843db2d23660a497f<>res://.godot/imported/Track04.ogg-29b48d0c82d0fceefa017633a3e93e5b.oggvorbisstr::
-::res://assets/Clou original files/Audio/SFX/::1783619168
+::res://assets/Clou original files/Audio/SFX/::1783775848
+Sfx_Alarm_Siren.wav::AudioStreamWAV::9125203223080455429::1783775810::1783775848::1::::<><><>0<>0<>e08a88f5f91da9b1f0a3d8c18862c182<>res://.godot/imported/Sfx_Alarm_Siren.wav-48d09c55639991bb7a1a8a21fb83b6c1.sample::
 Sfx_Burglary_Failure.wav::AudioStreamWAV::4435792436827179345::1783616445::1783619169::1::::<><><>0<>0<>2f75bdefbfe4a95529a8f32431384665<>res://.godot/imported/Sfx_Burglary_Failure.wav-07da617b4ef0437c47ded63afc258a2e.sample::
 Sfx_Burglary_Success.wav::AudioStreamWAV::865133310253297052::1783616442::1783619169::1::::<><><>0<>0<>71b705fa80d7206e5aabcbb9e19564d4<>res://.godot/imported/Sfx_Burglary_Success.wav-6a1c6c0b9f17633277efd3fe9693b713.sample::
 ::res://assets/Clou original files/Clou 2 World/::1783619130
@@ -256,8 +257,8 @@ WoodenDinnerTable.fbx::PackedScene::7170926788526411734::1779875554::1779875560:
 WoodenStool.fbx::PackedScene::3295465339130850124::1779875554::1779875560::1::::<><><>0<>0<>11e2d4ee6866df435cb3bea6bc26bdd7<>res://.godot/imported/WoodenStool.fbx-7dad7af027ad0a480cbf0bdb4345eebe.scn::
 ::res://assets/Meshes/textures/::1779799810
 frenchwinebottle.png::CompressedTexture2D::3191822471830499765::1779797816::1779799810::1::::<><><>0<>0<>354b38f934776c8b5fb146b393681042<>res://.godot/imported/frenchwinebottle.png-dc9b986a599759434e084c5a09b5a468.s3tc.ctex::
-::res://assets/Scenes/::1783614894
-actor.tscn::PackedScene::8660507803264867075::1783614894::0::1::::<><><>0<>0<><>::uid://bh6i84pbsmlsx::::res://assets/scripts/character.gd<>uid://prwe6io8p1iv::::res://robot.res
+::res://assets/Scenes/::1783622558
+actor.tscn::PackedScene::8660507803264867075::1783622558::0::1::::<><><>0<>0<><>::uid://bh6i84pbsmlsx::::res://assets/scripts/character.gd<>uid://prwe6io8p1iv::::res://robot.res
 Beverage store.tscn::PackedScene::5645692859401973669::1777632652::0::1::::<><><>0<>0<><>::uid://by7mq246uyeor::::res://assets/Meshes/HouseTest.blend
 camera.gd::GDScript::446155752292582567::1780082447::0::1::::<>Node3D<><>0<>0<><>::
 camera.tscn::PackedScene::4487779409874633377::1783605693::0::1::::<><><>0<>0<><>::uid://gmeec1xjimjv::::res://assets/Scenes/camera.gd<>uid://prwe6io8p1iv::::res://robot.res
@@ -274,11 +275,11 @@ Switch.tscn::PackedScene::1979153519819409499::1782921375::0::1::::<><><>0<>0<><
 table.tscn::PackedScene::2454990696370542168::1777141236::0::1::::<><><>0<>0<><>::uid://b6ccp5nenspcp::::res://assets/Meshes/Table.blend
 tool.tscn::PackedScene::1967021990187684242::1783610152::0::1::::<><><>0<>0<><>::uid://de4bv3cna3bye::::res://assets/scripts/tool.gd
 window.tscn::PackedScene::8307591851835381120::1783526594::0::1::::<><><>0<>0<><>::uid://cxi1jpfte7b2a::::res://assets/Meshes/Window.blend<>uid://dlk0osyitr8af::::res://assets/scripts/Interactable/interactable.gd<>uid://bpfk64tclyrlb::::res://assets/Materials/glass_material.tres
-::res://assets/Scenes/Containers/::1783605693
+::res://assets/Scenes/Containers/::1783774182
 locker.tscn::PackedScene::1162655099385617911::1782921375::0::1::::<><><>0<>0<><>::uid://nkca03ngy7k1::::res://assets/scripts/Interactable/Container.gd<>uid://xxh3ahdmr18u::::res://assets/Meshes/Locker.blend
-register.tscn::PackedScene::899705628409116219::1783605693::0::1::::<><><>0<>0<><>::uid://c5gho6pmn58kh::::res://assets/Meshes/Register.blend<>uid://nkca03ngy7k1::::res://assets/scripts/Interactable/Container.gd<>uid://lxoekc14dhjj::::res://assets/Scenes/Loot/coins.tscn
-::res://assets/Scenes/Environment/::1783254107
-ceiling_lamp.tscn::PackedScene::3098286266193822178::1783254107::0::1::::<><><>0<>0<><>::uid://ueseojs21hnh::::res://assets/Meshes/Low Poly Interior Pack/CeilingLamp.fbx
+register.tscn::PackedScene::899705628409116219::1783774182::0::1::::<><><>0<>0<><>::uid://c5gho6pmn58kh::::res://assets/Meshes/Register.blend<>uid://nkca03ngy7k1::::res://assets/scripts/Interactable/Container.gd<>uid://lxoekc14dhjj::::res://assets/Scenes/Loot/coins.tscn
+::res://assets/Scenes/Environment/::1783631881
+ceiling_lamp.tscn::PackedScene::3098286266193822178::1783631881::0::1::::<><><>0<>0<><>::
 lantern.tscn::PackedScene::8756022504396355065::1782837523::0::1::::<><><>0<>0<><>::uid://bol1sd60mg0ph::::res://assets/Meshes/Low Poly City/Lantern.glb
 ::res://assets/Scenes/Loot/::1783619122
 bag.tscn::PackedScene::8372246854940703062::1783619122::0::1::::<><><>0<>0<><>::uid://do8e1vhs0ky8t::::res://assets/Scenes/Loot/loot.tscn<>uid://dd81lljsagahh::::res://assets/Clou original files/Sack.blend
@@ -292,23 +293,24 @@ alarm_system.tscn::PackedScene::356157269213948126::1783605693::0::1::::<><><>0<
 ::res://assets/Scenes/UI/::1783615642
 pause_menu.gd::GDScript::2630319661272112610::1783610879::0::1::::<>VBoxContainer<><>0<>0<><>::
 pause_menu.tscn::PackedScene::5483448370894527295::1783615642::0::1::::<><><>0<>0<><>::uid://bdqe8lqvbvclm::::res://assets/Scenes/UI/pause_menu.gd
-::res://assets/scripts/::1783617272
-character.gd::GDScript::2942284513095368967::1783611090::0::1::::<>Marker3D<><>0<>0<><>::
-control.gd::GDScript::1004584878745492552::1783617272::0::1::::<>Node3D<><>0<>0<><>::
+::res://assets/scripts/::1783780191
+character.gd::GDScript::2942284513095368967::1783626520::0::1::::<>Marker3D<><>0<>0<><>::
+control.gd::GDScript::1004584878745492552::1783780191::0::1::::<>Node3D<><>0<>0<><>::
 global.gd::GDScript::1882782076143560631::1783607912::0::1::::<>Node<><>0<>0<><>::
 h_slider.gd::GDScript::798376899911253069::1783607740::0::1::::<>HSlider<><>0<>0<><>::
 line3d.gd::GDScript::3444908974601514454::1779461005::0::1::::<>MeshInstance3D<><>0<>0<><>::
 timer_label.gd::GDScript::3269206399217952631::1782910463::0::1::::<>Label<><>0<>0<><>::
 tool.gd::GDScript::7499984073499111352::1779743240::0::1::::<>Node3D<><>0<>0<><>::
 total_lines_of_code_counter.gd::GDScript::8131721467250216159::1783259119::0::1::::<>EditorScript<><>0<>1<><>::
+weight_label.gd::GDScript::4236141978658973114::1783628096::0::1::::<>Label<><>0<>0<><>::
 ::res://assets/scripts/Interactable/::1783609139
 Alarm.gd::GDScript::8185039929823794091::1783187013::0::1::::<>Node3D<><>0<>0<><>::
 Container.gd::GDScript::933221535758488110::1783186918::0::1::::<>Node3D<><>0<>0<><>::
 floor_visibility_check.gd::GDScript::7330308785086637840::1782919415::0::1::::<>Node3D<><>0<>0<><>::
 interactable.gd::GDScript::7953527017457275969::1783609139::0::1::::<>Node3D<><>0<>0<><>::
 Vehicle.gd::GDScript::2766076381550996137::1783187006::0::1::::<>Node3D<><>0<>0<><>::
-::res://assets/Shaders/::1783618691
-distance_fog.gdshader::Shader::5769102125295667939::1783618691::0::1::::<><><>0<>0<><>::
+::res://assets/Shaders/::1783772617
+distance_fog.gdshader::Shader::5769102125295667939::1783772617::0::1::::<><><>0<>0<><>::
 ::res://assets/Textures/::1783418295
 Hand.png::CompressedTexture2D::1174437883327855006::1782930810::1782930811::1::::<><><>0<>0<>52594100a07215d4439277746c186107<>res://.godot/imported/Hand.png-303b40ed9fd3ae42185ba7e22134d3e4.ctex::
 MagnifyingGlasses.png::CompressedTexture2D::8060384361993491463::1782930809::1782930811::1::::<><><>0<>0<>a270ae1a5c7072a281af703d06da0705<>res://.godot/imported/MagnifyingGlasses.png-7ae52239ee1bc9f48c1a55ac598ac377.ctex::

@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://bke3k7nl3t283"]
 
-[ext_resource type="PackedScene" uid="uid://ueseojs21hnh" path="res://assets/Meshes/Low Poly Interior Pack/CeilingLamp.fbx" id="1_fbedv"]
+[node name="CeilingLamp" type="Node3D" unique_id=1330302914]
 
-[node name="CeilingLamp" unique_id=1330302914 instance=ExtResource("1_fbedv")]
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." index="1" unique_id=410054555]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=410054555]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44558463, 0)
 light_energy = 3.0
 omni_range = 100.0
