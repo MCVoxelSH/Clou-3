@@ -1161,10 +1161,10 @@ func replay_backwards(actor:Node3D):
 	var offset:Vector3
 	if((typeof(actor.replay[actor.id][1]) == TYPE_STRING || typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks <= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
 		if(actor.replay[actor.id][2] == "use"):
-			if(!object_occupied(actor, get_node(str(actor.replay[actor.id][1])))):
-				actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
-			else:
+			if(object_occupied(actor, get_node(str(actor.replay[actor.id][1])))):
 				actor.object_that_is_being_interacted_with = null
+			else:
+				actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
 			#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
 			if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_length):
 				get_node(str(actor.replay[actor.id][1])).play_animation("Action", true, true, get_stack())
@@ -1361,10 +1361,10 @@ func replay_forwards(actor:Node3D):
 	if((typeof(actor.replay[actor.id][1]) == TYPE_STRING ||typeof(actor.replay[actor.id][1]) == TYPE_STRING_NAME) && (ticks >= actor.replay[actor.id][0] || actor.replay[actor.id][0] == -1)):
 		var object = get_node(str(actor.replay[actor.id][1]))
 		if(actor.replay[actor.id][2] == "use"):
-			if(!object_occupied(actor, object)):
-				actor.object_that_is_being_interacted_with = object
-			else:
+			if(object_occupied(actor, object)):
 				actor.object_that_is_being_interacted_with = null
+			else:
+				actor.object_that_is_being_interacted_with = object
 				if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
 					get_node(str(actor.replay[actor.id][1])).play_animation("Action", false, true, get_stack())
 					#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
