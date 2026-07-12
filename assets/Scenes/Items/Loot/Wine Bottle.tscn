@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://chchwddy7dv0u"]
 
-[ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Loot/loot.tscn" id="1_qlvu5"]
+[ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Items/Loot/loot.tscn" id="1_qlvu5"]
 [ext_resource type="PackedScene" uid="uid://dfrr8njldpbx1" path="res://assets/Meshes/Bottle.blend" id="2_rd7mb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlvu5"]

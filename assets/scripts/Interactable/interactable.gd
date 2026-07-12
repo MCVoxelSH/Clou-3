@@ -144,28 +144,29 @@ func update_interactable(delta):
 			previous_animation_position = anim_player.current_animation_position			
 
 func _on_area_3d_mouse_entered() -> void:
-		
-	for c in get_all_children(self):
-		if(c is MeshInstance3D):
-				var count = c.get_surface_override_material_count()
-				for i in range(count):
-					var mesh_material = c.get_active_material(i).duplicate()
-					c.set_surface_override_material(i, mesh_material)
-					mesh_material.albedo_color *= 2.0
-				
-				
-	if(get_node("/root/Control/InteractionButtons").visible):
-		return
-				
-	get_node("/root/Control").highlighted_object = self
-	if(object_type == 2 || object_type == 8):
-		get_node("/root/Control").subviewport_container.visible = true
-		is_being_hovered_over = true
-		
+	
+	if(self != get_node("/root/Control").selected_tool):	
+		for c in get_all_children(self):
+			if(c is MeshInstance3D):
+					var count = c.get_surface_override_material_count()
+					for i in range(count):
+						var mesh_material = c.get_active_material(i).duplicate()
+						c.set_surface_override_material(i, mesh_material)
+						mesh_material.albedo_color *= 2.0
+					
+					
+		if(get_node("/root/Control/InteractionButtons").visible):
+			return
+					
+		get_node("/root/Control").highlighted_object = self
+		if(object_type == 2 || object_type == 8):
+			get_node("/root/Control").subviewport_container.visible = true
+			is_being_hovered_over = true
+			
 	#print(get_parent().name)
 
 func _on_area_3d_mouse_exited() -> void:
-
+	
 	for c in get_all_children(self):
 		if(c is MeshInstance3D):
 				var count = c.get_surface_override_material_count()
@@ -178,6 +179,8 @@ func _on_area_3d_mouse_exited() -> void:
 		return				
 	if(!Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		get_node("/root/Control").highlighted_object = null
+		get_node("/root/Control").subviewport_container.visible = false
+		is_being_hovered_over = false
 	if(object_type == 2 || object_type == 8):
 		get_node("/root/Control").subviewport_container.visible = false
 		is_being_hovered_over = false

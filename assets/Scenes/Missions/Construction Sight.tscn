@@ -6,8 +6,33 @@
 [ext_resource type="PackedScene" uid="uid://basyfwf2g00kb" path="res://assets/Meshes/Low Poly Survival Tools/SM_Small_Wood_Box_Closed.glb" id="4_ppwqr"]
 [ext_resource type="PackedScene" uid="uid://s82q1covj1bf" path="res://assets/Meshes/Low Poly Survival Tools/SM_Ladder.glb" id="5_11ewu"]
 [ext_resource type="PackedScene" uid="uid://fqbxk0hfyv3p" path="res://assets/Meshes/Low Poly Survival Tools/SM_Hacksaw_For_Metal.glb" id="6_n3gm0"]
+[ext_resource type="PackedScene" uid="uid://bdxp3nmy7lvok" path="res://assets/Meshes/Low Poly Survival Tools/SM_Barrel_Closed_01_B.glb" id="7_n3gm0"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_11ewu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3gm0"]
+size = Vector3(2, 0.001, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qifqf"]
+size = Vector3(215.77179, 485.67865, 214.10349)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b5q6a"]
+size = Vector3(248.05563, 126.218765, 99.90404)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_anrgt"]
+size = Vector3(167.95007, 60.592087, 69.53789)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8fhqv"]
+size = Vector3(99.86868, 62.67036, 73.86739)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ulu5"]
+size = Vector3(108.52463, 57.35336, 210.86244)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aja0i"]
+size = Vector3(65.461525, 3.8530617, 20.291626)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwwug"]
+size = Vector3(60.813416, 61.771877, 90)
 
 [node name="ConstructionSight" type="Node3D" unique_id=1030509812]
 
@@ -15,20 +40,78 @@
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 19.766552, 0, 12.525833)
 mesh = SubResource("PlaneMesh_11ewu")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=1284953347]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=176688287]
+shape = SubResource("BoxShape3D_n3gm0")
+
 [node name="SM_CARGO_CONTAINER2" parent="." unique_id=1664980840 instance=ExtResource("1_fe3jd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.611864, 0, 9.528816)
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 23.579798, -0.19813655, 13.893544)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_CARGO_CONTAINER2/SM_CARGO_CONTAINER" parent_id_path=PackedInt32Array(1664980840, 132216742) index="4" unique_id=1582183912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5258789e-05, -105.43584)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_CARGO_CONTAINER2/SM_CARGO_CONTAINER/StaticBody3D" unique_id=1240030992]
+shape = SubResource("BoxShape3D_qifqf")
 
 [node name="SM_Cargo_Barrel2" parent="." unique_id=252509738 instance=ExtResource("2_ppwqr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.76967, 0, 5.299353)
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 19.711191, -0.19813655, 5.011672)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Cargo_Barrel2/SM_Cargo_Barrel" parent_id_path=PackedInt32Array(252509738, 1114427062) index="0" unique_id=2130569067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.77838135, -5.5963745, -49.95202)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Cargo_Barrel2/SM_Cargo_Barrel/StaticBody3D" unique_id=415498696]
+shape = SubResource("BoxShape3D_b5q6a")
 
 [node name="SM_Wheelbarrow2" parent="." unique_id=1047095805 instance=ExtResource("3_4al4l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.293495, 0.461352, 2.6879246)
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 20.811224, 0.7707026, -0.4723277)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Wheelbarrow2/SM_Wheelbarrow" parent_id_path=PackedInt32Array(1047095805, 1758944694) index="1" unique_id=284812206]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.545631, 0, 8.030491)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Wheelbarrow2/SM_Wheelbarrow/StaticBody3D" unique_id=770718238]
+shape = SubResource("BoxShape3D_anrgt")
 
 [node name="SM_Small_Wood_Box_Closed2" parent="." unique_id=197245384 instance=ExtResource("4_ppwqr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.68453, 0, 5.0733433)
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 27.932396, -0.19813655, 4.537051)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Small_Wood_Box_Closed2/SM_Small_Wood_Box_Closed" parent_id_path=PackedInt32Array(197245384, 1017333218) index="0" unique_id=997620363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013999939, 0, -36.933697)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Small_Wood_Box_Closed2/SM_Small_Wood_Box_Closed/StaticBody3D" unique_id=1146174751]
+shape = SubResource("BoxShape3D_8fhqv")
 
 [node name="SM_Ladder2" parent="." unique_id=870272518 instance=ExtResource("5_11ewu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.319704, 0, 7.692364)
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 27.166262, -0.19813655, 10.036995)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Ladder2/SM_Ladder" parent_id_path=PackedInt32Array(870272518, 1084951488) index="0" unique_id=404405954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0036697388, 0, -105.43122)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Ladder2/SM_Ladder/StaticBody3D" unique_id=551567145]
+shape = SubResource("BoxShape3D_3ulu5")
 
 [node name="SM_Hacksaw_For_Metal2" parent="." unique_id=579364119 instance=ExtResource("6_n3gm0")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 26.995127, 0.799517, 5.0288234)
+transform = Transform3D(2.1, 0, 0, 0, -9.1793915e-08, -2.1, 0, 2.1, -9.1793915e-08, 28.58465, 1.480849, 4.4435596)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Hacksaw_For_Metal2/SM_Hacksaw_For_Metal" parent_id_path=PackedInt32Array(579364119, 1235900754) index="0" unique_id=12796684]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.117035, 0.37848234, -0.46706104)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Hacksaw_For_Metal2/SM_Hacksaw_For_Metal/StaticBody3D" unique_id=1959628964]
+shape = SubResource("BoxShape3D_aja0i")
+
+[node name="SM_Barrel_Closed_01_B2" parent="." unique_id=674039017 instance=ExtResource("7_n3gm0")]
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 31.065222, -0.19813655, 1.4756794)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Barrel_Closed_01_B2/SM_Barrel_Closed_01_B" parent_id_path=PackedInt32Array(674039017, 641788047) index="0" unique_id=928987006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Barrel_Closed_01_B2/SM_Barrel_Closed_01_B/StaticBody3D" unique_id=1359658159]
+shape = SubResource("BoxShape3D_xwwug")
+
+[editable path="SM_CARGO_CONTAINER2"]
+[editable path="SM_Cargo_Barrel2"]
+[editable path="SM_Wheelbarrow2"]
+[editable path="SM_Small_Wood_Box_Closed2"]
+[editable path="SM_Ladder2"]
+[editable path="SM_Hacksaw_For_Metal2"]
+[editable path="SM_Barrel_Closed_01_B2"]

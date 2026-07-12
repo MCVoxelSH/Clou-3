@@ -12,7 +12,6 @@ var finalize_guard_replay = false
 var currently_carrying_weight = 0.0
 @export var show_path := true
 @export var is_guard = false
-@export var record_guard = false
 var filepath_addon = ""
 var replay:Array = []
 var parts:Array = []
@@ -717,7 +716,7 @@ func _on_body_or_area_exited(body_area):
 
 func load_replay():
 	
-	if(get_parent().play || Global.load_replay ||  (is_guard && !record_guard)):
+	if(get_parent().play || Global.load_replay ||  (is_guard)):
 		var f:FileAccess
 		if(!is_guard):
 			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.READ)
@@ -849,7 +848,7 @@ func add_wait_ticks(ticks_at_position):
 
 func save_replay():
 	
-	if(!Global.execute_plan && (!is_guard || record_guard)):
+	if(!Global.execute_plan && (!is_guard)):
 		var f:FileAccess
 		if(!is_guard):
 			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.WRITE)

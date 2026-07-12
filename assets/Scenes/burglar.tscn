@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://dvnhkeyunxa80"]
 
-[ext_resource type="Script" uid="uid://bh6i84pbsmlsx" path="res://assets/scripts/character.gd" id="1_tqr47"]
+[ext_resource type="Script" uid="uid://be5togw3cunno" path="res://assets/scripts/burglar.gd" id="1_ucjbi"]
 [ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="2_40a2n"]
+[ext_resource type="PackedScene" uid="uid://3a3tg5vcb4vm" path="res://assets/Scenes/Crowbar.tscn" id="3_7msq8"]
+[ext_resource type="Script" uid="uid://brdaaktjp0ecx" path="res://assets/Scenes/Missions/bag.gd" id="3_7v5qx"]
+[ext_resource type="PackedScene" uid="uid://c43ocs4fanb6d" path="res://assets/Axe.tscn" id="4_7v5qx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wo13b"]
 height = 1.3818359
@@ -10,8 +13,8 @@ height = 1.3818359
 bg_color = Color(0.7833561, 0.6799758, 0.11207495, 1)
 
 [node name="RobotBase" type="Marker3D" unique_id=916284773 groups=["Actor"]]
-script = ExtResource("1_tqr47")
-character_speed = 0.1
+script = ExtResource("1_ucjbi")
+character_speed = 1.0
 
 [node name="Robot" type="MeshInstance3D" parent="." unique_id=1093158534]
 transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 1, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
@@ -59,3 +62,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.427493, 0.42749307, 0.42749307, 1)
+
+[node name="Bag" type="Node3D" parent="." unique_id=2094878128]
+process_mode = 3
+script = ExtResource("3_7v5qx")
+
+[node name="Crowbar" parent="Bag" unique_id=1883026963 instance=ExtResource("3_7msq8")]
+visible = false
+tool_efficencies = Array[float]([50.0, 0.0, 0.0])
+loudness = Array[float]([50.0, 50.0, 75.0])
+
+[node name="Axe" parent="Bag" unique_id=830975763 instance=ExtResource("4_7v5qx")]
+visible = false

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bbrk7i63co31c"]
+
+[ext_resource type="Script" uid="uid://de4bv3cna3bye" path="res://assets/scripts/Tool.gd" id="1_4fwgd"]
+[ext_resource type="PackedScene" uid="uid://b0ckonl47tovl" path="res://assets/Meshes/Low Poly Survival Tools/SM_Crowbar.glb" id="2_x6b3c"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ala7q"]
+radius = 0.16894531
+height = 0.92578125
+
+[node name="Tool" type="Node3D" unique_id=430073392 groups=["Item"]]
+script = ExtResource("1_4fwgd")
+
+[node name="SM_Crowbar" parent="." unique_id=145914601 instance=ExtResource("2_x6b3c")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=261024409]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=287201691]
+shape = SubResource("CapsuleShape3D_ala7q")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

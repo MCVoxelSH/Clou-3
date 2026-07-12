@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7pflsibliusv"]
 
-[ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Scenes/actor.tscn" id="1_l30q5"]
+[ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Scenes/burglar.tscn" id="1_l30q5"]
+[ext_resource type="Script" uid="uid://cxub0vxd1nimg" path="res://assets/scripts/guard.gd" id="2_f2xg0"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l30q5"]
 points = PackedVector3Array(4, 0, 20, -0.66718864, 0, -5.4433336, -4, 0, 20)
@@ -42,6 +43,9 @@ transparency = 1
 albedo_color = Color(1, 1, 1, 0.14117648)
 
 [node name="RobotBase" unique_id=468724566 instance=ExtResource("1_l30q5")]
+script = ExtResource("2_f2xg0")
+record_guard = false
+show_path = false
 is_guard = true
 
 [node name="Area3D2" type="Area3D" parent="Robot" parent_id_path=PackedInt32Array(1093158534) index="0" unique_id=2106648720]

@@ -57,7 +57,7 @@ var _cam_rotation_x := 0.0
 var _cam_rotation_y := 0.0
 
 var highlighted_object:Node3D = null
-@export var selected_tool:Node3D
+var selected_tool:Node3D = null
 
 var burglar_moved = false
 
@@ -139,9 +139,10 @@ func _ready() -> void:
 		else:
 			number_of_guards += 1
 			actor.filepath_addon = str(number_of_burglars + number_of_guards)
-
-		if(actor.record_guard):
-			guards_are_recording = true
+	
+		if(actor.is_guard):
+			if(actor.record_guard):
+				guards_are_recording = true
 			
 		actor.load_replay()
 		
@@ -158,7 +159,7 @@ func _ready() -> void:
 	floor_visibility_check.change_visibility(active_burglar, false)
 		
 func _process(delta: float) -> void:
-	
+
 	if(debug_mode):
 		if(Input.is_action_just_pressed("debug_speed_toggle")):
 			if(engine_speed != engine_speed_overwrite):
@@ -191,13 +192,13 @@ func _process(delta: float) -> void:
 	
 	if(Input.is_action_just_pressed("fast_forward")):
 		#REMINDER need to change this later, this is just a temporary solution
-		selected_tool = $Crowbar
+		#selected_tool = active_burglar.bag.get_child(0)
 		pass
 	
 			
 	if(Input.is_action_just_pressed("rewind")):
 		#REMINDER need to change this later, this is just a temporary solution
-		selected_tool = null
+		#selected_tool = null
 		pass
 
 func _physics_process(delta: float) -> void:
@@ -281,12 +282,15 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent):
 	
-	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_UP && !active_burglar.is_zoomed_onto_object:
+	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_UP && !active_burglar.is_zoomed_onto_object && !active_burglar.bag.shown:
 		
 		var camera_offset = 0.5
 		
 		if(get_node(active_burglar.name+"/CameraBase/SpringArm3D").spring_length > 3):
 			get_node(active_burglar.name+"/CameraBase/SpringArm3D").spring_length -= camera_offset
+		
+		if(selected_tool):	
+			selected_tool.global_position = get_viewport().get_camera_3d().project_position(event.global_position, 3.0)
 		
 	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_DOWN && !active_burglar.is_zoomed_onto_object:
 		
@@ -296,11 +300,14 @@ func _unhandled_input(event: InputEvent):
 		
 		if(get_node(active_burglar.name+"/CameraBase/SpringArm3D").spring_length < 15):
 			get_node(active_burglar.name+"/CameraBase/SpringArm3D").spring_length -= camera_offset
+
+		if(selected_tool):	
+			selected_tool.global_position = get_viewport().get_camera_3d().project_position(event.global_position, 3.0)
 	
 	#REMINDER this is for when selecting an option while hovering over an interactable
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 		
-		if(Global.execute_plan || !recording):
+		if(Global.execute_plan || !recording || active_burglar.bag.shown):
 			return
 		
 		if(active_burglar.replay.size() > 0):
@@ -310,50 +317,69 @@ func _unhandled_input(event: InputEvent):
 		var closest_point_on_navmesh:Vector3
 		
 		if(highlighted_object != null):
-			var is_directed_towards_z = false
-			#if(highlighted_object.global_transform.basis.z.x == 1.0 || highlighted_object.global_transform.basis.z.x == -1.0):
-				#pass
-			if(is_equal_approx(highlighted_object.global_transform.basis.z.z,1.0) || is_equal_approx(highlighted_object.global_transform.basis.z.z,-1.0)):
-				is_directed_towards_z = true
-			
-			var modifier = 1
-			
-			if(highlighted_object.object_type == 0 || highlighted_object.object_type == 1 || highlighted_object.object_type == 6):
-				if (is_directed_towards_z):
-					if(active_burglar.global_position.z > highlighted_object.global_position.z):
-						modifier = highlighted_object.global_transform.basis.z.z
+			if(!highlighted_object.is_in_group("Item")):
+				var is_directed_towards_z = false
+				#if(highlighted_object.global_transform.basis.z.x == 1.0 || highlighted_object.global_transform.basis.z.x == -1.0):
+					#pass
+				if(is_equal_approx(highlighted_object.global_transform.basis.z.z,1.0) || is_equal_approx(highlighted_object.global_transform.basis.z.z,-1.0)):
+					is_directed_towards_z = true
+				
+				var modifier = 1
+				
+				if(highlighted_object.object_type == 0 || highlighted_object.object_type == 1 || highlighted_object.object_type == 6):
+					if (is_directed_towards_z):
+						if(active_burglar.global_position.z > highlighted_object.global_position.z):
+							modifier = highlighted_object.global_transform.basis.z.z
+						else:
+							modifier = -1 * highlighted_object.global_transform.basis.z.z
 					else:
-						modifier = -1 * highlighted_object.global_transform.basis.z.z
+						if(active_burglar.global_position.x < highlighted_object.global_position.x):
+							modifier = -1 * highlighted_object.global_transform.basis.z.x
+						else:
+							modifier = highlighted_object.global_transform.basis.z.x
+				
+				#if(highlighted_object.object_type == 1):
+				#####if(closest_point_on_navmesh.z)
+					#if(active_burglar.inside):
+						#closest_point_on_navmesh = highlighted_object.global_position - highlighted_object.global_transform.basis.z 
+					#else:
+						#closest_point_on_navmesh = highlighted_object.global_position + highlighted_object.global_transform.basis.z
+				#else:#if(highlighted_object.object_type != 0 && highlighted_object.object_type != 1): 
+				if(highlighted_object.object_type != 6):
+					closest_point_on_navmesh = highlighted_object.global_position + (highlighted_object.global_transform.basis.z.normalized() * modifier)
 				else:
-					if(active_burglar.global_position.x < highlighted_object.global_position.x):
-						modifier = -1 * highlighted_object.global_transform.basis.z.x
-					else:
-						modifier = highlighted_object.global_transform.basis.z.x
-			
-			#if(highlighted_object.object_type == 1):
-			#####if(closest_point_on_navmesh.z)
-				#if(active_burglar.inside):
-					#closest_point_on_navmesh = highlighted_object.global_position - highlighted_object.global_transform.basis.z 
-				#else:
-					#closest_point_on_navmesh = highlighted_object.global_position + highlighted_object.global_transform.basis.z
-			#else:#if(highlighted_object.object_type != 0 && highlighted_object.object_type != 1): 
-			if(highlighted_object.object_type != 6):
-				closest_point_on_navmesh = highlighted_object.global_position + (highlighted_object.global_transform.basis.z.normalized() * modifier)
-			else:
-				closest_point_on_navmesh = highlighted_object.global_position + (highlighted_object.global_transform.basis.x.normalized() * 2* modifier)
+					closest_point_on_navmesh = highlighted_object.global_position + (highlighted_object.global_transform.basis.x.normalized() * 2* modifier)
 
-			active_burglar.set_target_position(closest_point_on_navmesh,true)
-			pause = false
-			play = false
-			
-			$InteractionButtons.visible = false
-			
-			highlighted_object = null
+				active_burglar.set_target_position(closest_point_on_navmesh,true)
+				pause = false
+				play = false
+				
+				$InteractionButtons.visible = false
+				
+				highlighted_object = null
+				if(selected_tool):
+					selected_tool.visible = false
+					selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_INHERIT
+					selected_tool = null
 
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 
-		if(Global.execute_plan || !recording):
+		if(highlighted_object != null):
+			if(highlighted_object.is_in_group("Item")):
+				if(selected_tool != highlighted_object):
+					selected_tool = highlighted_object
+					_on_bag_button_up()
+					active_burglar.bag.shown = false
+					selected_tool._on_area_3d_mouse_exited()
+					selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_DISABLED
+					#selected_tool.area.mouse_entered.disconnect(selected_tool._on_mouse_entered)
+							
+		
+		if(highlighted_object != null && active_burglar.bag.shown):
+			active_burglar.bag.shown = false
+
+		if(Global.execute_plan || !recording || active_burglar.bag.shown):
 			return
 
 		#_on_h_slider_value_changed(1.0)
@@ -375,11 +401,17 @@ func _unhandled_input(event: InputEvent):
 #						
 
 		if(highlighted_object != null):
-			pause = true
-			pause_animations()
-			play = false
-			$InteractionButtons.visible = true
-			$InteractionButtons.global_position = get_viewport().get_camera_3d().unproject_position(highlighted_object.global_position)
+			if(!highlighted_object.is_in_group("Item")):
+				pause = true
+				pause_animations()
+				play = false
+				if(!selected_tool):	
+					$InteractionButtons.visible = true
+					$InteractionButtons.global_position = get_viewport().get_camera_3d().unproject_position(highlighted_object.global_position)
+				active_burglar.selected_interaction = 1
+			else:
+				selected_tool = highlighted_object
+				active_burglar.bag.shown = false
 		
 		var closest_point_on_navmesh:Vector3
 		
@@ -446,20 +478,25 @@ func _unhandled_input(event: InputEvent):
 			play = false
 		
 
-	elif (event is InputEventMouseMotion && ((event.button_mask & (MOUSE_BUTTON_MASK_MIDDLE + MOUSE_BUTTON_MASK_RIGHT)) || first_person_mode)  && !active_burglar.is_zoomed_onto_object):
-		_cam_rotation_x -= event.relative.x * 0.005
-		_cam_rotation_y += event.relative.y * 0.005
-		
-		_cam_rotation_y = clamp(_cam_rotation_y, -.3,.75)
-		
-		get_node(active_burglar.name+"/CameraBase").rotation.y = _cam_rotation_x
-		get_node(active_burglar.name+"/CameraBase").rotation.x = _cam_rotation_y
-		
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	else:
-		if(!first_person_mode):
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+	elif (event is InputEventMouseMotion):
+		if(((event.button_mask & (MOUSE_BUTTON_MASK_MIDDLE + MOUSE_BUTTON_MASK_RIGHT)) || first_person_mode)  && !active_burglar.is_zoomed_onto_object):
+			if(!active_burglar.bag.shown):
+				_cam_rotation_x -= event.relative.x * 0.005
+				_cam_rotation_y += event.relative.y * 0.005
+				
+				_cam_rotation_y = clamp(_cam_rotation_y, -.3,.75)
+				
+				get_node(active_burglar.name+"/CameraBase").rotation.y = _cam_rotation_x
+				get_node(active_burglar.name+"/CameraBase").rotation.x = _cam_rotation_y
+				
+				#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			#else:
+				#if(!first_person_mode):
+					#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)			
+		if(selected_tool):	
+			selected_tool.global_position = get_viewport().get_camera_3d().project_position(event.global_position, 3.0)
+
+
 	
 
 func do_replay():
@@ -666,25 +703,26 @@ func do_replay():
 	for actor in get_tree().get_nodes_in_group("Actor"):
 		
 		if(!backwards && !actor.replay.is_empty()):
-			var found_changed_ticks = find_changed_ticks_at_current_ticks(actor)
-			if(((actor.id == actor.maxid - 1 && actor.replay[actor.id][0] == -1) || (found_changed_ticks && actor.replay[actor.id][0] != actor.last_ticks)) && (actor.replay[actor.id][0] != actor.last_ticks || actor == active_burglar)):
-				#print(str(found_changed_ticks) + ", " + str(actor.id) + ", " + str(actor.maxid - 1) + ", " + str(actor.replay[actor.id][0]) + ", " + str(actor.last_ticks))
-				actor.last_ticks = ticks
-				if(actor.replay[actor.id][0] == -1 || (found_changed_ticks && actor.replay[actor.id][0] < ticks)):
-					if(!found_changed_ticks):
-						actor.changed_replay_ids.append(actor.id)
-					elif(actor.replay[actor.id][0] != -1 && actor.replay[actor.id][0] != ticks):
-						if(actor.id != actor.maxid -1):
-							actor.replay[actor.id +1][0] = ticks + actor.replay[actor.id +1][0]-actor.replay[actor.id][0]
-					actor.replay[actor.id][0] = ticks
-					if(actor == active_burglar && actor.id == actor.maxid - 1 ):
-						if(!play && ! Global.execute_plan):
-							pause_recording()
+			if(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3 || actor.id == actor.maxid - 1 ):
+				var found_changed_ticks = find_changed_ticks_at_current_ticks(actor)
+				if(((actor.id == actor.maxid - 1 && actor.replay[actor.id][0] == -1) || (found_changed_ticks && actor.replay[actor.id][0] != actor.last_ticks)) && (actor.replay[actor.id][0] != actor.last_ticks || actor == active_burglar)):
+					#print(str(found_changed_ticks) + ", " + str(actor.id) + ", " + str(actor.maxid - 1) + ", " + str(actor.replay[actor.id][0]) + ", " + str(actor.last_ticks))
+					actor.last_ticks = ticks
+					if(actor.replay[actor.id][0] == -1 || (found_changed_ticks && actor.replay[actor.id][0] < ticks)):
+						if(!found_changed_ticks):
+							actor.changed_replay_ids.append(actor.id)
+						elif(actor.replay[actor.id][0] != -1 && actor.replay[actor.id][0] != ticks):
+							if(actor.id != actor.maxid -1):
+								actor.replay[actor.id +1][0] = ticks + actor.replay[actor.id +1][0]-actor.replay[actor.id][0]
+						actor.replay[actor.id][0] = ticks
+						if(actor == active_burglar && actor.id == actor.maxid - 1 ):
+							if(!play && ! Global.execute_plan):
+								pause_recording()
 				
-			
-		if(actor.is_guard && actor.id == actor.maxid -1 && !actor.record_guard):
-			actor.id = 0
-			actor.currentid = 0
+		if(actor.is_guard):	
+			if(actor.id == actor.maxid -1 && !actor.record_guard):
+				actor.id = 0
+				actor.currentid = 0
 			
 		if(actor.is_guard && actor.id == 0 && ticks > 1 && backwards):
 			actor.id = actor.maxid -1
@@ -736,6 +774,10 @@ func check_and_fix_id():
 
 
 func _on_h_slider_value_changed(value: float) -> void:
+	
+	#if(selected_tool):
+		#$SliderBackground/HSlider.set_value_no_signal(previous_slider_value)
+		#return
 	
 	#REMINDER HMMMM
 	#if(!execute_plan && play):
@@ -1067,7 +1109,7 @@ func _on_skip_to_end_button_button_up() -> void:
 	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause):
 		_on_play_button_button_up()
 		_on_h_slider_value_changed(100.0)
-		play_until_ticks = active_burglar.max_ticks
+		play_until_ticks = active_burglar.replay[active_burglar.replay.size()-1][0]
 		RenderingServer.render_loop_enabled = false
 	#skip_to_start_or_end = true
 
@@ -1144,6 +1186,22 @@ func _on_close_mission_menu_button_up() -> void:
 func quit_plan():
 	debug_file.close()
 	get_tree().quit()
+	
+func _on_bag_button_up() -> void:
+	var vertical_cell_size = 128
+	var horizontal_cell_size = 256
+	var index = 0
+	if(!active_burglar.bag.shown):
+		if(selected_tool):
+			selected_tool.visible = false
+			selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_INHERIT
+		selected_tool = null
+	active_burglar.bag.shown = !active_burglar.bag.shown
+	for c in active_burglar.bag.get_children():
+		if(c != selected_tool):
+			c.global_position = get_viewport().get_camera_3d().project_position((Vector2.DOWN*vertical_cell_size)+ (Vector2.RIGHT*horizontal_cell_size/2)+(Vector2.RIGHT*index*horizontal_cell_size), 3.0)
+			c.visible = !c.visible
+		index += 1
 
 func play_music(name: String):
 	audio_player.stream = load(name)
@@ -1214,8 +1272,8 @@ func replay_backwards(actor:Node3D):
 						var guard_that_hears_the_most:Node3D
 						for guard in get_tree().get_nodes_in_group("Actor"):
 							if (guard.is_guard):
-								var tool = get_node(str(actor.replay[actor.id][4]))
-								var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing) * (tool.loudness[object.object_material])))* get_node(str(actor.replay[actor.id][4])).loudness[object.object_material]
+								var tool = get_node(actor.name+"/Bag/"+str(actor.replay[actor.id][4]))
+								var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing)))* (tool.loudness[object.object_material]/100.0)
 								if(loudness > max_loudness):
 									max_loudness = loudness
 									guard_that_hears_the_most = guard				
@@ -1430,8 +1488,8 @@ func replay_forwards(actor:Node3D):
 							var guard_that_hears_the_most:Node3D
 							for guard in get_tree().get_nodes_in_group("Actor"):
 								if (guard.is_guard):
-									var tool = get_node(str(actor.replay[actor.id][4]))
-									var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing) * (tool.loudness[object.object_material])))* get_node(str(actor.replay[actor.id][4])).loudness[object.object_material]
+									var tool = get_node(actor.name+"/Bag/"+str(actor.replay[actor.id][4]))
+									var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing)))* (tool.loudness[object.object_material]/100.0)
 									if(loudness > max_loudness):
 										max_loudness = loudness
 										guard_that_hears_the_most = guard	
@@ -1446,13 +1504,14 @@ func replay_forwards(actor:Node3D):
 								$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
 							actor.progress_bar.value = object.damage
 							object.damage += actor.replay[actor.id][3]
-							object.damaged = get_node(str(actor.replay[actor.id][4])).damaging	
+							object.damaged = get_node(actor.name+"/Bag/"+str(actor.replay[actor.id][4])).damaging	
 							if(object.damage > object_durability):
 								object.damage = object_durability
 							actor.progress_bar.value = object.damage
 							#print("forwards, actor.progress_bar.value: " +str(actor.progress_bar.value)+" at id" + str(actor.id) + " at ticks" + str(ticks))
 					else:
-						actor.show_text_bubble("someone is already working here!")
+						if(object.damage != object_durability):
+							actor.show_text_bubble("someone is already working here!")
 						#for i in range(actor.replay.size()-1-actor.id):
 							###actor.change_ticks = true
 							#actor.replay[actor.id+i][0] += 1

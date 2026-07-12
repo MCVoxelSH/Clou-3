@@ -1,2 +1,6 @@
-res://assets/Scenes/Missions/Construction Sight.tscn
+res://assets/Axe.tscn
 res://assets/Shaders/distance_fog.gdshader
+res://assets/Scenes/Items/item.gd
+res://assets/Scenes/Missions/Test Scene.tscn
+res://assets/scripts/Interactable/interactable.gd
+res://assets/scripts/control.gd

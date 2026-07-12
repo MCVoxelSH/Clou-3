@@ -52,8 +52,8 @@ enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/
 
 Actor="burglars and probably also guards"
 Interactable=""
-apply_to_navmesh=""
 Alarm=""
+Item="tools or loot"
 
 [input]
 
