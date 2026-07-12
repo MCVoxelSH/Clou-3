@@ -67,6 +67,16 @@ color = Color(0.427493, 0.42749307, 0.42749307, 1)
 process_mode = 3
 script = ExtResource("3_7v5qx")
 
+[node name="ColorRect" type="ColorRect" parent="Bag" unique_id=474309271]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.68, 0.68, 0.68, 0.15686275)
+
 [node name="Crowbar" parent="Bag" unique_id=1883026963 instance=ExtResource("3_7msq8")]
 visible = false
 tool_efficencies = Array[float]([50.0, 0.0, 0.0])

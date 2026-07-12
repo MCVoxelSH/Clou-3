@@ -292,7 +292,7 @@ func _unhandled_input(event: InputEvent):
 		if(selected_tool):	
 			selected_tool.global_position = get_viewport().get_camera_3d().project_position(event.global_position, 3.0)
 		
-	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_DOWN && !active_burglar.is_zoomed_onto_object:
+	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_DOWN && !active_burglar.is_zoomed_onto_object && !active_burglar.bag.shown:
 		
 		#var camera_offset = get_node(active_burglar.name+"/CameraBase").position - get_node(active_burglar.name+"/CameraBase/SpringArm3D/Camera3D").position
 		
@@ -369,10 +369,12 @@ func _unhandled_input(event: InputEvent):
 			if(highlighted_object.is_in_group("Item")):
 				if(selected_tool != highlighted_object):
 					selected_tool = highlighted_object
+					highlighted_object = null
 					_on_bag_button_up()
 					active_burglar.bag.shown = false
 					selected_tool._on_area_3d_mouse_exited()
 					selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_DISABLED
+					return
 					#selected_tool.area.mouse_entered.disconnect(selected_tool._on_mouse_entered)
 							
 		
@@ -494,7 +496,7 @@ func _unhandled_input(event: InputEvent):
 				#if(!first_person_mode):
 					#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)			
 		if(selected_tool):	
-			selected_tool.global_position = get_viewport().get_camera_3d().project_position(event.global_position, 3.0)
+			selected_tool.global_position = _camera.project_position(event.global_position, 3.0)
 
 
 	
@@ -1071,6 +1073,11 @@ func is_waiting(actor:Node3D):
 
 func switch_to_actor(index: int):
 
+	if(selected_tool):
+		selected_tool.visible = false
+		selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_INHERIT
+		selected_tool = null
+	
 	if(!Global.execute_plan):
 		play = false
 		pause = true
@@ -1107,10 +1114,11 @@ func _on_skip_to_start_button_button_up() -> void:
 
 func _on_skip_to_end_button_button_up() -> void:
 	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause):
-		_on_play_button_button_up()
-		_on_h_slider_value_changed(100.0)
-		play_until_ticks = active_burglar.replay[active_burglar.replay.size()-1][0]
-		RenderingServer.render_loop_enabled = false
+		if(active_burglar.replay[active_burglar.replay.size()-1][0] != -1):
+			_on_play_button_button_up()
+			_on_h_slider_value_changed(100.0)
+			play_until_ticks = active_burglar.replay[active_burglar.replay.size()-1][0]
+			RenderingServer.render_loop_enabled = false
 	#skip_to_start_or_end = true
 
 
@@ -1198,10 +1206,12 @@ func _on_bag_button_up() -> void:
 		selected_tool = null
 	active_burglar.bag.shown = !active_burglar.bag.shown
 	for c in active_burglar.bag.get_children():
-		if(c != selected_tool):
+		if(c is ColorRect):
+			c.visible = !c.visible
+		elif(c != selected_tool):
 			c.global_position = get_viewport().get_camera_3d().project_position((Vector2.DOWN*vertical_cell_size)+ (Vector2.RIGHT*horizontal_cell_size/2)+(Vector2.RIGHT*index*horizontal_cell_size), 3.0)
 			c.visible = !c.visible
-		index += 1
+			index += 1
 
 func play_music(name: String):
 	audio_player.stream = load(name)

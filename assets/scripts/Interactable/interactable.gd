@@ -44,8 +44,19 @@ var camera_pos_node:Node3D
 #calculates the rest time at the end of the animation that is usually smaller than the normal animation "step size"
 var animation_rest_time = 0.0
 
+var base_albedos = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	for c in get_all_children(self):
+		if(c is MeshInstance3D):
+			var count = c.get_surface_override_material_count()
+			for i in range(count):
+				var mesh_material = c.get_active_material(i).duplicate()
+				base_albedos.append(mesh_material.albedo_color)
+
+	
 	if(get_node_or_null("CameraPosNode")):
 		camera_pos_node = $CameraPosNode
 	
@@ -145,48 +156,50 @@ func update_interactable(delta):
 
 func _on_area_3d_mouse_entered() -> void:
 	
-	if(self != get_node("/root/Control").selected_tool):	
+	if(!get_node("/root/Control").active_burglar.bag.shown):
+		if(self != get_node("/root/Control").selected_tool):	
+			for c in get_all_children(self):
+				if(c is MeshInstance3D):
+						var count = c.get_surface_override_material_count()
+						for i in range(count):
+							var mesh_material = c.get_active_material(i).duplicate()
+							c.set_surface_override_material(i, mesh_material)
+							mesh_material.albedo_color = base_albedos[i] * 2.0
+						
+						
+			if(get_node("/root/Control/InteractionButtons").visible):
+				return
+						
+			get_node("/root/Control").highlighted_object = self
+			if(object_type == 2 || object_type == 8):
+				get_node("/root/Control").subviewport_container.visible = true
+				is_being_hovered_over = true
+				
+		#print(get_parent().name)
+
+func _on_area_3d_mouse_exited() -> void:
+	
+	if(!get_node("/root/Control").active_burglar.bag.shown):
 		for c in get_all_children(self):
 			if(c is MeshInstance3D):
 					var count = c.get_surface_override_material_count()
 					for i in range(count):
 						var mesh_material = c.get_active_material(i).duplicate()
 						c.set_surface_override_material(i, mesh_material)
-						mesh_material.albedo_color *= 2.0
-					
-					
+						mesh_material.albedo_color = base_albedos[i] *  0.5
+						
 		if(get_node("/root/Control/InteractionButtons").visible):
-			return
-					
-		get_node("/root/Control").highlighted_object = self
+			return				
+		if(!Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
+			get_node("/root/Control").highlighted_object = null
+			get_node("/root/Control").subviewport_container.visible = false
+			is_being_hovered_over = false
 		if(object_type == 2 || object_type == 8):
-			get_node("/root/Control").subviewport_container.visible = true
-			is_being_hovered_over = true
-			
-	#print(get_parent().name)
-
-func _on_area_3d_mouse_exited() -> void:
-	
-	for c in get_all_children(self):
-		if(c is MeshInstance3D):
-				var count = c.get_surface_override_material_count()
-				for i in range(count):
-					var mesh_material = c.get_active_material(i).duplicate()
-					c.set_surface_override_material(i, mesh_material)
-					mesh_material.albedo_color *= 0.5
-					
-	if(get_node("/root/Control/InteractionButtons").visible):
-		return				
-	if(!Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
-		get_node("/root/Control").highlighted_object = null
-		get_node("/root/Control").subviewport_container.visible = false
-		is_being_hovered_over = false
-	if(object_type == 2 || object_type == 8):
-		get_node("/root/Control").subviewport_container.visible = false
-		is_being_hovered_over = false
-		get_node("/root/Control").hover_over_timer = 0.0
-	#print(get_parent().highlighted_object)
-	
+			get_node("/root/Control").subviewport_container.visible = false
+			is_being_hovered_over = false
+			get_node("/root/Control").hover_over_timer = 0.0
+		#print(get_parent().highlighted_object)
+		
 func append_door_opening(direction:String):
 		var array = []
 		#if(!door_closed_at_ticks.is_empty()):

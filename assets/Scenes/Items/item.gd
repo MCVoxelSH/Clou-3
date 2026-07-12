@@ -3,6 +3,8 @@ extends Node3D
 @onready var area:Area3D
 
 var base_albedos = []
+@onready var base_rotation = global_rotation
+@onready var current_rotation = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,7 +22,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if(get_parent().visible):
-		rotation.y += 3.0 * delta
+		global_rotation =get_node("/root/Control")._camera.global_rotation
+		current_rotation += 3.0 * delta
+		rotate_object_local(Vector3.UP, current_rotation)
 
 
 func _on_area_3d_mouse_entered() -> void:

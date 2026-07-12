@@ -690,10 +690,10 @@ icon = ExtResource("44_2c21t")
 expand_icon = true
 
 [node name="Bag" type="Button" parent="." unique_id=1647179936]
-offset_left = 1680.0
-offset_top = 1158.0
-offset_right = 1722.0
-offset_bottom = 1208.0
+offset_left = 1712.0
+offset_top = 988.0
+offset_right = 1786.0
+offset_bottom = 1076.0952
 focus_mode = 1
 expand_icon = true
 
