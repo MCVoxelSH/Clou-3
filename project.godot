@@ -54,6 +54,7 @@ Actor="burglars and probably also guards"
 Interactable=""
 Alarm=""
 Item="tools or loot"
+burglar_in_burglar_switcher=""
 
 [input]
 

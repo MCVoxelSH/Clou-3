@@ -51,10 +51,12 @@ func _ready() -> void:
 	
 	for c in get_all_children(self):
 		if(c is MeshInstance3D):
+			var array = []
 			var count = c.get_surface_override_material_count()
 			for i in range(count):
 				var mesh_material = c.get_active_material(i).duplicate()
-				base_albedos.append(mesh_material.albedo_color)
+				array.append(mesh_material.albedo_color)
+			base_albedos.append(array)
 
 	
 	if(get_node_or_null("CameraPosNode")):
@@ -157,14 +159,16 @@ func update_interactable(delta):
 func _on_area_3d_mouse_entered() -> void:
 	
 	if(!get_node("/root/Control").active_burglar.bag.shown):
-		if(self != get_node("/root/Control").selected_tool):	
+		if(self != get_node("/root/Control").selected_tool):
+			var i = 0
 			for c in get_all_children(self):
 				if(c is MeshInstance3D):
-						var count = c.get_surface_override_material_count()
-						for i in range(count):
-							var mesh_material = c.get_active_material(i).duplicate()
-							c.set_surface_override_material(i, mesh_material)
-							mesh_material.albedo_color = base_albedos[i] * 2.0
+					var count = c.get_surface_override_material_count()
+					for j in range(count):
+						var mesh_material = c.get_active_material(j).duplicate()
+						c.set_surface_override_material(j, mesh_material)
+						mesh_material.albedo_color = base_albedos[i][j] * 2.0
+					i+=1
 						
 						
 			if(get_node("/root/Control/InteractionButtons").visible):
@@ -180,13 +184,15 @@ func _on_area_3d_mouse_entered() -> void:
 func _on_area_3d_mouse_exited() -> void:
 	
 	if(!get_node("/root/Control").active_burglar.bag.shown):
+		var i = 0
 		for c in get_all_children(self):
 			if(c is MeshInstance3D):
-					var count = c.get_surface_override_material_count()
-					for i in range(count):
-						var mesh_material = c.get_active_material(i).duplicate()
-						c.set_surface_override_material(i, mesh_material)
-						mesh_material.albedo_color = base_albedos[i] *  0.5
+				var count = c.get_surface_override_material_count()
+				for j in range(count):
+					var mesh_material = c.get_active_material(j).duplicate()
+					c.set_surface_override_material(j, mesh_material)
+					mesh_material.albedo_color = base_albedos[i][j]
+				i+=1
 						
 		if(get_node("/root/Control/InteractionButtons").visible):
 			return				

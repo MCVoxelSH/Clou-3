@@ -42,6 +42,11 @@ shadow_mesh = SubResource("ArrayMesh_3j12q")
 transparency = 1
 albedo_color = Color(1, 1, 1, 0.14117648)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2xg0"]
+render_priority = -1
+no_depth_test = true
+albedo_color = Color(0.36, 0.36, 0.36, 0.8117647)
+
 [node name="RobotBase" unique_id=468724566 instance=ExtResource("1_l30q5")]
 script = ExtResource("2_f2xg0")
 record_guard = false
@@ -64,6 +69,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ljuip")
 
 [node name="TextBubble" parent="." index="4" unique_id=1432405381]
 visible = false
+
+[node name="Background" parent="Bag" parent_id_path=PackedInt32Array(2094878128) index="0" unique_id=775146004]
+surface_material_override/0 = SubResource("StandardMaterial3D_f2xg0")
 
 [connection signal="area_entered" from="Robot/Area3D2" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Robot/Area3D2" to="." method="_on_area_3d_area_exited"]

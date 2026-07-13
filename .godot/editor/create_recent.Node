@@ -1,9 +1,9 @@
+MeshInstance3D
 ColorRect
+Node3D
 CollisionShape3D
 Area3D
 GridContainer
-Node3D
-MeshInstance3D
 VBoxContainer
 HBoxContainer
 ConfirmationDialog

@@ -17,6 +17,8 @@ func _ready() -> void:
 			for i in range(count):
 				var mesh_material = c.get_active_material(i).duplicate()
 				base_albedos.append(mesh_material.albedo_color)
+				mesh_material.no_depth_test = true
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -54,7 +56,7 @@ func _on_area_3d_mouse_exited() -> void:
 				for i in range(count):
 					var mesh_material = c.get_active_material(i).duplicate()
 					c.set_surface_override_material(i, mesh_material)
-					mesh_material.albedo_color = base_albedos[i]*0.5
+					mesh_material.albedo_color = base_albedos[i]
 
 					
 	if(get_node("/root/Control/InteractionButtons").visible):

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cito6solu20eu"
+path="res://.godot/imported/Track11.ogg-6617a4d7061df32dafe79f912291dea7.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Clou original files/Audio/Music/Track11.ogg"
+dest_files=["res://.godot/imported/Track11.ogg-6617a4d7061df32dafe79f912291dea7.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

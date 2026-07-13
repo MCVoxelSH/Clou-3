@@ -1,6 +1,9 @@
 res://assets/Scenes/Missions/Test Scene.tscn
 res://assets/Shaders/distance_fog.gdshader
 res://assets/scripts/control.gd
+res://assets/scripts/UI/burglar_switcher.gd
+res://assets/Axe.tscn
+res://assets/Scenes/Items/item.gd
 res://assets/Scenes/burglar.tscn
-res://assets/Scenes/Items/Loot/bag.tscn
-res://assets/scripts/Interactable/interactable.gd
+res://robot.res
+res://assets/Scenes/guard.tscn

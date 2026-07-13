@@ -151,13 +151,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.022903442)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 2.0140486, -0.11860493)
 shape = SubResource("BoxShape3D_pso2s")
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1024579794]
-vertices = PackedVector3Array(-1, 0, -0.5, -1, 0, 0.5, -0.3, 0, 0.5, -0.3, 0, -0.5)
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=1997465721]
+vertices = PackedVector3Array(-1, 0, -0.5, -1, 0, 0.5, -0.4, 0, 0.5, -0.4, 0, -0.5)
 affect_navigation_mesh = true
 
-[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="." unique_id=2069248020]
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="." unique_id=161770650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63, 0, 0)
-vertices = PackedVector3Array(-1.2, 0, -0.5, -1.2, 0, 0.5, -0.5, 0, 0.5, -0.5, 0, -0.5)
+vertices = PackedVector3Array(-1.1, 0, -0.5, -1.1, 0, 0.5, -0.5, 0, 0.5, -0.5, 0, -0.5)
 affect_navigation_mesh = true
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=1374438171]

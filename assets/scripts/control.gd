@@ -41,6 +41,8 @@ var hover_over_timer = 0.0
 @onready var subviewport_container = $SubViewportContainer
 
 @onready var audio_player = $AudioStreamPlayer
+
+@onready var burglar_switcher = $BurglarSwitcher
 #@onready var _robot := $RobotBase as Character
 
 var active_burglar_index = 1
@@ -136,6 +138,22 @@ func _ready() -> void:
 		if(!actor.is_guard):
 			number_of_burglars += 1
 			actor.filepath_addon = str(number_of_burglars)
+			var mesh = actor.mesh.duplicate()
+			mesh.set_script(load("res://assets/Scenes/Items/item.gd"))
+			var area = actor.burglar_area.duplicate()
+			area.mouse_entered.connect(mesh._on_area_3d_mouse_entered)
+			area.mouse_exited.connect(mesh._on_area_3d_mouse_exited)
+			mesh.add_child(area)
+			mesh.add_to_group("burglar_in_burglar_switcher")
+			var count = mesh.get_surface_override_material_count()
+			for i in range(count):
+				var mesh_material = mesh.get_active_material(i).duplicate()
+				mesh.set_surface_override_material(i, mesh_material)
+				mesh_material.no_depth_test = true
+					
+			mesh.scale *= 0.5
+			mesh.visible = false
+			burglar_switcher.add_child(mesh)
 		else:
 			number_of_guards += 1
 			actor.filepath_addon = str(number_of_burglars + number_of_guards)
@@ -145,6 +163,8 @@ func _ready() -> void:
 				guards_are_recording = true
 			
 		actor.load_replay()
+		
+
 		
 	#if(play):
 		#$SliderBackground/HSlider.set_min(0.0)
@@ -168,14 +188,7 @@ func _process(delta: float) -> void:
 				engine_speed = 60.0
 			change_game_speed(previous_slider_value)
 			
-	if(Input.is_action_just_pressed("switch_to_burglar1")):
-		switch_to_actor(1)
-	if(Input.is_action_just_pressed("switch_to_burglar2")):
-		switch_to_actor(2)		
-	if(Input.is_action_just_pressed("switch_to_burglar3")):
-		switch_to_actor(3)		
-	if(Input.is_action_just_pressed("switch_to_burglar4")):
-		switch_to_actor(4)				
+			
 	
 	if(Input.is_action_just_pressed("first_person_mode")):
 		spring_arm_length_before_zoom_in = spring_arm.spring_length
@@ -186,9 +199,18 @@ func _process(delta: float) -> void:
 		spring_arm.spring_length = spring_arm_length_before_zoom_in
 		first_person_mode = false
 
-	if(Input.is_action_just_released("ui_focus_next")):
-		switch_to_actor(active_burglar_index + 1)	
-			
+	if(!burglar_switcher.shown):
+		if(Input.is_action_just_released("ui_focus_next")):
+			switch_to_actor(active_burglar_index + 1)
+		if(Input.is_action_just_pressed("switch_to_burglar1")):
+			switch_to_actor(1)
+		if(Input.is_action_just_pressed("switch_to_burglar2")):
+			switch_to_actor(2)		
+		if(Input.is_action_just_pressed("switch_to_burglar3")):
+			switch_to_actor(3)		
+		if(Input.is_action_just_pressed("switch_to_burglar4")):
+			switch_to_actor(4)		
+				
 	
 	if(Input.is_action_just_pressed("fast_forward")):
 		#REMINDER need to change this later, this is just a temporary solution
@@ -282,7 +304,7 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent):
 	
-	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_UP && !active_burglar.is_zoomed_onto_object && !active_burglar.bag.shown:
+	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_UP && !active_burglar.is_zoomed_onto_object && !active_burglar.bag.shown && !burglar_switcher.shown:
 		
 		var camera_offset = 0.5
 		
@@ -292,7 +314,7 @@ func _unhandled_input(event: InputEvent):
 		if(selected_tool):	
 			selected_tool.global_position = get_viewport().get_camera_3d().project_position(event.global_position, 3.0)
 		
-	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_DOWN && !active_burglar.is_zoomed_onto_object && !active_burglar.bag.shown:
+	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_WHEEL_DOWN && !active_burglar.is_zoomed_onto_object && !active_burglar.bag.shown && !burglar_switcher.shown:
 		
 		#var camera_offset = get_node(active_burglar.name+"/CameraBase").position - get_node(active_burglar.name+"/CameraBase/SpringArm3D/Camera3D").position
 		
@@ -307,7 +329,7 @@ func _unhandled_input(event: InputEvent):
 	#REMINDER this is for when selecting an option while hovering over an interactable
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
 		
-		if(Global.execute_plan || !recording || active_burglar.bag.shown):
+		if(Global.execute_plan || !recording || active_burglar.bag.shown || burglar_switcher.shown || burglar_switcher.shown):
 			return
 		
 		if(active_burglar.replay.size() > 0):
@@ -376,12 +398,20 @@ func _unhandled_input(event: InputEvent):
 					selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_DISABLED
 					return
 					#selected_tool.area.mouse_entered.disconnect(selected_tool._on_mouse_entered)
-							
+			elif(highlighted_object.is_in_group("burglar_in_burglar_switcher")):
+				var index = 0
+				for child in burglar_switcher.get_children():
+					if(child == highlighted_object):
+						switch_to_actor(index)
+						_on_burglar_switcher_button_up()
+						highlighted_object = null
+						return
+					index += 1			
 		
 		if(highlighted_object != null && active_burglar.bag.shown):
 			active_burglar.bag.shown = false
 
-		if(Global.execute_plan || !recording || active_burglar.bag.shown):
+		if(Global.execute_plan || !recording || active_burglar.bag.shown || burglar_switcher.shown):
 			return
 
 		#_on_h_slider_value_changed(1.0)
@@ -482,7 +512,7 @@ func _unhandled_input(event: InputEvent):
 
 	elif (event is InputEventMouseMotion):
 		if(((event.button_mask & (MOUSE_BUTTON_MASK_MIDDLE + MOUSE_BUTTON_MASK_RIGHT)) || first_person_mode)  && !active_burglar.is_zoomed_onto_object):
-			if(!active_burglar.bag.shown):
+			if(!active_burglar.bag.shown && !burglar_switcher.shown):
 				_cam_rotation_x -= event.relative.x * 0.005
 				_cam_rotation_y += event.relative.y * 0.005
 				
@@ -777,6 +807,10 @@ func check_and_fix_id():
 
 func _on_h_slider_value_changed(value: float) -> void:
 	
+		
+	if(burglar_switcher.shown):
+		$SliderBackground/HSlider.set_value_no_signal(previous_slider_value)
+		return
 	#if(selected_tool):
 		#$SliderBackground/HSlider.set_value_no_signal(previous_slider_value)
 		#return
@@ -879,21 +913,24 @@ func _on_h_slider_value_changed(value: float) -> void:
 
 
 func _on_play_button_button_up() -> void:
-	play = true
-	pause = false
-	was_backwards = false
-	was_forwards = false
+		
+	if(!burglar_switcher.shown):
+		play = true
+		pause = false
+		was_backwards = false
+		was_forwards = false
 
 
 func _on_pause_button_button_up() -> void:
 	
-	recording = !recording
-	
-	if(!recording):
-		$PauseButton.set_button_icon(load("res://assets/Textures/Record_Button.png"))
-		pause_recording()
-	else:
-		$PauseButton.set_button_icon(load("res://assets/Textures/Pause_Button.png"))
+	if(!burglar_switcher.shown):
+		recording = !recording
+		
+		if(!recording):
+			$PauseButton.set_button_icon(load("res://assets/Textures/Record_Button.png"))
+			pause_recording()
+		else:
+			$PauseButton.set_button_icon(load("res://assets/Textures/Pause_Button.png"))
 	
 
 func pause_recording():
@@ -1106,14 +1143,14 @@ func switch_to_actor(index: int):
 
 
 func _on_skip_to_start_button_button_up() -> void:
-	if(pause):
+	if(pause && !burglar_switcher.shown):
 		_on_h_slider_value_changed(-100.0)
 		play_until_ticks = 0
 		RenderingServer.render_loop_enabled = false
 		#skip_to_start_or_end = true
 
 func _on_skip_to_end_button_button_up() -> void:
-	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause):
+	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause && !burglar_switcher.shown):
 		if(active_burglar.replay[active_burglar.replay.size()-1][0] != -1):
 			_on_play_button_button_up()
 			_on_h_slider_value_changed(100.0)
@@ -1123,7 +1160,7 @@ func _on_skip_to_end_button_button_up() -> void:
 
 
 func _on_skip_to_previous_action_button_button_up() -> void:
-	if(active_burglar.id != 0  && pause):
+	if(active_burglar.id != 0  && pause && !burglar_switcher.shown):
 		_on_h_slider_value_changed(-100.0)
 		for i in range(active_burglar.id -1, -1, -1):
 			if(active_burglar.replay[i][0] != -1  && i != active_burglar.id - 1):
@@ -1134,7 +1171,7 @@ func _on_skip_to_previous_action_button_button_up() -> void:
 
 
 func _on_skip_to_next_action_button_button_up() -> void:
-	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0 && pause):
+	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0 && pause && !burglar_switcher.shown):
 		_on_play_button_button_up()
 		_on_h_slider_value_changed(100.0)
 		for i in range(active_burglar.id + 1, active_burglar.maxid, 1):
@@ -1206,12 +1243,36 @@ func _on_bag_button_up() -> void:
 		selected_tool = null
 	active_burglar.bag.shown = !active_burglar.bag.shown
 	for c in active_burglar.bag.get_children():
-		if(c is ColorRect):
-			c.visible = !c.visible
-		elif(c != selected_tool):
+		if(c != selected_tool && c.is_in_group("Item")):
 			c.global_position = get_viewport().get_camera_3d().project_position((Vector2.DOWN*vertical_cell_size)+ (Vector2.RIGHT*horizontal_cell_size/2)+(Vector2.RIGHT*index*horizontal_cell_size), 3.0)
 			c.visible = !c.visible
 			index += 1
+		elif(!c.is_in_group("Item")):
+			c.global_position = get_viewport().get_camera_3d().project_position(get_viewport().size/2, 3.0)
+			c.global_rotation = _camera.global_rotation
+			c.visible = !c.visible
+		
+
+
+func _on_burglar_switcher_button_up() -> void:
+	
+	if(recording):
+		_on_pause_button_button_up()
+	var vertical_cell_size = 64
+	var horizontal_cell_size = 256
+	var index = 0
+	
+	burglar_switcher.shown = !burglar_switcher.shown
+	for c in burglar_switcher.get_children():
+		if(c.is_in_group("burglar_in_burglar_switcher")):
+			c.global_position = get_viewport().get_camera_3d().project_position(burglar_switcher.position+(Vector2.UP*vertical_cell_size)+(Vector2.RIGHT*index*horizontal_cell_size), 5.0)
+			c.global_rotation = _camera.global_rotation
+			index += 1
+		else:
+			c.global_position = get_viewport().get_camera_3d().project_position(burglar_switcher.position+(Vector2.UP*vertical_cell_size)+(Vector2.RIGHT*horizontal_cell_size), 5.0)
+			c.global_rotation = _camera.global_rotation
+			
+		c.visible = !c.visible
 
 func play_music(name: String):
 	audio_player.stream = load(name)
