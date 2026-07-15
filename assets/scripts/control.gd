@@ -7,6 +7,8 @@ extends Node3D
 #FIXME stair checks get skipped when using the skip backwards or forwards buttons
 #I disabled skip_to_start_or_end because of this and instead enabled "skipping steps" for the slider and froze the frame for a moment, this works pretty well right now aswell 
 #FIXME when going through doors then scrolling back and the door suddenly is not open anymore the system doesn't account for this case yet
+#REMINDER currently working on method get_item_from_interactable
+
 
 @export var debug_mode = false
 @onready var engine_speed:float = Engine.physics_ticks_per_second
@@ -35,6 +37,7 @@ const Character = preload("res://assets/scripts/character.gd")
 @onready var spring_arm_length_before_zoom_in = spring_arm.spring_length
 var zoom_in_spring_arm_length = 1.5
 var _camera: Camera3D
+@onready var tool_path = "/Bag/SubViewport/Camera/"
 
 @onready var hover_over_camera = $SubViewportContainer/SubViewport/HoverOverCamera
 var hover_over_timer = 0.0
@@ -127,9 +130,8 @@ func _ready() -> void:
 	if(Global.execute_plan):
 		play = true
 		play_music("res://assets/Clou original files/Audio/Music/Track04.ogg")
-	else:
-		play_music("res://assets/Clou original files/Audio/Music/Track03.ogg")
-	
+	#else:
+		#play_music("res://assets/Clou original files/Audio/Music/Track03.ogg")
 	if(play):
 		pause = false
 		
@@ -149,11 +151,11 @@ func _ready() -> void:
 			for i in range(count):
 				var mesh_material = mesh.get_active_material(i).duplicate()
 				mesh.set_surface_override_material(i, mesh_material)
-				mesh_material.no_depth_test = true
 					
 			mesh.scale *= 0.5
 			mesh.visible = false
-			burglar_switcher.add_child(mesh)
+			mesh.layers = 2
+			burglar_switcher.get_child(0).get_child(0).add_child(mesh)
 		else:
 			number_of_guards += 1
 			actor.filepath_addon = str(number_of_burglars + number_of_guards)
@@ -180,6 +182,9 @@ func _ready() -> void:
 		
 func _process(delta: float) -> void:
 
+	if(selected_tool):	
+		selected_tool.global_position = _camera.project_position(get_viewport().get_mouse_position(), 3.0)
+	
 	if(debug_mode):
 		if(Input.is_action_just_pressed("debug_speed_toggle")):
 			if(engine_speed != engine_speed_overwrite):
@@ -386,27 +391,9 @@ func _unhandled_input(event: InputEvent):
 
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-
-		if(highlighted_object != null):
-			if(highlighted_object.is_in_group("Item")):
-				if(selected_tool != highlighted_object):
-					selected_tool = highlighted_object
-					highlighted_object = null
-					_on_bag_button_up()
-					active_burglar.bag.shown = false
-					selected_tool._on_area_3d_mouse_exited()
-					selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_DISABLED
-					return
-					#selected_tool.area.mouse_entered.disconnect(selected_tool._on_mouse_entered)
-			elif(highlighted_object.is_in_group("burglar_in_burglar_switcher")):
-				var index = 0
-				for child in burglar_switcher.get_children():
-					if(child == highlighted_object):
-						switch_to_actor(index)
-						_on_burglar_switcher_button_up()
-						highlighted_object = null
-						return
-					index += 1			
+		
+		if(active_burglar.bag.shown || burglar_switcher.shown):
+			return
 		
 		if(highlighted_object != null && active_burglar.bag.shown):
 			active_burglar.bag.shown = false
@@ -525,8 +512,6 @@ func _unhandled_input(event: InputEvent):
 			#else:
 				#if(!first_person_mode):
 					#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)			
-		if(selected_tool):	
-			selected_tool.global_position = _camera.project_position(event.global_position, 3.0)
 
 
 	
@@ -808,7 +793,7 @@ func check_and_fix_id():
 func _on_h_slider_value_changed(value: float) -> void:
 	
 		
-	if(burglar_switcher.shown):
+	if(burglar_switcher.shown || active_burglar.bag.shown):
 		$SliderBackground/HSlider.set_value_no_signal(previous_slider_value)
 		return
 	#if(selected_tool):
@@ -1233,45 +1218,97 @@ func quit_plan():
 	get_tree().quit()
 	
 func _on_bag_button_up() -> void:
+	
+	if(burglar_switcher.shown):
+		return
+	
 	var vertical_cell_size = 128
 	var horizontal_cell_size = 256
 	var index = 0
+	if(active_burglar.bag.process_mode == PROCESS_MODE_DISABLED):
+		active_burglar.bag.process_mode = PROCESS_MODE_INHERIT
+		active_burglar.bag.mouse_filter = SubViewportContainer.MOUSE_FILTER_STOP
+	else:
+		active_burglar.bag.process_mode = PROCESS_MODE_DISABLED
+		active_burglar.bag.mouse_filter = SubViewportContainer.MOUSE_FILTER_IGNORE
 	if(!active_burglar.bag.shown):
 		if(selected_tool):
 			selected_tool.visible = false
 			selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_INHERIT
 		selected_tool = null
 	active_burglar.bag.shown = !active_burglar.bag.shown
-	for c in active_burglar.bag.get_children():
+	
+	var total_width = 4
+	
+	for c in active_burglar.bag.get_child(0).get_child(0).get_children():
 		if(c != selected_tool && c.is_in_group("Item")):
-			c.global_position = get_viewport().get_camera_3d().project_position((Vector2.DOWN*vertical_cell_size)+ (Vector2.RIGHT*horizontal_cell_size/2)+(Vector2.RIGHT*index*horizontal_cell_size), 3.0)
+			var spacing: float = 1.5
+			var start_offset = -total_width
+
+			# Calculate the current item's distance from the center
+			var horizontal_distance = start_offset + (index%6 * spacing)
+			c.global_position = Vector3(horizontal_distance / 1.75,1.1+ -1.0 * floor(index/6),-2.5)
+			c.global_rotation = Vector3.ZERO
 			c.visible = !c.visible
 			index += 1
 		elif(!c.is_in_group("Item")):
-			c.global_position = get_viewport().get_camera_3d().project_position(get_viewport().size/2, 3.0)
-			c.global_rotation = _camera.global_rotation
+			c.global_position = Vector3(0.0,0.0, -3.5)
+			#c.global_rotation = _camera.global_rotation
 			c.visible = !c.visible
 		
 
 
 func _on_burglar_switcher_button_up() -> void:
 	
+	if(active_burglar.bag.shown):
+		return
+	
 	if(recording):
 		_on_pause_button_button_up()
-	var vertical_cell_size = 64
-	var horizontal_cell_size = 256
+		
 	var index = 0
 	
+	if(burglar_switcher.process_mode == PROCESS_MODE_DISABLED):
+		burglar_switcher.process_mode = PROCESS_MODE_INHERIT
+		burglar_switcher.mouse_filter = SubViewportContainer.MOUSE_FILTER_STOP
+	else:
+		burglar_switcher.process_mode = PROCESS_MODE_DISABLED
+		burglar_switcher.mouse_filter = SubViewportContainer.MOUSE_FILTER_IGNORE
+		
 	burglar_switcher.shown = !burglar_switcher.shown
-	for c in burglar_switcher.get_children():
+
+	# 1. Get the camera component
+	var cam = get_viewport().get_camera_3d()
+	# 2. Get screen-aligned directions (Right and Forward relative to the player's view)
+	var cam_right = cam.global_transform.basis.x.normalized()
+	var cam_up = cam.global_transform.basis.y.normalized()
+	var cam_forward = cam.global_transform.basis.z.normalized()
+	
+
+	# 3. Calculate the center anchor point in world space
+	#var center_anchor = cam.project_position(burglar_switcher.get_child(0).position, 5.5)
+
+	for c in burglar_switcher.get_child(0).get_child(0).get_children():
 		if(c.is_in_group("burglar_in_burglar_switcher")):
-			c.global_position = get_viewport().get_camera_3d().project_position(burglar_switcher.position+(Vector2.UP*vertical_cell_size)+(Vector2.RIGHT*index*horizontal_cell_size), 5.0)
-			c.global_rotation = _camera.global_rotation
+			var spacing: float = 1.5 
+			var total_width = (burglar_switcher.get_child(0).get_child(0).get_child_count() - 2) * spacing
+			var start_offset = -total_width / 2.0
+
+			# Calculate the current item's distance from the center
+			var horizontal_distance = start_offset + (index * spacing)
+
+			# 4. Use global_position and offset it along the camera's local axes
+			# Push along cam_right for horizontal spacing, and slightly along cam_forward to prevent clipping
+			#c.global_position = center_anchor + (cam_right * horizontal_distance) + (cam_forward * 0.5) + cam_up
+			c.position = Vector3(horizontal_distance, -0.25, -1.0)
+			#c.global_rotation = _camera.global_rotation
 			index += 1
 		else:
-			c.global_position = get_viewport().get_camera_3d().project_position(burglar_switcher.position+(Vector2.UP*vertical_cell_size)+(Vector2.RIGHT*horizontal_cell_size), 5.0)
-			c.global_rotation = _camera.global_rotation
-			
+			# Use the same anchor point for the background/quad elements
+			c.global_position = Vector3(0.0, 0.0, -1.5)
+			#c.global_rotation = _camera.global_rotation
+			c.scale.x = burglar_switcher.get_child(0).get_child(0).get_child_count()* 2.0
+				
 		c.visible = !c.visible
 
 func play_music(name: String):
@@ -1314,6 +1351,7 @@ func replay_backwards(actor:Node3D):
 				get_node(str(actor.replay[actor.id][1])).visible = true
 				cash -= get_node(str(actor.replay[actor.id][1])).value
 				actor.currently_carrying_weight -= get_node(str(actor.replay[actor.id][1])).weight
+				actor.bag.get_child(0).get_child(0).remove_child(actor.bag.get_child(0).get_child(0).get_child(actor.bag.get_child(0).get_child(0).get_child_count()-1))
 				selected_car.current_load -= get_node(str(actor.replay[actor.id][1])).weight
 		else:
 			var object:Node3D
@@ -1343,7 +1381,7 @@ func replay_backwards(actor:Node3D):
 						var guard_that_hears_the_most:Node3D
 						for guard in get_tree().get_nodes_in_group("Actor"):
 							if (guard.is_guard):
-								var tool = get_node(actor.name+"/Bag/"+str(actor.replay[actor.id][4]))
+								var tool = get_node(actor.name+tool_path+str(actor.replay[actor.id][4]))
 								var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing)))* (tool.loudness[object.object_material]/100.0)
 								if(loudness > max_loudness):
 									max_loudness = loudness
@@ -1528,6 +1566,7 @@ func replay_forwards(actor:Node3D):
 				actor.currently_carrying_weight += get_node(str(actor.replay[actor.id][1])).weight
 				selected_car.current_load += get_node(str(actor.replay[actor.id][1])).weight
 				get_node(str(actor.replay[actor.id][1])).visible = false
+				create_item_from_interactable(get_node(str(actor.replay[actor.id][1])))
 				get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_DISABLED
 				
 		else:
@@ -1559,7 +1598,7 @@ func replay_forwards(actor:Node3D):
 							var guard_that_hears_the_most:Node3D
 							for guard in get_tree().get_nodes_in_group("Actor"):
 								if (guard.is_guard):
-									var tool = get_node(actor.name+"/Bag/"+str(actor.replay[actor.id][4]))
+									var tool = get_node(actor.name+tool_path+str(actor.replay[actor.id][4]))
 									var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing)))* (tool.loudness[object.object_material]/100.0)
 									if(loudness > max_loudness):
 										max_loudness = loudness
@@ -1575,7 +1614,7 @@ func replay_forwards(actor:Node3D):
 								$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
 							actor.progress_bar.value = object.damage
 							object.damage += actor.replay[actor.id][3]
-							object.damaged = get_node(actor.name+"/Bag/"+str(actor.replay[actor.id][4])).damaging	
+							object.damaged = get_node(actor.name+tool_path+str(actor.replay[actor.id][4])).damaging	
 							if(object.damage > object_durability):
 								object.damage = object_durability
 							actor.progress_bar.value = object.damage
@@ -1864,6 +1903,20 @@ func replay_forwards(actor:Node3D):
 		#TODO how should I code this
 		#$NoiseLevelProgessBar.visible = false
 		
+func create_item_from_interactable(interactable:Node3D):
+	
+			var item = interactable.duplicate()
+			for c in item.get_all_children(item):
+				if(c is MeshInstance3D):
+					c.layers = 1 << 2 | 1
+			item.set_script(load("res://assets/Scenes/Items/item.gd"))
+			item.remove_from_group("Interactable")
+			item.add_to_group("Item")
+			item.scale *= 0.5
+			item.visible = active_burglar.bag.shown
+			item.item_type = 1
+			active_burglar.bag.get_child(0).get_child(0).add_child(item)
+				
 #global_position = global_position.move_toward(next_position, delta * character_speed)
 
 # Make the robot look at the direction we're traveling.
@@ -1872,3 +1925,19 @@ func replay_forwards(actor:Node3D):
 #offset.x *= -1
 
 #if(backwards || play):
+
+#func get_aabb_global_endpoints(mesh_instance: MeshInstance3D) -> Array:
+	#if	not	is_instance_valid(mesh_instance):
+		#return	[]
+#
+	#var	mesh:	Mesh = mesh_instance.mesh
+	#if	not	mesh:
+		#return	[]
+#
+	#var	aabb:AABB = mesh.get_aabb()
+	#var	global_endpoints:=	[]
+	#for	i	in	range(8):
+		#var	local_endpoint:	Vector3	=	aabb.get_endpoint(i)
+		#var	global_endpoint:	Vector3	=	mesh_instance.to_global(local_endpoint)
+		#global_endpoints.push_back(global_endpoint)
+	#return	global_endpoints

@@ -38,6 +38,9 @@
 		{
 			"alphaMode":"BLEND",
 			"doubleSided":true,
+			"extras":{
+				"mmd_material":{}
+			},
 			"name":"lambert128_pSphereShape37",
 			"pbrMetallicRoughness":{
 				"metallicFactor":0,

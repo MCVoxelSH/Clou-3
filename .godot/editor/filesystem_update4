@@ -1,9 +1,7 @@
 res://assets/Scenes/Missions/Test Scene.tscn
 res://assets/Shaders/distance_fog.gdshader
-res://assets/scripts/control.gd
-res://assets/scripts/UI/burglar_switcher.gd
-res://assets/Axe.tscn
-res://assets/Scenes/Items/item.gd
 res://assets/Scenes/burglar.tscn
-res://robot.res
-res://assets/Scenes/guard.tscn
+res://assets/Scenes/Items/Loot/Chateu de France.tscn
+res://assets/Scenes/Items/Loot/Wine Bottle.tscn
+res://assets/Scenes/Items/Loot/bag.tscn
+res://assets/scripts/control.gd

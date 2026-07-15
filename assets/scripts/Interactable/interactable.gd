@@ -91,6 +91,14 @@ func _ready() -> void:
 		
 		
 func _physics_process(delta: float) -> void:
+	
+	#REMINDER this was a quick fix, maybe I should make it more efficient, since right now it double checks this
+	if(anim_player):
+		
+		if(anim_player.current_animation_position != 0.0 && was_opened_by_burglar):
+			if(related_objects && (object_type == 0 || object_type == 1)):
+				disable_floor()
+	
 	if(is_being_hovered_over):
 		get_node("/root/Control").hover_over_timer += delta
 		if(get_node("/root/Control").hover_over_timer > related_objects.size()):

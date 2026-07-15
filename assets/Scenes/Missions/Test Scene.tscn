@@ -51,12 +51,12 @@
 [ext_resource type="Texture2D" uid="uid://bm0qpctff6h1k" path="res://assets/Textures/SkipToPreviousAction_Button.png" id="46_qlpnk"]
 [ext_resource type="Texture2D" uid="uid://da6q2g16o00q5" path="res://assets/Textures/Record_Button.png" id="46_rlm6b"]
 [ext_resource type="Texture2D" uid="uid://bvocot38fl74y" path="res://assets/Textures/SkipToNextAction_Button.png" id="47_ftytq"]
-[ext_resource type="Script" uid="uid://b35eio6yfrjvu" path="res://assets/scripts/UI/burglar_switcher.gd" id="47_m1cuv"]
+[ext_resource type="Script" uid="uid://brdaaktjp0ecx" path="res://assets/Scenes/Missions/bag.gd" id="47_m1cuv"]
 [ext_resource type="PackedScene" uid="uid://bxjpbc8sioki3" path="res://assets/Meshes/Weinglas.glb" id="47_wp7ki"]
 [ext_resource type="PackedScene" uid="uid://fcr4gciqu4va" path="res://assets/Scenes/Security/alarm_system.tscn" id="48_u8as7"]
 [ext_resource type="PackedScene" uid="uid://qtg03eexgg3h" path="res://assets/Scenes/Containers/locker.tscn" id="49_oyf2v"]
-[ext_resource type="AudioStream" uid="uid://doy0033mjobd" path="res://assets/Clou original files/Audio/Music/Track03.ogg" id="50_ig7xc"]
 [ext_resource type="PackedScene" uid="uid://ckehugd8h2al8" path="res://assets/Scenes/UI/pause_menu.tscn" id="55_ftytq"]
+[ext_resource type="AudioStream" uid="uid://c21uajgf4ulwk" path="res://assets/Clou original files/Audio/Music/Track07.ogg" id="56_m1cuv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ps07l"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -200,6 +200,10 @@ albedo_color = Color(0.3499999, 1, 0, 1)
 diffuse_mode = 3
 albedo_color = Color(1, 0.8333334, 0, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7rpxe"]
+diffuse_mode = 3
+albedo_color = Color(0, 1, 0.9333334, 1)
+
 [sub_resource type="Theme" id="Theme_27hxy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdjfv"]
@@ -208,9 +212,10 @@ bg_color = Color(0.29411766, 0.6784314, 0.11372549, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_ala7q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ytp2"]
-render_priority = -1
-no_depth_test = true
+transparency = 1
+shading_mode = 0
 albedo_color = Color(0.36, 0.36, 0.36, 0.8117647)
+disable_receive_shadows = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_ig7xc"]
 
@@ -432,25 +437,25 @@ transform = Transform3D(0.49997965, 0, -0.004511591, 0, 0.5, 0, 0.004511591, 0, 
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.872032, 1.9992039, 23.018814)
 
 [node name="Bottle6" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1834645063 instance=ExtResource("24_tpnuq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.34338, 4.2807403, 17.090324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.391382, 4.6530557, 17.1294)
 value = 20
 
 [node name="Bag" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1342787328 instance=ExtResource("11_eptic")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6448193, 1.9615494, 16.034895)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.558175, 2.573634, 15.9281645)
 
 [node name="Bag3" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1519015174 instance=ExtResource("11_eptic")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.539407, 1.9615494, 16.034895)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.574937, 2.5735786, 15.71271)
 
 [node name="Bag2" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=261899043 instance=ExtResource("11_eptic")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.001627, 1.9613358, 35.381565)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.16329, 2.573449, 35.237656)
 
 [node name="Bottle" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=1221348770 instance=ExtResource("12_641hl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.933186, 4.2807403, 17.164133)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.024391, 4.652741, 17.130083)
 value = 10
 unique_name = "Raggiante Rosso"
 
 [node name="Bottle2" parent="NavigationRegion3D/HouseTest/Floor0/InteractableObjects" unique_id=240457217 instance=ExtResource("12_641hl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.473045, 4.2807403, 17.164133)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.446268, 4.652741, 17.162706)
 value = 5
 unique_name = "Flor de Primavera"
 
@@ -566,7 +571,19 @@ unique_name = "Frank Stein"
 [node name="Robot" parent="Burglar3" index="0" unique_id=1093158534]
 surface_material_override/0 = SubResource("StandardMaterial3D_o8l7b")
 
-[node name="Burglar4" parent="." unique_id=468724566 instance=ExtResource("5_020ig")]
+[node name="Burglar4" parent="." unique_id=916284773 instance=ExtResource("4_3bmqa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54832, 2.306, 27.828072)
+selected_interaction = 1
+character_speed = 1.1
+max_capacity = 35.0
+show_path = false
+skills = Array[int]([15, 5, 15])
+unique_name = "Bingo Bulbhead"
+
+[node name="Robot" parent="Burglar4" index="0" unique_id=1093158534]
+surface_material_override/0 = SubResource("StandardMaterial3D_7rpxe")
+
+[node name="Burglar5" parent="." unique_id=468724566 instance=ExtResource("5_020ig")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4444838, 2.3055716, 36.4873)
 selected_interaction = 3
 character_speed = 0.8
@@ -705,20 +722,55 @@ offset_bottom = 1076.0952
 focus_mode = 1
 expand_icon = true
 
-[node name="BurglarSwitcher" type="Button" parent="." unique_id=2018753264]
+[node name="BurglarSwitcher" type="SubViewportContainer" parent="." unique_id=1072525897]
+process_mode = 4
+light_mask = 2
+visibility_layer = 2
+propagate_maximum_size = false
+anchors_preset = -1
+offset_left = 1135.0
+offset_top = 617.00006
+offset_right = 3183.0
+offset_bottom = 1129.0
+scale = Vector2(0.47999382, 0.35999885)
+script = ExtResource("47_m1cuv")
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="BurglarSwitcher" unique_id=1912194084]
+transparent_bg = true
+handle_input_locally = false
+physics_object_picking = true
+canvas_cull_mask = 4293918722
+size = Vector2i(2048, 512)
+render_target_update_mode = 4
+
+[node name="Camera" type="Camera3D" parent="BurglarSwitcher/SubViewport" unique_id=1918302625]
+transform = Transform3D(1, 0, 0, 0, 0.3361561, 0, 0, 0, 1, 0, 0, 0)
+cull_mask = 2
+projection = 1
+current = true
+size = 1.25
+
+[node name="Background" type="MeshInstance3D" parent="BurglarSwitcher/SubViewport/Camera" unique_id=1268870882]
+transform = Transform3D(3.1817212, 0, 0, 0, 1.161369, 0, 0, 0, 2.4988832, 0, -0.15729368, 0)
+visible = false
+layers = 2
+mesh = SubResource("QuadMesh_ala7q")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_7ytp2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="BurglarSwitcher/SubViewport" unique_id=1356232340]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+layers = 2
+light_cull_mask = 4293918722
+
+[node name="BurglarSwitcherButton" type="Button" parent="." unique_id=1232559852]
 offset_left = 1641.0
 offset_top = 1004.6667
 offset_right = 1687.0
 offset_bottom = 1059.4285
 focus_mode = 1
 expand_icon = true
-script = ExtResource("47_m1cuv")
-
-[node name="Background" type="MeshInstance3D" parent="BurglarSwitcher" unique_id=1268870882]
-transform = Transform3D(4.9230595, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-visible = false
-mesh = SubResource("QuadMesh_ala7q")
-surface_material_override/0 = SubResource("StandardMaterial3D_7ytp2")
 
 [node name="SkipToStartButton" type="Button" parent="." unique_id=337356126]
 offset_left = 1244.0
@@ -786,12 +838,14 @@ expand_icon = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1696494635]
 process_mode = 3
-stream = ExtResource("50_ig7xc")
+stream = ExtResource("56_m1cuv")
+autoplay = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1250952005]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1422548093]
 handle_input_locally = false
@@ -815,7 +869,7 @@ grow_vertical = 2
 color = Color(0.3137255, 0.3137255, 0.3137255, 1)
 
 [node name="DebugSphere" type="MeshInstance3D" parent="." unique_id=2073837553]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -27.97268, 3.3498216, 22.784246)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("SphereMesh_ig7xc")
 skeleton = NodePath("../NavigationRegion3D/HouseTest/Stairs")
@@ -858,7 +912,7 @@ color = Color(0.427493, 0.42749307, 0.42749307, 1)
 [connection signal="button_up" from="PlayButton" to="." method="_on_play_button_button_up"]
 [connection signal="button_up" from="SkipToEndButton" to="." method="_on_skip_to_end_button_button_up"]
 [connection signal="button_up" from="Bag" to="." method="_on_bag_button_up"]
-[connection signal="button_up" from="BurglarSwitcher" to="." method="_on_burglar_switcher_button_up"]
+[connection signal="button_up" from="BurglarSwitcherButton" to="." method="_on_burglar_switcher_button_up"]
 [connection signal="button_up" from="SkipToStartButton" to="." method="_on_skip_to_start_button_button_up"]
 [connection signal="button_up" from="SkipToPreviousActionButton" to="." method="_on_skip_to_previous_action_button_button_up"]
 [connection signal="button_up" from="SkipToNextActionButton" to="." method="_on_skip_to_next_action_button_button_up"]
@@ -893,3 +947,4 @@ color = Color(0.427493, 0.42749307, 0.42749307, 1)
 [editable path="Burglar1"]
 [editable path="Burglar2"]
 [editable path="Burglar3"]
+[editable path="Burglar4"]

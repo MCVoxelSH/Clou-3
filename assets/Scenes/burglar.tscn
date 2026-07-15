@@ -16,8 +16,9 @@ bg_color = Color(0.7833561, 0.6799758, 0.11207495, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uyv7r"]
 transparency = 1
-no_depth_test = true
-albedo_color = Color(0.36, 0.36, 0.36, 0.8117647)
+shading_mode = 0
+albedo_color = Color(0.36, 0.36, 0.36, 0.18039216)
+disable_receive_shadows = true
 
 [node name="RobotBase" type="Marker3D" unique_id=916284773 groups=["Actor"]]
 script = ExtResource("1_ucjbi")
@@ -70,20 +71,51 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.427493, 0.42749307, 0.42749307, 1)
 
-[node name="Bag" type="Node3D" parent="." unique_id=2094878128]
-process_mode = 3
+[node name="Bag" type="SubViewportContainer" parent="." unique_id=1771894895]
+process_mode = 4
+light_mask = 2
+visibility_layer = 4
+propagate_maximum_size = false
+anchors_preset = -1
+offset_right = 2048.0
+offset_bottom = 512.0
 script = ExtResource("3_7v5qx")
+metadata/_edit_use_anchors_ = true
 
-[node name="Background" type="MeshInstance3D" parent="Bag" unique_id=775146004]
-transform = Transform3D(-7.710512, 0, -8.742278e-08, 0, 5.2929835, 0, 6.740744e-07, 0, -1, 0, 0, 0)
+[node name="SubViewport" type="SubViewport" parent="Bag" unique_id=1184454086]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 4
+physics_object_picking = true
+canvas_cull_mask = 4293918724
+size = Vector2i(2560, 1440)
+render_target_update_mode = 4
+
+[node name="Camera" type="Camera3D" parent="Bag/SubViewport" unique_id=431123707]
+cull_mask = 4
+projection = 1
+current = true
+size = 3.0
+
+[node name="Background" type="MeshInstance3D" parent="Bag/SubViewport/Camera" unique_id=775146004]
+process_mode = 1
+transform = Transform3D(133.35136, 0, 0, 0, 91.54081, 0, 0, 0, 17.294746, 0, 0, 0)
 visible = false
+layers = 4
 mesh = SubResource("QuadMesh_7v5qx")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_uyv7r")
 
-[node name="Crowbar" parent="Bag" unique_id=1883026963 instance=ExtResource("3_7msq8")]
+[node name="Crowbar" parent="Bag/SubViewport/Camera" unique_id=1883026963 instance=ExtResource("3_7msq8")]
+process_mode = 1
 visible = false
 tool_efficencies = Array[float]([50.0, 0.0, 0.0])
 loudness = Array[float]([50.0, 50.0, 75.0])
 
-[node name="Axe" parent="Bag" unique_id=830975763 instance=ExtResource("4_7v5qx")]
+[node name="Axe" parent="Bag/SubViewport/Camera" unique_id=830975763 instance=ExtResource("4_7v5qx")]
+process_mode = 1
 visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Bag/SubViewport" unique_id=1023737730]
+layers = 4
+light_energy = 0.5

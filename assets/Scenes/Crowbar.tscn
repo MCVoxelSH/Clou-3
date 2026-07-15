@@ -12,13 +12,20 @@ script = ExtResource("1_4fwgd")
 tool_efficencies = Array[float]([50.0, 50.0, 50.0])
 loudness = Array[float]([25.0, 50.0, 75.0])
 damaging = true
+item_type = 0
 
 [node name="SM_Crowbar" parent="." unique_id=145914601 instance=ExtResource("2_x6b3c")]
 
+[node name="SM_Crowbar" parent="SM_Crowbar" index="0" unique_id=1196737464]
+layers = 5
+
 [node name="Area3D" type="Area3D" parent="." unique_id=133978660]
+collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1854932792]
 shape = SubResource("CapsuleShape3D_ala7q")
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="SM_Crowbar"]

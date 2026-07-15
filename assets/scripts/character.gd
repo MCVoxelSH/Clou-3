@@ -575,21 +575,22 @@ func set_target_position(target_position: Vector3, record: bool):
 						#this whole thing uses floats for time and steps and could be the cause of bugs later on with float precision issues
 						#TODO this also causes and issue where the following happens: while the burglar is working on the object another one gets the command to work on it, but only recieves the current damage of the object not the damage in time when he arrives at the object
 						var breaking_time = calculate_breaking_time()
-						var step_size:int = floor(10000.0 / breaking_time)
-						var current_progress = 	get_parent().highlighted_object.damage
-						while(current_progress < 10000):
-							current_progress += step_size
-							if(current_progress > 10000):
-								current_progress = 10000
-							parts.clear()
-							parts.append(-1)
-							parts.append(str(get_parent().highlighted_object.get_path()))	
-							parts.append("break")
-							parts.append(step_size)
-							parts.append(get_parent().selected_tool.name)
-							replay.append(parts.duplicate())
-							ticks_at_position+=1
-							currentid +=1	
+						if(breaking_time != 0):
+							var step_size:int = floor(10000.0 / breaking_time)
+							var current_progress = 	get_parent().highlighted_object.damage
+							while(current_progress < 10000):
+								current_progress += step_size
+								if(current_progress > 10000):
+									current_progress = 10000
+								parts.clear()
+								parts.append(-1)
+								parts.append(str(get_parent().highlighted_object.get_path()))	
+								parts.append("break")
+								parts.append(step_size)
+								parts.append(get_parent().selected_tool.name)
+								replay.append(parts.duplicate())
+								ticks_at_position+=1
+								currentid +=1	
 				if(selected_interaction == 2):
 					if(get_parent().highlighted_object.object_type == 3 || get_parent().highlighted_object.object_type == 4):
 						if(!is_guard):
@@ -796,11 +797,12 @@ func calculate_breaking_time()->float:
 	
 	#type 3 is "none"
 	if(get_parent().selected_tool != null && get_parent().highlighted_object.lock_type != 3):
-		var time = floor(10000.0 / (float(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])+float(skills[get_parent().highlighted_object.lock_type])))
-		return time
-		#(300 - get_parent().highlighted_object.damage - get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])
-	else:
-		return 0
+		if(owner.selected_tool.item_type == 0):
+			var time = floor(10000.0 / (float(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])+float(skills[get_parent().highlighted_object.lock_type])))
+			return time
+			#(300 - get_parent().highlighted_object.damage - get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])
+
+	return 0
 		
 
 func show_text_bubble(text:String):

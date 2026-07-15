@@ -61,6 +61,9 @@
 	"materials":[
 		{
 			"doubleSided":true,
+			"extras":{
+				"mmd_material":{}
+			},
 			"name":"Material",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[

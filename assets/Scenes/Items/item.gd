@@ -6,6 +6,10 @@ var base_albedos = []
 @onready var base_rotation = global_rotation
 @onready var current_rotation = 0.0
 
+var speed = 1.25
+
+@export_enum("Tool", "Loot", "other") var item_type
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for c in get_all_children(self):
@@ -16,17 +20,23 @@ func _ready() -> void:
 			var count = c.get_surface_override_material_count()
 			for i in range(count):
 				var mesh_material = c.get_active_material(i).duplicate()
+				c.set_surface_override_material(i, mesh_material)
+				mesh_material.disable_receive_shadows = true
 				base_albedos.append(mesh_material.albedo_color)
-				mesh_material.no_depth_test = true
 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if(get_parent().visible):
-		global_rotation =get_node("/root/Control")._camera.global_rotation
-		current_rotation += 3.0 * delta
-		rotate_object_local(Vector3.UP, current_rotation)
+	#if(get_parent().visible):
+	#global_rotation = get_node("/root/Control")._camera.global_rotation
+	if(visible):
+		current_rotation -= delta * speed
+		if(get_node("/root/Control").selected_tool != self):
+			rotation.y = current_rotation
+		else:
+			global_rotation = get_node("/root/Control")._camera.global_rotation
+			rotate_object_local(Vector3.UP, current_rotation)
 
 
 func _on_area_3d_mouse_entered() -> void:
