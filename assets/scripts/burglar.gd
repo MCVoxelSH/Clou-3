@@ -1,6 +1,7 @@
 extends "res://assets/scripts/character.gd"
 
 @onready var bag= $Bag
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()

@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://c61arfeqa1h0b"
+path.s3tc="res://.godot/imported/W_I__Eckverschluß [Verziert2_180°]_218_0.png-1f2f75b3b4b4ffd567a6a84421784f31.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "d5830a7827000b0a730c08fb7144aabd"
+}
+
+[deps]
+
+source_file="res://Clou2/Clou2_unpack_new_textures/models/Wände/Eckverschlüsse/W_I__Eckverschluß [Verziert2_180°]_218_0.png"
+dest_files=["res://.godot/imported/W_I__Eckverschluß [Verziert2_180°]_218_0.png-1f2f75b3b4b4ffd567a6a84421784f31.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

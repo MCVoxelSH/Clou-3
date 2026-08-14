@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://c2mvwokn1l0r5"
+path.s3tc="res://.godot/imported/W_I2_xxx [Rot]_2059_0.png-586153de9e981b3f41aaad573084f6be.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "20f25051677f891628e382a8281da91a"
+}
+
+[deps]
+
+source_file="res://Clou2/Clou2_unpack_new_textures/models/Wände/InnenWände/W_I2_xxx [Rot]_2059_0.png"
+dest_files=["res://.godot/imported/W_I2_xxx [Rot]_2059_0.png-586153de9e981b3f41aaad573084f6be.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

@@ -7,20 +7,35 @@ var finalize_guard_replay = false
 ##Which interaction was selected while interacting with an object
 @export_enum("Talk", "Interact", "Inspect", "none", "Look at", "Break") var selected_interaction
 
+const ANIMATIONS := {
+	"move": {"start": 6, "end": 19, "loop": true, "loop_start": 4, "loop_end": 19},
+	"takestart": {"start": 170, "end": 175, "loop": false},
+	"takeend": {"start": 170, "end": 175, "loop": false},
+	"open": {"start": 178, "end": 185, "loop": false},
+	"idle": {"start": 664, "end": 701, "loop": true, "loop_start": 664, "loop_end": 701},
+	"movethroughwindow": {"start": 948, "end": 974, "loop": false},
+	"breakhigh": {"start": 1357, "end": 1370, "loop": true, "loop_start": 1360, "loop_end": 1370},
+	"break": {"start": 1374, "end": 1383, "loop": true, "loop_start": 1374, "loop_end": 1380}
+}
+
 @export var character_speed := 10.0
 @export var max_capacity = 40.0
-var currently_carrying_weight = 0.0
+var current_carrying_weight = 0.0
 @export var show_path := true
 @export var is_guard = false
 var filepath_addon = ""
 var replay:Array = []
 var parts:Array = []
 
+var previous_animation_clip := ""
+var current_animation_clip := ""
+var current_animation_clip_length = 0.0
 var id = 0
 var currentid = 0
 #seems to be the same as the array size, so basically id should always be < max id
 var maxid = 0
-var current_floor = 0
+@export var starting_floor = 0
+@onready var current_floor = starting_floor
 
 #is actor inside a building?
 @export var starts_inside = false
@@ -53,10 +68,15 @@ var is_zoomed_onto_object = false
 var camera_position_before_zoom_onto_object:Vector3
 var camera_rotation_before_zoom_onto_object:Vector3
 
+var previous_animation_position = 0.0
+var previous_animation_dir = 1.0
+var previous_animation_speed = 1.0
+var animation_name = ""
+
 #is there a door so the move commands should be pushed forward?
 var change_ticks = false
 
-var pickup_time = 25
+var pickup_time = 12
 
 var max_ticks = 0
 
@@ -78,13 +98,41 @@ var check_last_ticks = false
 
 var last_ticks_index = -1
 
-@onready var mesh = $Robot
+@onready var mesh_root = $Robot
+@export var character_model:PackedScene
+var anim_player:AnimationPlayer
 
-@onready var start_pos = mesh.global_position
+@onready var start_pos = mesh_root.global_position
 
 @export_flags_3d_physics var guard_sight_check_collision_mask
 
+@onready var desired_global_position = start_pos
+
 func _ready():
+	var model:Node3D
+	if character_model:
+		model = character_model.instantiate()
+		mesh_root.add_child(model)
+		model.scale = Vector3(10.0,10.0,10.0)
+		model.global_position.y -= 0.3
+		model.rotation.y = deg_to_rad(90)
+		if(model.get_child_count() > 1):
+			anim_player = model.get_child(1)
+			animation_name = "Take 001"
+			anim_player.current_animation = animation_name
+			anim_player.set_auto_capture(false)
+			#REMINDER update animation only in physics step 
+			anim_player.callback_mode_process = 2
+			#anim_player.callback_mode_method = 1
+			anim_player.pause()
+			
+	for c in GlobalFunctions.get_all_children(model):
+		if(c is MeshInstance3D):
+			var count = c.get_surface_override_material_count()
+			for i in range(count):
+				var mesh_material = c.get_active_material(i).duplicate()
+				#mesh_material.transparency = 1
+				c.set_surface_override_material(i, mesh_material)
 	
 	$TextBubble.visible = false
 	if(starts_inside):
@@ -103,46 +151,33 @@ func _ready():
 	
 	#for actor in get_tree().get_nodes_in_group("Actor"):
 		#ray.add_exception(actor.area)
-	
 
 func _physics_process(_delta):
 	
-	if(!get_parent().backwards):
-		
-		for object in objects_in_sight_of_guard:
-			if(object.is_in_group("Actor")):
-				if(!object.is_guard):
-					var space_state = get_world_3d().direct_space_state
-								
-					var query = PhysicsRayQueryParameters3D.create(mesh.global_position,object.global_position)
-					query.collision_mask = guard_sight_check_collision_mask
-					query.collide_with_areas = true
-					query.exclude = [burglar_area]
-
-					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
-					if(result):
-						if(result.collider.owner.is_in_group("Actor")):
-							owner.print_caught_message(object.unique_name + " caught at " + get_node("/root/Control/TimerLabel").get_time_as_string() +  " ("+str(get_node("/root/Control").ticks)+" ticks)" + " by " + unique_name)
-							print("burglar position: " + str(result.collider.owner.global_position)+ ",id: " + str(result.collider.owner.id) + ", own position: " + str(global_position) + ", id: " + str(id))
-							objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))
-					
-			if(object.is_in_group("Interactable")):
-				var space_state = get_world_3d().direct_space_state
-							
-				var query = PhysicsRayQueryParameters3D.create(mesh.global_position,object.global_position)
-				query.collision_mask = guard_sight_check_collision_mask
-				query.collide_with_areas = true
-				query.exclude = [burglar_area]
-
-				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
-				if(result):	
-					if(result.collider.owner.is_in_group("Interactable")):
-						if(result.collider.owner.object_type == 0 || result.collider.owner.object_type == 1):
-							if(result.collider.owner.anim_player.current_animation_position != 0):
-								owner.print_caught_message("open door was found at " +str(get_parent().ticks) + " by " + unique_name && result.collider.owner.was_opened_by_burglar)
-								objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))							
-		
-		
+	if current_animation_clip == "":
+		return
+	
+	var clip = ANIMATIONS[current_animation_clip]
+	
+	var clip_end := 0.0
+	var clip_start := 0.0
+	
+	if(clip.loop):
+		clip_end = clip.loop_end
+		clip_start = clip.loop_start
+	else:
+		clip_end = clip.end
+		clip_start = clip.start
+	
+	if (anim_player.current_animation_position * owner.FPS >= clip_end && !owner.backwards) || (owner.backwards && anim_player.current_animation_position * owner.FPS <= clip_start):
+		if clip.loop:
+			if(!owner.backwards):
+				anim_player.seek(clip_start / owner.FPS, true)
+			else:
+				anim_player.seek(clip_end/ owner.FPS, true)
+		else:
+			anim_player.pause()
+			current_animation_clip = ""	
 	
 	progress_bar.global_position = get_viewport().get_camera_3d().unproject_position(global_transform.origin)
 	#$TextBubble/TextBubbleBackground.global_position = get_viewport().get_camera_3d().unproject_position(global_transform.origin)
@@ -157,8 +192,9 @@ func _physics_process(_delta):
 		return
 	#var next_position := _nav_agent.get_next_path_position()
 
-func _process(delta: float) -> void:
-	pass
+func _process(_delta):
+
+	pass#global_position= lerp(global_position, desired_global_position, global_position.distance_to(desired_global_position)*60 * delta)	
 	
 func set_target_position(target_position: Vector3, record: bool):
 	
@@ -174,7 +210,7 @@ func set_target_position(target_position: Vector3, record: bool):
 	get_parent().play = false
 	# Get a full navigation path with the NavigationServer API.
 	if true:
-		var start_position = mesh.global_position
+		var start_position = mesh_root.global_position
 		var optimize := true
 		var navigation_map := get_world_3d().get_navigation_map()
 		var path := NavigationServer3D.map_get_path(
@@ -186,7 +222,7 @@ func set_target_position(target_position: Vector3, record: bool):
 		
 		if(record):		
 			
-			var vec = mesh.global_position
+			var vec = mesh_root.global_position
 			
 			var ticks_plus_one = false
 			var ticks_plus_one_overwrite = false
@@ -224,7 +260,7 @@ func set_target_position(target_position: Vector3, record: bool):
 					#currentid-= diff -1
 				#parts.clear()
 				#parts.append(get_parent().ticks)
-				#parts.append(mesh.global_position)
+				#parts.append(mesh_root.global_position)
 				#replay.append(parts.duplicate())
 				#currentid +=1
 				#if(id > 0):
@@ -376,10 +412,10 @@ func set_target_position(target_position: Vector3, record: bool):
 			var comparision_position = Vector3.INF
 			if(get_parent().highlighted_object != null):
 				comparision_position = get_parent().highlighted_object.global_position
-				comparision_position.y = mesh.global_position.y
+				comparision_position.y = mesh_root.global_position.y
 				
 			#if(!is_zoomed_onto_object):
-			if(mesh.global_position.distance_squared_to(comparision_position)>2):
+			if(mesh_root.global_position.distance_squared_to(comparision_position)>2):
 			
 				var first_vec = true
 				for v in path:
@@ -403,8 +439,11 @@ func set_target_position(target_position: Vector3, record: bool):
 						
 						if((v-vec).length()< character_speed):
 							#vec +=((v-vec).normalized())*character_speed
-							vec = vec.move_toward(v, character_speed)
-							vec.y = v.y
+							if(i != path.size()-1):
+								vec = vec.move_toward(path[i+1], character_speed)
+							else:
+								vec = v
+							#vec.y = v.y
 							last_vec = true
 							
 					
@@ -439,7 +478,7 @@ func set_target_position(target_position: Vector3, record: bool):
 						#if(result):
 							#if(result.collider.get_parent().is_in_group("Interactable")):
 								#if(result.collider.get_parent().is_breakable && result.collider.get_parent().damage == 10000):
-									##if(result.collider.get_parent().anim_player.current_animation_position != result.collider.get_parent().anim_player.current_animation_length):
+									##if(result.collider.get_parent().anim_player.current_animation_position != result.collider.get_parent().current_animation_clip_length):
 									##at ticks for door opening animation
 									#
 									#
@@ -471,15 +510,14 @@ func set_target_position(target_position: Vector3, record: bool):
 			else:
 				parts.clear()
 				parts.append(ticks_at_position)		
-				parts.append(mesh.global_position)
+				parts.append(mesh_root.global_position)
 				parts.append("move")
 				replay.append(parts.duplicate())
 				ticks_at_position+=1
 				currentid +=1
 	
 			if(get_parent().highlighted_object != null):
-				if(selected_interaction == 1):
-					
+				if(selected_interaction == 1):		
 					#if is car
 					if(get_parent().highlighted_object.object_type == 6):
 							parts.clear()
@@ -502,12 +540,14 @@ func set_target_position(target_position: Vector3, record: bool):
 							else:	
 								parts.append(str(get_parent().highlighted_object.get_path()))
 							if(j < pickup_time -1):
-								parts.append("none")
+								parts.append("takestart")
 							else:
-								parts.append("take")
+								parts.append("takeend")
 							replay.append(parts.duplicate())
 							ticks_at_position+=1
 							currentid +=1
+							
+					#if is door or container
 					if((get_parent().highlighted_object.object_type == 0 || get_parent().highlighted_object.object_type == 3 ) && get_parent().selected_tool == null):#(get_parent().highlighted_object.object_type == 1 && inside)):
 						for j in range(get_parent().highlighted_object.opening_time):
 							parts.clear()
@@ -532,16 +572,32 @@ func set_target_position(target_position: Vector3, record: bool):
 						var y_pos = path[path.size()-1].y
 						var start_pos:Vector3
 						var end_pos:Vector3
+						
+						var dir := GlobalFunctions.get_visual_facing(get_parent().highlighted_object)
+	
 						if(inside):
-							start_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.z
-							end_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.z*2
-						else:
-							start_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.z
-							end_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.z*2
+							dir = -dir
+
+						start_pos = get_parent().highlighted_object.global_position+dir
+						end_pos = get_parent().highlighted_object.global_position-dir
+						#if(inside):
+							#if(is_directed_towards_z):	
+								#start_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
+							#else:
+								#start_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
+						#else:
+							#if(is_directed_towards_z):	
+								#start_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
+							#else:
+								#start_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
 						start_pos.y = y_pos	
 						end_pos.y = y_pos
-						for t in range(0,1000,25):
-							pos =_quadratic_bezier(start_pos,get_parent().highlighted_object.global_position, end_pos,t/1000.0)
+						for t in range(0,1300,20):
+							pos =_quadratic_bezier(start_pos,get_parent().highlighted_object.global_position, end_pos,t/1300.0)
 							parts.clear()
 							parts.append(-1)
 							parts.append(pos)
@@ -633,14 +689,22 @@ func set_target_position(target_position: Vector3, record: bool):
 		#id -=1
 		maxid = replay.size()
 		
-		var waiting_positions_to_delte = []
+		var waiting_positions_to_delete = []
+		var changed_replay_ids_to_delete = []
 		
 		for w in waiting_positions:
 			if(w[0] >= get_node("/root/Control").ticks):
-				waiting_positions_to_delte.append(w)
+				waiting_positions_to_delete.append(w)
 		
-		for w in waiting_positions_to_delte:
+		for i in changed_replay_ids:
+			if(i > id):
+				changed_replay_ids_to_delete.append(i)
+		
+		for w in waiting_positions_to_delete:
 			waiting_positions.erase(w)
+			
+		for i in changed_replay_ids_to_delete:
+			changed_replay_ids.erase(i)
 		
 		if(show_path):
 			_nav_path_line.draw_path(path)
@@ -657,64 +721,6 @@ static func string_to_vector3(string := "") -> Vector3:
 
 	return Vector3.ZERO
 	
-func _on_area_3d_area_entered(area: Area3D) -> void:
-	_on_body_or_area_entered(area)
-	
-
-func _on_area_3d_area_exited(area: Area3D) -> void:
-	_on_body_or_area_exited(area)
-
-
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	_on_body_or_area_entered(body)
-
-
-func _on_area_3d_body_exited(body: Node3D) -> void:
-	_on_body_or_area_exited(body)
-
-func _on_body_or_area_entered(body_area):
-	#if(!get_parent().backwards):
-
-		if(objects_in_sight_of_guard.find(body_area.owner)== -1 && (body_area.owner.is_in_group("Interactable")|| body_area.owner.is_in_group("Actor"))): #|| body_area.owner.is_in_group("Actor"))):
-			objects_in_sight_of_guard.append(body_area.owner)
-
-		
-		if(body_area.owner.is_in_group("Actor")):
-			if(!body_area.owner.is_guard):
-				var space_state = get_world_3d().direct_space_state
-							
-				var query = PhysicsRayQueryParameters3D.create(mesh.global_position,body_area.owner.global_position)
-				query.collision_mask = guard_sight_check_collision_mask
-				query.collide_with_areas = true
-				query.exclude = [burglar_area]
-
-				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
-				if(result):
-					if(result.collider.owner.is_in_group("Actor")):
-						#owner.print_caught_message(body_area.owner.name,str(get_parent().ticks),unique_name)
-						owner.print_caught_message(body_area.owner.unique_name + " caught at " +str(get_parent().ticks) + " by " + unique_name)
-				
-		if(body_area.owner.is_in_group("Interactable")):
-			var space_state = get_world_3d().direct_space_state
-						
-			var query = PhysicsRayQueryParameters3D.create(mesh.global_position,body_area.owner.global_position)
-			query.collision_mask = guard_sight_check_collision_mask
-			query.collide_with_areas = true
-			query.exclude = [burglar_area]
-
-			var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
-			if(result):	
-				if(result.collider.owner.is_in_group("Interactable")):
-					if(result.collider.owner.object_type == 0 || result.collider.owner.object_type == 1  || result.collider.owner.object_type == 3):
-						if(result.collider.owner.anim_player.current_animation_position != 0 && result.collider.owner.was_opened_by_burglar):
-							owner.print_caught_message("opened object was found at " +str(get_parent().ticks) + " by " + unique_name)
-	
-func _on_body_or_area_exited(body_area):
-	#if(!get_parent().backwards):
-	var index = objects_in_sight_of_guard.find(body_area.owner)
-	if(index != -1):
-		objects_in_sight_of_guard.remove_at(index)
-
 func load_replay():
 	
 	if(get_parent().play || Global.load_replay ||  (is_guard)):
@@ -798,7 +804,11 @@ func calculate_breaking_time()->float:
 	#type 3 is "none"
 	if(get_parent().selected_tool != null && get_parent().highlighted_object.lock_type != 3):
 		if(owner.selected_tool.item_type == 0):
-			var time = floor(10000.0 / (float(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])+float(skills[get_parent().highlighted_object.lock_type])))
+			var time = 0.0
+			if(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type] != 0):
+				time = floor(10000.0 / (float(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])+float(skills[get_parent().highlighted_object.lock_type])))
+			else:
+				time = 30.0
 			return time
 			#(300 - get_parent().highlighted_object.damage - get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])
 
@@ -841,7 +851,7 @@ func add_wait_ticks(ticks_at_position):
 			
 	parts.clear()
 	parts.append(ticks_at_position)
-	parts.append(mesh.global_position)#final_position
+	parts.append(mesh_root.global_position)#final_position
 	parts.append("wait")
 	replay.append(parts.duplicate())
 	
@@ -879,3 +889,26 @@ func save_replay():
 		g.close()
 			
 	#if(int(filepath_addon) == get_parent().number_of_burglars):
+
+func play_animation(name:String, backwards:bool, save_anim_direction:bool):
+	var clip = ANIMATIONS.get(name)
+	if clip == null:
+		push_error("Unbekannte Animation: " + name)
+		return
+	
+	previous_animation_clip = current_animation_clip	
+	current_animation_clip = name
+	current_animation_clip_length = ANIMATIONS[current_animation_clip].end * get_node("/root/Control").FPS
+	
+	if(!backwards):
+		anim_player.play(animation_name)
+		if(previous_animation_clip != current_animation_clip):
+			anim_player.seek(clip.start / owner.FPS, true)
+		if(save_anim_direction):	
+			previous_animation_dir = 1
+	else:
+		anim_player.play_backwards(animation_name)
+		if(previous_animation_clip != current_animation_clip):
+			anim_player.seek(clip.end / owner.FPS, true)
+		if(save_anim_direction):
+			previous_animation_dir = -1

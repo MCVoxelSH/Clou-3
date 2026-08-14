@@ -7,7 +7,7 @@
 size = Vector3(1.9638672, 1.7197425, 1.1447754)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_efsu4"]
-size = Vector3(1.9541016, 1.7167073, 1.1447754)
+size = Vector3(1.7900391, 1.4707031, 1.1447754)
 
 [node name="Bag" unique_id=1834645063 instance=ExtResource("1_nxrme")]
 value = 2

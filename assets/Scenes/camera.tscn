@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b466cok0vg882"]
 
 [ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Scenes/camera.gd" id="1_pwlxj"]
-[ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="1_sbruj"]
+[ext_resource type="PackedScene" uid="uid://dlbi237eii0cw" path="res://assets/Meshes/Kamera.blend" id="2_spw5c"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pwlxj"]
 points = PackedVector3Array(10, 0, 29.999998, -0.0019578934, 0, 0, -10, 0, 29.999998)
@@ -50,20 +50,18 @@ transform = Transform3D(1, 0, 0, 1.4901161e-08, 1, 2.9802322e-08, -2.9802322e-08
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=206607191]
-transform = Transform3D(-0.9942223, 0, 0.1073401, 0, 1, -1.8626451e-09, -0.1073401, -2.6077032e-08, -0.99422234, 0, 0, 0)
+transform = Transform3D(-0.9917849, 0, -0.12791671, 0, 1, 0, 0.12791671, 0, -0.9917849, 0.189537, 0.14031273, -0.024445778)
 shape = SubResource("ConvexPolygonShape3D_pwlxj")
 
-[node name="CameraMesh" type="MeshInstance3D" parent="." unique_id=2058705584]
-transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 1, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("1_sbruj")
-
 [node name="Spotlight" type="MeshInstance3D" parent="." unique_id=1461383171]
-transform = Transform3D(-0.99422234, 0, 0.10734008, 0, 1, 0, -0.10734008, 0, -0.99422234, 0, 0, 0)
+transform = Transform3D(-0.9917849, 0, -0.1279167, 0, 1, 0, 0.1279167, 0, -0.9917849, 0.189537, 0.14031273, -0.024445778)
 mesh = SubResource("ArrayMesh_e71kx")
 skeleton = NodePath("")
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=2095706538]
 transform = Transform3D(-0.9365508, -0.30757606, 0.16813764, 0.14321773, 0.102045536, 0.9844168, -0.31994113, 0.94603604, -0.05152034, 1.8414936, 3.6923356, -5.6772656)
+
+[node name="Kamera" parent="." unique_id=1333220478 instance=ExtResource("2_spw5c")]
+transform = Transform3D(-0.06078762, -0.017787449, -0.22103617, -0.15970959, 0.16251144, 0.030844254, 0.15383825, 0.16168529, -0.05531868, -0.04514437, -1.0782771, 0.29005793)
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

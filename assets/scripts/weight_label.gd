@@ -7,5 +7,8 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	text = str(int(get_node("/root/Control/").active_burglar.currently_carrying_weight))+ "/"+ str(int(get_node("/root/Control/").active_burglar.max_capacity)) +"kg"
+func _physics_process(delta: float) -> void:
+	if(!owner.active_burglar.is_guard):
+		text = str(int(get_node("/root/Control/").active_burglar.current_carrying_weight))+ "/"+ str(int(get_node("/root/Control/").active_burglar.max_capacity)) +"kg"
+	else:
+		text = ""

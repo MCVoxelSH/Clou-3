@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cu3nk2rpsnu7g"]
+
+[ext_resource type="PackedScene" uid="uid://co7vma8q57ap4" path="res://assets/Meshes/Low Poly City Megapolis/SM_lawn_00.glb" id="1_50y1m"]
+[ext_resource type="Material" uid="uid://dn5pynq82qklr" path="res://assets/Materials/grass_material.tres" id="2_gh645"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_50y1m"]
+size = Vector3(2, 2, 2)
+
+[node name="SM_lawn_00" unique_id=1446973001 instance=ExtResource("1_50y1m")]
+
+[node name="Cube" parent="." index="0" unique_id=692269085]
+surface_material_override/0 = ExtResource("2_gh645")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cube" index="0" unique_id=1128157383]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube/StaticBody3D" index="0" unique_id=1248225420]
+shape = SubResource("BoxShape3D_50y1m")

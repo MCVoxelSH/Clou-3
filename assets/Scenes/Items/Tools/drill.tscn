@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://baelrphj8f8qr"]
+
+[ext_resource type="PackedScene" uid="uid://bfr8jwkg3aag3" path="res://assets/Meshes/Low Poly Survival Tools/SM_ELECTRIC_DRILL.glb" id="1_kuh5o"]
+[ext_resource type="Script" uid="uid://de4bv3cna3bye" path="res://assets/scripts/Tool.gd" id="2_xx24x"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dnm0n"]
+radius = 0.1850586
+height = 0.3701172
+
+[node name="Drill" type="Node3D" unique_id=1009371699 groups=["Item"]]
+process_mode = 3
+script = ExtResource("2_xx24x")
+tool_efficencies = Array[float]([30.0, 50.0, 0.0])
+loudness = Array[float]([50.0, 85.0, 0.0])
+damaging = true
+item_type = 0
+
+[node name="SM_ELECTRIC_DRILL2" parent="." unique_id=964373689 instance=ExtResource("1_kuh5o")]
+
+[node name="SM_ELECTRIC_DRILL" parent="SM_ELECTRIC_DRILL2" index="0" unique_id=1486239401]
+layers = 5
+
+[node name="DRILL_BIT" parent="SM_ELECTRIC_DRILL2/SM_ELECTRIC_DRILL" index="0" unique_id=114464164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.940397, 0.08521992, -10.790547)
+layers = 5
+
+[node name="Area3D" type="Area3D" parent="." unique_id=261024409]
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=287201691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08360195, 0.046735957, 0)
+shape = SubResource("CapsuleShape3D_dnm0n")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="SM_ELECTRIC_DRILL2"]

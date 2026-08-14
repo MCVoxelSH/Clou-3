@@ -80,7 +80,7 @@ data = PackedVector3Array(0.1982, -2.6324, 1, 4.0333, -2.6334, -1.7221999, 4.033
 
 [node name="HouseTest" unique_id=552123884 groups=["apply_to_navmesh"] instance=ExtResource("1_m0uff")]
 
-[node name="Stairs" parent="." index="0" unique_id=1542585700]
+[node name="Stairs" parent="." index="0" unique_id=2121263278]
 script = ExtResource("2_5gidf")
 related_objects = ["HouseTest"]
 
@@ -97,7 +97,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3658438, 1.5741664, 0.55335
 shape = SubResource("BoxShape3D_ymem3")
 debug_color = Color(0.8754037, 0.34498727, 0, 0.41960785)
 
-[node name="Stairs2" parent="." index="1" unique_id=1668026026]
+[node name="Stairs2" parent="." index="1" unique_id=2142466532]
 script = ExtResource("2_5gidf")
 related_objects = ["HouseTest"]
 floor = 1
@@ -116,129 +116,133 @@ transform = Transform3D(1.0000017, 0, -1.8626451e-09, 0, 1, 0, 1.8626451e-09, 0,
 shape = SubResource("BoxShape3D_5gidf")
 debug_color = Color(0.8754037, 0.34498727, 0, 0.41960785)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Platform" parent_id_path=PackedInt32Array(242326912) index="0" unique_id=1938847073]
+[node name="StaticBody3D" type="StaticBody3D" parent="Platform" parent_id_path=PackedInt32Array(437607554) index="0" unique_id=1938847073]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Platform/StaticBody3D" index="0" unique_id=1375121476]
 shape = SubResource("ConcavePolygonShape3D_dcawt")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="StairsRailing" parent_id_path=PackedInt32Array(577285896) index="0" unique_id=1542105087]
+[node name="StaticBody3D" type="StaticBody3D" parent="StairsRailing" parent_id_path=PackedInt32Array(1412310767) index="0" unique_id=1542105087]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StairsRailing/StaticBody3D" index="0" unique_id=2139649422]
 shape = SubResource("ConcavePolygonShape3D_j1ani")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Staris2Railing" parent_id_path=PackedInt32Array(1438515662) index="0" unique_id=1455988827]
+[node name="StaticBody3D" type="StaticBody3D" parent="Staris2Railing" parent_id_path=PackedInt32Array(1860880139) index="0" unique_id=1455988827]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Staris2Railing/StaticBody3D" index="0" unique_id=2104560514]
 shape = SubResource("ConcavePolygonShape3D_yvlgp")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="PlatformRailing" parent_id_path=PackedInt32Array(2052520248) index="0" unique_id=2053206146]
+[node name="StaticBody3D" type="StaticBody3D" parent="PlatformRailing" parent_id_path=PackedInt32Array(1054950639) index="0" unique_id=2053206146]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlatformRailing/StaticBody3D" index="0" unique_id=357035226]
 shape = SubResource("ConcavePolygonShape3D_bb7yi")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Building" parent_id_path=PackedInt32Array(955308296) index="0" unique_id=1984810047]
+[node name="StaticBody3D" type="StaticBody3D" parent="Building" parent_id_path=PackedInt32Array(2140814296) index="0" unique_id=1984810047]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Building/StaticBody3D" index="0" unique_id=1311338227]
 shape = SubResource("ConcavePolygonShape3D_480eu")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_003" parent_id_path=PackedInt32Array(1633673040) index="0" unique_id=2030113080]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_003" parent_id_path=PackedInt32Array(1270469979) index="0" unique_id=2030113080]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_003/StaticBody3D" index="0" unique_id=381604823]
 shape = SubResource("ConcavePolygonShape3D_5gidf")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_001" parent_id_path=PackedInt32Array(502066612) index="0" unique_id=72299255]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_001" parent_id_path=PackedInt32Array(1088668701) index="0" unique_id=72299255]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_001/StaticBody3D" index="0" unique_id=1947826307]
 shape = SubResource("ConcavePolygonShape3D_ymem3")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_002" parent_id_path=PackedInt32Array(1884186088) index="0" unique_id=1927305408]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_002" parent_id_path=PackedInt32Array(2134187811) index="0" unique_id=1927305408]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_002/StaticBody3D" index="0" unique_id=408446566]
 shape = SubResource("ConcavePolygonShape3D_juuy5")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_004" parent_id_path=PackedInt32Array(1856273771) index="0" unique_id=884740234]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_004" parent_id_path=PackedInt32Array(245270034) index="0" unique_id=884740234]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_004/StaticBody3D" index="0" unique_id=176775503]
 shape = SubResource("ConcavePolygonShape3D_gq7xq")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_005" parent_id_path=PackedInt32Array(641926447) index="0" unique_id=794914174]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_005" parent_id_path=PackedInt32Array(1298917051) index="0" unique_id=794914174]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_005/StaticBody3D" index="0" unique_id=64000843]
 shape = SubResource("ConcavePolygonShape3D_ip026")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_006" parent_id_path=PackedInt32Array(828615719) index="0" unique_id=1294474596]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_006" parent_id_path=PackedInt32Array(1029996435) index="0" unique_id=1294474596]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_006/StaticBody3D" index="0" unique_id=1821381679]
 shape = SubResource("ConcavePolygonShape3D_jjqod")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Crate_001" parent_id_path=PackedInt32Array(1599413187) index="0" unique_id=435685337]
+[node name="StaticBody3D" type="StaticBody3D" parent="Crate_001" parent_id_path=PackedInt32Array(1590185168) index="0" unique_id=435685337]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Crate_001/StaticBody3D" index="0" unique_id=356057326]
 shape = SubResource("ConcavePolygonShape3D_xq6e0")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Crate" parent_id_path=PackedInt32Array(1737325043) index="0" unique_id=1542642112]
+[node name="StaticBody3D" type="StaticBody3D" parent="Crate" parent_id_path=PackedInt32Array(354706843) index="0" unique_id=1542642112]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Crate/StaticBody3D" index="0" unique_id=1667927025]
 shape = SubResource("ConcavePolygonShape3D_0q6sx")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Crate_002" parent_id_path=PackedInt32Array(820143568) index="0" unique_id=1953495222]
+[node name="StaticBody3D" type="StaticBody3D" parent="Crate_002" parent_id_path=PackedInt32Array(1894445767) index="0" unique_id=1953495222]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Crate_002/StaticBody3D" index="0" unique_id=151952228]
 shape = SubResource("ConcavePolygonShape3D_unnxy")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_007" parent_id_path=PackedInt32Array(186814522) index="0" unique_id=1836058062]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_007" parent_id_path=PackedInt32Array(1374690927) index="0" unique_id=1836058062]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_007/StaticBody3D" index="0" unique_id=376469165]
 shape = SubResource("ConcavePolygonShape3D_uw7hs")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_008" parent_id_path=PackedInt32Array(616221792) index="0" unique_id=1294111292]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_008" parent_id_path=PackedInt32Array(720685581) index="0" unique_id=1294111292]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_008/StaticBody3D" index="0" unique_id=1770151853]
 shape = SubResource("ConcavePolygonShape3D_whcge")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Counter" parent_id_path=PackedInt32Array(1451358886) index="0" unique_id=1143338428]
+[node name="StaticBody3D" type="StaticBody3D" parent="Counter" parent_id_path=PackedInt32Array(1157518589) index="0" unique_id=1143338428]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/StaticBody3D" index="0" unique_id=22031574]
 shape = SubResource("ConcavePolygonShape3D_iavvr")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_009" parent_id_path=PackedInt32Array(1685808702) index="0" unique_id=1202866120]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_009" parent_id_path=PackedInt32Array(917325218) index="0" unique_id=1202866120]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_009/StaticBody3D" index="0" unique_id=1641419202]
 shape = SubResource("ConcavePolygonShape3D_ayx4x")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Regal_010" parent_id_path=PackedInt32Array(1086619310) index="0" unique_id=1263716646]
+[node name="StaticBody3D" type="StaticBody3D" parent="Regal_010" parent_id_path=PackedInt32Array(225828256) index="0" unique_id=1263716646]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Regal_010/StaticBody3D" index="0" unique_id=683249272]
 shape = SubResource("ConcavePolygonShape3D_4l41w")
 debug_color = Color(0, 0.6, 0.7, 0.42)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor1" parent_id_path=PackedInt32Array(921127547) index="0" unique_id=1926014049]
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor1" parent_id_path=PackedInt32Array(630232472) index="0" unique_id=1926014049]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor1/StaticBody3D" index="0" unique_id=1599691366]
 shape = SubResource("ConcavePolygonShape3D_lbrv7")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor0" parent_id_path=PackedInt32Array(1138537638) index="0" unique_id=438296668]
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor0" parent_id_path=PackedInt32Array(1895089337) index="0" unique_id=438296668]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor0/StaticBody3D" index="0" unique_id=1187041556]
 shape = SubResource("ConcavePolygonShape3D_3xlkm")
 debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="Inside" type="Node3D" parent="." index="24" unique_id=587252298]
+
+[node name="Floor0" type="Node3D" parent="Inside" index="0" unique_id=683665985]
 
 [connection signal="area_entered" from="Stairs/Area3D" to="Stairs" method="_on_area_3d_area_entered"]
 [connection signal="area_entered" from="Stairs2/Area3D" to="Stairs2" method="_on_area_3d_area_entered"]

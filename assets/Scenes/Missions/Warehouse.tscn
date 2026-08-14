@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://doktf1ltri2tp"]
+
+[ext_resource type="PackedScene" uid="uid://bc0271l55tfv5" path="res://assets/Meshes/Low Poly Survival Tools/SM_Box_Warehouse.glb" id="2_muho7"]
+[ext_resource type="PackedScene" uid="uid://2j1ps1t28a50" path="res://assets/Scenes/Containers/safe.tscn" id="4_5h6bi"]
+[ext_resource type="PackedScene" uid="uid://ckj6cpfqhq88b" path="res://assets/Meshes/Low Poly Survival Construction/SM_Pallet_01.glb" id="4_fluic"]
+[ext_resource type="PackedScene" uid="uid://c3w4yr46orjb3" path="res://assets/Scenes/Environment/food_shelf.tscn" id="4_jkqkf"]
+[ext_resource type="PackedScene" uid="uid://bke3k7nl3t283" path="res://assets/Scenes/Environment/ceiling_lamp.tscn" id="5_jkqkf"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ala7q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vmtkv"]
+size = Vector3(2, 0.001, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fluic"]
+size = Vector3(101.1357, 103.62387, 121.577034)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jkqkf"]
+size = Vector3(88.8463, 92.92098, 16.249498)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5h6bi"]
+size = Vector3(88.8463, 92.92098, 16.249498)
+
+[node name="Warehouse" type="Node3D" unique_id=855578962]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=130595050]
+transform = Transform3D(13.323594, 0, 0, 0, 71.297, 0, 0, 0, 10.011972, -8.895647, 0, -34.227966)
+mesh = SubResource("PlaneMesh_ala7q")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1981989953]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1070210865]
+shape = SubResource("BoxShape3D_vmtkv")
+
+[node name="SM_Box_Warehouse2" parent="." unique_id=1548011749 instance=ExtResource("2_muho7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.174961, 0, -32.20653)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Box_Warehouse2/SM_Box_Warehouse" parent_id_path=PackedInt32Array(1548011749, 1686527758) index="0" unique_id=618131705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08143234, 0.62976074, -58.957523)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Box_Warehouse2/SM_Box_Warehouse/StaticBody3D" unique_id=476995105]
+shape = SubResource("BoxShape3D_fluic")
+
+[node name="SM_Pallet_012" parent="." unique_id=700906348 instance=ExtResource("4_fluic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.850937, 0, -31.87901)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Pallet_012/SM_Pallet_01" parent_id_path=PackedInt32Array(700906348, 924683857) index="0" unique_id=1942830825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1988106, 0.88629913, -6.319605)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Pallet_012/SM_Pallet_01/StaticBody3D" unique_id=1701525486]
+shape = SubResource("BoxShape3D_jkqkf")
+
+[node name="SM_Pallet_013" parent="." unique_id=1641393939 instance=ExtResource("4_fluic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.836197, 0.123905, -31.891521)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SM_Pallet_013/SM_Pallet_01" parent_id_path=PackedInt32Array(1641393939, 924683857) index="0" unique_id=1635406304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1988106, 0.88629913, -6.319605)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Pallet_013/SM_Pallet_01/StaticBody3D" unique_id=1302377708]
+shape = SubResource("BoxShape3D_5h6bi")
+
+[node name="Shelfs1" type="Node3D" parent="." unique_id=503629556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.82504, 0, 60.79347)
+
+[node name="SM_Food_Shelf_022" parent="Shelfs1" unique_id=1314809574 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -98)
+
+[node name="SM_Food_Shelf_012" parent="Shelfs1" unique_id=1756483356 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.994118, 2.353191, -97.99331)
+
+[node name="SM_Food_Shelf_013" parent="Shelfs1" unique_id=23092199 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.042015, 0, -98)
+
+[node name="SM_Food_Shelf_014" parent="Shelfs1" unique_id=1391491411 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.036133, 2.353191, -97.99331)
+
+[node name="SM_Food_Shelf_015" parent="Shelfs1" unique_id=994075985 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.2797, 0, -98)
+
+[node name="SM_Food_Shelf_016" parent="Shelfs1" unique_id=1246043880 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.27382, 2.353191, -97.99331)
+
+[node name="SM_Food_Shelf_017" parent="Shelfs1" unique_id=543733294 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.97168, 0, -98)
+
+[node name="SM_Food_Shelf_018" parent="Shelfs1" unique_id=328262228 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.965797, 2.353191, -97.99331)
+
+[node name="SM_Food_Shelf_019" parent="Shelfs1" unique_id=506004132 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.917927, 0, -98)
+
+[node name="SM_Food_Shelf_020" parent="Shelfs1" unique_id=178978153 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.912045, 2.353191, -97.99331)
+
+[node name="Shelfs2" type="Node3D" parent="." unique_id=509208767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.82504, 0, 60.79347)
+
+[node name="SM_Food_Shelf_012" parent="Shelfs2" unique_id=1793378348 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -94.211914)
+
+[node name="SM_Food_Shelf_013" parent="Shelfs2" unique_id=1316399094 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.994118, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_014" parent="Shelfs2" unique_id=1932298886 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.042015, 0, -94.211914)
+
+[node name="SM_Food_Shelf_015" parent="Shelfs2" unique_id=1260079113 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.036133, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_016" parent="Shelfs2" unique_id=1154904360 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.2797, 0, -94.211914)
+
+[node name="SM_Food_Shelf_017" parent="Shelfs2" unique_id=1749138251 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.27382, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_018" parent="Shelfs2" unique_id=786255117 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.97168, 0, -94.211914)
+
+[node name="SM_Food_Shelf_019" parent="Shelfs2" unique_id=390222318 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.965797, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_020" parent="Shelfs2" unique_id=2115573450 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.917927, 0, -94.211914)
+
+[node name="SM_Food_Shelf_021" parent="Shelfs2" unique_id=232438771 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.912045, 2.353191, -94.20522)
+
+[node name="Shelfs3" type="Node3D" parent="." unique_id=114587313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.82504, 0, 64.55112)
+
+[node name="SM_Food_Shelf_012" parent="Shelfs3" unique_id=169155347 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, -94.211914)
+
+[node name="SM_Food_Shelf_013" parent="Shelfs3" unique_id=1270279002 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.994118, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_014" parent="Shelfs3" unique_id=1518495530 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.042015, 0, -94.211914)
+
+[node name="SM_Food_Shelf_015" parent="Shelfs3" unique_id=793850443 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.036133, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_016" parent="Shelfs3" unique_id=1268340916 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.2797, 0, -94.211914)
+
+[node name="SM_Food_Shelf_017" parent="Shelfs3" unique_id=1553084690 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.27382, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_018" parent="Shelfs3" unique_id=583457272 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.97168, 0, -94.211914)
+
+[node name="SM_Food_Shelf_019" parent="Shelfs3" unique_id=924744998 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.965797, 2.353191, -94.20522)
+
+[node name="SM_Food_Shelf_020" parent="Shelfs3" unique_id=149267582 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.917927, 0, -94.211914)
+
+[node name="SM_Food_Shelf_021" parent="Shelfs3" unique_id=1502068606 instance=ExtResource("4_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.912045, 2.353191, -94.20522)
+
+[node name="Safe" parent="." unique_id=1776310826 instance=ExtResource("4_5h6bi")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.866822, 0.035648305, -41.114197)
+
+[node name="CeilingLamp" parent="." unique_id=1330302914 instance=ExtResource("5_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.57366, 5.663381, -33.837914)
+
+[node name="CeilingLamp2" parent="." unique_id=1806725980 instance=ExtResource("5_jkqkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.57366, 5.663381, -40.502163)
+
+[editable path="SM_Box_Warehouse2"]
+[editable path="SM_Pallet_012"]
+[editable path="SM_Pallet_013"]

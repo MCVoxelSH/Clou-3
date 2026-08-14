@@ -34,7 +34,6 @@ shape = SubResource("SeparationRayShape3D_d18g4")
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=1978336891]
-physics_interpolation_mode = 1
 cull_mask = 1
 current = true
 near = 0.1

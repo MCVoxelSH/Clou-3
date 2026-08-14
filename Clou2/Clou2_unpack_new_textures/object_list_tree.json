@@ -1,0 +1,387 @@
+[
+  {
+    "index": 2,
+    "name": "Fenster",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 3,
+    "name": "T\u00fcren",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 4,
+    "name": "Items",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 5,
+    "name": "Werkzeug",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 6,
+    "name": "Beute",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 7,
+    "name": "Bilder",
+    "parent_folder_id": 6
+  },
+  {
+    "index": 8,
+    "name": "WorthlessLoot",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 9,
+    "name": "Adventure",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 10,
+    "name": "Schreibtische",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 11,
+    "name": "Kr\u00e4ne",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 12,
+    "name": "Schiff",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 13,
+    "name": "Characters",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 14,
+    "name": "A",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 15,
+    "name": "B",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 16,
+    "name": "C",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 17,
+    "name": "B-UsedByMarin",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 18,
+    "name": "Knackbar",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 19,
+    "name": "K\u00fcchen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 20,
+    "name": "T\u00f6pfe",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 21,
+    "name": "Alarm",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 22,
+    "name": "Schauk\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 23,
+    "name": "S\u00e4rge",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 24,
+    "name": "K\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 25,
+    "name": "Cars",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 26,
+    "name": "burglarycars",
+    "parent_folder_id": 25
+  },
+  {
+    "index": 27,
+    "name": "taxis",
+    "parent_folder_id": 25
+  },
+  {
+    "index": 28,
+    "name": "Maschinen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 29,
+    "name": "Fahnen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 30,
+    "name": "Fenster",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 31,
+    "name": "T\u00fcren",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 32,
+    "name": "Schreibtische",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 33,
+    "name": "Kr\u00e4ne",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 34,
+    "name": "Schiff",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 35,
+    "name": "Characters",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 36,
+    "name": "A",
+    "parent_folder_id": 35
+  },
+  {
+    "index": 37,
+    "name": "B",
+    "parent_folder_id": 35
+  },
+  {
+    "index": 38,
+    "name": "C",
+    "parent_folder_id": 35
+  },
+  {
+    "index": 39,
+    "name": "B-UsedByMarin",
+    "parent_folder_id": 35
+  },
+  {
+    "index": 40,
+    "name": "Knackbar",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 41,
+    "name": "K\u00fcchen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 42,
+    "name": "T\u00f6pfe",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 43,
+    "name": "Schl\u00fcssel",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 44,
+    "name": "Telefone",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 45,
+    "name": "Schauk\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 46,
+    "name": "S\u00e4rge",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 47,
+    "name": "K\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 48,
+    "name": "taxis",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 49,
+    "name": "Maschinen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 50,
+    "name": "Fahnen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 51,
+    "name": "Fenster",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 52,
+    "name": "T\u00fcren",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 53,
+    "name": "Items_2209",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 54,
+    "name": "Beute",
+    "parent_folder_id": 53
+  },
+  {
+    "index": 55,
+    "name": "Bilder",
+    "parent_folder_id": 54
+  },
+  {
+    "index": 56,
+    "name": "WorthlessLoot",
+    "parent_folder_id": 53
+  },
+  {
+    "index": 57,
+    "name": "Adventure",
+    "parent_folder_id": 53
+  },
+  {
+    "index": 58,
+    "name": "Schreibtische",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 59,
+    "name": "Kr\u00e4ne",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 60,
+    "name": "Schiff",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 61,
+    "name": "Characters_2209",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 62,
+    "name": "A",
+    "parent_folder_id": 61
+  },
+  {
+    "index": 63,
+    "name": "B",
+    "parent_folder_id": 61
+  },
+  {
+    "index": 64,
+    "name": "C",
+    "parent_folder_id": 61
+  },
+  {
+    "index": 65,
+    "name": "B-UsedByMarin",
+    "parent_folder_id": 61
+  },
+  {
+    "index": 66,
+    "name": "Knackbar",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 67,
+    "name": "K\u00fcchen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 68,
+    "name": "T\u00f6pfe",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 69,
+    "name": "Alarm",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 70,
+    "name": "Schl\u00fcssel",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 71,
+    "name": "Telefone",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 72,
+    "name": "Schauk\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 73,
+    "name": "S\u00e4rge",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 74,
+    "name": "K\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 75,
+    "name": "Cars_2209",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 76,
+    "name": "taxis",
+    "parent_folder_id": 75
+  },
+  {
+    "index": 77,
+    "name": "Maschinen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 78,
+    "name": "Fahnen",
+    "parent_folder_id": 1
+  }
+]

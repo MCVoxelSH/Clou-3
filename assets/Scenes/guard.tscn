@@ -2,76 +2,54 @@
 
 [ext_resource type="PackedScene" uid="uid://dvnhkeyunxa80" path="res://assets/Scenes/burglar.tscn" id="1_l30q5"]
 [ext_resource type="Script" uid="uid://cxub0vxd1nimg" path="res://assets/scripts/guard.gd" id="2_f2xg0"]
+[ext_resource type="PackedScene" uid="uid://dl7wii8bxsyht" path="res://assets/Meshes/SpotlightGuard.blend" id="3_tuw5j"]
+[ext_resource type="Texture2D" uid="uid://1rd6pvni0p2u" path="res://assets/Textures/Other/Sightcone.png" id="4_ofjbf"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l30q5"]
-points = PackedVector3Array(4, 0, 20, -0.66718864, 0, -5.4433336, -4, 0, 20)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tuw5j"]
+points = PackedVector3Array(25, 0, -80, -25, 0, -80, -0.0048942566, 0, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01mds"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_3j12q"]
-_surfaces = [{
-"aabb": AABB(-4, 0, -5.4433336, 8, 1e-05, 25.443333),
-"format": 34896613377,
-"index_count": 3,
-"index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 3,
-"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 170, 106, 0, 0, 0, 0, 0, 0)
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_l30q5"]
-resource_name = "SpotlightGuard_Plane"
-_surfaces = [{
-"aabb": AABB(-4, 0, -5.4433336, 8, 1e-05, 25.443333),
-"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
-"format": 34896613399,
-"index_count": 3,
-"index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
-"material": SubResource("StandardMaterial3D_01mds"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 3,
-"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 255, 63, 0, 0, 0, 0, 255, 255, 255, 63, 170, 106, 0, 0, 0, 0, 255, 63, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
-}]
-blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_3j12q")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ljuip"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tuw5j"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.14117648)
+albedo_texture = ExtResource("4_ofjbf")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2xg0"]
 albedo_color = Color(0.36, 0.36, 0.36, 0.8117647)
 
 [node name="RobotBase" unique_id=468724566 instance=ExtResource("1_l30q5")]
 script = ExtResource("2_f2xg0")
-record_guard = false
+record_guard = null
+max_capacity = null
 show_path = false
 is_guard = true
+starting_floor = null
+starts_inside = null
+skills = null
+unique_name = null
+hearing = null
 
-[node name="Area3D2" type="Area3D" parent="Robot" parent_id_path=PackedInt32Array(1093158534) index="0" unique_id=2106648720]
+[node name="Area3D2" type="Area3D" parent="Robot" parent_id_path=PackedInt32Array(2137937786) index="0" unique_id=2106648720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0458031e-07, 0, 0.69260406)
-visible = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/Area3D2" index="0" unique_id=1890430363]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6204657, 0.6717707, 5.2904606)
-shape = SubResource("ConvexPolygonShape3D_l30q5")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/Area3D2" index="0" unique_id=669896763]
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 1.0458031e-07, 0.6290839, -0.69260406)
+shape = SubResource("ConvexPolygonShape3D_tuw5j")
 
-[node name="Spotlight" type="MeshInstance3D" parent="Robot" parent_id_path=PackedInt32Array(1093158534) index="2" unique_id=406023474]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6204656, 0.7814132, 5.9830647)
-mesh = SubResource("ArrayMesh_l30q5")
-skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_ljuip")
+[node name="SpotlightGuard" parent="Robot" parent_id_path=PackedInt32Array(2137937786) index="2" unique_id=1547308914 instance=ExtResource("3_tuw5j")]
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)
+
+[node name="Plane" parent="Robot/SpotlightGuard" index="0" unique_id=1556755674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6290839, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_tuw5j")
 
 [node name="TextBubble" parent="." index="4" unique_id=1432405381]
 visible = false
 
-[node name="Background" parent="Bag" parent_id_path=PackedInt32Array(2094878128) index="0" unique_id=775146004]
+[node name="Background" parent="Bag/SubViewport/Camera" parent_id_path=PackedInt32Array(431123707) index="0" unique_id=775146004]
 surface_material_override/0 = SubResource("StandardMaterial3D_f2xg0")
 
 [connection signal="area_entered" from="Robot/Area3D2" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Robot/Area3D2" to="." method="_on_area_3d_area_exited"]
 [connection signal="body_entered" from="Robot/Area3D2" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Robot/Area3D2" to="." method="_on_area_3d_body_exited"]
+
+[editable path="Robot/SpotlightGuard"]

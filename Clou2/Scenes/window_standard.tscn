@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://clikknfvd8v88"]
+
+[ext_resource type="PackedScene" uid="uid://b2bih6xcnupio" path="res://Clou2/Scenes/Window.tscn" id="1_di2n1"]
+[ext_resource type="PackedScene" uid="uid://ykuj2ds8r2t4" path="res://Clou2/Clou2_unpack/models/Fenster/FensterStandard[Beleuchtet]_646.glb" id="2_di2n1"]
+
+[node name="FensterClou2Standard" unique_id=612355611 instance=ExtResource("1_di2n1")]
+
+[node name="FensterStandard[Beleuchtet]_646" parent="." index="0" unique_id=1873923067 instance=ExtResource("2_di2n1")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" parent="Door/Area3D" parent_id_path=PackedInt32Array(1625466342) index="0" unique_id=260253587]
+transform = Transform3D(1, 0, 6.82121e-13, 0, 1, 0, -5.4178884e-12, 0, 0.9999995, 0.007715948, 0.0033134324, -0.031715915)

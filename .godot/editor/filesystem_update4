@@ -1,7 +1,6 @@
 res://assets/Scenes/Missions/Test Scene.tscn
 res://assets/Shaders/distance_fog.gdshader
 res://assets/Scenes/burglar.tscn
-res://assets/Scenes/Items/Loot/Chateu de France.tscn
-res://assets/Scenes/Items/Loot/Wine Bottle.tscn
-res://assets/Scenes/Items/Loot/bag.tscn
+res://assets/scripts/character.gd
+res://assets/scripts/Interactable/floor_visibility_check.gd
 res://assets/scripts/control.gd

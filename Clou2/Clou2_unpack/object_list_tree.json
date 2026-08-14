@@ -1,0 +1,152 @@
+[
+  {
+    "index": 2,
+    "name": "Fenster",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 3,
+    "name": "T\u00fcren",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 4,
+    "name": "Items",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 5,
+    "name": "Werkzeug",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 6,
+    "name": "Beute",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 7,
+    "name": "Bilder",
+    "parent_folder_id": 6
+  },
+  {
+    "index": 8,
+    "name": "WorthlessLoot",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 9,
+    "name": "Adventure",
+    "parent_folder_id": 4
+  },
+  {
+    "index": 10,
+    "name": "Schreibtische",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 11,
+    "name": "Kr\u00e4ne",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 12,
+    "name": "Schiff",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 13,
+    "name": "Characters",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 14,
+    "name": "A",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 15,
+    "name": "B",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 16,
+    "name": "C",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 17,
+    "name": "B-UsedByMarin",
+    "parent_folder_id": 13
+  },
+  {
+    "index": 18,
+    "name": "Knackbar",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 19,
+    "name": "K\u00fcchen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 20,
+    "name": "T\u00f6pfe",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 21,
+    "name": "Alarm",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 22,
+    "name": "Schl\u00fcssel",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 23,
+    "name": "Telefone",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 24,
+    "name": "Schauk\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 25,
+    "name": "S\u00e4rge",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 26,
+    "name": "K\u00e4sten",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 27,
+    "name": "Cars",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 28,
+    "name": "burglarycars",
+    "parent_folder_id": 27
+  },
+  {
+    "index": 29,
+    "name": "taxis",
+    "parent_folder_id": 27
+  },
+  {
+    "index": 30,
+    "name": "Maschinen",
+    "parent_folder_id": 1
+  },
+  {
+    "index": 31,
+    "name": "Fahnen",
+    "parent_folder_id": 1
+  }
+]

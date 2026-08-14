@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://b1jmxyemyxe88"]
+
+[ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://assets/scripts/Interactable/interactable.gd" id="1_4swin"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ufl1m"]
+size = Vector3(2.081543, 2.047573, 15.098957)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pso2s"]
+size = Vector3(2.081543, 2.4047766, 0.13995689)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8o7sn"]
+size = Vector3(2.081543, 2.5798297, 0.13995689)
+
+[node name="DoorClou2" type="Node3D" unique_id=612355611 groups=["Interactable"]]
+script = ExtResource("1_4swin")
+is_breakable = true
+lock_type = 0
+object_type = 0
+object_material = 0
+
+[node name="Door" type="Node3D" parent="." unique_id=308604268]
+transform = Transform3D(-1.1211131e-08, 0, -1, 0, 2.010108, 0, 0.06881343, 0, -1.6292068e-07, -0.8693336, 1.9338678, 0.05480974)
+
+[node name="Area3D" type="StaticBody3D" parent="Door" unique_id=1625466342]
+transform = Transform3D(-2.308688e-06, 0, 1, 0, 1, 0, -1, 0, -2.308688e-06, -0.7964997, -0.9620716, -0.8693336)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door/Area3D" unique_id=260253587]
+transform = Transform3D(1, 0, 6.82121e-13, 0, 1, 0, -1.9291235e-12, 0, 0.9999995, 0.098, 1, -1.3886409)
+shape = SubResource("BoxShape3D_ufl1m")
+
+[node name="OutsideCheck" type="Area3D" parent="." unique_id=1191086551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06459844)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OutsideCheck" unique_id=992811701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 1.6875362, 0.02949965)
+shape = SubResource("BoxShape3D_pso2s")
+
+[node name="InsideCheck" type="Area3D" parent="." unique_id=2101058853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.21287513)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InsideCheck" unique_id=1432203158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 1.5936449, -0.11860493)
+shape = SubResource("BoxShape3D_8o7sn")
+
+[node name="CameraPosNode" type="Node3D" parent="." unique_id=1374438171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50627947, 1.6825235, 7.0942307)
+
+[connection signal="mouse_entered" from="Door/Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Door/Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="area_entered" from="OutsideCheck" to="." method="_on_outside_check_area_entered"]
+[connection signal="mouse_entered" from="OutsideCheck" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="OutsideCheck" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="area_entered" from="InsideCheck" to="." method="_on_inside_check_area_entered"]
+[connection signal="mouse_entered" from="InsideCheck" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="InsideCheck" to="." method="_on_area_3d_mouse_exited"]

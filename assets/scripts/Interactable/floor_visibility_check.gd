@@ -3,10 +3,13 @@ extends Node3D
 @export var related_objects = []
 @export var floor = 0
 
+func _ready() -> void:
+	related_objects.append(get_node("/root/Control").burglary_target)
+
 func enable_floor():
-	for i in range (get_node("/root/Control").active_burglar.current_floor, get_node("/root/Control").number_of_floors + 1):
-		get_node("/root/Control/NavigationRegion3D/"+get_node("/root/Control").burglary_target.name+"/Floor"+str(i)).cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
-		for c in get_all_children(get_node("/root/Control/NavigationRegion3D/"+get_node("/root/Control").burglary_target.name+"/Floor"+str(i))):
+	for i in range (get_node("/root/Control").active_burglar.current_floor, get_node("/root/Control").get_node(related_objects[0]).number_of_floors + 1):
+		#get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i)).cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
+		for c in get_all_children(get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i))):
 			if(c.name != "Spotlight"):
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
@@ -27,9 +30,9 @@ func enable_floor():
 func disable_floor():
 	if(!(get_node("/root/Control").active_burglar.inside)):
 		return
-	for i in range (get_node("/root/Control").active_burglar.current_floor + 1, get_node("/root/Control").number_of_floors + 1):
-		get_node("/root/Control/NavigationRegion3D/"+get_node("/root/Control").burglary_target.name+"/Floor"+str(i)).cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
-		for c in get_all_children(get_node("/root/Control/NavigationRegion3D/"+get_node("/root/Control").burglary_target.name+"/Floor"+str(i))):
+	for i in range (get_node("/root/Control").active_burglar.current_floor + 1, get_node("/root/Control").get_node(str(related_objects[0])).number_of_floors + 1):
+		#get_node("/root/Control/NavigationRegion3D/"+get_node("/root/Control").burglary_target.name+"Inside/Floor"+str(i)).cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
+		for c in get_all_children(get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i))):
 			if(c.name != "Spotlight"):
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
@@ -74,19 +77,26 @@ func change_visibility(node, set_floor:bool):
 		if(set_floor):
 			node.current_floor = floor
 		for actor in get_tree().get_nodes_in_group("Actor"):
-			if(actor.is_guard):
+			if(true):#actor.is_guard):
 				if(actor.current_floor != get_node("/root/Control").active_burglar.current_floor):
 					var mesh = actor.get_child(0)
-					for i in range(mesh.get_surface_override_material_count()):
-						var mesh_material = actor.get_child(0).get_active_material(i).duplicate()
-						mesh.set_surface_override_material(i, mesh_material)
-						mesh_material.albedo_color.a = 0
+					for c in GlobalFunctions.get_all_children(mesh):
+						if(c is MeshInstance3D && c.name != "Plane"):
+							for i in range(c.get_surface_override_material_count()):
+								var mesh_material = c.get_active_material(i).duplicate()
+								c.set_surface_override_material(i, mesh_material)
+								mesh_material.transparency = 1
+								mesh_material.albedo_color.a = 0
 				else:
 					var mesh = actor.get_child(0)
-					for i in range(mesh.get_surface_override_material_count()):
-						var mesh_material = actor.get_child(0).get_active_material(i).duplicate()
-						mesh.set_surface_override_material(i, mesh_material)
-						mesh_material.albedo_color.a = 1
+					for c in GlobalFunctions.get_all_children(mesh):
+						#REMINDME this is questionable and might cause issues later, if any other object should be name "Plane"
+						if(c is MeshInstance3D && c.name != "Plane"):
+							for i in range(c.get_surface_override_material_count()):
+								var mesh_material = c.get_active_material(i).duplicate()
+								c.set_surface_override_material(i, mesh_material)
+								mesh_material.transparency = 0
+								mesh_material.albedo_color.a = 1
 		if(node == get_node("/root/Control").active_burglar):
 			enable_floor()
 			disable_floor()

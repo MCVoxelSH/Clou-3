@@ -4,18 +4,26 @@
 [ext_resource type="PackedScene" uid="uid://b0ckonl47tovl" path="res://assets/Meshes/Low Poly Survival Tools/SM_Crowbar.glb" id="2_x6b3c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ala7q"]
-radius = 0.16894531
-height = 0.92578125
+radius = 0.032226563
+height = 0.2944336
 
 [node name="Tool" type="Node3D" unique_id=430073392 groups=["Item"]]
+process_mode = 1
 script = ExtResource("1_4fwgd")
+item_type = 0
 
 [node name="SM_Crowbar" parent="." unique_id=145914601 instance=ExtResource("2_x6b3c")]
 
+[node name="SM_Crowbar" parent="SM_Crowbar" index="0" unique_id=816600379]
+layers = 5
+
 [node name="Area3D" type="Area3D" parent="." unique_id=261024409]
+collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=287201691]
 shape = SubResource("CapsuleShape3D_ala7q")
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="SM_Crowbar"]

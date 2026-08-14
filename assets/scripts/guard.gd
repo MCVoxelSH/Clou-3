@@ -2,6 +2,7 @@ extends "res://assets/scripts/character.gd"
 
 @export var record_guard = false
 
+@onready var bag= $Bag
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
@@ -10,6 +11,45 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
+
+func _physics_process(_delta):
+	if(!get_parent().backwards):
+		
+		for object in objects_in_sight_of_guard:
+			if(object.is_in_group("Actor")):
+				if(!object.is_guard):
+					var space_state = get_world_3d().direct_space_state
+								
+					var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,object.global_position)
+					query.collision_mask = guard_sight_check_collision_mask
+					query.collide_with_areas = true
+					query.exclude = [burglar_area]
+
+					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
+					if(result):
+						if(result.collider.owner.is_in_group("Actor")):
+							owner.print_caught_message(object.unique_name + " caught at " + get_node("/root/Control/TimerLabel").get_time_as_string() +  " ("+str(get_node("/root/Control").ticks)+" ticks)" + " by " + unique_name)
+							print("burglar position: " + str(result.collider.owner.global_position)+ ",id: " + str(result.collider.owner.id) + ", own position: " + str(global_position) + ", id: " + str(id))
+							objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))
+					
+			if(object.is_in_group("Interactable")):
+				var space_state = get_world_3d().direct_space_state
+							
+				var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,object.global_position)
+				query.collision_mask = guard_sight_check_collision_mask
+				query.collide_with_areas = true
+				query.exclude = [burglar_area]
+
+				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
+				if(result):	
+					if(result.collider.owner.is_in_group("Interactable")):
+						if(result.collider.owner.object_type == 0 || result.collider.owner.object_type == 1):
+							if(result.collider.owner.anim_player.current_animation_position != 0):
+								owner.print_caught_message("open door was found at " +str(get_parent().ticks) + " by " + unique_name && result.collider.owner.was_opened_by_burglar)
+								objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))							
+		
+		
+	super(_delta)	
 
 func load_replay():
 	
@@ -117,3 +157,61 @@ func save_replay():
 		g.close()
 			
 	#if(int(filepath_addon) == get_parent().number_of_burglars):
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	_on_body_or_area_entered(area)
+	
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+	_on_body_or_area_exited(area)
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	_on_body_or_area_entered(body)
+
+
+func _on_area_3d_body_exited(body: Node3D) -> void:
+	_on_body_or_area_exited(body)
+
+func _on_body_or_area_entered(body_area):
+	#if(!get_parent().backwards):
+
+		if(objects_in_sight_of_guard.find(body_area.owner)== -1 && (body_area.owner.is_in_group("Interactable")|| body_area.owner.is_in_group("Actor"))): #|| body_area.owner.is_in_group("Actor"))):
+			objects_in_sight_of_guard.append(body_area.owner)
+
+		
+		if(body_area.owner.is_in_group("Actor")):
+			if(!body_area.owner.is_guard):
+				var space_state = get_world_3d().direct_space_state
+							
+				var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.owner.global_position)
+				query.collision_mask = guard_sight_check_collision_mask
+				query.collide_with_areas = true
+				query.exclude = [burglar_area]
+
+				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
+				if(result):
+					if(result.collider.owner.is_in_group("Actor")):
+						#owner.print_caught_message(body_area.owner.name,str(get_parent().ticks),unique_name)
+						owner.print_caught_message(body_area.owner.unique_name + " caught at " +str(get_parent().ticks) + " by " + unique_name)
+				
+		if(body_area.owner.is_in_group("Interactable")):
+			var space_state = get_world_3d().direct_space_state
+						
+			var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.owner.global_position)
+			query.collision_mask = guard_sight_check_collision_mask
+			query.collide_with_areas = true
+			query.exclude = [burglar_area]
+
+			var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
+			if(result):	
+				if(result.collider.owner.is_in_group("Interactable")):
+					if(result.collider.owner.object_type == 0 || result.collider.owner.object_type == 1  || result.collider.owner.object_type == 3):
+						if(result.collider.owner.anim_player.current_animation_position != 0 && result.collider.owner.was_opened_by_burglar):
+							owner.print_caught_message("opened object was found at " +str(get_parent().ticks) + " by " + unique_name)
+	
+func _on_body_or_area_exited(body_area):
+	#if(!get_parent().backwards):
+	var index = objects_in_sight_of_guard.find(body_area.owner)
+	if(index != -1):
+		objects_in_sight_of_guard.remove_at(index)

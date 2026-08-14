@@ -1,0 +1,44 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://s80to101addy"
+path.s3tc="res://.godot/imported/Randstein_Flach_Gedreht_1897_0.png-1349c66274189fce87d3c2c9ae5b8d67.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "97d320786f5264064ebbe3468c53ed78"
+}
+
+[deps]
+
+source_file="res://Clou2/Clou2_unpack/models/Randsteine/Randstein_Flach_Gedreht_1897_0.png"
+dest_files=["res://.godot/imported/Randstein_Flach_Gedreht_1897_0.png-1349c66274189fce87d3c2c9ae5b8d67.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

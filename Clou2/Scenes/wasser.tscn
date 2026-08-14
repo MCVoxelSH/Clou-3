@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cdsgh76qyqesa"]
+
+[ext_resource type="PackedScene" uid="uid://bisc6dg43tf0e" path="res://Clou2/Clou2_unpack_new_textures/models/wasser_3x3_timetest_1032.glb" id="1_eu5no"]
+
+[node name="Wasser" type="Node3D" unique_id=1877870136]
+
+[node name="wasser_3x3_timetest_1032" parent="." unique_id=917415358 instance=ExtResource("1_eu5no")]
+
+[node name="pPlaneShape19" parent="wasser_3x3_timetest_1032/Z_up_to_Y_up/wasser_3x3_timetest/pPlane19" parent_id_path=PackedInt32Array(917415358, 441946139) index="0" unique_id=1058305505]
+blend_shapes/morph_0 = 1.0
+blend_shapes/morph_2 = 1.0
+blend_shapes/morph_3 = 1.0
+blend_shapes/morph_4 = 1.0
+blend_shapes/morph_5 = 1.0
+blend_shapes/morph_7 = 0.9999977
+blend_shapes/morph_8 = 0.9999989
+blend_shapes/morph_9 = 0.45876408
+blend_shapes/morph_11 = 0.9999952
+blend_shapes/morph_12 = 1.0
+blend_shapes/morph_14 = 1.0
+blend_shapes/morph_15 = 0.60641795
+blend_shapes/morph_16 = 0.9999931
+blend_shapes/morph_17 = 0.45876408
+blend_shapes/morph_19 = 0.9999974
+blend_shapes/morph_20 = 0.99999875
+blend_shapes/morph_22 = 1.0
+blend_shapes/morph_23 = 1.0
+blend_shapes/morph_24 = 1.0
+blend_shapes/morph_25 = 1.0
+blend_shapes/morph_27 = 0.9999977
+blend_shapes/morph_28 = 1.0
+blend_shapes/morph_29 = 0.45876408
+blend_shapes/morph_31 = 0.99999964
+blend_shapes/morph_32 = 1.0
+blend_shapes/morph_33 = 1.0
+blend_shapes/morph_35 = 1.0
+blend_shapes/morph_36 = 1.0
+blend_shapes/morph_37 = 0.45876408
+blend_shapes/morph_39 = 0.9999973
+blend_shapes/morph_40 = 1.0
+blend_shapes/morph_42 = 1.0
+blend_shapes/morph_43 = 0.9999988
+blend_shapes/morph_44 = 1.0
+blend_shapes/morph_45 = 1.0
+blend_shapes/morph_47 = 0.9999993
+blend_shapes/morph_48 = 1.0
+blend_shapes/morph_50 = 1.0
+blend_shapes/morph_51 = 0.9999713
+blend_shapes/morph_52 = 0.99999875
+blend_shapes/morph_53 = 1.0
+blend_shapes/morph_55 = 0.9999877
+blend_shapes/morph_56 = 1.0
+blend_shapes/morph_57 = 0.45876408
+blend_shapes/morph_59 = 0.99998355
+blend_shapes/morph_60 = 1.0
+blend_shapes/morph_62 = 1.0
+blend_shapes/morph_63 = 0.9999713
+
+[node name="AnimationPlayer" parent="wasser_3x3_timetest_1032" index="1" unique_id=1622776241]
+autoplay = &"Take 001"
+
+[editable path="wasser_3x3_timetest_1032"]

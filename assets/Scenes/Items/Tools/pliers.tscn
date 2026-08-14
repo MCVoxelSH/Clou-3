@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://gounytm2f0bl"]
+
+[ext_resource type="Script" uid="uid://de4bv3cna3bye" path="res://assets/scripts/Tool.gd" id="1_g0yh6"]
+[ext_resource type="PackedScene" uid="uid://nlqaltasrthf" path="res://assets/Meshes/Low Poly Survival Tools/SM_Pliers.glb" id="2_lyfgc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ala7q"]
+radius = 0.0546875
+height = 0.21679688
+
+[node name="Pliers" type="Node3D" unique_id=430073392 groups=["Item"]]
+process_mode = 1
+script = ExtResource("1_g0yh6")
+tool_efficencies = Array[float]([0.0, 0.0, 50.0])
+loudness = Array[float]([0.0, 10.0, 0.0])
+item_type = 0
+
+[node name="SM_Pliers" parent="." unique_id=1139612194 instance=ExtResource("2_lyfgc")]
+
+[node name="SM_Pliers" parent="SM_Pliers" index="0" unique_id=1988365850]
+layers = 5
+
+[node name="HOLDER_FOR)Pliers" parent="SM_Pliers/SM_Pliers" index="0" unique_id=101319025]
+layers = 5
+
+[node name="Area3D" type="Area3D" parent="." unique_id=261024409]
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=287201691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.049072266, 0)
+shape = SubResource("CapsuleShape3D_ala7q")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="SM_Pliers"]

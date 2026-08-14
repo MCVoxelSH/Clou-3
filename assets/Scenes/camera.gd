@@ -19,5 +19,5 @@ func _process(delta: float) -> void:
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if(area.get_parent().is_in_group("Actor") && !get_node("/root/Control/").backwards):
 		if(!area.get_parent().is_guard):
-			print(area.get_parent().name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
+			get_node("/root/Control").print_caught_message(area.get_parent().name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
 	

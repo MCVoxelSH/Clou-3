@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://dvnhkeyunxa80"]
 
 [ext_resource type="Script" uid="uid://be5togw3cunno" path="res://assets/scripts/burglar.gd" id="1_ucjbi"]
-[ext_resource type="ArrayMesh" uid="uid://prwe6io8p1iv" path="res://robot.res" id="2_40a2n"]
-[ext_resource type="PackedScene" uid="uid://3a3tg5vcb4vm" path="res://assets/Scenes/Crowbar.tscn" id="3_7msq8"]
+[ext_resource type="PackedScene" uid="uid://3a3tg5vcb4vm" path="res://assets/Scenes/Items/Tools/Crowbar.tscn" id="3_7msq8"]
 [ext_resource type="Script" uid="uid://brdaaktjp0ecx" path="res://assets/Scenes/Missions/bag.gd" id="3_7v5qx"]
-[ext_resource type="PackedScene" uid="uid://c43ocs4fanb6d" path="res://assets/Axe.tscn" id="4_7v5qx"]
+[ext_resource type="PackedScene" uid="uid://c43ocs4fanb6d" path="res://assets/Scenes/Items/Tools/Axe.tscn" id="4_7v5qx"]
+[ext_resource type="PackedScene" uid="uid://gounytm2f0bl" path="res://assets/Scenes/Items/Tools/pliers.tscn" id="6_uyv7r"]
+[ext_resource type="PackedScene" uid="uid://baelrphj8f8qr" path="res://assets/Scenes/Items/Tools/drill.tscn" id="7_i1uo5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wo13b"]
-height = 1.3818359
+height = 2.7579346
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wo13b"]
 bg_color = Color(0.7833561, 0.6799758, 0.11207495, 1)
@@ -24,10 +25,8 @@ disable_receive_shadows = true
 script = ExtResource("1_ucjbi")
 character_speed = 1.0
 
-[node name="Robot" type="MeshInstance3D" parent="." unique_id=1093158534]
-transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 1, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("2_40a2n")
+[node name="Robot" type="Node3D" parent="." unique_id=2137937786]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="Robot" unique_id=1334004488]
 target_position = Vector3(0, 0, 3.1)
@@ -35,10 +34,10 @@ collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1219912384]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=828623892]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.192772e-08, 0.35645762, 0.008050896)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2154441, 0)
 shape = SubResource("CapsuleShape3D_wo13b")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1091042113]
@@ -107,13 +106,17 @@ skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_uyv7r")
 
 [node name="Crowbar" parent="Bag/SubViewport/Camera" unique_id=1883026963 instance=ExtResource("3_7msq8")]
-process_mode = 1
 visible = false
 tool_efficencies = Array[float]([50.0, 0.0, 0.0])
 loudness = Array[float]([50.0, 50.0, 75.0])
 
 [node name="Axe" parent="Bag/SubViewport/Camera" unique_id=830975763 instance=ExtResource("4_7v5qx")]
-process_mode = 1
+visible = false
+
+[node name="Soldering Iron" parent="Bag/SubViewport/Camera" unique_id=430073392 instance=ExtResource("6_uyv7r")]
+visible = false
+
+[node name="Drill" parent="Bag/SubViewport/Camera" unique_id=1009371699 instance=ExtResource("7_i1uo5")]
 visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Bag/SubViewport" unique_id=1023737730]

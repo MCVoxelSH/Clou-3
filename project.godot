@@ -28,13 +28,10 @@ config/icon="uid://bie5mp4wgqgrr"
 
 [autoload]
 
-DebugMenu="*uid://cggqb75a8w8r"
-AmbientAPI="*uid://cmbh88h6yljhy"
-AmbientParser="*uid://dcdrqnwmpgvk4"
-AmbientFileHandler="*uid://dnh8sqjyu74hs"
-AmbientMaterialMaker="*uid://nig0lamfd3mv"
 floor_visibility_check="*uid://dco4d5u57b37y"
 Global="*uid://13be7ph1pe8n"
+DebugMenu="*uid://cggqb75a8w8r"
+GlobalFunctions="*uid://byhjf7td1ch75"
 
 [debug]
 
@@ -46,7 +43,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/ambientcg/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/snappy/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/snappy/plugin.cfg")
 
 [global_group]
 
@@ -55,6 +52,8 @@ Interactable=""
 Alarm=""
 Item="tools or loot"
 burglar_in_burglar_switcher=""
+change_scene=""
+apply_to_navmesh=""
 
 [input]
 
@@ -108,6 +107,7 @@ switch_to_burglar4={
 
 common/max_physics_steps_per_frame=100
 common/physics_jitter_fix=0.0
+common/physics_interpolation=true
 
 [rendering]
 
