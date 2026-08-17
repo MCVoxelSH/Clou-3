@@ -14,6 +14,7 @@ is_breakable = true
 lock_type = 0
 object_type = 1
 object_material = 2
+interaction_point = Vector3(1, 0, 0)
 
 [node name="Door" type="Node3D" parent="." unique_id=308604268]
 transform = Transform3D(-1.1211131e-08, 0, -1, 0, 2.010108, 0, 0.06881343, 0, -1.6292068e-07, -0.8693336, 1.9338678, 0.05480974)

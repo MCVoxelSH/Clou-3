@@ -17,6 +17,7 @@ is_breakable = true
 lock_type = 0
 object_type = 0
 object_material = 0
+interaction_vector = Vector3(1, 0, 0)
 
 [node name="Door" type="Node3D" parent="." unique_id=308604268]
 transform = Transform3D(-1.1211131e-08, 0, -1, 0, 2.010108, 0, 0.06881343, 0, -1.6292068e-07, -0.8693336, 1.9338678, 0.05480974)
@@ -45,6 +46,15 @@ shape = SubResource("BoxShape3D_8o7sn")
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=1374438171]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50627947, 1.6825235, 7.0942307)
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=408833868]
+vertices = PackedVector3Array(-1, 0, -0.5, -1, 0, 0.5, -0.6, 0, 0.5, -0.6, 0, -0.5)
+affect_navigation_mesh = true
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="." unique_id=632932738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63, 0, 0)
+vertices = PackedVector3Array(-0.9, 0, -0.5, -0.9, 0, 0.5, -0.5, 0, 0.5, -0.5, 0, -0.5)
+affect_navigation_mesh = true
 
 [connection signal="mouse_entered" from="Door/Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Door/Area3D" to="." method="_on_area_3d_mouse_exited"]

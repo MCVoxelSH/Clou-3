@@ -7,6 +7,7 @@
 size = Vector3(1, 1.4467294, 25.51131)
 
 [node name="Tür [Schwarzes Glas]" unique_id=612355611 instance=ExtResource("1_psi6m")]
+interaction_point = Vector3(0, 0, 1)
 
 [node name="Door" parent="." index="0" unique_id=308604268]
 transform = Transform3D(-0.06881343, 0, 2.0663205e-07, 0, 2.010108, 0, -1.421906e-08, 0, -0.99999994, -0.025021672, 1.4928321, 0.05480974)

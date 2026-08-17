@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://fgr71u0vrow8"]
+
+[ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Scenes/camera.gd" id="1_7e82y"]
+[ext_resource type="PackedScene" uid="uid://5okkxbt8pnq4" path="res://Clou2/Clou2_unpack_new_textures/models/Alarm/Lichtstrahl1_2704.glb" id="2_vt6fq"]
+[ext_resource type="PackedScene" uid="uid://d18fqjry0k53q" path="res://Clou2/Clou2_unpack_new_textures/models/Alarm/Lichtschranke_mech_2696.glb" id="3_mtkxv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7e82y"]
+size = Vector3(0.021392345, 0.25008523, 0.001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vt6fq"]
+size = Vector3(0.057, 0.041, 0.15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtkxv"]
+size = Vector3(0.05746436, 0.0411309, 0.14991534)
+
+[node name="LightBarrier" type="Node3D" unique_id=719711699]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("1_7e82y")
+object_type = 7
+
+[node name="Spotlight" parent="." unique_id=1433674003 instance=ExtResource("2_vt6fq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000274, 0.003, -0.013, -0.001)
+
+[node name="Area3D" type="Area3D" parent="Spotlight" unique_id=1099508075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9999727, -0.0030000003, 0.013000001, 0.0009999727)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Spotlight/Area3D" unique_id=1024528967]
+transform = Transform3D(-1, 8.742278e-08, 3.821371e-15, 0, -4.371139e-08, 1, 8.742278e-08, 1, 4.371139e-08, 0.0030000214, -0.012994999, -0.0009999275)
+shape = SubResource("BoxShape3D_7e82y")
+
+[node name="CameraPosNode" type="Node3D" parent="." unique_id=1381064270]
+transform = Transform3D(-4.3711402e-08, -0.29893085, 0.9542752, 0, 0.9542752, 0.29893085, -1.0000004, 1.3066682e-08, -4.1712692e-08, 0.35815215, 0.22398725, 3.0670089e-09)
+
+[node name="Lichtschranke_mech_2696" parent="." unique_id=497946842 instance=ExtResource("3_mtkxv")]
+transform = Transform3D(-1.0000001, 0, -8.7422784e-08, 0, 1.0000001, 0, 8.7422904e-08, 0, -1.0000021, 0.001, 0, -0.14528015)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Lichtschranke_mech_2696/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27" parent_id_path=PackedInt32Array(497946842, 565351240) index="0" unique_id=638949579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2498922, -1.0192368, 0.10234974)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Lichtschranke_mech_2696/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27/StaticBody3D" unique_id=1794838478]
+transform = Transform3D(1, 0, -2.3716923e-20, 0, 1, 0, -2.3716923e-20, 0, 1, 0, 0, 0.03856772)
+shape = SubResource("BoxShape3D_vt6fq")
+
+[node name="Lichtschranke_mech_2697" parent="." unique_id=337162434 instance=ExtResource("3_mtkxv")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000005, 0, 0, 0.14471996)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Lichtschranke_mech_2697/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27" parent_id_path=PackedInt32Array(337162434, 565351240) index="0" unique_id=1227791669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2498922, -1.0192368, 0.10234974)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Lichtschranke_mech_2697/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27/StaticBody3D" unique_id=789169958]
+transform = Transform3D(1, 0, 1.4593927e-29, 0, 1, 0, -1.4593927e-29, 0, 1, 0, 0, 0.044182956)
+shape = SubResource("BoxShape3D_mtkxv")
+
+[connection signal="area_entered" from="Spotlight/Area3D" to="." method="_on_area_3d_area_entered"]
+
+[editable path="Spotlight"]
+[editable path="Lichtschranke_mech_2696"]
+[editable path="Lichtschranke_mech_2697"]

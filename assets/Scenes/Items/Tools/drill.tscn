@@ -11,16 +11,16 @@ height = 0.3701172
 process_mode = 3
 script = ExtResource("2_xx24x")
 tool_efficencies = Array[float]([30.0, 50.0, 0.0])
-loudness = Array[float]([50.0, 85.0, 0.0])
+loudness = Array[float]([50.0, 85.0, 50.0])
 damaging = true
 item_type = 0
 
 [node name="SM_ELECTRIC_DRILL2" parent="." unique_id=964373689 instance=ExtResource("1_kuh5o")]
 
-[node name="SM_ELECTRIC_DRILL" parent="SM_ELECTRIC_DRILL2" index="0" unique_id=1486239401]
+[node name="SM_ELECTRIC_DRILL" parent="SM_ELECTRIC_DRILL2" index="0" unique_id=475826122]
 layers = 5
 
-[node name="DRILL_BIT" parent="SM_ELECTRIC_DRILL2/SM_ELECTRIC_DRILL" index="0" unique_id=114464164]
+[node name="DRILL_BIT" parent="SM_ELECTRIC_DRILL2/SM_ELECTRIC_DRILL" index="0" unique_id=1990826031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.940397, 0.08521992, -10.790547)
 layers = 5
 

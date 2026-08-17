@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://fgps5dfdbloj"]
+
+[ext_resource type="Script" uid="uid://dbt3sag0xlkwe" path="res://Clou2/Scenes/switch.gd" id="1_rk7hw"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6dmew"]
+height = 0.13378906
+radius = 0.08691406
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1mgq5"]
+height = 0.107421875
+radius = 0.040039063
+
+[sub_resource type="Animation" id="Animation_ynoe0"]
+resource_name = "Action"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Handle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 1.8994658, 0, 0.033333335, 1, 0, 1.896777, 0, 0.06666667, 1, 0, 1.8764057, 0, 0.1, 1, 0, 1.8385731, 0, 0.13333334, 1, 0, 1.7863162, 0, 0.16666667, 1, 0, 1.7226715, 0, 0.2, 1, 0, 1.6506758, 0, 0.23333333, 1, 0, 1.5733658, 0, 0.3, 1, 0, 1.4149501, 0, 0.33333334, 1, 0, 1.3399175, 0, 0.36666667, 1, 0, 1.2717178, 0, 0.4, 1, 0, 1.2133875, 0, 0.43333334, 1, 0, 1.167963, 0, 0.46666667, 1, 0, 1.1384815, 0, 0.5, 1, 0, 1.1279795, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5t8bn"]
+_data = {
+&"Action": SubResource("Animation_ynoe0")
+}
+
+[node name="Switch" type="Node3D" unique_id=1353067391 groups=["Interactable"]]
+script = ExtResource("1_rk7hw")
+object_type = 2
+interaction_point = Vector3(0, 0, 1)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1304582401]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1990121223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03221351, 0)
+shape = SubResource("CylinderShape3D_6dmew")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=791950754]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1066351622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0070919394, 0)
+shape = SubResource("CylinderShape3D_1mgq5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1350654266]
+libraries/ = SubResource("AnimationLibrary_5t8bn")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="mouse_entered" from="StaticBody3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="StaticBody3D" to="." method="_on_area_3d_mouse_exited"]

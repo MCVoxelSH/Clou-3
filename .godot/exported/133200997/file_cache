@@ -1,6 +1,47 @@
-res://addons/ambientcg/gui/ambient_ui/ambient_ui.tscn::2137dad3ff115ba8b962c9b7e67b27e7::1779652105::res://.godot/exported/133200997/export-dd4733c5b1f92805db66f05fbe04db4f-ambient_ui.scn
-res://addons/ambientcg/gui/browser_widget/browser_widget.tscn::5a2fa2c10cc9b0d8194619680f0ea874::1779652105::res://.godot/exported/133200997/export-8cbde529e874ab83ff22222120e49b2f-browser_widget.scn
-res://addons/ambientcg/gui/download_window/download_window.tscn::12510a86747d92a54b8fe488bb2de0d2::1779652105::res://.godot/exported/133200997/export-d7d376ca8eea556421871d6b47be1dc9-download_window.scn
+res://assets/Materials/glass_material.tres::b9ca20a23a7ca27bcbd7b41d439dec5d::1779822899::res://.godot/exported/133200997/export-c012184ceb24d44659d7d99804bdaeb9-glass_material.res
+res://house_test.tscn::969cf3a0da72ce46f2291fed3ab9819a::1786711656::res://.godot/exported/133200997/export-d03d928893cf602338997e6c39ab7e34-house_test.scn
+res://assets/Scenes/Containers/locker.tscn::4eaf8fec8943d03117da0660c47d0189::1784896987::res://.godot/exported/133200997/export-19e431e203f0a96e098190dc0e8a706a-locker.scn
+res://assets/Scenes/Containers/register.tscn::b60a5549600dc072e4e38fcbe165c34e::1783890588::res://.godot/exported/133200997/export-c3ffde218f95b9fe6e864d12ead8084b-register.scn
+res://assets/Scenes/Environment/ceiling_lamp.tscn::6886f474ba2e4dd03cadd8ed026f5619::1783631881::res://.godot/exported/133200997/export-db3eb68278104e050be34daaa7f875ae-ceiling_lamp.scn
+res://assets/Scenes/Environment/lantern.tscn::e3060a0899ba207efbd84e336d610059::1782837523::res://.godot/exported/133200997/export-0d3b04ac35f30092444d75ad070e5dbc-lantern.scn
+res://assets/Scenes/Security/alarm_system.tscn::81bc249c03a602c6a6c363032231a274::1783605693::res://.godot/exported/133200997/export-5d3d75da30879e9c8dbf6777f2288e05-alarm_system.scn
+res://assets/Scenes/UI/pause_menu.tscn::aeead3938bce0d31b3d0e2e870966dcb::1783615642::res://.godot/exported/133200997/export-33cf9acdd47f29ce9b06afeba82e681b-pause_menu.scn
+res://assets/Scenes/camera.tscn::a9abd1aea375318a97543179e13b28c4::1784837270::res://.godot/exported/133200997/export-62363f642561d956a530bc9e477f4585-camera.scn
+res://assets/Scenes/camera_base.tscn::67ef97c09e656eeb8a5de5543911649b::1784214098::res://.godot/exported/133200997/export-629559cd292296d747421162de13fd7f-camera_base.scn
+res://assets/Scenes/Car.tscn::05f03c4c54a926c0879a67d4f8be502e::1782921375::res://.godot/exported/133200997/export-62257206d1212d67a5fbe78c8806380c-Car.scn
+res://assets/Scenes/Door.tscn::1188ec7324c199ca5df8c78aa3bcbe92::1786534987::res://.godot/exported/133200997/export-d54f09d0e39cd8a606e40b53382e9a05-Door.scn
+res://assets/Scenes/DoorInside.tscn::4dd3db648857f6af16e48d6e40a1d47d::1786795682::res://.godot/exported/133200997/export-b063e1c6bb5e860f7b8957d1b6c4cd71-DoorInside.scn
+res://assets/Scenes/guard.tscn::172609f927c7016d88e9d0acc799c905::1786796580::res://.godot/exported/133200997/export-3346748f748de24032ee43e58b0debd5-guard.scn
+res://assets/Scenes/Interactable.tscn::78ac792663190473755c7f5eb75fb372::1783090227::res://.godot/exported/133200997/export-880f618bbbdf5b5fd06ca80535d452a3-Interactable.scn
+res://assets/Scenes/Switch.tscn::8c909b781a37ab04415bb9c1b94d787c::1782921375::res://.godot/exported/133200997/export-de948ef89c474b749e514e9358d30a98-Switch.scn
+res://assets/Scenes/window.tscn::c9017b8bc5b11743b2be0e9e0ab59deb::1783526594::res://.godot/exported/133200997/export-a1826219df5f86df0298d73f53866a5c-window.scn
+res://assets/Materials/grass_material.tres::cb7d3d64b18e89b75ee6819112cdae69::1784461221::res://.godot/exported/133200997/export-1a96534baecfa11f2860093497cf56cb-grass_material.res
+res://assets/Scenes/Containers/safe.tscn::ff1e3fb261fda8df9990f34eae6a7920::1784905043::res://.godot/exported/133200997/export-85cc1603482f339ae97b9d515b33a551-safe.scn
+res://assets/Scenes/Environment/food_shelf.tscn::354d1c8d85a401ebba630d7ed42d42d0::1784894848::res://.godot/exported/133200997/export-5cf86531c577fd73b59641fdfa455e89-food_shelf.scn
+res://assets/Scenes/Environment/lawn.tscn::699fa754207edeaa67ee7a88d686db08::1785847871::res://.godot/exported/133200997/export-e90b9b9040885ff87b1e7a327a332d9d-lawn.scn
+res://assets/Scenes/Items/Loot/bag.tscn::f5c482a1b453674444164d03f58cb652::1786813492::res://.godot/exported/133200997/export-573268a0f3e65068a801ef5396bd9f0e-bag.scn
+res://assets/Scenes/Items/Loot/Chateu de France.tscn::0d6d4ec37803b6e1e1e36eb76f1684bf::1786811793::res://.godot/exported/133200997/export-2dcf353d44cfa3f48a110f7612435519-Chateu de France.scn
+res://assets/Scenes/Items/Loot/coins.tscn::71390a7073a62bf52e849b789acf4593::1784062584::res://.godot/exported/133200997/export-b962b7d6939a8506cd5b59823d64e846-coins.scn
+res://assets/Scenes/Items/Loot/loot.tscn::85d22dcc6e73840b1ded58f987342a6a::1786805823::res://.godot/exported/133200997/export-d059867eb5ba49341cab9f89867a79e4-loot.scn
+res://assets/Scenes/Items/Loot/Wine Bottle.tscn::74562ec6611da7f31bac322e98cacc10::1786815998::res://.godot/exported/133200997/export-83896eec5f89f17d35918c8441dffde9-Wine Bottle.scn
+res://assets/Scenes/Items/Tools/Axe.tscn::780b5e20d37354305c264b0f17011cb9::1784112766::res://.godot/exported/133200997/export-e857a7809eff077d5ac73e82440ebabe-Axe.scn
+res://assets/Scenes/Items/Tools/Crowbar.tscn::94d474c9f89b033956894bc04d1fb37f::1784112755::res://.godot/exported/133200997/export-9aa65ce365065c8deec831a3212c72f4-Crowbar.scn
+res://assets/Scenes/Items/Tools/drill.tscn::29ad55ff45bf35cc818fb9d5fa4d69cf::1786879895::res://.godot/exported/133200997/export-b7904d204e0874f06ecd2460bc59ab7b-drill.scn
+res://assets/Scenes/Items/Tools/pliers.tscn::169ca51c02e6136af54150330a463a60::1784393966::res://.godot/exported/133200997/export-27f4a71c18fe22b03017e31060ccad4d-pliers.scn
+res://assets/Scenes/Missions/Clou 2 Custom Mission.tscn::8403f831db4ab744b4663f1dbf1b44a1::1786976271::res://.godot/exported/133200997/export-def8b28e793633dacffb0896cf282e06-Clou 2 Custom Mission.scn
+res://assets/Scenes/Missions/Construction Sight.tscn::e6d7036ba2ab4244d4521cf5f754e8f0::1783810661::res://.godot/exported/133200997/export-08348c80b5538e0445cb6208c4feae75-Construction Sight.scn
+res://assets/Scenes/Missions/Test Scene.tscn::846d60a1f892e51d6081ab4c75e5b5e3::1786976045::res://.godot/exported/133200997/export-705c275c1d706d5cf97ca5e509d1a909-Test Scene.scn
+res://assets/Scenes/Missions/Warehouse.tscn::2bd5a13365bcba74d1b731c2aeb03975::1784906136::res://.godot/exported/133200997/export-6ce411f63b33cf4659ffcc51a3808e0f-Warehouse.scn
+res://assets/Scenes/burglar.tscn::07e1aaba91dc48dfd737d52794265dcf::1786795236::res://.godot/exported/133200997/export-acee5b0d89c7b02192e340b230e7bf15-burglar.scn
+res://assets/Scenes/DoorClou2.tscn::d050b7e885250923ae08adcc6dce73fb::1786800587::res://.godot/exported/133200997/export-9e0ccf372122d43fa34004826686a618-DoorClou2.scn
+res://Clou2/Scenes/Camera.tscn::ab03b8937669e62a19a8469bda5318a0::1786917683::res://.godot/exported/133200997/export-0791a95a3ef79bbe32a8d71662ed90d6-Camera.scn
+res://Clou2/Scenes/light_barrier.tscn::11e773a87864cb3926288d7d5c09f5fe::1786917616::res://.godot/exported/133200997/export-db6e7b8612d171a0eaed75b28c281e50-light_barrier.scn
+res://Clou2/Scenes/Switch.tscn::3f82d61d6981fae79e25c4dd8467e418::1786970695::res://.godot/exported/133200997/export-8b9faeca4c5aa5e236b3283f3a3eb4c5-Switch.scn
+res://Clou2/Scenes/timed_switch.tscn::63da687430f79572fe67f1d5eb39d699::1786973275::res://.godot/exported/133200997/export-6d1a907f027d82fe4f896420e37d2b61-timed_switch.scn
+res://Clou2/Scenes/Tür [Schwarzes Glas].tscn::27ff70c291beac1835e379a4c7ae1eba::1786890104::res://.godot/exported/133200997/export-38ddef3c3ca675edbec328ee156bb447-Tür [Schwarzes Glas].scn
+res://Clou2/Scenes/wasser.tscn::af3286c48f574598f1e7a31d8d34378e::1786617385::res://.godot/exported/133200997/export-9e67a569ec7132e1074aa116fb288030-wasser.scn
+res://Clou2/Scenes/Window.tscn::d0dfb48c0c23edd1cb0807cc4abe46ff::1786802714::res://.godot/exported/133200997/export-5b9548c3a9a61b9230f1d4365a783196-Window.scn
+res://Clou2/Scenes/window_standard.tscn::d502d231a3f7d4eedfc40607046f56d2::1786802734::res://.godot/exported/133200997/export-a55dbdd1344f413bd8febef1256dbf11-window_standard.scn
 res://addons/debug_menu/debug_menu.tscn::7afe0a8b7a4b3d541faa2ed0b39f6c9a::1776254061::res://.godot/exported/133200997/export-cf14e99bcd5cad797259b72ffd500df4-debug_menu.scn
 res://addons/Todo_Manager/UI/ColourPicker.tscn::af51474622f0b62c104b8829f05b9203::1775999431::res://.godot/exported/133200997/export-f06440eee4db2f3d12e74f87d99b6fdb-ColourPicker.scn
 res://addons/Todo_Manager/UI/Dock.tscn::af10e4ff70753b0a3586ff7f03e8431a::1775999431::res://.godot/exported/133200997/export-891e3457b8f469bb430e8ffbd2072c94-Dock.scn
@@ -9,37 +50,14 @@ res://addons/Todo_Manager/UI/PathEdit.tscn::18f9a17944a96cb441f6beb31e4de6d4::17
 res://addons/Todo_Manager/UI/PatternContainer.tres::1dae86d13ae842ca0e2ec28225f1d751::1775999431::res://.godot/exported/133200997/export-3c47cb6100749057a0f46475e52b6c67-PatternContainer.res
 res://addons/Todo_Manager/UI/PatternEdit.tscn::636adb5328e3c0b33738565da7977fbd::1775999431::res://.godot/exported/133200997/export-dbfa29e3cfa38d6c64c2d9dcc9860d31-PatternEdit.scn
 res://addons/Todo_Manager/UI/ToggleButton.tscn::d48b0bbb70b5d59488cea34366b41ffe::1775999431::res://.godot/exported/133200997/export-4d3e64d31ae61462354413e0062b3234-ToggleButton.scn
-res://AmbientCG/Extracted/WoodFloor043_1K-JPG.tres::29a1a240f3b1c794e445f614662110d6::1779653101::res://.godot/exported/133200997/export-a40073cedd838b169f79e383c7718ee8-WoodFloor043_1K-JPG.res
-res://assets/Materials/glass_material.tres::b9ca20a23a7ca27bcbd7b41d439dec5d::1779822899::res://.godot/exported/133200997/export-c012184ceb24d44659d7d99804bdaeb9-glass_material.res
-res://psx_camera/camera_example.tscn::aeb915911d08b585f57ce54115bbed31::1776618372::res://.godot/exported/133200997/export-a0f2186421e0b652e8527230ca2462eb-camera_example.scn
-res://house_test.tscn::a932b7bcd56598c9dda2fb61475857f8::1782921375::res://.godot/exported/133200997/export-d03d928893cf602338997e6c39ab7e34-house_test.scn
-res://Test Scene.tscn::03714aecd68edb1af448483782a9e5b6::1783622860::res://.godot/exported/133200997/export-c0339fd08ba9c022153f49a3a658bd28-Test Scene.scn
-res://Test SceneNew.tscn::8e7b86b9c1edd88966d50d68c37a5029::1783619164::res://.godot/exported/133200997/export-6a737ee6f174200fa238ed3723945f87-Test SceneNew.scn
-res://assets/Scenes/Containers/locker.tscn::0c48580660f9bb64242e5b6470c2ba06::1782921375::res://.godot/exported/133200997/export-19e431e203f0a96e098190dc0e8a706a-locker.scn
-res://assets/Scenes/Containers/register.tscn::dfe2f5eb2365ffe34cb986d643bfc1a2::1783605693::res://.godot/exported/133200997/export-c3ffde218f95b9fe6e864d12ead8084b-register.scn
-res://assets/Scenes/Environment/ceiling_lamp.tscn::c18aee1b186e0966d6f87ece496f3506::1783254107::res://.godot/exported/133200997/export-db3eb68278104e050be34daaa7f875ae-ceiling_lamp.scn
-res://assets/Scenes/Environment/lantern.tscn::e3060a0899ba207efbd84e336d610059::1782837523::res://.godot/exported/133200997/export-0d3b04ac35f30092444d75ad070e5dbc-lantern.scn
-res://assets/Scenes/Loot/bag.tscn::a9a6f127911bf491e76ab5d6c780bcc5::1783619122::res://.godot/exported/133200997/export-994ebdf3c07be8cf9720bfb757324dd8-bag.scn
-res://assets/Scenes/Loot/Chateu de France.tscn::4d30b770f0cab99f40afaa2c2d697c1d::1783605693::res://.godot/exported/133200997/export-481f44fb76d84a1987f95e0d2a1f9df7-Chateu de France.scn
-res://assets/Scenes/Loot/coins.tscn::9cd7636b1d9226c06ff9bc56445bf662::1783605693::res://.godot/exported/133200997/export-362943dcd198a730451ebb74e26c3e7d-coins.scn
-res://assets/Scenes/Loot/loot.tscn::0f9a58c0b0cc4b2f1e179787b4515249::1783605693::res://.godot/exported/133200997/export-f260b06c0ccfa1a95f7530b1f86ea750-loot.scn
-res://assets/Scenes/Loot/Wine Bottle.tscn::157103506156a813d6f79604f98d3e55::1783605693::res://.godot/exported/133200997/export-9d8b7d987db5f80fa15f10c5302fd4f0-Wine Bottle.scn
-res://assets/Scenes/Security/alarm_system.tscn::81bc249c03a602c6a6c363032231a274::1783605693::res://.godot/exported/133200997/export-5d3d75da30879e9c8dbf6777f2288e05-alarm_system.scn
-res://assets/Scenes/UI/pause_menu.tscn::aeead3938bce0d31b3d0e2e870966dcb::1783615642::res://.godot/exported/133200997/export-33cf9acdd47f29ce9b06afeba82e681b-pause_menu.scn
-res://assets/Scenes/actor.tscn::5bc1d498e87d2f0733795166b50dd28b::1783622558::res://.godot/exported/133200997/export-8c488441e66bc656f59736ce51e7c3cd-actor.scn
-res://assets/Scenes/Beverage store.tscn::eb29e777d022ce1f2d5d0e89d2abfe8a::1777632652::res://.godot/exported/133200997/export-39eb20a5219de1e526def8e01895dd2a-Beverage store.scn
-res://assets/Scenes/camera.tscn::45b9f7db789104f1c4325d57abc8f9f5::1783605693::res://.godot/exported/133200997/export-62363f642561d956a530bc9e477f4585-camera.scn
-res://assets/Scenes/camera_base.tscn::b9ce11c7a28571cc85db1a9705722048::1783089492::res://.godot/exported/133200997/export-629559cd292296d747421162de13fd7f-camera_base.scn
-res://assets/Scenes/Car.tscn::05f03c4c54a926c0879a67d4f8be502e::1782921375::res://.godot/exported/133200997/export-62257206d1212d67a5fbe78c8806380c-Car.scn
-res://assets/Scenes/Door.tscn::fbef95fbdda380bd70cec521de49f15a::1783447331::res://.godot/exported/133200997/export-d54f09d0e39cd8a606e40b53382e9a05-Door.scn
-res://assets/Scenes/DoorInside.tscn::e42ff3f92cc7d00ad279942511009518::1783606913::res://.godot/exported/133200997/export-b063e1c6bb5e860f7b8957d1b6c4cd71-DoorInside.scn
-res://assets/Scenes/guard.tscn::725a0079c0565bc894e005651805a0bd::1783605693::res://.godot/exported/133200997/export-3346748f748de24032ee43e58b0debd5-guard.scn
-res://assets/Scenes/house_test.tscn::6618cc1d63d3fd0d5db588ac782b3cb0::1777311778::res://.godot/exported/133200997/export-78f6d829c3ca077a762085b7995a3add-house_test.scn
-res://assets/Scenes/Interactable.tscn::78ac792663190473755c7f5eb75fb372::1783090227::res://.godot/exported/133200997/export-880f618bbbdf5b5fd06ca80535d452a3-Interactable.scn
-res://assets/Scenes/LightBarrier.tscn::bcd9359ce3e2ad63994d08846f741f82::1783605693::res://.godot/exported/133200997/export-4c145ec9c14d5aeccec933c2d4b7aa92-LightBarrier.scn
-res://assets/Scenes/Switch.tscn::8c909b781a37ab04415bb9c1b94d787c::1782921375::res://.godot/exported/133200997/export-de948ef89c474b749e514e9358d30a98-Switch.scn
-res://assets/Scenes/table.tscn::a326f19a7ffa61e8a9b5dae50caf3519::1777141236::res://.godot/exported/133200997/export-db55361e4a2c034a76fcc4329990dccc-table.scn
-res://assets/Scenes/tool.tscn::1282400d13bcd88cbbd8a43ebef506a1::1783610152::res://.godot/exported/133200997/export-f02d714a433c26fe4a5168f8165fa6f9-tool.scn
-res://assets/Scenes/window.tscn::c9017b8bc5b11743b2be0e9e0ab59deb::1783526594::res://.godot/exported/133200997/export-a1826219df5f86df0298d73f53866a5c-window.scn
 res://assets/Clou original files/Clou 2 World/toolshop.tscn::715e321d33cc4a8af20dc4db6116c963::1783619122::res://.godot/exported/133200997/export-c9c222646cf7dd3e92ca8c87f0975f71-toolshop.scn
 res://assets/Clou original files/Clou 2 World/wld.tscn::0ae4d44139e6730accc21b2c0310f9ef::1783619122::res://.godot/exported/133200997/export-722935b7a45db55f596f910f2a005bb0-wld.scn
+res://assets/Scenes/Containers/container.tscn::d9e4e0bfc575dd3b2541806b8d0ca97b::1784894972::res://.godot/exported/133200997/export-484395bb57d0556b806f4845a2b3a7c3-container.scn
+res://assets/Scenes/Items/Tools/tool.tscn::a8890935998344f1b2eb68c3d130f172::1784896047::res://.godot/exported/133200997/export-821779bc5590b7bfa0bd82f360e30518-tool.scn
+res://assets/Scenes/Beverage store.tscn::eb29e777d022ce1f2d5d0e89d2abfe8a::1777632652::res://.godot/exported/133200997/export-39eb20a5219de1e526def8e01895dd2a-Beverage store.scn
+res://assets/Scenes/house_test.tscn::6618cc1d63d3fd0d5db588ac782b3cb0::1777311778::res://.godot/exported/133200997/export-78f6d829c3ca077a762085b7995a3add-house_test.scn
+res://assets/Scenes/LightBarrier.tscn::3a78024c053952bf053fce4fda3eea33::1786908240::res://.godot/exported/133200997/export-4c145ec9c14d5aeccec933c2d4b7aa92-LightBarrier.scn
+res://assets/Scenes/table.tscn::a326f19a7ffa61e8a9b5dae50caf3519::1777141236::res://.godot/exported/133200997/export-db55361e4a2c034a76fcc4329990dccc-table.scn
+res://Clou2/Scenes/SwitchRed.tscn::3198dd74596f03b1a6e2f038e786b4f8::1786972785::res://.godot/exported/133200997/export-d1300d57383803d206ebaa0c89270401-SwitchRed.scn
+res://psx_camera/camera_example.tscn::aeb915911d08b585f57ce54115bbed31::1776618372::res://.godot/exported/133200997/export-a0f2186421e0b652e8527230ca2462eb-camera_example.scn
+res://Test SceneNew.tscn::7a0e9650571d94b29455d286c5545a42::1784895915::res://.godot/exported/133200997/export-6a737ee6f174200fa238ed3723945f87-Test SceneNew.scn

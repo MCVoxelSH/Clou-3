@@ -2,7 +2,7 @@
 extends EditorScript
 
 # 1. Path to your new scene
-const NEW_SCENE_PATH = "res://Clou2/Clou2_unpack_new_textures/models/Böden/Boden1x1 [GroberSchotter]_1014.glb"
+const NEW_SCENE_PATH = "res://Clou2/Scenes/timed_switch.tscn"
 
 func _run() -> void:
 	var interface := EditorInterface

@@ -17,18 +17,13 @@ albedo_color = Color(0.36, 0.36, 0.36, 0.8117647)
 
 [node name="RobotBase" unique_id=468724566 instance=ExtResource("1_l30q5")]
 script = ExtResource("2_f2xg0")
-record_guard = null
-max_capacity = null
+record_guard = false
 show_path = false
 is_guard = true
-starting_floor = null
-starts_inside = null
-skills = null
-unique_name = null
-hearing = null
 
 [node name="Area3D2" type="Area3D" parent="Robot" parent_id_path=PackedInt32Array(2137937786) index="0" unique_id=2106648720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0458031e-07, 0, 0.69260406)
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/Area3D2" index="0" unique_id=669896763]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 1.0458031e-07, 0.6290839, -0.69260406)

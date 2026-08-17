@@ -3,21 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Items/Loot/loot.tscn" id="1_aey7t"]
 [ext_resource type="PackedScene" uid="uid://dfrr8njldpbx1" path="res://assets/Meshes/Bottle.blend" id="2_aey7t"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_t4wl1"]
-size = Vector3(1.3996432, 5.2508945, 1.4296291)
-
 [node name="Bottle2" unique_id=1834645063 instance=ExtResource("1_aey7t")]
 value = 2
 unique_name = "Chateu de France"
 
-[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1700667802) index="0" unique_id=1834766986]
-transform = Transform3D(0.2416695, 0, 0, 0, 0.2416695, 0, 0, 0, 0.2416695, -0.014, -0.025, 0)
-shape = SubResource("BoxShape3D_t4wl1")
-
-[node name="Bottle" parent="." index="1" unique_id=611766805 instance=ExtResource("2_aey7t")]
+[node name="Bottle" parent="." index="0" unique_id=611766805 instance=ExtResource("2_aey7t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.37231436, 0)
-
-[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
 
 [editable path="Bottle"]

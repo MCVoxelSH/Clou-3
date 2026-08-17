@@ -1,5 +1,7 @@
 extends "res://assets/scripts/character.gd"
 
+var finalize_guard_replay = false
+
 @export var record_guard = false
 
 @onready var bag= $Bag

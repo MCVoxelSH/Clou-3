@@ -1,6 +1,4 @@
-res://assets/Scenes/Missions/Test Scene.tscn
+res://assets/Scenes/Missions/Clou 2 Custom Mission.tscn
 res://assets/Shaders/distance_fog.gdshader
-res://assets/Scenes/burglar.tscn
-res://assets/scripts/character.gd
-res://assets/scripts/Interactable/floor_visibility_check.gd
-res://assets/scripts/control.gd
+res://assets/Scenes/Missions/Test Scene.tscn
+res://assets/Scenes/Items/Loot/loot.gd

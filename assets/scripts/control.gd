@@ -7,6 +7,7 @@ extends Node3D
 #FIXME stair checks get skipped when using the skip backwards or forwards buttons
 #I disabled skip_to_start_or_end because of this and instead enabled "skipping steps" for the slider and froze the frame for a moment, this works pretty well right now aswell 
 #FIXME when going through doors then scrolling back and the door suddenly is not open anymore the system doesn't account for this case yet
+#REMINDER I was currently working on timed switches, they probably aren't fleshed out yet, I am pretty sure it has problems like the one that doors had with fast rewinding and fast forwarding at the exact point in time where the object toggles
 
 const FPS:= 24.0
 
@@ -106,8 +107,12 @@ var direction_changed = false
 var skip_to_start_or_end = false
 #var debug_file2 = FileAccess.open("user://debug2.txt", FileAccess.WRITE)
 
+#decides wether to play idle anim or not
+var play_idle_anim_rng = RandomNumberGenerator.new()
+
 func _ready() -> void:
 	
+	play_idle_anim_rng.randomize()
 	#connect signals
 	$PauseMenu/CloseMissionMenu.button_up.connect(_on_close_mission_menu_button_up)
 	$PauseMenu/QuitMission.button_up.connect(_on_quit_mission_button_up)
@@ -197,8 +202,17 @@ func _process(delta: float) -> void:
 			else:
 				engine_speed = 60.0
 			change_game_speed(previous_slider_value)
-			
-			
+				
+	if(active_burglar.is_guard):
+		if(active_burglar.record_guard || debug_mode):
+			if(Input.is_action_just_released("switch_to_next_interaction")):
+				active_burglar.selected_interaction += 1
+		
+			if(Input.is_action_just_released("switch_to_previous_interaction")):
+				active_burglar.selected_interaction -= 1
+				
+			if(Input.is_action_just_released("finalize_guard_replay")):
+				active_burglar.finalize_guard_replay = true
 	
 	if(Input.is_action_just_pressed("first_person_mode")):
 		spring_arm_length_before_zoom_in = spring_arm.spring_length
@@ -235,14 +249,15 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if(active_burglar.finalize_guard_replay):
-		active_burglar.set_target_position(active_burglar.start_pos,true)
-		pause = false
-		play = false
-		active_burglar.finalize_guard_replay = false
-	#if(query_set_target_position):
-		#active_burglar.set_target_position(closest_point_on_navmesh_for_query,true)
-		#query_set_target_position = false
+	if(active_burglar.is_guard):
+		if(active_burglar.finalize_guard_replay):
+			active_burglar.set_target_position(active_burglar.start_pos,true)
+			pause = false
+			play = false
+			active_burglar.finalize_guard_replay = false
+		#if(query_set_target_position):
+			#active_burglar.set_target_position(closest_point_on_navmesh_for_query,true)
+			#query_set_target_position = false
 	
 	#TODO I disabled it because it didn't work anymore, maybe I want to reenable it later if I fix it
 	if(Global.load_replay):
@@ -351,14 +366,12 @@ func _unhandled_input(event: InputEvent):
 		if(highlighted_object != null):
 			if(!highlighted_object.is_in_group("Item")):
 				
-				var dir := GlobalFunctions.get_visual_facing(highlighted_object)
-				
-
+				var dir:Vector3= GlobalFunctions.get_interaction_forward(highlighted_object)
 				
 				#var modifier = 1
 				#
-				if(highlighted_object.object_type == 0 || highlighted_object.object_type == 1 || highlighted_object.object_type == 6):
-					if (abs(dir) == Vector3.RIGHT):
+				if(highlighted_object.object_type == 0 || highlighted_object.object_type == 1 || highlighted_object.object_type == 4 || highlighted_object.object_type == 6):
+					if (abs(dir.x) == 1.0):
 						if(active_burglar.global_position.x < highlighted_object.global_position.x):
 							dir *= -1
 					else:
@@ -426,10 +439,11 @@ func _unhandled_input(event: InputEvent):
 				pause = true
 				pause_animations()
 				play = false
-				if(!selected_tool):	
-					$InteractionButtons.visible = true
-					$InteractionButtons.global_position = get_viewport().get_camera_3d().unproject_position(highlighted_object.global_position)
-				active_burglar.selected_interaction = 1
+				if(!active_burglar.is_guard):
+					if(!selected_tool):	
+							$InteractionButtons.visible = true
+							$InteractionButtons.global_position = get_viewport().get_camera_3d().unproject_position(highlighted_object.global_position)
+					active_burglar.selected_interaction = 1
 			else:
 				selected_tool = highlighted_object
 				active_burglar.bag.shown = false
@@ -486,7 +500,8 @@ func _unhandled_input(event: InputEvent):
 				camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
 				camera_base.global_rotation = active_burglar.camera_rotation_before_zoom_onto_object
 				spring_arm.spring_length = spring_arm_length_before_zoom_in
-				active_burglar.mesh_root.visible = true
+				if(active_burglar.replay[active_burglar.id][2] != "moveinsidecar"):
+					active_burglar.mesh_root.visible = true
 				return
 					
 			
@@ -675,11 +690,13 @@ func do_replay():
 				if(actor.anim_player):	
 					if(!pause):
 						actor.previous_animation_position = actor.anim_player.current_animation_position
+						#if(play_idle_anim_rng.randi_range(1,1000) > 999):
 						if(backwards):
 							actor.play_animation("idle", true, true)
 						else:
 							actor.play_animation("idle", false, true)
 		else:
+			#if(play_idle_anim_rng.randi_range(1,1000) > 999):
 			if(backwards):
 				actor.play_animation("idle", true, true)
 			else:
@@ -928,7 +945,8 @@ func _on_h_slider_value_changed(value: float) -> void:
 func _on_play_button_button_up() -> void:
 		
 	if(!burglar_switcher.shown):
-		play = true
+		#REMINDER I just changed this first line an kept the rest the same, so didn't think this through yet
+		play = !play
 		pause = false
 		was_backwards = false
 		was_forwards = false
@@ -1309,6 +1327,7 @@ func _on_bag_button_up() -> void:
 			var horizontal_distance = start_offset + (index%6 * spacing)
 			c.global_position = Vector3(horizontal_distance / 1.75,1.1+ -1.0 * floor(index/6),-2.5)
 			c.global_rotation = Vector3.ZERO
+			#c.global_rotation.z = deg_to_rad(-5)
 			c.visible = !c.visible
 			index += 1
 		elif(!c.is_in_group("Item")):
@@ -1399,14 +1418,13 @@ func replay_backwards(actor:Node3D):
 			elif(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
 				get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, false, true)
 			if(actor.replay[actor.id][3]== "last"):
-				for related_object in get_node(str(actor.replay[actor.id][1])).related_objects_string_array:
-					#is camera
-					if(get_node(related_object).object_type == 7):
-						get_node(related_object).process_mode = Node.PROCESS_MODE_INHERIT
-						get_node(related_object).spotlight.visible = true		
+				for related_object in get_node(str(actor.replay[actor.id][1])).related_objects:
+					#is camera or light barrier
+					if(related_object.object_type == 7):
+						related_object.toggle_power_state()
 					#is alarm
-					if(get_node(related_object).object_type == 8):
-						get_node(related_object).is_off = false	
+					if(related_object.object_type == 8):
+						related_object.is_off = false	
 		if(actor.replay[actor.id][2]== "takeend"):
 			if(!get_node(str(actor.replay[actor.id][1])).visible):
 				get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_ALWAYS
@@ -1489,7 +1507,8 @@ func replay_backwards(actor:Node3D):
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
 		
 				
-
+		if(actor.replay[actor.id][2] != "moveinsidecar"):
+			actor.mesh_root.visible = true
 				
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
 			var found_object = get_node(str(actor.replay[actor.id][3]))
@@ -1612,20 +1631,20 @@ func replay_forwards(actor:Node3D):
 				actor.object_that_is_being_interacted_with = null
 			else:
 				actor.object_that_is_being_interacted_with = object
-				if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
+				if(actor.replay[actor.id][3]== "first" && object.anim_player.current_animation_position == 0.0):
 					object.play_animation(object.animation_name, false, true)
 					#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
-				if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
-						get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, true, true)
+				if(actor.replay[actor.id][3]== "first" && object.anim_player.current_animation_position == object.current_animation_clip_length):
+						object.play_animation(object.animation_name, true, true)
 				if(actor.replay[actor.id][3]== "last"):
-					for related_object in get_node(str(actor.replay[actor.id][1])).related_objects_string_array:
-						#is camera
-						if(get_node(related_object).object_type == 7):
-							get_node(related_object).process_mode = Node.PROCESS_MODE_DISABLED
-							get_node(related_object).spotlight.visible = false		
+					object.append_switch_timer(ticks)
+					for related_object in object.related_objects:
+						#is camera or light barrier
+						if(related_object.object_type == 7):
+							related_object.toggle_power_state()
 						#is alarm
-						if(get_node(related_object).object_type == 8):
-							get_node(related_object).is_off = true	
+						if(related_object.object_type == 8):
+							related_object.is_off = true	
 						#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
 		if(actor.replay[actor.id][2] == "takeend"):
 			var can_pick_up = true
@@ -1782,6 +1801,11 @@ func replay_forwards(actor:Node3D):
 							print_caught_message("damaged object found at " + str(ticks)+" by "+ actor.unique_name)
 	
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
+		
+		if(actor.replay[actor.id][2] == "moveinsidecar"):
+			actor.mesh_root.visible = false
+		else:
+			actor.mesh_root.visible = true			
 		
 		actor.text_bubble.visible = false
 		actor.finished_working = false
@@ -2009,7 +2033,7 @@ func create_item_from_interactable(interactable:Node3D, actor:Node3D):
 			item.set_script(load("res://assets/Scenes/Items/item.gd"))
 			item.remove_from_group("Interactable")
 			item.add_to_group("Item")
-			item.scale *= 0.5
+			item.scale *= 4
 			item.visible = actor.bag.shown
 			item.item_type = 1
 			item.process_mode = Node.PROCESS_MODE_PAUSABLE

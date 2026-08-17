@@ -73,6 +73,7 @@ func get_all_children(node):
 	return nodes
 
 func change_visibility(node, set_floor:bool):
+	
 	if(node.is_in_group("Actor")):
 		if(set_floor):
 			node.current_floor = floor
@@ -88,7 +89,7 @@ func change_visibility(node, set_floor:bool):
 								mesh_material.transparency = 1
 								mesh_material.albedo_color.a = 0
 				else:
-					var mesh = actor.get_child(0)
+					var mesh = actor.mesh_root
 					for c in GlobalFunctions.get_all_children(mesh):
 						#REMINDME this is questionable and might cause issues later, if any other object should be name "Plane"
 						if(c is MeshInstance3D && c.name != "Plane"):
@@ -100,3 +101,5 @@ func change_visibility(node, set_floor:bool):
 		if(node == get_node("/root/Control").active_burglar):
 			enable_floor()
 			disable_floor()
+			
+	

@@ -3,16 +3,23 @@ extends Marker3D
 
 const Line3D = preload("res://assets/scripts/line3d.gd")
 
-var finalize_guard_replay = false
 ##Which interaction was selected while interacting with an object
 @export_enum("Talk", "Interact", "Inspect", "none", "Look at", "Break") var selected_interaction
+
+const number_of_idle_animations = 4
 
 const ANIMATIONS := {
 	"move": {"start": 6, "end": 19, "loop": true, "loop_start": 4, "loop_end": 19},
 	"takestart": {"start": 170, "end": 175, "loop": false},
 	"takeend": {"start": 170, "end": 175, "loop": false},
 	"open": {"start": 178, "end": 185, "loop": false},
-	"idle": {"start": 664, "end": 701, "loop": true, "loop_start": 664, "loop_end": 701},
+	"use": {"start": 178, "end": 185, "loop": false},
+	"inspect": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
+	"lookat": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
+	"idle1": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
+	"idle2": {"start": 664, "end": 701, "loop": true, "loop_start": 664, "loop_end": 701},
+	"idle3": {"start": 1258, "end": 1271, "loop": true, "loop_start": 1258, "loop_end": 1271},
+	"idle4": {"start": 1284, "end": 1296, "loop": true, "loop_start": 1284, "loop_end": 1296},
 	"movethroughwindow": {"start": 948, "end": 974, "loop": false},
 	"breakhigh": {"start": 1357, "end": 1370, "loop": true, "loop_start": 1360, "loop_end": 1370},
 	"break": {"start": 1374, "end": 1383, "loop": true, "loop_start": 1374, "loop_end": 1380}
@@ -99,6 +106,7 @@ var check_last_ticks = false
 var last_ticks_index = -1
 
 @onready var mesh_root = $Robot
+var mesh_root_bone: Node3D
 @export var character_model:PackedScene
 var anim_player:AnimationPlayer
 
@@ -108,7 +116,11 @@ var anim_player:AnimationPlayer
 
 @onready var desired_global_position = start_pos
 
+var idle_anim_rng = RandomNumberGenerator.new()
+
 func _ready():
+	idle_anim_rng.randomize()
+
 	var model:Node3D
 	if character_model:
 		model = character_model.instantiate()
@@ -125,6 +137,19 @@ func _ready():
 			anim_player.callback_mode_process = 2
 			#anim_player.callback_mode_method = 1
 			anim_player.pause()
+			
+			mesh_root_bone = model.find_child("joint1",true, true)
+			
+	if(starting_floor != get_node("/root/Control/Burglar1").starting_floor):
+		var mesh = model
+		for c in GlobalFunctions.get_all_children(mesh):
+			if(c is MeshInstance3D && c.name != "Plane"):
+				for i in range(c.get_surface_override_material_count()):
+					var mesh_material = c.get_active_material(i).duplicate()
+					c.set_surface_override_material(i, mesh_material)
+					mesh_material.transparency = 1
+					mesh_material.albedo_color.a = 0
+	
 			
 	for c in GlobalFunctions.get_all_children(model):
 		if(c is MeshInstance3D):
@@ -153,6 +178,8 @@ func _ready():
 		#ray.add_exception(actor.area)
 
 func _physics_process(_delta):
+	
+	burglar_area.global_position = mesh_root_bone.global_position
 	
 	if current_animation_clip == "":
 		return
@@ -573,7 +600,8 @@ func set_target_position(target_position: Vector3, record: bool):
 						var start_pos:Vector3
 						var end_pos:Vector3
 						
-						var dir := GlobalFunctions.get_visual_facing(get_parent().highlighted_object)
+						var dir:Vector3= GlobalFunctions.get_interaction_forward(get_parent().highlighted_object)
+
 	
 						if(inside):
 							dir = -dir
@@ -772,7 +800,10 @@ func load_replay():
 					max_ticks +=1
 		
 		last_ticks = max_ticks			
-					
+		
+		#REMINDME I added a return here, because waiting positions were causing issues and I don't even know why I was saving them			
+		return
+		
 		var g:FileAccess
 		if(!is_guard):
 			g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.READ)
@@ -891,10 +922,16 @@ func save_replay():
 	#if(int(filepath_addon) == get_parent().number_of_burglars):
 
 func play_animation(name:String, backwards:bool, save_anim_direction:bool):
+	
+	if(name.left(4) == "idle" && previous_animation_clip.left(4) != "idle"):
+		var random_number = idle_anim_rng.randi_range(1,number_of_idle_animations)
+		name = "idle" + str(random_number)
+	
 	var clip = ANIMATIONS.get(name)
+	
 	if clip == null:
-		push_error("Unbekannte Animation: " + name)
-		return
+		clip = ANIMATIONS.get(current_animation_clip)
+		name = current_animation_clip
 	
 	previous_animation_clip = current_animation_clip	
 	current_animation_clip = name

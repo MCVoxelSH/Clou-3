@@ -11,4 +11,4 @@ func _physics_process(delta: float) -> void:
 	if(!owner.active_burglar.is_guard):
 		text = str(int(get_node("/root/Control/").active_burglar.current_carrying_weight))+ "/"+ str(int(get_node("/root/Control/").active_burglar.max_capacity)) +"kg"
 	else:
-		text = ""
+		text = str(owner.active_burglar.selected_interaction)

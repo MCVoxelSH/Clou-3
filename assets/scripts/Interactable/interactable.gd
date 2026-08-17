@@ -31,10 +31,12 @@ var previous_animation_position := 0.0
 var previous_animation_dir := 1
 var animation_name := ""
 
-@export var related_objects = []
+@export var related_objects: Array[Node3D] = []
 var related_objects_string_array = []
 
 var is_being_hovered_over
+var was_being_hovered_over := false
+var previous_index = 0
 
 var was_opened_by_burglar := false
 
@@ -51,6 +53,7 @@ var base_albedos = []
 
 var floor_disabled = false
 
+@export var interaction_point: Vector3
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -59,9 +62,11 @@ func _ready() -> void:
 	match object_type:
 		0: end = 4
 		1: end = 8
+		2: end = 8
 		
 	ANIMATIONS = {
-	"open": {"start": 0, "end": end, "loop": false}
+	"open": {"start": 0, "end": end, "loop": false},
+	"use": {"start": 0, "end": end, "loop": false}
 	}
 	
 	for c in get_all_children(self):
@@ -77,9 +82,9 @@ func _ready() -> void:
 	if(get_node_or_null("CameraPosNode")):
 		camera_pos_node = $CameraPosNode
 	
-	if(related_objects):
-		for path in related_objects:
-			related_objects_string_array.append(get_node(path).get_path())
+	#if(related_objects):
+		#for path in related_objects:
+			#related_objects_string_array.append(get_node(path).get_path())
 		
 	
 	pass # Replace with function body.
@@ -124,6 +129,9 @@ func _process(_delta):
 	pass
 func _physics_process(delta: float) -> void:
 	
+	if Engine.is_editor_hint():
+		return
+
 	var control = get_node("/root/Control")
 	#REMINDER this was a quick fix, maybe I should make it more efficient, since right now it double checks this
 	if(anim_player):
@@ -134,14 +142,54 @@ func _physics_process(delta: float) -> void:
 					floor_disabled = true
 	
 	if(is_being_hovered_over):
+		was_being_hovered_over = true
 		control.hover_over_timer += delta
 		if(control.hover_over_timer > related_objects.size()):
 			control.hover_over_timer = 0.0
 		var index = int(floor(control.hover_over_timer))
-		control.hover_over_camera.global_transform = get_node(str(related_objects[index])).camera_pos_node.global_transform
+		
+		if(previous_index != index):
+			var i := 0
+			for c in get_all_children(related_objects[previous_index]):
+				if(c.owner.name != "Spotlight" && c.name != "Spotlight"):
+					if(c is MeshInstance3D):
+						var count = c.get_surface_override_material_count()
+						for j in range(count):
+							var mesh_material = c.get_active_material(j).duplicate()
+							c.set_surface_override_material(j, mesh_material)
+							mesh_material.albedo_color = base_albedos[i][j] * 1.0
+						i += 1	
+		
+		previous_index = index
+		
+		var i := 0
+		for c in get_all_children(related_objects[index]):
+			if(c.owner.name != "Spotlight" && c.name != "Spotlight"):
+				if(c is MeshInstance3D):
+					var count = c.get_surface_override_material_count()
+					for j in range(count):
+						var mesh_material = c.get_active_material(j).duplicate()
+						c.set_surface_override_material(j, mesh_material)
+						mesh_material.albedo_color = base_albedos[i][j] * 2.0
+					i += 1
+			
+		control.hover_over_camera.global_transform = related_objects[index].camera_pos_node.global_transform
 		get_node("/root/Control/SubViewportContainer/SubViewport/CurrentObject").size = Vector2.ZERO
 		get_node("/root/Control/SubViewportContainer/SubViewport/CurrentObject").text = str(index+1) + "/" + str(related_objects.size()) 
-
+	elif(was_being_hovered_over):
+		
+		for obj in related_objects:
+			var i := 0	
+			for c in get_all_children(obj):
+				if(c.owner.name != "Spotlight" && c.name != "Spotlight"):
+					if(c is MeshInstance3D):
+						var count = c.get_surface_override_material_count()
+						for j in range(count):
+							var mesh_material = c.get_active_material(j).duplicate()
+							c.set_surface_override_material(j, mesh_material)
+							mesh_material.albedo_color = base_albedos[i][j] * 1.0
+						i += 1
+						
 func update_interactable(delta):
 	
 	var control = get_node("/root/Control")
@@ -167,8 +215,9 @@ func update_interactable(delta):
 		if anim_position == 0.0 && previous_animation_position != 0.0:
 			if !control.active_burglar.inside:
 				if related_objects && (object_type == 0 || object_type == 1):
-					enable_floor()
-					floor_disabled = false
+					if(floor_disabled):
+						enable_floor()
+						floor_disabled = false
 					
 			close_door = false
 		if(close_door && !control.pause):
@@ -300,7 +349,9 @@ func _on_inside_check_area_entered(area: Area3D) -> void:
 		if(area.owner == get_node("/root/Control").active_burglar):
 			get_node("/root/Control").disable_spring_arm()
 		if(area.get_parent() == get_node("/root/Control").active_burglar):
-			disable_floor()
+			if(!floor_disabled):
+				disable_floor()
+				floor_disabled = true
 	
 func _on_outside_check_area_entered(area: Area3D) -> void:
 	if(area.get_parent().is_in_group("Actor")):
@@ -308,7 +359,9 @@ func _on_outside_check_area_entered(area: Area3D) -> void:
 		if(area.owner == get_node("/root/Control").active_burglar):
 			get_node("/root/Control").enable_spring_arm()
 		if(area.get_parent() == get_node("/root/Control").active_burglar):
-			disable_floor()
+			if(!floor_disabled):
+				disable_floor()
+				floor_disabled = true
 			
 func replay_door_animation():	
 	#TODO this whole thing doesnt work yet	
@@ -338,9 +391,9 @@ func replay_door_animation():
 				
 	
 func enable_floor():
-	for i in range (get_node("/root/Control").active_burglar.current_floor, get_node(str(related_objects[0])).number_of_floors +1):
+	for i in range (get_node("/root/Control").active_burglar.current_floor, related_objects[0].number_of_floors +1):
 		#get_node(str(related_objects[0])+"/Inside/Floor"+str(i)).cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
-		for c in get_all_children(get_node(str(related_objects[0])+"/Inside/Floor"+str(i))):
+		for c in get_all_children(get_node(str(related_objects[0].get_path())+"/Inside/Floor"+str(i))):
 			if(c.name != "Spotlight"):
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
@@ -362,9 +415,9 @@ func enable_floor():
 		#
 	
 func disable_floor():
-	for i in range (get_node("/root/Control").active_burglar.current_floor +1, get_node(str(related_objects[0])).number_of_floors +1):
+	for i in range (get_node("/root/Control").active_burglar.current_floor +1, related_objects[0].number_of_floors +1):
 		#get_node(str(related_objects[0])+"/Inside/Floor"+str(i)).cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
-		for c in get_all_children(get_node(str(related_objects[0])+"/Inside/Floor"+str(i))):
+		for c in get_all_children(get_node(str(related_objects[0].get_path())+"/Inside/Floor"+str(i))):
 			if(c.name != "Spotlight"):
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):

@@ -3,40 +3,25 @@
 [ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Items/Loot/loot.tscn" id="1_nxrme"]
 [ext_resource type="PackedScene" uid="uid://dd81lljsagahh" path="res://assets/Clou original files/Sack.blend" id="2_jnnvv"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nxrme"]
-size = Vector3(1.9638672, 1.7197425, 1.1447754)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_efsu4"]
 size = Vector3(1.7900391, 1.4707031, 1.1447754)
 
 [node name="Bag" unique_id=1834645063 instance=ExtResource("1_nxrme")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 value = 2
 weight = 35.0
 unique_name = "Bag"
+interaction_point = Vector3(0, 0, 1)
 
-[node name="Area3D" parent="." index="0" unique_id=1700667802]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13766259, 0)
-
-[node name="CollisionShape3D" parent="Area3D" index="0" unique_id=1834766986]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0019981032, 0.2817167, -0.0008371134)
-shape = SubResource("BoxShape3D_nxrme")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." index="1" unique_id=1686092139]
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="0" unique_id=1686092139]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11130136, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=942932116]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0019981032, 0.25967762, -0.0008371134)
 shape = SubResource("BoxShape3D_efsu4")
 
-[node name="Sack" parent="." index="2" unique_id=308964100 instance=ExtResource("2_jnnvv")]
+[node name="Sack" parent="." index="1" unique_id=308964100 instance=ExtResource("2_jnnvv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7186059, 0)
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="3" unique_id=1441170739]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.61203176, 0)
-vertices = PackedVector3Array(1.16, 0, -0.8, -1.178, 0, -0.8, -1.178, 0, 0.615, 1.16, 0, 0.615)
-carve_navigation_mesh = true
-
-[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
 [connection signal="mouse_entered" from="StaticBody3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="StaticBody3D" to="." method="_on_area_3d_mouse_exited"]

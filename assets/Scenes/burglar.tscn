@@ -37,7 +37,7 @@ collide_with_bodies = false
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=828623892]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2154441, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0057706833, 0)
 shape = SubResource("CapsuleShape3D_wo13b")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1091042113]

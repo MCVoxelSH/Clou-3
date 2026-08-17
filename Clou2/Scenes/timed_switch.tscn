@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://2k06cjel3jaa"]
+
+[ext_resource type="PackedScene" uid="uid://fgps5dfdbloj" path="res://Clou2/Scenes/Switch.tscn" id="1_tp1b3"]
+[ext_resource type="PackedScene" uid="uid://cti8nqhrpdwac" path="res://Clou2/Clou2_unpack_new_textures/models/Schalter/Schalter_Oben_2604.glb" id="3_necqv"]
+
+[node name="TimedSwitch" unique_id=1353067391 instance=ExtResource("1_tp1b3")]
+is_timed_switch = true
+
+[node name="Schalter_Oben_2604" parent="." index="3" unique_id=1240750607 instance=ExtResource("3_necqv")]

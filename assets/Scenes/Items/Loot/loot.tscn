@@ -2,16 +2,7 @@
 
 [ext_resource type="Script" uid="uid://mxilmvvlncsr" path="res://assets/Scenes/Items/Loot/loot.gd" id="1_o0m4d"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_i8waw"]
-size = Vector3(0.44589233, 0.07922949, 0.28925842)
-
 [node name="Loot" type="Node3D" unique_id=1834645063 groups=["Interactable"]]
 script = ExtResource("1_o0m4d")
 lock_type = 3
 object_type = 4
-
-[node name="Area3D" type="Area3D" parent="." unique_id=1700667802]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1834766986]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.074730724, 0.046138212, -0.00857643)
-shape = SubResource("BoxShape3D_i8waw")

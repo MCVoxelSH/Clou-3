@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d33wg8nvejsqq"]
+
+[ext_resource type="PackedScene" uid="uid://fgps5dfdbloj" path="res://Clou2/Scenes/Switch.tscn" id="1_o381k"]
+[ext_resource type="PackedScene" uid="uid://cti8nqhrpdwac" path="res://Clou2/Clou2_unpack_new_textures/models/Schalter/Schalter_Oben_2604.glb" id="2_0xpnt"]
+
+[node name="Switch" unique_id=1353067391 instance=ExtResource("1_o381k")]
+
+[node name="Schalter_Oben_2604" parent="." index="3" unique_id=1240750607 instance=ExtResource("2_0xpnt")]

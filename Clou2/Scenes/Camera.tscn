@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://ceodpos6gilhc"]
+
+[ext_resource type="Script" uid="uid://gmeec1xjimjv" path="res://assets/Scenes/camera.gd" id="1_hiky8"]
+[ext_resource type="PackedScene" uid="uid://71loqc5f44fc" path="res://Clou2/Clou2_unpack_new_textures/models/Alarm/cone ohne cone_2695.glb" id="2_8oytc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ljuip"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.14117648)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jn2v2"]
+_surfaces = [{
+"aabb": AABB(-10, 0, 0, 20, 1e-05, 30),
+"format": 34896613377,
+"index_count": 3,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 3,
+"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_e71kx"]
+resource_name = "SpotlightCamera_Plane"
+_surfaces = [{
+"aabb": AABB(-10, 0, 0, 20, 1e-05, 30),
+"attribute_data": PackedByteArray(0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255),
+"format": 34896613399,
+"index_count": 3,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0),
+"material": SubResource("StandardMaterial3D_ljuip"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 3,
+"vertex_data": PackedByteArray(255, 255, 0, 0, 255, 255, 255, 63, 0, 0, 0, 0, 255, 255, 255, 63, 255, 127, 0, 0, 0, 0, 255, 63, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_jn2v2")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hiky8"]
+points = PackedVector3Array(10, 0, 29.999998, -0.0019578934, 0, 0, -10, 0, 29.999998)
+
+[node name="Camera" type="Node3D" unique_id=1060649190]
+transform = Transform3D(0.32903334, 0.5890978, -0.7380384, -0.086591244, 0.79708594, 0.5976252, 0.94033974, -0.13273093, 0.31327868, 0, 0, 0)
+script = ExtResource("1_hiky8")
+object_type = 7
+
+[node name="Spotlight" type="MeshInstance3D" parent="." unique_id=1461383171]
+transform = Transform3D(-0.08432387, -6.0535967e-09, 0.005664617, -1.4901161e-08, 0.045000035, -1.1641532e-08, -0.010699825, -9.662472e-09, -0.044642065, -0.0010475302, -0.019293752, -0.052591994)
+mesh = SubResource("ArrayMesh_e71kx")
+skeleton = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="Spotlight" unique_id=1665056100]
+transform = Transform3D(-11.668057, -2.1457672e-06, 1.504899, -4.529953e-06, 22.222208, -4.0233135e-06, -2.8425868, -6.1392784e-06, -22.039658, -0.09011172, 0.4287494, -1.1564838)
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Spotlight/Area3D" unique_id=1518147015]
+transform = Transform3D(-0.08430172, -7.906298e-09, -0.005756244, -1.3193737e-08, 0.04500003, -7.65151e-09, 0.010872901, -6.6951675e-09, -0.044630338, -0.01425357, -0.019293746, -0.05063447)
+shape = SubResource("ConvexPolygonShape3D_hiky8")
+
+[node name="CameraPosNode" type="Node3D" parent="." unique_id=2095706538]
+transform = Transform3D(-0.92560357, -0.23506103, 0.29665646, 0.09759387, 0.60905546, 0.78710103, -0.36569673, 0.7574949, -0.5408034, 0.1292702, 0.34854758, -0.6812453)
+
+[node name="cone ohne cone_2695" parent="." unique_id=424607788 instance=ExtResource("2_8oytc")]
+
+[connection signal="area_entered" from="Spotlight/Area3D" to="." method="_on_area_3d_area_entered"]
