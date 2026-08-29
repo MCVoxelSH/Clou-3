@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://5o3vhd6do5l0" path="res://Clou2/Clou2_unpack_new_textures/models/Wände/Außenwände/W_A3_o [Steine]_1018.glb" id="16_k7nx7"]
 [ext_resource type="PackedScene" uid="uid://dxy72w51to5d5" path="res://Clou2/Clou2_unpack_new_textures/models/Wände/Außenwände/W_A3_xxxx [Steine]_1163.glb" id="16_yfh70"]
 [ext_resource type="PackedScene" uid="uid://p43l624am7pd" path="res://Clou2/Clou2_unpack_new_textures/models/Wände/Außenwände/W_A3_x [Steine]_971.glb" id="17_cwkno"]
+[ext_resource type="Script" uid="uid://bfn54yg2cbs38" path="res://assets/scripts/Interactable/Vehicle.gd" id="17_ru06g"]
 [ext_resource type="PackedScene" uid="uid://cr86cxv848fjp" path="res://Clou2/Clou2_unpack_new_textures/models/Straßen/street_Straße_Gerade1Schräg_26.glb" id="19_jcrui"]
 [ext_resource type="PackedScene" uid="uid://c8vd73pwdvls" path="res://Clou2/Clou2_unpack_new_textures/models/Straßen/street_Straße_Gerade1_25.glb" id="20_dpdhc"]
 [ext_resource type="PackedScene" uid="uid://ceodpos6gilhc" path="res://Clou2/Scenes/Camera.tscn" id="20_l20mr"]
@@ -36,7 +37,6 @@
 [ext_resource type="PackedScene" uid="uid://xngmshsv68k8" path="res://Clou2/Clou2_unpack_new_textures/models/Wände/Außen_InnenWände/W_AI1_x [Steine]_1037.glb" id="30_moaju"]
 [ext_resource type="PackedScene" uid="uid://fgr71u0vrow8" path="res://Clou2/Scenes/light_barrier.tscn" id="31_0bag2"]
 [ext_resource type="Texture2D" uid="uid://ty1o2gkmvtnf" path="res://Clou2/Clou2_unpack_new_textures/models/Wände/Außen_InnenWände/W_AI1_x [Steine]_1037_0.png" id="32_ou7mf"]
-[ext_resource type="Script" uid="uid://dbt3sag0xlkwe" path="res://Clou2/Scenes/switch.gd" id="34_gg6q6"]
 [ext_resource type="PackedScene" uid="uid://b7y1oet6ekog2" path="res://Clou2/Clou2_unpack_new_textures/models/Böden/Boden4x4 [Wiese]_30.glb" id="34_vbcbx"]
 [ext_resource type="Texture2D" uid="uid://dp0fjh416a04f" path="res://Clou2/Clou2_unpack_new_textures/models/Böden/Boden4x4 [Wiese]_30_0.png" id="35_0bag2"]
 [ext_resource type="PackedScene" uid="uid://u5m1gnqhx63p" path="res://Clou2/Clou2_unpack_new_textures/models/Items/Beute/Bilder/Bild_A1Q [Chaos_2]_2303.glb" id="35_ru06g"]
@@ -2111,10 +2111,11 @@ shape = SubResource("BoxShape3D_eu85g")
 
 [node name="Fisher Boat" type="Node3D" parent="Outside" unique_id=680889424]
 transform = Transform3D(-0.1287674, 0, 0.4831345, 0, 0.5, 0, -0.4831345, 0, -0.1287674, 0.011795878, 0.17498384, 1.9071541)
-script = ExtResource("7_l5ri7")
+script = ExtResource("17_ru06g")
+max_capacity = 500.0
 object_type = 6
 
-[node name="LootVisual" type="Node3D" parent="Outside/Fisher Boat" unique_id=1614939531 instance=ExtResource("41_gg6q6")]
+[node name="LootVisual" parent="Outside/Fisher Boat" unique_id=1614939531 instance=ExtResource("41_gg6q6")]
 
 [node name="Area3D" type="Area3D" parent="Outside/Fisher Boat" unique_id=1950230255]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
@@ -3807,7 +3808,7 @@ shape = SubResource("ConvexPolygonShape3D_63smi")
 shape = SubResource("ConvexPolygonShape3D_ou7mf")
 
 [node name="W_A3_x [Steine]_973" parent="Inside/Floor0" unique_id=2013463633 instance=ExtResource("17_cwkno")]
-transform = Transform3D(1, 0, -8.526513e-15, 0, 1, 0, 8.526513e-15, 0, 1, -3.7478683, 0.3891, 3.0724225)
+transform = Transform3D(1, 0, -8.526513e-15, 0, 1, 0, 8.526513e-15, 0, 1, -3.7753663, 0.38900003, 3.0491416)
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor0/W_A3_x [Steine]_973/Z_up_to_Y_up/wa3_x/fenster_tuer_2e_fenster_tuer_2x_polySurface409/polySurfaceShape1213" parent_id_path=PackedInt32Array(2013463633, 1576333087) index="0" unique_id=15854481]
@@ -3821,7 +3822,7 @@ shape = SubResource("ConvexPolygonShape3D_63smi")
 shape = SubResource("ConvexPolygonShape3D_ou7mf")
 
 [node name="W_A3_x [Steine]_972" parent="Inside/Floor0" unique_id=1281587035 instance=ExtResource("17_cwkno")]
-transform = Transform3D(1, 0, -8.526513e-15, 0, 1, 0, 8.526513e-15, 0, 1, -3.4978673, 0.3891, 3.0724225)
+transform = Transform3D(1, 0, -8.526513e-15, 0, 1, 0, 8.526513e-15, 0, 1, -3.5253663, 0.38900003, 3.0491416)
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor0/W_A3_x [Steine]_972/Z_up_to_Y_up/wa3_x/fenster_tuer_2e_fenster_tuer_2x_polySurface409/polySurfaceShape1213" parent_id_path=PackedInt32Array(1281587035, 1576333087) index="0" unique_id=528094648]
@@ -3890,15 +3891,12 @@ shape = SubResource("ConvexPolygonShape3D_63smi")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor0/W_A3_x [Steine]_977/Z_up_to_Y_up/wa3_x/zwischenstock128/polySurface893/polySurfaceShape1215/StaticBody3D" unique_id=443447795]
 shape = SubResource("ConvexPolygonShape3D_ou7mf")
 
-[node name="TimedSwitch" type="Node3D" parent="Inside/Floor0" unique_id=1353067391 node_paths=PackedStringArray("related_objects") groups=["Interactable"] instance=ExtResource("40_gg6q6")]
+[node name="TimedSwitch" parent="Inside/Floor0" unique_id=1353067391 node_paths=PackedStringArray("related_objects") instance=ExtResource("40_gg6q6")]
 transform = Transform3D(-1, 0, -8.7422784e-08, 0, 1, 0, 8.7422784e-08, 0, -1, -2, 0.3, 3)
-script = ExtResource("34_gg6q6")
-object_type = 2
-related_objects = [NodePath("../Camera2"), NodePath("../Camera3")]
-interaction_point = Vector3(0, 0, 1)
+related_objects = [NodePath("../Camera"), NodePath("../Camera2")]
 
 [node name="Painting - Chaos" type="Node3D" parent="Inside/Floor0" unique_id=573453132]
-transform = Transform3D(1, 0, 0, 0, 0.92508215, -0.379767, 0, 0.379767, 0.92508215, -3.2732408, 0.31727374, 2.9814)
+transform = Transform3D(1, 0, 0, 0, 0.92508215, -0.379767, 0, 0.379767, 0.92508215, -3.5688035, 0.31727374, 2.9814)
 script = ExtResource("36_1ef1y")
 value = 800
 weight = 35.0
@@ -3907,7 +3905,8 @@ loot_mesh = ExtResource("35_ru06g")
 generate_colliders = true
 object_type = 4
 
-[node name="LootVisual" type="Node3D" parent="Inside/Floor0/Painting - Chaos" unique_id=1259100441 instance=ExtResource("35_ru06g")]
+[node name="LootVisual" parent="Inside/Floor0/Painting - Chaos" unique_id=1259100441 instance=ExtResource("35_ru06g")]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="Area3D" type="Area3D" parent="Inside/Floor0/Painting - Chaos" unique_id=943811350]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
@@ -6025,6 +6024,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04165018, 0.0424136, 0.083
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1599/Z_up_to_Y_up/Kiste0,4/group2/pPlane5/pPlaneShape5/StaticBody3D" unique_id=1536605106]
 shape = SubResource("BoxShape3D_3fcki")
 
+[node name="Kiste0_4_1619" parent="Inside/Floor1" unique_id=1470829569 instance=ExtResource("27_2yd4f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.147199, 0.937005, 1.7971538)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane1/pPlaneShape1" parent_id_path=PackedInt32Array(1470829569, 1935915720) index="0" unique_id=236079913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04163827, 0.00065588875, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane1/pPlaneShape1/StaticBody3D" unique_id=1040298384]
+shape = SubResource("BoxShape3D_dpwne")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane2/pPlaneShape2" parent_id_path=PackedInt32Array(1470829569, 720659535) index="0" unique_id=472426726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04163827, 0.08416939, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane2/pPlaneShape2/StaticBody3D" unique_id=1218161269]
+shape = SubResource("BoxShape3D_7d7ik")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane3/pPlaneShape3" parent_id_path=PackedInt32Array(1470829569, 1452155323) index="0" unique_id=1757014007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08339598, 0.042413596, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane3/pPlaneShape3/StaticBody3D" unique_id=129713219]
+shape = SubResource("BoxShape3D_3y2of")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane4/pPlaneShape4" parent_id_path=PackedInt32Array(1470829569, 141468839) index="0" unique_id=1076646258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00011752514, 0.042413596, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane4/pPlaneShape4/StaticBody3D" unique_id=1933781232]
+shape = SubResource("BoxShape3D_7s7uo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane5/pPlaneShape5" parent_id_path=PackedInt32Array(1470829569, 2035998676) index="0" unique_id=1007323931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04165018, 0.0424136, 0.08374242)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1619/Z_up_to_Y_up/Kiste0,4/group2/pPlane5/pPlaneShape5/StaticBody3D" unique_id=1874920387]
+shape = SubResource("BoxShape3D_3fcki")
+
 [node name="Kiste0_4_1600" parent="Inside/Floor1" unique_id=2146280595 instance=ExtResource("27_2yd4f")]
 transform = Transform3D(0.87126964, 0, 0.49080473, 0, 1, 0, -0.49080473, 0, 0.87126964, -2.2841904, 0.937005, 2.3935897)
 metadata/_edit_group_ = true
@@ -6057,6 +6090,40 @@ shape = SubResource("BoxShape3D_fs4v8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04165018, 0.0424136, 0.08374242)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1600/Z_up_to_Y_up/Kiste0,4/group2/pPlane5/pPlaneShape5/StaticBody3D" unique_id=323010469]
+shape = SubResource("BoxShape3D_2cfw3")
+
+[node name="Kiste0_4_1618" parent="Inside/Floor1" unique_id=360930042 instance=ExtResource("27_2yd4f")]
+transform = Transform3D(0.87126964, 0, 0.49080473, 0, 1, 0, -0.49080473, 0, 0.87126964, -2.3555288, 0.937005, 2.2669508)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane1/pPlaneShape1" parent_id_path=PackedInt32Array(360930042, 1935915720) index="0" unique_id=837228812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04163827, 0.00065588875, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane1/pPlaneShape1/StaticBody3D" unique_id=2094000583]
+shape = SubResource("BoxShape3D_q4ce7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane2/pPlaneShape2" parent_id_path=PackedInt32Array(360930042, 720659535) index="0" unique_id=899975019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04163827, 0.08416939, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane2/pPlaneShape2/StaticBody3D" unique_id=923009316]
+shape = SubResource("BoxShape3D_bdn0w")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane3/pPlaneShape3" parent_id_path=PackedInt32Array(360930042, 1452155323) index="0" unique_id=645796129]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08339598, 0.042413596, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane3/pPlaneShape3/StaticBody3D" unique_id=369077192]
+shape = SubResource("BoxShape3D_uvam8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane4/pPlaneShape4" parent_id_path=PackedInt32Array(360930042, 141468839) index="0" unique_id=1613078632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00011752514, 0.042413596, 0.041974705)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane4/pPlaneShape4/StaticBody3D" unique_id=1986950313]
+shape = SubResource("BoxShape3D_fs4v8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane5/pPlaneShape5" parent_id_path=PackedInt32Array(360930042, 2035998676) index="0" unique_id=1506586130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04165018, 0.0424136, 0.08374242)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Kiste0_4_1618/Z_up_to_Y_up/Kiste0,4/group2/pPlane5/pPlaneShape5/StaticBody3D" unique_id=522220962]
 shape = SubResource("BoxShape3D_2cfw3")
 
 [node name="Kiste0_4_1616" parent="Inside/Floor1" unique_id=1703929855 instance=ExtResource("27_2yd4f")]
@@ -9850,29 +9917,20 @@ transform = Transform3D(-4.3711385e-08, 0, 1.0000001, 0, 0.99999994, 0, -0.99999
 transform = Transform3D(-4.3711385e-08, 0, 1.0000001, 0, 0.99999994, 0, -0.99999994, 0, -4.3711392e-08, -2.5635698, 0.93337137, 2.7746809)
 
 [node name="TimedSwitch" parent="Inside/Floor1" unique_id=702857255 node_paths=PackedStringArray("related_objects") instance=ExtResource("40_gg6q6")]
-transform = Transform3D(1, 0, 2.842171e-15, 0, 1, 0, -2.842171e-15, 0, 1, -2.4156978, 1.0858451, -0.37979767)
+transform = Transform3D(1, 0, 2.842171e-15, 0, 1, 0, -2.842171e-15, 0, 1, -2.37969, 0.99419993, -0.35864654)
 related_objects = [NodePath("../LightBarrier")]
 
-[node name="TimedSwitch2" type="Node3D" parent="Inside/Floor1" unique_id=534607981 node_paths=PackedStringArray("related_objects") groups=["Interactable"] instance=ExtResource("40_gg6q6")]
+[node name="TimedSwitch2" parent="Inside/Floor1" unique_id=534607981 node_paths=PackedStringArray("related_objects") instance=ExtResource("40_gg6q6")]
 transform = Transform3D(-4.3711392e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711392e-08, -1.4706674, 0.99419993, 1.9480814)
-script = ExtResource("34_gg6q6")
-object_type = 2
-related_objects = [NodePath("../LightBarrier")]
-interaction_point = Vector3(0, 0, 1)
+related_objects = [NodePath("../LightBarrier3")]
 
-[node name="TimedSwitch3" type="Node3D" parent="Inside/Floor1" unique_id=697165790 node_paths=PackedStringArray("related_objects") groups=["Interactable"] instance=ExtResource("40_gg6q6")]
+[node name="TimedSwitch3" parent="Inside/Floor1" unique_id=697165790 node_paths=PackedStringArray("related_objects") instance=ExtResource("40_gg6q6")]
 transform = Transform3D(-4.3711392e-08, 0, 1, 0, 1, 0, -1, 0, -4.3711392e-08, -3.8107994, 0.99419993, 2.140825)
-script = ExtResource("34_gg6q6")
-object_type = 2
 related_objects = [NodePath("../LightBarrier2")]
-interaction_point = Vector3(0, 0, 1)
 
-[node name="TimedSwitch4" type="Node3D" parent="Inside/Floor1" unique_id=458480687 node_paths=PackedStringArray("related_objects") groups=["Interactable"] instance=ExtResource("40_gg6q6")]
+[node name="TimedSwitch4" parent="Inside/Floor1" unique_id=458480687 node_paths=PackedStringArray("related_objects") instance=ExtResource("40_gg6q6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5813444, 0.99419993, 2.4621408)
-script = ExtResource("34_gg6q6")
-object_type = 2
-related_objects = [NodePath("../../Floor0/Camera")]
-interaction_point = Vector3(0, 0, 1)
+related_objects = [NodePath("../../Floor0/Camera3")]
 
 [connection signal="mouse_entered" from="Outside/Car Schlachters/Area3D" to="Outside/Car Schlachters" method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Outside/Car Schlachters/Area3D" to="Outside/Car Schlachters" method="_on_area_3d_mouse_exited"]
@@ -10266,7 +10324,9 @@ interaction_point = Vector3(0, 0, 1)
 [editable path="Inside/Floor1/Kiste0_4 [Trouble]_2080"]
 [editable path="Inside/Floor1/Kiste0_4 [Trouble]_2081"]
 [editable path="Inside/Floor1/Kiste0_4_1599"]
+[editable path="Inside/Floor1/Kiste0_4_1619"]
 [editable path="Inside/Floor1/Kiste0_4_1600"]
+[editable path="Inside/Floor1/Kiste0_4_1618"]
 [editable path="Inside/Floor1/Kiste0_4_1616"]
 [editable path="Inside/Floor1/Kiste0_4_1617"]
 [editable path="Inside/Floor1/Kiste0_4_1601"]

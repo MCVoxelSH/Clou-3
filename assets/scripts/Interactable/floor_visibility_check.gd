@@ -14,6 +14,8 @@ func enable_floor():
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
 						continue
+					elif(c.object_type == 0 || c.object_type == 1):
+						c.floor_disabled = false
 				c.set_deferred("visible", true)
 				
 			if(c is CollisionObject3D):
@@ -36,7 +38,9 @@ func disable_floor():
 			if(c.name != "Spotlight"):
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
-						continue
+						continue					
+					elif(c.object_type == 0 || c.object_type == 1):
+						c.floor_disabled = true
 				c.set_deferred("visible", false)
 		
 			if(c is CollisionObject3D):

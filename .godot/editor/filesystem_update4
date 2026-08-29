@@ -1,4 +1,3 @@
-res://assets/Scenes/Missions/Clou 2 Custom Mission.tscn
-res://assets/Shaders/distance_fog.gdshader
 res://assets/Scenes/Missions/Test Scene.tscn
-res://assets/Scenes/Items/Loot/loot.gd
+res://assets/Shaders/distance_fog.gdshader
+res://assets/scripts/control.gd

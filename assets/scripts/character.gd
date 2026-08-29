@@ -7,6 +7,8 @@ const Line3D = preload("res://assets/scripts/line3d.gd")
 @export_enum("Talk", "Interact", "Inspect", "none", "Look at", "Break") var selected_interaction
 
 const number_of_idle_animations = 4
+ 
+@export var idle_anim = ""
 
 const ANIMATIONS := {
 	"move": {"start": 6, "end": 19, "loop": true, "loop_start": 4, "loop_end": 19},
@@ -19,7 +21,7 @@ const ANIMATIONS := {
 	"idle1": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
 	"idle2": {"start": 664, "end": 701, "loop": true, "loop_start": 664, "loop_end": 701},
 	"idle3": {"start": 1258, "end": 1271, "loop": true, "loop_start": 1258, "loop_end": 1271},
-	"idle4": {"start": 1284, "end": 1296, "loop": true, "loop_start": 1284, "loop_end": 1296},
+	"idle4": {"start": 1284, "end": 1308, "loop": true, "loop_start": 1284, "loop_end": 1308},
 	"movethroughwindow": {"start": 948, "end": 974, "loop": false},
 	"breakhigh": {"start": 1357, "end": 1370, "loop": true, "loop_start": 1360, "loop_end": 1370},
 	"break": {"start": 1374, "end": 1383, "loop": true, "loop_start": 1374, "loop_end": 1380}
@@ -924,8 +926,11 @@ func save_replay():
 func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 	
 	if(name.left(4) == "idle" && previous_animation_clip.left(4) != "idle"):
-		var random_number = idle_anim_rng.randi_range(1,number_of_idle_animations)
-		name = "idle" + str(random_number)
+		if(idle_anim == ""):
+			var random_number = idle_anim_rng.randi_range(1,number_of_idle_animations)
+			name = "idle" + str(random_number)
+		else:
+			name = "idle" + idle_anim
 	
 	var clip = ANIMATIONS.get(name)
 	

@@ -48,5 +48,5 @@ func update_interactable(delta):
 				
 func append_switch_timer(ticks: int)->void:
 	if(ticks_to_reset != 0):
-		if(ticks_to_reset_at.back() != ticks):
+		if(ticks_to_reset_at.is_empty() or ticks_to_reset_at.back() != ticks):
 			ticks_to_reset_at.append(ticks)
