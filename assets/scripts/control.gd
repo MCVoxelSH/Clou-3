@@ -1624,7 +1624,7 @@ func replay_backwards(actor:Node3D):
 					if(found_door_or_window):
 						if(found_window and get_node(actor.replay[actor.id][3]).anim_player.current_animation_position != get_node(actor.replay[actor.id][3]).current_animation_clip_length):
 							play_open_anim = true
-						elif(!found_window  and get_node(actor.replay[actor.id][1].anim_player).current_animation_position != get_node(actor.replay[actor.id][1]).current_animation_clip_length):
+						elif(!found_window and (found_door_or_window or get_node(actor.replay[actor.id][1].anim_player).current_animation_position != get_node(actor.replay[actor.id][1]).current_animation_clip_length)):
 							play_open_anim = true
 					if(play_open_anim):
 						actor.play_animation("open", true, true)
