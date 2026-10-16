@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dhq4undhljj0v"]
+
+[ext_resource type="PackedScene" uid="uid://bfyijh0tdrnmg" path="res://assets/Scenes/Interactable.tscn" id="1_mj1dv"]
+[ext_resource type="Script" uid="uid://ck8r8quxn0tgj" path="res://assets/scripts/Interactable/Noise_Detector.gd" id="2_mj1dv"]
+[ext_resource type="PackedScene" uid="uid://cldrnmpxyxvnl" path="res://Clou2/Custom/Noise Detector.glb" id="3_mj1dv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sujmb"]
+size = Vector3(0.091796875, 0.19335938, 0.13049316)
+
+[node name="Noise Detector" unique_id=467983730 groups=["Alarm"] instance=ExtResource("1_mj1dv")]
+script = ExtResource("2_mj1dv")
+hearing = 0.5
+is_breakable = true
+lock_type = 2
+object_type = 9
+object_material = 1
+interaction_point = Vector3(1, 0, 0)
+
+[node name="Area3D" parent="." index="0" unique_id=698272675]
+transform = Transform3D(0.36, 0, 0, 0, 0.36, 0, 0, 0, 0.36, 0, -0.014273881, 0)
+
+[node name="CollisionShape3D" parent="Area3D" index="0" unique_id=949089932]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 7.891653e-05, 0.01845425, 0.00047993663)
+shape = SubResource("BoxShape3D_sujmb")
+
+[node name="CameraPosNode" type="Node3D" parent="." index="1" unique_id=291855855]
+transform = Transform3D(1, 0, 0, 0, 0.9933808, 0.1148678, 0, -0.1148678, 0.9933808, -0.0039914357, 0.3757334, 0.87641263)
+
+[node name="Noise Detector" parent="." index="2" unique_id=1187353052 instance=ExtResource("3_mj1dv")]
+
+[node name="pSphereShape5" parent="Noise Detector/Z_up_to_Y_up/alarmanlage3/group91/pSphere5/pSphere5_rz/pSphere5_ry/pSphere5_rx" parent_id_path=PackedInt32Array(1187353052, 853638316) index="0" unique_id=2052584676]
+transform = Transform3D(1, 0, 0, -1.4210855e-14, 1, 4.2632564e-14, 2.0861626e-07, 7.1054274e-15, 1, 0.025541283, 3.7252903e-09, -0.0067724586)
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="Noise Detector"]

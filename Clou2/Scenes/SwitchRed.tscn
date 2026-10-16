@@ -6,3 +6,8 @@
 [node name="Switch" unique_id=1353067391 instance=ExtResource("1_o381k")]
 
 [node name="Schalter_Oben_2604" parent="." index="3" unique_id=1240750607 instance=ExtResource("2_0xpnt")]
+
+[node name="pPlane2" parent="Schalter_Oben_2604/Z_up_to_Y_up/Schalter_oben/group22" parent_id_path=PackedInt32Array(1240750607, 518599983) index="1" unique_id=2134580167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.110750884, 0.20483498)
+
+[editable path="Schalter_Oben_2604"]

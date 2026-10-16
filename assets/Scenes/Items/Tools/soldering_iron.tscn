@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bnfrbr7j8bilv"]
+
+[ext_resource type="Script" uid="uid://de4bv3cna3bye" path="res://assets/scripts/Tool.gd" id="1_xahre"]
+[ext_resource type="PackedScene" uid="uid://ccc5recbaifo8" path="res://Clou2/Clou2_unpack_new_textures/models/Items/Werkzeug/electric_kit_2702.glb" id="2_v3nyt"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bi5mc"]
+radius = 0.028320313
+height = 0.08203125
+
+[node name="SolderingIron" type="Node3D" unique_id=443840832 groups=["Item"]]
+script = ExtResource("1_xahre")
+tool_efficencies = Array[float]([0.0, 0.0, 50.0])
+loudness = Array[float]([0.0, 10.0, 0.0])
+item_type = 0
+
+[node name="electric_kit_2702" parent="." unique_id=1239852199 instance=ExtResource("2_v3nyt")]
+transform = Transform3D(3.5196896, 0, 0, 0, 3.5196896, 0, 0, 0, 3.5196896, 4.6932875e-09, 0, 0)
+
+[node name="pSphereShape1" parent="electric_kit_2702/Z_up_to_Y_up/electric_kit/pSphere1" parent_id_path=PackedInt32Array(1239852199, 1492495101) index="0" unique_id=1842478854]
+layers = 5
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1196545777]
+transform = Transform3D(3.5196896, 1.2504449e-14, 0, -1.2504449e-14, 3.5196896, 0, 0, 0, 3.5196896, -8.418578e-09, 0, 0)
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1550141954]
+shape = SubResource("CapsuleShape3D_bi5mc")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="electric_kit_2702"]

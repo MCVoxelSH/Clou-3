@@ -16,7 +16,9 @@ func enable_floor():
 						continue
 					elif(c.object_type == 0 || c.object_type == 1):
 						c.floor_disabled = false
-				c.set_deferred("visible", true)
+						
+				if(c.process_mode != ProcessMode.PROCESS_MODE_DISABLED):
+					c.set_deferred("visible", true)
 				
 			if(c is CollisionObject3D):
 				c.collision_layer = 1
@@ -57,7 +59,7 @@ func disable_floor():
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
-	change_visibility(area.get_parent(),true)
+	change_visibility(area.get_parent(), self,true)
 	
 func get_all_children(node):
 	var nodes : Array = []
@@ -76,11 +78,15 @@ func get_all_children(node):
 
 	return nodes
 
-func change_visibility(node, set_floor:bool):
+func change_visibility(node,area, set_floor:bool):
 	
 	if(node.is_in_group("Actor")):
 		if(set_floor):
-			node.current_floor = floor
+			if(area):
+				node.current_floor = area.floor
+			else:
+				node.current_floor = floor
+				
 		for actor in get_tree().get_nodes_in_group("Actor"):
 			if(true):#actor.is_guard):
 				if(actor.current_floor != get_node("/root/Control").active_burglar.current_floor):

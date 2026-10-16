@@ -8,14 +8,19 @@ var finalize_guard_replay = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
-
+		
+	for c in GlobalFunctions.get_all_children(self):
+		if(c.name == "Bag2" || c.name == "Bag3"):
+			c.visible = false
+		elif(c.name == "Bag1" && is_guard):
+			c.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
 
 func _physics_process(_delta):
-	if(!get_parent().backwards):
+	if(!get_node("/root/Control").backwards):
 		
 		for object in objects_in_sight_of_guard:
 			if(object.is_in_group("Actor")):
@@ -29,9 +34,9 @@ func _physics_process(_delta):
 
 					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 					if(result):
-						if(result.collider.owner.is_in_group("Actor")):
-							owner.print_caught_message(object.unique_name + " caught at " + get_node("/root/Control/TimerLabel").get_time_as_string() +  " ("+str(get_node("/root/Control").ticks)+" ticks)" + " by " + unique_name)
-							print("burglar position: " + str(result.collider.owner.global_position)+ ",id: " + str(result.collider.owner.id) + ", own position: " + str(global_position) + ", id: " + str(id))
+						if(result.collider.get_parent().is_in_group("Actor")):
+							control.print_caught_message(object.unique_name + " caught at " + get_node("/root/Control/TimerLabel").get_time_as_string() +  " ("+str(get_node("/root/Control").ticks)+" ticks)" + " by " + unique_name)
+							print("burglar position: " + str(result.collider.get_parent().global_position)+ ",id: " + str(result.collider.get_parent().id) + ", own position: " + str(global_position) + ", id: " + str(id))
 							objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))
 					
 			if(object.is_in_group("Interactable")):
@@ -44,23 +49,23 @@ func _physics_process(_delta):
 
 				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 				if(result):	
-					if(result.collider.owner.is_in_group("Interactable")):
-						if(result.collider.owner.object_type == 0 || result.collider.owner.object_type == 1):
-							if(result.collider.owner.anim_player.current_animation_position != 0):
-								owner.print_caught_message("open door was found at " +str(get_parent().ticks) + " by " + unique_name && result.collider.owner.was_opened_by_burglar)
+					if(result.collider.get_parent().is_in_group("Interactable")):
+						if(result.collider.get_parent().object_type == 0 || result.collider.get_parent().object_type == 1):
+							if(result.collider.get_parent().anim_player.current_animation_position != 0):
+								get_parent().print_caught_message("open door was found at " +str(get_node("/root/Control").ticks) + " by " + unique_name && result.collider.get_parent().was_opened_by_burglar)
 								objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))							
 		
 		
 	super(_delta)	
 
 func load_replay():
-	
-	if(get_parent().play || Global.load_replay ||  (is_guard && !record_guard)):
+		
+	if(get_node("/root/Control").play || Global.load_replay ||  (is_guard && !record_guard)):
 		var f:FileAccess
 		if(!is_guard):
-			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.READ)
+			f = FileAccess.open("user://replay"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.READ)
 		else:
-			f = FileAccess.open("res://guard_replays/replay" + filepath_addon+".txt", FileAccess.READ)
+			f = FileAccess.open("res://guard_replays/replay"  + control.burglary_target_name + filepath_addon+".txt", FileAccess.READ)
 		if(f != null):
 			while !f.eof_reached():
 				var line = f.get_line()
@@ -107,9 +112,9 @@ func load_replay():
 					
 		var g:FileAccess
 		if(!is_guard):
-			g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.READ)
+			g = FileAccess.open("user://waiting_positions"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.READ)
 		else:
-			g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.READ)
+			g = FileAccess.open("res://guard_replays/waiting_positions"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.READ)
 		if(g != null):
 			while !g.eof_reached():
 				var line = g.get_line()
@@ -133,9 +138,9 @@ func save_replay():
 	if(!Global.execute_plan && (!is_guard || record_guard)):
 		var f:FileAccess
 		if(!is_guard):
-			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.WRITE)
+			f = FileAccess.open("user://replay"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.WRITE)
 		else:
-			f = FileAccess.open("res://guard_replays/replay" + filepath_addon+".txt", FileAccess.WRITE)
+			f = FileAccess.open("res://guard_replays/replay"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.WRITE)
 		
 		#for e in replay:
 		#	f.store_line("%d %s" % [e.tick, e.action])
@@ -151,14 +156,14 @@ func save_replay():
 		f.close()
 		var g:FileAccess
 		if(!is_guard):
-			g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
+			g = FileAccess.open("user://waiting_positions"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.WRITE)
 		else:
-			g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
+			g = FileAccess.open("res://guard_replays/waiting_positions"  + control.burglary_target_name +  filepath_addon+".txt", FileAccess.WRITE)
 		for l in waiting_positions:
 			g.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2]))
 		g.close()
 			
-	#if(int(filepath_addon) == get_parent().number_of_burglars):
+	#if(int(filepath_addon) == get_node("/root/Control").number_of_burglars):
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	_on_body_or_area_entered(area)
@@ -176,44 +181,44 @@ func _on_area_3d_body_exited(body: Node3D) -> void:
 	_on_body_or_area_exited(body)
 
 func _on_body_or_area_entered(body_area):
-	#if(!get_parent().backwards):
+	#if(!get_node("/root/Control").backwards):
 
-		if(objects_in_sight_of_guard.find(body_area.owner)== -1 && (body_area.owner.is_in_group("Interactable")|| body_area.owner.is_in_group("Actor"))): #|| body_area.owner.is_in_group("Actor"))):
-			objects_in_sight_of_guard.append(body_area.owner)
+		if(objects_in_sight_of_guard.find(body_area.get_parent())== -1 && (body_area.get_parent().is_in_group("Interactable")|| body_area.get_parent().is_in_group("Actor"))): #|| body_area.get_parent().is_in_group("Actor"))):
+			objects_in_sight_of_guard.append(body_area.get_parent())
 
 		
-		if(body_area.owner.is_in_group("Actor")):
-			if(!body_area.owner.is_guard):
+		if(body_area.get_parent().is_in_group("Actor")):
+			if(!body_area.get_parent().is_guard):
 				var space_state = get_world_3d().direct_space_state
 							
-				var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.owner.global_position)
+				var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.get_parent().global_position)
 				query.collision_mask = guard_sight_check_collision_mask
 				query.collide_with_areas = true
 				query.exclude = [burglar_area]
 
 				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 				if(result):
-					if(result.collider.owner.is_in_group("Actor")):
-						#owner.print_caught_message(body_area.owner.name,str(get_parent().ticks),unique_name)
-						owner.print_caught_message(body_area.owner.unique_name + " caught at " +str(get_parent().ticks) + " by " + unique_name)
+					if(result.collider.get_parent().is_in_group("Actor")):
+						#get_parent().print_caught_message(body_area.get_parent().name,str(get_node("/root/Control").ticks),unique_name)
+						control.print_caught_message(body_area.get_parent().unique_name + " caught at " +str(get_node("/root/Control").ticks) + " by " + unique_name)
 				
-		if(body_area.owner.is_in_group("Interactable")):
+		if(body_area.get_parent().is_in_group("Interactable")):
 			var space_state = get_world_3d().direct_space_state
 						
-			var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.owner.global_position)
+			var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.get_parent().global_position)
 			query.collision_mask = guard_sight_check_collision_mask
 			query.collide_with_areas = true
 			query.exclude = [burglar_area]
 
 			var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 			if(result):	
-				if(result.collider.owner.is_in_group("Interactable")):
-					if(result.collider.owner.object_type == 0 || result.collider.owner.object_type == 1  || result.collider.owner.object_type == 3):
-						if(result.collider.owner.anim_player.current_animation_position != 0 && result.collider.owner.was_opened_by_burglar):
-							owner.print_caught_message("opened object was found at " +str(get_parent().ticks) + " by " + unique_name)
+				if(result.collider.get_parent().is_in_group("Interactable")):
+					if(result.collider.get_parent().object_type == 0 || result.collider.get_parent().object_type == 1  || result.collider.get_parent().object_type == 3):
+						if(result.collider.get_parent().anim_player.current_animation_position != 0 && result.collider.get_parent().was_opened_by_burglar):
+							get_parent().print_caught_message("opened object was found at " +str(get_node("/root/Control").ticks) + " by " + unique_name)
 	
 func _on_body_or_area_exited(body_area):
-	#if(!get_parent().backwards):
-	var index = objects_in_sight_of_guard.find(body_area.owner)
+	#if(!get_node("/root/Control").backwards):
+	var index = objects_in_sight_of_guard.find(body_area.get_parent())
 	if(index != -1):
 		objects_in_sight_of_guard.remove_at(index)

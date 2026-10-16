@@ -16,10 +16,10 @@ item_type = 0
 
 [node name="SM_Pliers" parent="." unique_id=1139612194 instance=ExtResource("2_lyfgc")]
 
-[node name="SM_Pliers" parent="SM_Pliers" index="0" unique_id=1988365850]
+[node name="SM_Pliers" parent="SM_Pliers" index="0" unique_id=677524807]
 layers = 5
 
-[node name="HOLDER_FOR)Pliers" parent="SM_Pliers/SM_Pliers" index="0" unique_id=101319025]
+[node name="HOLDER_FOR)Pliers" parent="SM_Pliers/SM_Pliers" index="0" unique_id=1185240139]
 layers = 5
 
 [node name="Area3D" type="Area3D" parent="." unique_id=261024409]

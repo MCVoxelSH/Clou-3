@@ -20,8 +20,9 @@ const FPS:= 24.0
 #@export load_replay = false
 
 @export var burglary_target:NodePath
+@onready var burglary_target_name:StringName = get_node(burglary_target).name
 
-@export var min_loot = 0
+@onready var min_loot = get_node(burglary_target).min_loot
 
 #rewind and play forwards
 var backwards = false
@@ -93,7 +94,7 @@ var cash = 0
 
 var was_caught = false
 var was_success = false
-var caught_message = ""
+var caught_message:String = ""
 var previous_caught_message = ""
 
 var debug_file = FileAccess.open("user://debug.txt", FileAccess.WRITE)
@@ -167,15 +168,19 @@ func _ready() -> void:
 			mesh.visible = false
 			burglar_switcher.get_child(0).get_child(0).add_child(mesh)
 		else:
-			number_of_guards += 1
-			actor.filepath_addon = str(number_of_burglars + number_of_guards)
-	
-		if(actor.is_guard):
+			if(actor.owner.name != burglary_target_name):
+				actor.visible = false
+				actor.process_mode = Node.PROCESS_MODE_DISABLED
+				continue
+			else:
+				number_of_guards += 1
+				actor.filepath_addon = str(number_of_burglars + number_of_guards)
+			actor.reparent(self)
+			
 			if(actor.record_guard):
 				guards_are_recording = true
-			
-		actor.load_replay()
 		
+		actor.load_replay()
 
 		
 	#if(play):
@@ -188,7 +193,7 @@ func _ready() -> void:
 	
 	#since burglars are outside everytime we can call this method at the start
 	enable_spring_arm()		
-	floor_visibility_check.change_visibility(active_burglar, false)
+	floor_visibility_check.change_visibility(active_burglar,null, false)
 		
 func _process(delta: float) -> void:
 
@@ -284,7 +289,7 @@ func _physics_process(delta: float) -> void:
 								
 	
 	if(!pause):
-		while(true):
+		while(true && (caught_message == "" || !Global.execute_plan)):
 		#print("ticks before doing replay: " + str(ticks))
 			do_replay()	
 			#REMINDER I changed this from !pause to true, does this cause issues
@@ -353,6 +358,9 @@ func _unhandled_input(event: InputEvent):
 	
 	#REMINDER this is for when selecting an option while hovering over an interactable
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
+		
+		if(play_until_ticks != -1):
+			return
 		
 		if(Global.execute_plan || !recording || active_burglar.bag.shown || burglar_switcher.shown || burglar_switcher.shown):
 			return
@@ -427,7 +435,7 @@ func _unhandled_input(event: InputEvent):
 			if((active_burglar.replay[active_burglar.id][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow") && (active_burglar.replay[active_burglar.id][0] == -1 || active_burglar.id != active_burglar.maxid -1) && active_burglar.replay[active_burglar.id][0] != ticks):
 				play_until_ticks = ticks - 1
 				for i in range (active_burglar.id, active_burglar.replay.size()):
-					if(active_burglar.replay[i][2] == "open" || active_burglar.replay[active_burglar.id][2] == "use" || active_burglar.replay[active_burglar.id][2] == "movethroughwindow"):
+					if(active_burglar.replay[i][2] == "open" || active_burglar.replay[i][2] == "use" || active_burglar.replay[i][2] == "movethroughwindow"):
 						play_until_ticks += 1
 							
 				_on_play_button_button_up()
@@ -490,13 +498,10 @@ func _unhandled_input(event: InputEvent):
 			if(active_burglar.is_zoomed_onto_object):
 				active_burglar.is_zoomed_onto_object = false
 				for object in get_tree().get_nodes_in_group("Interactable"):
-					if(object.object_type != 4):
-						if(object.object_type == 0):
-							get_node(str(object.get_path())+"/Door/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
-						elif(object.object_type == 1):
-							get_node(str(object.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
-						else:
-							get_node(str(object.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
+					if(object.owner.name == get_node("/root/Control").burglary_target_name):
+						if(object.object_type != 4):
+							object.area.process_mode = Node.PROCESS_MODE_INHERIT
+						
 				camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
 				camera_base.global_rotation = active_burglar.camera_rotation_before_zoom_onto_object
 				spring_arm.spring_length = spring_arm_length_before_zoom_in
@@ -869,12 +874,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 		active_burglar.is_zoomed_onto_object = false
 		for object in get_tree().get_nodes_in_group("Interactable"):
 			if(object.object_type != 4):
-				if(object.object_type == 0):
-					get_node(str(object.get_path())+"/Door/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
-				elif(object.object_type == 1):
-					get_node(str(object.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
-				else:
-					get_node(str(object.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_INHERIT
+				object.area.process_mode = Node.PROCESS_MODE_INHERIT
 		camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
 		camera_base.global_rotation = active_burglar.camera_rotation_before_zoom_onto_object
 		spring_arm.spring_length = spring_arm_length_before_zoom_in
@@ -1057,7 +1057,7 @@ func check_success():
 			else:
 				all_burglars_are_in_car = false
 					
-	if(all_burglars_are_in_car && cash >= min_loot):
+	if(all_burglars_are_in_car && cash >= min_loot && Global.execute_plan):
 		was_success = true
 		print_caught_message("you won!")
 		play_music("res://assets/Clou original files/Audio/SFX/Sfx_Burglary_Success.wav")
@@ -1077,7 +1077,7 @@ func update_interactables(delta):
 	for node in nodes:
 		if(node.anim_player):
 			if(node.anim_player.is_playing()):
-				if(get_node("/root/Control").backwards):
+				if(backwards):
 					#REMINDER this and line 1421 is work in progress, maybe the logic is not correct
 					#if(node.previous_animation_dir > 0):
 						#if(node.anim_player.current_animation_position == node.current_animation_clip_length):
@@ -1109,7 +1109,10 @@ func update_interactables(delta):
 							node.anim_player.advance(delta)
 					else:
 						node.anim_player.advance(delta)
-	
+			
+								
+					if(node.anim_player.current_animation_position > node.current_animation_clip_length):
+						node.anim_player.seek(node.current_animation_clip_length)
 		#if(node.was_opened_by_burglar):
 			#print(active_burglar.name + " waiting at position " + str(active_burglar.global_position) + ", id: " + str(active_burglar.id))
 			#print(node.name + ", ticks: " + str(ticks) + ", anim position: " + str(node.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value))
@@ -1129,7 +1132,6 @@ func print_caught_message(message):
 				$CaughtMessage.visible = true
 				$CaughtMessage.text = message
 				play_music("res://assets/Clou original files/Audio/SFX/Sfx_Alarm_Siren.wav")
-				get_tree().paused = true
 				
 
 func change_game_speed(value: float):	
@@ -1182,20 +1184,39 @@ func switch_to_actor(index: int):
 	var child_node = get_node(active_burglar.name + "/CameraBase")
 	active_burglar.remove_child(child_node)
 	active_burglar_index = index
+	
+	var name_prefix:String
+	var current_index = active_burglar_index
+	if(active_burglar_index > number_of_burglars):
+		name_prefix = "Guard"
+		current_index -= number_of_burglars
+	else:
+		name_prefix = "Burglar"
+
+	
 	if(active_burglar_index > number_of_burglars+number_of_guards):
 		active_burglar_index = 1
+		current_index = active_burglar_index - number_of_burglars
 		
 	if((guards_are_recording || debug_mode) && active_burglar_index > number_of_burglars):
-		while(!get_node("Burglar"+str(active_burglar_index)).record_guard && !debug_mode):
+		while(!get_node(name_prefix+str(current_index)).record_guard && !debug_mode):
 			active_burglar_index += 1
+			current_index += 1
 	else:
 		if(active_burglar_index > number_of_burglars):
 			active_burglar_index = 1
-	active_burglar = get_node("Burglar"+str(active_burglar_index))
+			
+	if(active_burglar_index > number_of_burglars):
+		name_prefix = "Guard"
+		current_index = active_burglar_index - number_of_burglars
+	else:
+		name_prefix = "Burglar"		
+			
+	active_burglar = get_node(name_prefix+str(current_index))
 	active_burglar.add_child(child_node)
 	_camera = get_node(active_burglar.name+"/CameraBase/SpringArm3D/Camera3D")
 	
-	floor_visibility_check.change_visibility(active_burglar, false)
+	floor_visibility_check.change_visibility(active_burglar,null, false)
 	if(active_burglar.inside):
 		disable_spring_arm()
 	else:
@@ -1428,7 +1449,7 @@ func replay_backwards(actor:Node3D):
 						if(related_object.object_type == 7):
 							related_object.toggle_power_state()
 						#is alarm
-						if(related_object.object_type == 8):
+						if(related_object.object_type == 8 || related_object.object_type == 9):
 							related_object.is_off = false	
 		if(actor.replay[actor.id][2]== "takeend"):
 			if(!get_node(str(actor.replay[actor.id][1])).visible):
@@ -1438,10 +1459,11 @@ func replay_backwards(actor:Node3D):
 				actor.current_carrying_weight -= get_node(str(actor.replay[actor.id][1])).weight
 				actor.bag.get_child(0).get_child(0).remove_child(actor.bag.get_child(0).get_child(0).get_child(actor.bag.get_child(0).get_child(0).get_child_count()-1))
 				selected_car.current_load -= get_node(str(actor.replay[actor.id][1])).weight
+				actor.update_bag()
 		else:
 			var object:Node3D
 			object = get_node(str(actor.replay[actor.id][1]))
-			offset = actor.global_position - get_node(str(actor.replay[actor.id][1])).global_position
+			offset = actor.global_position - object.global_position
 			rotate_actor(actor,offset)
 			#if(object.lock_type != 3):
 			if(!object_occupied(actor, object)):
@@ -1466,13 +1488,19 @@ func replay_backwards(actor:Node3D):
 								
 							actor.progress_bar.visible = true
 							var guard_that_hears_the_most:Node3D
+							var listeners = []
 							for guard in get_tree().get_nodes_in_group("Actor"):
 								if (guard.is_guard):
-									var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing)))* (tool.loudness[object.object_material]/100.0)
-									if(loudness > max_loudness):
-										max_loudness = loudness
-										guard_that_hears_the_most = guard				
-									$NoiseLevelProgessBar.value = max_loudness
+									listeners.append(guard)
+							for obj in get_tree().get_nodes_in_group("Interactable"):
+								if(obj.object_type == 9 and (obj.damage != object_durability && !obj.is_off)):
+									listeners.append(obj)
+							for listener in listeners :
+								var loudness = (10000.0/((listener.global_position.distance_to(object.global_position))* (1.0/listener.hearing)))* (tool.loudness[object.object_material]/100.0)
+								if(loudness > max_loudness):
+									max_loudness = loudness
+									guard_that_hears_the_most = listener				
+								$NoiseLevelProgessBar.value = max_loudness
 									
 							if($NoiseLevelProgessBar.value > noise_threshold):
 								$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(1,0,0)
@@ -1511,13 +1539,17 @@ func replay_backwards(actor:Node3D):
 				#actor.is_opening = true
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
 		
+		var found_object: Node3D
+		
+		if(actor.replay[actor.id][2] != "idle"):
+			actor.text_bubble.visible = false
 				
 		if(actor.replay[actor.id][2] != "moveinsidecar"):
 			actor.mesh_root.visible = true
 				
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
 			found_window = true
-			var found_object = get_node(str(actor.replay[actor.id][3]))
+			found_object = get_node(str(actor.replay[actor.id][3]))
 			if(actor.id == actor.maxid-1):
 				actor.object_that_is_being_interacted_with = null
 			elif(actor.replay[actor.id + 1][2] != "movethroughwindow"):
@@ -1530,7 +1562,7 @@ func replay_backwards(actor:Node3D):
 		else:
 			actor.object_that_is_being_interacted_with = null
 		
-		actor.text_bubble.visible = false
+		#actor.text_bubble.visible = false
 		#REMINDER I commented this out, dunno if it is needed
 		#if(actor.is_waiting):
 			#actor.is_waiting = false
@@ -1539,15 +1571,18 @@ func replay_backwards(actor:Node3D):
 		actor.finished_working = false
 		#actor.is_opening = false
 		
-		
-		for i in range(actor.id, 0, -1):
-			if(typeof(actor.replay[i][1]) == TYPE_VECTOR3):
-				if(!(actor.global_position.is_equal_approx(actor.replay[i][1]))):
-					offset = actor.replay[i][1] - actor.mesh_root.global_position
+		if(!found_object or found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+			for i in range(actor.id, 0, -1):
+				if(typeof(actor.replay[i][1]) == TYPE_VECTOR3):
+					if(!(actor.global_position.is_equal_approx(actor.replay[i][1]))):
+						offset = actor.replay[i][1] - actor.mesh_root.global_position
+						break
+				else:
+					offset = actor.replay[actor.id][1] - actor.mesh_root.global_position
 					break
-			else:
-				offset = actor.replay[actor.id][1] - actor.mesh_root.global_position
-				break
+		else:
+			offset = actor.mesh_root.global_position - found_object.global_position
+		
 		
 		var move = true
 		var space_state = get_world_3d().direct_space_state
@@ -1582,8 +1617,8 @@ func replay_backwards(actor:Node3D):
 		#var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 		#if(result):
 			##TODO currently it seems like actors arent correctly filtered out, so this might block the door from being detected in some cases
-			#if(result.collider.get_parent().get_parent().is_in_group("Interactable")):
-				#if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent().object_type == 0):
+			#if(result.collider.get_parent().is_in_group("Interactable")):
+				#if(result.collider.get_parent().is_breakable && result.collider.get_parent().object_type == 0):
 					#found_door_or_window = true
 		if(found_door_or_window):
 			if(actor.waiting_positions.size() > 0):
@@ -1599,7 +1634,9 @@ func replay_backwards(actor:Node3D):
 					#debug_file.store_line(str(ticks) + " ," + str(backwards))
 				
 					#FIXME this was not thought through
-					
+		
+		
+	
 		
 		if(move):	
 			if(actor.is_waiting):
@@ -1609,7 +1646,8 @@ func replay_backwards(actor:Node3D):
 			#actor.is_opening = false
 			actor.is_opening = false		
 			actor.global_position = actor.replay[actor.id][1]
-			rotate_actor(actor,offset)
+			
+		rotate_actor(actor,offset)
 		actor.progress_bar.visible = false
 		#$NoiseLevelProgessBar.visible = false
 	
@@ -1627,10 +1665,18 @@ func replay_backwards(actor:Node3D):
 						elif(!found_window and (found_door_or_window or get_node(actor.replay[actor.id][1].anim_player).current_animation_position != get_node(actor.replay[actor.id][1]).current_animation_clip_length)):
 							play_open_anim = true
 					if(play_open_anim):
-						actor.play_animation("open", true, true)
+						if(actor.current_animation_clip != "open"):
+							actor.play_animation("open", true, true)
 					else:
 						if(found_waiting_position):
 							actor.play_animation("idle", true, true)
+						elif(actor.replay[actor.id][2] == "open"):
+							var found_object = get_node(actor.replay[actor.id][3]) if found_window else get_node(actor.replay[actor.id][1])
+							if(found_object.anim_player.current_animation_position == 0.0 || found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+								actor.play_animation("open", true, true)	
+							else:
+								if(actor.current_animation_clip == ""):
+									actor.play_animation("idle", true, true)		
 						else:
 							actor.play_animation(actor.replay[actor.id][2], true, true)
 
@@ -1659,8 +1705,8 @@ func replay_forwards(actor:Node3D):
 							#is camera or light barrier
 							if(related_object.object_type == 7):
 								related_object.toggle_power_state()
-							#is alarm
-							if(related_object.object_type == 8):
+							#is alarm 
+							if(related_object.object_type == 8 || related_object.object_type == 9):
 								related_object.is_off = true	
 						#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
 		if(actor.replay[actor.id][2] == "takeend"):
@@ -1683,6 +1729,7 @@ func replay_forwards(actor:Node3D):
 				get_node(str(actor.replay[actor.id][1])).visible = false
 				create_item_from_interactable(get_node(str(actor.replay[actor.id][1])), actor)
 				get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_DISABLED
+				actor.update_bag()
 				
 		else:
 		#FIXME this needs to be changed for loot as it is can be a child of interactables
@@ -1711,19 +1758,30 @@ func replay_forwards(actor:Node3D):
 								#TODO this has to probably be adjusted for multiple burglars, so that the actual loudest value is shown
 								actor.progress_bar.visible = true
 								var guard_that_hears_the_most:Node3D
+								var listeners = []
 								for guard in get_tree().get_nodes_in_group("Actor"):
 									if (guard.is_guard):
-										var loudness = (10000.0/((guard.global_position.distance_to(object.global_position))* (1.0/guard.hearing)))* (tool.loudness[object.object_material]/100.0)
-										if(loudness > max_loudness):
-											max_loudness = loudness
-											guard_that_hears_the_most = guard	
+										listeners.append(guard)
+								for obj in get_tree().get_nodes_in_group("Interactable"):
+									if(obj.object_type == 9 and (obj.damage != object_durability && !obj.is_off)):
+										listeners.append(obj)
+								for listener in listeners :
+									var loudness = (10000.0/((listener.global_position.distance_to(object.global_position))* (1.0/listener.hearing)))* (tool.loudness[object.object_material]/100.0)
+									if(loudness > max_loudness):
+										max_loudness = loudness
+										guard_that_hears_the_most = listener	
 														
 										$NoiseLevelProgessBar.value = max_loudness
 											
 								if($NoiseLevelProgessBar.value > noise_threshold):
 									if(guard_that_hears_the_most):
 										$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(1,0,0)
-										print_caught_message("you have been heard by " + guard_that_hears_the_most.unique_name + " at " + $TimerLabel.get_time_as_string())
+										var name
+										if(guard_that_hears_the_most.is_in_group("Actor")):
+											name = guard_that_hears_the_most.unique_name
+										else:
+											name = guard_that_hears_the_most.name
+										print_caught_message("you have been heard by " + name + " at " + $TimerLabel.get_time_as_string())
 								else:
 									$NoiseLevelProgessBar.get("theme_override_styles/fill").bg_color = Color(0,1,0)
 								actor.progress_bar.value = object.damage
@@ -1788,14 +1846,12 @@ func replay_forwards(actor:Node3D):
 						elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
 							actor.is_zoomed_onto_object = true
 							for obj in get_tree().get_nodes_in_group("Interactable"):
-								if(obj.object_type != 4):
-									if(obj.object_type == 0):
-										get_node(str(obj.get_path())+"/Door/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
-									#elif(obj.object_type == 1):
-										#get_node(obj.name+"/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
-									else:
-										get_node(str(obj.get_path())+"/Area3D").process_mode = Node.PROCESS_MODE_DISABLED
-										
+								if(obj.owner.name == get_node("/root/Control").burglary_target_name):
+									if(obj.object_type != 4):
+										obj.area.process_mode = Node.PROCESS_MODE_DISABLED
+										#elif(obj.object_type == 1):
+											#obj.area.process_mode = Node.PROCESS_MODE_DISABLED
+											
 							if(!camera_base.global_position.is_equal_approx(get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position)):
 								actor.camera_position_before_zoom_onto_object = camera_base.global_position
 								actor.camera_rotation_before_zoom_onto_object = camera_base.global_rotation
@@ -1819,18 +1875,20 @@ func replay_forwards(actor:Node3D):
 	
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
 		
-		if(actor.replay[actor.id][2] == "moveinsidecar"):
+		if(actor.replay[actor.id][2] == "moveinsidecar" || actor.is_zoomed_onto_object):
 			actor.mesh_root.visible = false
 		else:
 			actor.mesh_root.visible = true			
 		
-		actor.text_bubble.visible = false
+		if(actor.replay[actor.id][2] != "idle"):
+			actor.text_bubble.visible = false
 		actor.finished_working = false
-		offset = actor.mesh_root.global_position - actor.replay[actor.id][1]
 		
 		var space_state = get_world_3d().direct_space_state
 			
-		var query = PhysicsRayQueryParameters3D.create(actor.global_position,actor.replay[actor.id][1])
+		var to = actor.global_position +((actor.replay[actor.id][1] - actor.global_position)*8.0)
+			
+		var query = PhysicsRayQueryParameters3D.create(actor.global_position,to)
 		query.collide_with_areas = true
 		for a in get_tree().get_nodes_in_group("Actor"):
 			query.exclude = [a]
@@ -1857,10 +1915,10 @@ func replay_forwards(actor:Node3D):
 		
 		if(result):
 			#TODO currently it seems like actors arent correctly filtered out, so this might block the door from being detected in some cases
-			if(result.collider.get_parent().get_parent().is_in_group("Interactable")):
-				if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent().object_type == 0):
+			if(result.collider.get_parent().is_in_group("Interactable")):
+				if(result.collider.get_parent().is_breakable && result.collider.get_parent().object_type == 0):
 					found_door_or_window = true
-					found_object = result.collider.get_parent().get_parent()
+					found_object = result.collider.get_parent()
 					#print(backwards)
 					#print("found door at " + str(ticks) + " ticks" + "\n" + " while on position " + str(actor.global_position))
 		
@@ -1997,15 +2055,35 @@ func replay_forwards(actor:Node3D):
 				#push_ticks_forward_while_waiting(actor)
 				move = false
 				#REMINDER this is probably not optimal, but actors need to be stopped from proceeding in some cases meaning the id (index) should not change
-				actor.is_waiting = true
-				if(!forwards && !play):
-					#REMINDER this solution is not optimal, if you go press play or fast forward and then rewind the actor will move through doors
-					if(actor == active_burglar):
-						pause_recording()
+				#actor.is_waiting = true
+				for i in range(actor.replay.size()-1 - actor.id):
+					actor.replay.erase(actor.replay.back())
+					
+				for i in range(25):
+					var parts = []
+					parts.append(-1)
+					parts.append(actor.global_position)
+					parts.append("idle")
+					actor.replay.append(parts.duplicate())
+
+
+				actor.maxid = actor.id+26
+				actor.currentid = actor.maxid
+					
+					
+				#if(!forwards && !play):
+					##REMINDER this solution is not optimal, if you go press play or fast forward and then rewind the actor will move through doors
+					#if(actor == active_burglar):
+						#pause_recording()
 				#if(actor == active_burglar):
 					#pause = true
 					#pause_animations()
 					
+		
+		if(!found_object or found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+			offset = actor.mesh_root.global_position - actor.replay[actor.id][1]
+		else:
+			offset = actor.mesh_root.global_position - found_object.global_position
 		
 		if(move):
 			if(actor.is_waiting):
@@ -2023,8 +2101,9 @@ func replay_forwards(actor:Node3D):
 				actor.id +=1
 				actor.currentid = actor.id + 1
 			actor.global_position = actor.replay[actor.id][1]
-			rotate_actor(actor,offset)
-	
+		
+		rotate_actor(actor,offset)
+		
 		actor.progress_bar.visible = false
 		#TODO how should I code this
 		#$NoiseLevelProgessBar.visible = false
@@ -2041,10 +2120,18 @@ func replay_forwards(actor:Node3D):
 						elif(!found_window  and (typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3 or get_node(actor.replay[actor.id][1].anim_player).current_animation_position != get_node(actor.replay[actor.id][1]).current_animation_clip_length)):
 							play_open_anim = true
 					if(play_open_anim):
-						actor.play_animation("open", false, true)
+						if(actor.current_animation_clip != "open"):
+							actor.play_animation("open", false, true)
 					else:
 						if(window_is_occupied):
 							actor.play_animation("idle", false, true)
+						elif(actor.replay[actor.id][2] == "open"):
+							var found_object = get_node(actor.replay[actor.id][3]) if found_window else get_node(actor.replay[actor.id][1])
+							if(found_object.anim_player.current_animation_position == 0.0 || found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+								actor.play_animation("open", false, true)	
+							else:
+								if(actor.current_animation_clip == ""):
+									actor.play_animation("idle", false, true)	
 						else:
 							actor.play_animation(actor.replay[actor.id][2], false, true)
 		

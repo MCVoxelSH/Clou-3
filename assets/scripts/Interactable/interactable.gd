@@ -3,7 +3,7 @@ extends Node3D
 @export var is_breakable := false
 
 @export_enum("Lock", "Safe", "Alarm", "none") var lock_type
-@export_enum("Door", "Window", "Switch", "Container","Loot","other", "Car", "Camera", "Alarm") var object_type
+@export_enum("Door", "Window", "Switch", "Container","Loot","other", "Car", "Camera", "Alarm", "Noise Detector") var object_type
 @export_enum("Wood", "Metal", "Glass") var object_material
 
 
@@ -53,20 +53,21 @@ var base_albedos = []
 
 var floor_disabled = false
 
+@export var animation_end := 0
+
 @export var interaction_point: Vector3
+
+var area:Node3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-	var end := 0
-	
 	match object_type:
-		0: end = 4
-		1: end = 8
-		2: end = 8
+		1: animation_end = 8
+		2: animation_end = 8
 		
 	ANIMATIONS = {
-	"open": {"start": 0, "end": end, "loop": false},
-	"use": {"start": 0, "end": end, "loop": false}
+	"open": {"start": 0, "end": animation_end, "loop": false},
+	"use": {"start": 0, "end": animation_end, "loop": false}
 	}
 	
 	for c in get_all_children(self):
@@ -86,43 +87,50 @@ func _ready() -> void:
 		#for path in related_objects:
 			#related_objects_string_array.append(get_node(path).get_path())
 		
+	for c in get_all_children(self):
+		
+		if(!area):
+			if(c is Area3D or c is StaticBody3D):
+				if("object_type" in c.get_parent()):
+					if(c.get_parent().object_type != 4):
+						area = c
 	
-	pass # Replace with function body.
-	if(object_type != 4 && object_type != 5  && object_type != 6 && object_type != 8):
-		for c in get_all_children(self):
+		if(object_type != 4 && object_type != 5  && object_type != 6 && object_type != 8 && object_type != 9):
 			if (c is AnimationPlayer):
 				anim_player = c
-		anim_player.set_auto_capture(false)
-		#REMINDER update animation only in physics step 
-		anim_player.callback_mode_process = 2
-		#anim_player.callback_mode_method = 1
-		
-		var anim_list = anim_player.get_animation_list()
-	
-		if anim_list.size() > 0:
-			anim_player.current_animation = anim_list[0]
-			animation_name = anim_player.current_animation
+				
+			if(anim_player):	
+				anim_player.set_auto_capture(false)
+				#REMINDER update animation only in physics step 
+				anim_player.callback_mode_process = 2
+				#anim_player.callback_mode_method = 1
+				
+				var anim_list = anim_player.get_animation_list()
 			
-		current_animation_clip = "open"
-		if current_animation_clip == "":
-			return
-	
-		var clip = ANIMATIONS[current_animation_clip]
-		current_animation_clip_length = clip.end / get_node("/root/Control/").FPS 
-		#do I need to make this longer like before (add a factor like 1.1 to it?)
-		#FIXME for less physics ticks this results in less opening_time which makes no sense, I kinda fixed this with the constant 60.0
-		opening_time = current_animation_clip_length * Engine.physics_ticks_per_second * 1.1
-		anim_player.pause()
-		
-		var sum = 0.0
-		var delta = 0.0
-		var counter = 0
-		while(sum < current_animation_clip_length):
-			counter += 1
-			delta = current_animation_clip_length - sum
-			sum = move_toward(sum, current_animation_clip_length, 1.0/60.0)
-		animation_rest_time = delta
-	
+				if anim_list.size() > 0:
+					anim_player.current_animation = anim_list[0]
+					animation_name = anim_player.current_animation
+					
+				current_animation_clip = "open"
+				if current_animation_clip == "":
+					return
+			
+				var clip = ANIMATIONS[current_animation_clip]
+				current_animation_clip_length = clip.end / get_node("/root/Control/").FPS 
+				#do I need to make this longer like before (add a factor like 1.1 to it?)
+				#FIXME for less physics ticks this results in less opening_time which makes no sense, I kinda fixed this with the constant 60.0
+				opening_time = current_animation_clip_length * Engine.physics_ticks_per_second * 1.1
+				anim_player.pause()
+				
+				var sum = 0.0
+				var delta = 0.0
+				var counter = 0
+				while(sum < current_animation_clip_length):
+					counter += 1
+					delta = current_animation_clip_length - sum
+					sum = move_toward(sum, current_animation_clip_length, 1.0/60.0)
+				animation_rest_time = delta
+
 		
 	
 func _process(_delta):
@@ -459,7 +467,6 @@ func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 	var clip = ANIMATIONS[current_animation_clip]
 	current_animation_clip_length = clip.end / get_node("/root/Control/").FPS
 	
-	
 	if(!backwards):
 		anim_player.play(animation_name)
 		if(save_anim_direction):	
@@ -473,3 +480,19 @@ func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 	#var source = "Source:" + frame[0]["source"]
 	#var function = "Function:" + frame[0]["function"]
 	#print("%s - %s - %s" % [source,function,line])
+
+
+func _on_inside_check_mouse_entered() -> void:
+	pass # Replace with function body.
+
+
+func _on_inside_check_mouse_exited() -> void:
+	pass # Replace with function body.
+
+
+func _on_outside_check_mouse_entered() -> void:
+	pass # Replace with function body.
+
+
+func _on_outside_check_mouse_exited() -> void:
+	pass # Replace with function body.

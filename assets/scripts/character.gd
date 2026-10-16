@@ -9,21 +9,21 @@ const Line3D = preload("res://assets/scripts/line3d.gd")
 const number_of_idle_animations = 4
  
 @export var idle_anim = ""
-
+@onready var control = get_node("/root/Control")
 const ANIMATIONS := {
 	"move": {"start": 6, "end": 19, "loop": true, "loop_start": 4, "loop_end": 19},
 	"takestart": {"start": 170, "end": 175, "loop": false},
 	"takeend": {"start": 170, "end": 175, "loop": false},
 	"open": {"start": 178, "end": 185, "loop": false},
 	"use": {"start": 178, "end": 185, "loop": false},
-	"inspect": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
+	"inspect": {"start": 664, "end": 701, "loop": true, "loop_start": 664, "loop_end": 701},
 	"lookat": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
 	"idle1": {"start": 349, "end": 408, "loop": true, "loop_start": 349, "loop_end": 408},
 	"idle2": {"start": 664, "end": 701, "loop": true, "loop_start": 664, "loop_end": 701},
 	"idle3": {"start": 1258, "end": 1271, "loop": true, "loop_start": 1258, "loop_end": 1271},
 	"idle4": {"start": 1284, "end": 1308, "loop": true, "loop_start": 1284, "loop_end": 1308},
 	"movethroughwindow": {"start": 948, "end": 974, "loop": false},
-	"breakhigh": {"start": 1357, "end": 1370, "loop": true, "loop_start": 1360, "loop_end": 1370},
+	"breakhigh": {"start": 1357, "end": 1370, "loop": true, "loop_start": 1361, "loop_end": 1368},
 	"break": {"start": 1374, "end": 1383, "loop": true, "loop_start": 1374, "loop_end": 1380}
 }
 
@@ -45,7 +45,6 @@ var currentid = 0
 var maxid = 0
 @export var starting_floor = 0
 @onready var current_floor = starting_floor
-
 #is actor inside a building?
 @export var starts_inside = false
 var inside = false
@@ -121,6 +120,8 @@ var anim_player:AnimationPlayer
 var idle_anim_rng = RandomNumberGenerator.new()
 
 func _ready():
+	
+
 	idle_anim_rng.randomize()
 
 	var model:Node3D
@@ -135,8 +136,9 @@ func _ready():
 			animation_name = "Take 001"
 			anim_player.current_animation = animation_name
 			anim_player.set_auto_capture(false)
-			#REMINDER update animation only in physics step 
+			#REMINDER update animation only in physics step  
 			anim_player.callback_mode_process = 2
+			anim_player.advance(1.5)
 			#anim_player.callback_mode_method = 1
 			anim_player.pause()
 			
@@ -198,12 +200,12 @@ func _physics_process(_delta):
 		clip_end = clip.end
 		clip_start = clip.start
 	
-	if (anim_player.current_animation_position * owner.FPS >= clip_end && !owner.backwards) || (owner.backwards && anim_player.current_animation_position * owner.FPS <= clip_start):
+	if (anim_player.current_animation_position * control.FPS >= clip_end && !control.backwards) || (control.backwards && anim_player.current_animation_position * control.FPS <= clip_start):
 		if clip.loop:
-			if(!owner.backwards):
-				anim_player.seek(clip_start / owner.FPS, true)
+			if(!control.backwards):
+				anim_player.seek(clip_start / control.FPS, true)
 			else:
-				anim_player.seek(clip_end/ owner.FPS, true)
+				anim_player.seek(clip_end/ control.FPS, true)
 		else:
 			anim_player.pause()
 			current_animation_clip = ""	
@@ -227,16 +229,16 @@ func _process(_delta):
 	
 func set_target_position(target_position: Vector3, record: bool):
 	
-	#if(get_parent().ticks == 0 && last_ticks.is_empty()):
+	#if(control.ticks == 0 && last_ticks.is_empty()):
 		#last_ticks.append(0)
 		#last_ticks_index += 1
 
 	#_nav_agent.set_target_position(target_position)
 	$TextBubble.visible = false
 	
-	get_parent().was_backwards = false
-	get_parent().was_forwards = false
-	get_parent().play = false
+	control.was_backwards = false
+	control.was_forwards = false
+	control.play = false
 	# Get a full navigation path with the NavigationServer API.
 	if true:
 		var start_position = mesh_root.global_position
@@ -257,7 +259,7 @@ func set_target_position(target_position: Vector3, record: bool):
 			var ticks_plus_one_overwrite = false
 			
 			if(!replay.is_empty()):
-				if(replay[id][0] != -1 && replay[id][0] > owner.ticks):
+				if(replay[id][0] != -1 && replay[id][0] > control.ticks):
 					replay.remove_at(id)
 					ticks_plus_one_overwrite = true
 					
@@ -266,14 +268,14 @@ func set_target_position(target_position: Vector3, record: bool):
 				
 				if(!replay.is_empty() && id != maxid - 1):
 					if(typeof(replay[id][1]) == TYPE_VECTOR3):
-						replay[id][0] = owner.ticks
+						replay[id][0] = control.ticks
 						changed_replay_ids.append(id)
 				#REMINDER I readded +1, this fixes an issue, does it cause other issues though?
 				var diff:int
-				#if(owner.was_backwards && !(get_parent().ticks != 0 && id != 0)):
+				#if(control.was_backwards && !(control.ticks != 0 && id != 0)):
 					#diff = maxid - id + 1
 				#else:
-				if((get_parent().ticks != 0 && id != 0) || id != maxid - 1):
+				if((control.ticks != 0 && id != 0) || id != maxid - 1):
 					diff = maxid - id
 				else:
 					diff = maxid - id + 1
@@ -288,7 +290,7 @@ func set_target_position(target_position: Vector3, record: bool):
 				#if(currentid == maxid):
 					#currentid-= diff -1
 				#parts.clear()
-				#parts.append(get_parent().ticks)
+				#parts.append(control.ticks)
 				#parts.append(mesh_root.global_position)
 				#replay.append(parts.duplicate())
 				#currentid +=1
@@ -300,20 +302,20 @@ func set_target_position(target_position: Vector3, record: bool):
 		#start with ticks and increment with each position
 			var ticks_at_position:int
 			#if(replay.size() > 0):
-				##get_parent().ticks = replay[id-1][0]+1
+				##control.ticks = replay[id-1][0]+1
 				#ticks_at_position = r +1
 			#else:
 			if(replay.size() > 0):
 				#REMINDER this is pretty hacky, I am not sure why, but in some situations I gotta add 1 to the ticks and in others not, for example when working the check for the ticks is before the ticks are added, therefore I need to make the ticks one lower, maybe I should put the ticks addition before the check
-				if(replay[replay.size()-1][0] == get_parent().ticks || ticks_plus_one): #&& get_parent().highlighted_object == null):
-					ticks_at_position = get_parent().ticks + 1
+				if(replay[replay.size()-1][0] == control.ticks || ticks_plus_one): #&& control.highlighted_object == null):
+					ticks_at_position = control.ticks + 1
 				elif(replay[replay.size()-1][0] != -1):
-					ticks_at_position = get_parent().ticks
+					ticks_at_position = control.ticks
 				else:
-					ticks_at_position = get_parent().ticks + 1
+					ticks_at_position = control.ticks + 1
 			else:
-				ticks_at_position = get_parent().ticks
-			#if(get_parent().ticks != 0 && id != 0):
+				ticks_at_position = control.ticks
+			#if(control.ticks != 0 && id != 0):
 				#ticks_at_position += 1
 			
 			
@@ -340,7 +342,7 @@ func set_target_position(target_position: Vector3, record: bool):
 								#if(i == 0):
 									##REMINDER this whole code might be obsolete
 									#break
-							#if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent() == get_parent().highlighted_object):
+							#if(result.collider.get_parent().get_parent().is_breakable && result.collider.get_parent().get_parent() == control.highlighted_object):
 								#
 								#var distance_x = abs(path[i+1].x - path[i].x)
 								#var distance_z = abs(path[i+1].z - path[i].z)
@@ -374,11 +376,11 @@ func set_target_position(target_position: Vector3, record: bool):
 										#path.remove_at(path.size()-1)
 								#
 								##TODO this only works for 1 door being walked through currently, need to change to work with more doors
-				##if(get_parent().highlighted_object != null && i < path.size()-1):
+				##if(control.highlighted_object != null && i < path.size()-1):
 					##var path_y = path[i+1].y
-					##if(get_parent().highlighted_object.flip_axis):
+					##if(control.highlighted_object.flip_axis):
 						##dir *= -1
-					##path[i+1] = get_parent().highlighted_object.global_position + (get_parent().highlighted_object.global_transform.basis.z*dir)
+					##path[i+1] = control.highlighted_object.global_position + (control.highlighted_object.global_transform.basis.z*dir)
 					##path[i+1].y = path_y
 			
 			i = -1
@@ -400,7 +402,7 @@ func set_target_position(target_position: Vector3, record: bool):
 						##current+ 50*(current - previous),
 						##optimize)	
 					#
-					#if(get_parent().highlighted_object != null && v == path[path.size()-1]):
+					#if(control.highlighted_object != null && v == path[path.size()-1]):
 					#
 						#var query = PhysicsRayQueryParameters3D.create(previous -50*(current - previous),current+ 50*(current - previous))
 						#query.collide_with_areas = true
@@ -409,8 +411,8 @@ func set_target_position(target_position: Vector3, record: bool):
 						#
 						#var result = space_state.intersect_ray(query)
 						#if(result):
-							#if(result.collider.get_parent().is_in_group("Interactable")):
-								#if(result.collider.get_parent().is_breakable):
+							#if(result.collider.control.is_in_group("Interactable")):
+								#if(result.collider.control.is_breakable):
 									#
 									#var distance_x = abs(current.x - previous.x)
 									#var distance_z = abs(current.z - previous.z)
@@ -439,8 +441,8 @@ func set_target_position(target_position: Vector3, record: bool):
 											#
 			
 			var comparision_position = Vector3.INF
-			if(get_parent().highlighted_object != null):
-				comparision_position = get_parent().highlighted_object.global_position
+			if(control.highlighted_object != null):
+				comparision_position = control.highlighted_object.global_position
 				comparision_position.y = mesh_root.global_position.y
 				
 			#if(!is_zoomed_onto_object):
@@ -458,7 +460,7 @@ func set_target_position(target_position: Vector3, record: bool):
 										#break
 							#parts.clear()
 							#parts.append(ticks_at_position)
-							#path[path.size()-1] = get_parent().highlighted_object.global_position + get_parent().highlighted_object.global_transform.basis.z*2
+							#path[path.size()-1] = control.highlighted_object.global_position + control.highlighted_object.global_transform.basis.z*2
 							#parts.append(path[path.size()-1])
 							#parts.append("move")
 							#replay.append(parts.duplicate())
@@ -505,9 +507,9 @@ func set_target_position(target_position: Vector3, record: bool):
 						#
 						#var result = space_state.intersect_ray(query)
 						#if(result):
-							#if(result.collider.get_parent().is_in_group("Interactable")):
-								#if(result.collider.get_parent().is_breakable && result.collider.get_parent().damage == 10000):
-									##if(result.collider.get_parent().anim_player.current_animation_position != result.collider.get_parent().current_animation_clip_length):
+							#if(result.collider.control.is_in_group("Interactable")):
+								#if(result.collider.control.is_breakable && result.collider.control.damage == 10000):
+									##if(result.collider.control.anim_player.current_animation_position != result.collider.control.current_animation_clip_length):
 									##at ticks for door opening animation
 									#
 									#
@@ -518,10 +520,10 @@ func set_target_position(target_position: Vector3, record: bool):
 										#if(actor != burglar_area):
 											#pass
 												#
-									#for j in range(result.collider.get_parent().opening_time):
+									#for j in range(result.collider.control.opening_time):
 										#parts.clear()
 										#parts.append(ticks_at_position)
-										#parts.append(result.collider.get_parent().name)	
+										#parts.append(result.collider.control.name)	
 										#parts.append("open")
 										#replay.append(parts.duplicate())
 										#ticks_at_position+=1
@@ -529,7 +531,7 @@ func set_target_position(target_position: Vector3, record: bool):
 								#else:
 									#parts.clear()
 									#parts.append(ticks_at_position)
-									#parts.append(result.collider.get_parent().name)	
+									#parts.append(result.collider.control.name)	
 									#parts.append("open")
 									#replay.append(parts.duplicate())
 									#ticks_at_position+=1
@@ -545,29 +547,29 @@ func set_target_position(target_position: Vector3, record: bool):
 				ticks_at_position+=1
 				currentid +=1
 	
-			if(get_parent().highlighted_object != null):
+			if(control.highlighted_object != null):
 				if(selected_interaction == 1):		
 					#if is car
-					if(get_parent().highlighted_object.object_type == 6):
+					if(control.highlighted_object.object_type == 6):
 							parts.clear()
 							parts.append(-1)
-							parts.append(get_parent().highlighted_object.global_position)
+							parts.append(control.highlighted_object.global_position)
 							parts.append("moveinsidecar")
-							parts.append(str(get_parent().highlighted_object.get_path()))
+							parts.append(str(control.highlighted_object.get_path()))
 							replay.append(parts.duplicate())
 							ticks_at_position+=1
 							currentid +=1
 					
 					#if is loot
-					if(get_parent().highlighted_object.object_type == 4):
+					if(control.highlighted_object.object_type == 4):
 						for j in range(pickup_time):
 							parts.clear()
 							parts.append(-1)
 							#FIXME this produces bad paths
-							if(get_parent().highlighted_object.get_parent()is MeshInstance3D):
-								parts.append(str(get_parent().highlighted_object.get_path()))
+							if(control.highlighted_object is MeshInstance3D):
+								parts.append(str(control.highlighted_object.get_path()))
 							else:	
-								parts.append(str(get_parent().highlighted_object.get_path()))
+								parts.append(str(control.highlighted_object.get_path()))
 							if(j < pickup_time -1):
 								parts.append("takestart")
 							else:
@@ -577,16 +579,16 @@ func set_target_position(target_position: Vector3, record: bool):
 							currentid +=1
 							
 					#if is door or container
-					if((get_parent().highlighted_object.object_type == 0 || get_parent().highlighted_object.object_type == 3 ) && get_parent().selected_tool == null):#(get_parent().highlighted_object.object_type == 1 && inside)):
-						for j in range(get_parent().highlighted_object.opening_time):
+					if((control.highlighted_object.object_type == 0 || control.highlighted_object.object_type == 3 ) && control.selected_tool == null):#(control.highlighted_object.object_type == 1 && inside)):
+						for j in range(control.highlighted_object.opening_time):
 							parts.clear()
 							parts.append(-1)
-							parts.append(str(get_parent().highlighted_object.get_path()))	
+							parts.append(str(control.highlighted_object.get_path()))	
 							#FIXME there is the following issue: I set it to only do the thing for 1 tick, because otherwise it would repeat the animation when the tick speed is high (for some reason), but the issue now is that when playing in reverse the object opening does only get reversed at the starting frame, so at the beginning of the forward animation not of the backward animation
 							parts.append("open")
 							if(j == 0):
 								parts.append("first")
-							elif(j == get_parent().highlighted_object.opening_time-1):
+							elif(j == floor(control.highlighted_object.opening_time)-1):
 								parts.append("last")
 							else:
 								parts.append("intermediate")
@@ -596,59 +598,59 @@ func set_target_position(target_position: Vector3, record: bool):
 							
 							
 					#if is window and wants to open
-					if(get_parent().highlighted_object.object_type == 1 && selected_interaction == 1 && get_parent().selected_tool == null):
+					if(control.highlighted_object.object_type == 1 && selected_interaction == 1 && control.selected_tool == null):
 						var pos:Vector3
 						var y_pos = path[path.size()-1].y
 						var start_pos:Vector3
 						var end_pos:Vector3
 						
-						var dir:Vector3= GlobalFunctions.get_interaction_forward(get_parent().highlighted_object)
+						var dir:Vector3= GlobalFunctions.get_interaction_forward(control.highlighted_object)
 
 	
 						if(inside):
 							dir = -dir
 
-						start_pos = get_parent().highlighted_object.global_position+dir
-						end_pos = get_parent().highlighted_object.global_position-dir
+						start_pos = control.highlighted_object.global_position+dir
+						end_pos = control.highlighted_object.global_position-dir
 						#if(inside):
 							#if(is_directed_towards_z):	
-								#start_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
-								#end_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#start_pos = control.highlighted_object.global_position-control.highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = control.highlighted_object.global_position+control.highlighted_object.global_transform.basis.x.normalized()
 							#else:
-								#start_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
-								#end_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#start_pos = control.highlighted_object.global_position-control.highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = control.highlighted_object.global_position+control.highlighted_object.global_transform.basis.x.normalized()
 						#else:
 							#if(is_directed_towards_z):	
-								#start_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
-								#end_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#start_pos = control.highlighted_object.global_position+control.highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = control.highlighted_object.global_position-control.highlighted_object.global_transform.basis.x.normalized()
 							#else:
-								#start_pos = get_parent().highlighted_object.global_position+get_parent().highlighted_object.global_transform.basis.x.normalized()
-								#end_pos = get_parent().highlighted_object.global_position-get_parent().highlighted_object.global_transform.basis.x.normalized()
+								#start_pos = control.highlighted_object.global_position+control.highlighted_object.global_transform.basis.x.normalized()
+								#end_pos = control.highlighted_object.global_position-control.highlighted_object.global_transform.basis.x.normalized()
 						start_pos.y = y_pos	
 						end_pos.y = y_pos
 						for t in range(0,1300,20):
-							pos =_quadratic_bezier(start_pos,get_parent().highlighted_object.global_position, end_pos,t/1300.0)
+							pos =_quadratic_bezier(start_pos,control.highlighted_object.global_position, end_pos,t/1300.0)
 							parts.clear()
 							parts.append(-1)
 							parts.append(pos)
 							#REMINDER the idea is to not save the window opening steps, instead let the burglar dynamicaly open window and wait if needed
 							parts.append("movethroughwindow")
-							parts.append(str(get_parent().highlighted_object.get_path()))
+							parts.append(str(control.highlighted_object.get_path()))
 							parts.append(inside)
 							replay.append(parts.duplicate())
 							ticks_at_position+=1
 							currentid +=1
 					
 					
-					if(get_parent().highlighted_object.object_type == 2):
-						for j in range(get_parent().highlighted_object.opening_time):
+					if(control.highlighted_object.object_type == 2):
+						for j in range(control.highlighted_object.opening_time):
 							parts.clear()			
 							parts.append(-1)
-							parts.append(str(get_parent().highlighted_object.get_path()))	
+							parts.append(str(control.highlighted_object.get_path()))	
 							parts.append("use")
 							if(j == 1):
 								parts.append("first")
-							elif(j == get_parent().highlighted_object.opening_time-1):
+							elif(j == control.highlighted_object.opening_time-1):
 								parts.append("last")
 							else:
 								parts.append("intermediate")
@@ -657,36 +659,36 @@ func set_target_position(target_position: Vector3, record: bool):
 							currentid +=1
 						
 								
-					elif((get_parent().highlighted_object.is_breakable && !(get_parent().highlighted_object.object_type == 1 && inside))&& get_parent().selected_tool != null):
+					elif((control.highlighted_object.is_breakable && !(control.highlighted_object.object_type == 1 && inside))&& control.selected_tool != null):
 						#this whole thing uses floats for time and steps and could be the cause of bugs later on with float precision issues
 						#TODO this also causes and issue where the following happens: while the burglar is working on the object another one gets the command to work on it, but only recieves the current damage of the object not the damage in time when he arrives at the object
 						var breaking_time = calculate_breaking_time()
 						if(breaking_time != 0):
 							var step_size:int = floor(10000.0 / breaking_time)
-							var current_progress = 	get_parent().highlighted_object.damage
+							var current_progress = 	control.highlighted_object.damage
 							while(current_progress < 10000):
 								current_progress += step_size
 								if(current_progress > 10000):
 									current_progress = 10000
 								parts.clear()
 								parts.append(-1)
-								parts.append(str(get_parent().highlighted_object.get_path()))	
+								parts.append(str(control.highlighted_object.get_path()))	
 								parts.append("break")
 								parts.append(step_size)
-								parts.append(get_parent().selected_tool.name)
+								parts.append(control.selected_tool.name)
 								replay.append(parts.duplicate())
 								ticks_at_position+=1
 								currentid +=1	
 				if(selected_interaction == 2):
-					if(get_parent().highlighted_object.object_type == 3 || get_parent().highlighted_object.object_type == 4):
+					if(control.highlighted_object.object_type == 3 || control.highlighted_object.object_type == 4):
 						if(!is_guard):
-							for j in range(3):
+							for j in range(25):
 								parts.clear()
 								parts.append(-1)
-								if(get_parent().highlighted_object.get_parent()is MeshInstance3D):
-									parts.append(str(get_parent().highlighted_object.get_path()))
+								if(control.highlighted_object is MeshInstance3D):
+									parts.append(str(control.highlighted_object.get_path()))
 								else:	
-									parts.append(str(get_parent().highlighted_object.get_path()))
+									parts.append(str(control.highlighted_object.get_path()))
 								parts.append("inspect")
 								replay.append(parts.duplicate())
 								ticks_at_position+=1
@@ -696,7 +698,7 @@ func set_target_position(target_position: Vector3, record: bool):
 							for j in range(25):
 								parts.clear()
 								parts.append(-1)
-								parts.append(str(get_parent().highlighted_object.get_path()))	
+								parts.append(str(control.highlighted_object.get_path()))	
 								parts.append("inspect")
 								replay.append(parts.duplicate())
 								ticks_at_position+=1
@@ -706,7 +708,7 @@ func set_target_position(target_position: Vector3, record: bool):
 					for j in range(3):
 						parts.clear()
 						parts.append(-1)
-						parts.append(str(get_parent().highlighted_object.get_path()))	
+						parts.append(str(control.highlighted_object.get_path()))	
 						parts.append("look at")
 						replay.append(parts.duplicate())
 						ticks_at_position+=1
@@ -723,7 +725,7 @@ func set_target_position(target_position: Vector3, record: bool):
 		var changed_replay_ids_to_delete = []
 		
 		for w in waiting_positions:
-			if(w[0] >= get_node("/root/Control").ticks):
+			if(w[0] >= control.ticks):
 				waiting_positions_to_delete.append(w)
 		
 		for i in changed_replay_ids:
@@ -753,12 +755,12 @@ static func string_to_vector3(string := "") -> Vector3:
 	
 func load_replay():
 	
-	if(get_parent().play || Global.load_replay ||  (is_guard)):
+	if(control.play || Global.load_replay ||  (is_guard)):
 		var f:FileAccess
 		if(!is_guard):
-			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.READ)
+			f = FileAccess.open("user://replay" + control.burglary_target_name + filepath_addon+".txt", FileAccess.READ)
 		else:
-			f = FileAccess.open("res://guard_replays/replay" + filepath_addon+".txt", FileAccess.READ)
+			f = FileAccess.open("res://guard_replays/replay" + control.burglary_target_name + filepath_addon+ ".txt", FileAccess.READ)
 		if(f != null):
 			while !f.eof_reached():
 				var line = f.get_line()
@@ -808,9 +810,9 @@ func load_replay():
 		
 		var g:FileAccess
 		if(!is_guard):
-			g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.READ)
+			g = FileAccess.open("user://waiting_positions" + control.burglary_target_name + filepath_addon+".txt", FileAccess.READ)
 		else:
-			g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.READ)
+			g = FileAccess.open("res://guard_replays/waiting_positions" + control.burglary_target_name + filepath_addon+".txt", FileAccess.READ)
 		if(g != null):
 			while !g.eof_reached():
 				var line = g.get_line()
@@ -835,15 +837,15 @@ func load_replay():
 func calculate_breaking_time()->float:
 	
 	#type 3 is "none"
-	if(get_parent().selected_tool != null && get_parent().highlighted_object.lock_type != 3):
-		if(owner.selected_tool.item_type == 0):
+	if(control.selected_tool != null && control.highlighted_object.lock_type != 3):
+		if(control.selected_tool.item_type == 0):
 			var time = 0.0
-			if(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type] != 0):
-				time = floor(10000.0 / (float(get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])+float(skills[get_parent().highlighted_object.lock_type])))
+			if(control.selected_tool.tool_efficencies[control.highlighted_object.lock_type] != 0):
+				time = floor(10000.0 / (float(control.selected_tool.tool_efficencies[control.highlighted_object.lock_type])+float(skills[control.highlighted_object.lock_type])))
 			else:
 				time = 30.0
 			return time
-			#(300 - get_parent().highlighted_object.damage - get_parent().selected_tool.tool_efficencies[get_parent().highlighted_object.lock_type])
+			#(300 - control.highlighted_object.damage - control.selected_tool.tool_efficencies[control.highlighted_object.lock_type])
 
 	return 0
 		
@@ -896,9 +898,9 @@ func save_replay():
 	if(!Global.execute_plan && (!is_guard)):
 		var f:FileAccess
 		if(!is_guard):
-			f = FileAccess.open("user://replay" + filepath_addon+".txt", FileAccess.WRITE)
+			f = FileAccess.open("user://replay" + control.burglary_target_name + filepath_addon+".txt", FileAccess.WRITE)
 		else:
-			f = FileAccess.open("res://guard_replays/replay" + filepath_addon+".txt", FileAccess.WRITE)
+			f = FileAccess.open("res://guard_replays/replay" + control.burglary_target_name + filepath_addon + ".txt", FileAccess.WRITE)
 		
 		#for e in replay:
 		#	f.store_line("%d %s" % [e.tick, e.action])
@@ -914,14 +916,14 @@ func save_replay():
 		f.close()
 		var g:FileAccess
 		if(!is_guard):
-			g = FileAccess.open("user://waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
+			g = FileAccess.open("user://waiting_positions" + control.burglary_target_name + filepath_addon+".txt", FileAccess.WRITE)
 		else:
-			g = FileAccess.open("res://guard_replays/waiting_positions" + filepath_addon+".txt", FileAccess.WRITE)
+			g = FileAccess.open("res://guard_replays/waiting_positions" + control.burglary_target_name + filepath_addon+".txt", FileAccess.WRITE)
 		for l in waiting_positions:
 			g.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2]))
 		g.close()
 			
-	#if(int(filepath_addon) == get_parent().number_of_burglars):
+	#if(int(filepath_addon) == control.number_of_burglars):
 
 func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 	
@@ -934,23 +936,27 @@ func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 	
 	var clip = ANIMATIONS.get(name)
 	
+	if(name == "break"):
+		if(object_that_is_being_interacted_with and object_that_is_being_interacted_with.global_position.y - global_position.y > 2.0):
+			name += "high"
+	
 	if clip == null:
 		clip = ANIMATIONS.get(current_animation_clip)
 		name = current_animation_clip
 	
 	previous_animation_clip = current_animation_clip	
 	current_animation_clip = name
-	current_animation_clip_length = ANIMATIONS[current_animation_clip].end * get_node("/root/Control").FPS
+	current_animation_clip_length = ANIMATIONS[current_animation_clip].end * control.FPS
 	
 	if(!backwards):
 		anim_player.play(animation_name)
 		if(previous_animation_clip != current_animation_clip):
-			anim_player.seek(clip.start / owner.FPS, true)
+			anim_player.seek(clip.start / control.FPS, true)
 		if(save_anim_direction):	
 			previous_animation_dir = 1
 	else:
 		anim_player.play_backwards(animation_name)
 		if(previous_animation_clip != current_animation_clip):
-			anim_player.seek(clip.end / owner.FPS, true)
+			anim_player.seek(clip.end / control.FPS, true)
 		if(save_anim_direction):
 			previous_animation_dir = -1

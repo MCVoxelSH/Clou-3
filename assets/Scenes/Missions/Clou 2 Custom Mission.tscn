@@ -41,6 +41,9 @@
 [ext_resource type="Texture2D" uid="uid://dp0fjh416a04f" path="res://Clou2/Clou2_unpack_new_textures/models/Böden/Boden4x4 [Wiese]_30_0.png" id="35_0bag2"]
 [ext_resource type="PackedScene" uid="uid://u5m1gnqhx63p" path="res://Clou2/Clou2_unpack_new_textures/models/Items/Beute/Bilder/Bild_A1Q [Chaos_2]_2303.glb" id="35_ru06g"]
 [ext_resource type="Script" uid="uid://mxilmvvlncsr" path="res://assets/Scenes/Items/Loot/loot.gd" id="36_1ef1y"]
+[ext_resource type="PackedScene" uid="uid://7pflsibliusv" path="res://assets/Scenes/guard.tscn" id="37_co6l6"]
+[ext_resource type="PackedScene" uid="uid://ip5fii0u6lcw" path="res://Clou2/Clou2_unpack_new_textures/models/Characters/Wachmann_2_2766.glb" id="38_y71cs"]
+[ext_resource type="PackedScene" uid="uid://c1qknp3wtqnfw" path="res://Clou2/Clou2_unpack_new_textures/models/Characters/Wachmann_2765.glb" id="39_0g10l"]
 [ext_resource type="PackedScene" uid="uid://2k06cjel3jaa" path="res://Clou2/Scenes/timed_switch.tscn" id="40_gg6q6"]
 [ext_resource type="PackedScene" uid="uid://ycpm1top0hum" path="res://Clou2/Clou2_unpack_new_textures/models/Fischerboot_1017.glb" id="41_gg6q6"]
 
@@ -273,7 +276,7 @@ size = Vector3(0.46072197, 0.49922776, 0.1768341)
 size = Vector3(0.46072197, 0.49922776, 0.1768341)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ala7q"]
-size = Vector3(0.203125, 0.22216797, 0.2763672)
+size = Vector3(0.203125, 0.86938477, 0.2763672)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_eu85g"]
 size = Vector3(1, 1, 0.001)
@@ -1114,10 +1117,50 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_g16d6")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ru06g"]
+resource_name = "lambert2_polySurfaceShape1018"
+cull_mode = 2
+albedo_color = Color(0.6651851, 1, 0.6651851, 1)
+albedo_texture = ExtResource("35_0bag2")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1ef1y"]
+_surfaces = [{
+"aabb": AABB(-2.75, -2, 0, 1, 1, 1e-05),
+"format": 34359742465,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAgABAAMA"),
+"name": "lambert2_polySurfaceShape1018",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AADgvwAAAMAAAAAAAADgvwAAgL8AAAAAAAAwwAAAAMAAAAAAAAAwwAAAgL8AAAAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8ylyb"]
+resource_name = "Boden4x4 [Wiese]_30_polySurfaceShape1018"
+_surfaces = [{
+"aabb": AABB(-2.75, -2, 0, 1, 1, 1e-05),
+"attribute_data": PackedByteArray("AAB/PwAAAAAAAH8/AAB/PwAAAAAAAAAAAAAAAAAAAAAAAH8/AAB/PwAAAAAAAH8/"),
+"format": 34359742487,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUA"),
+"material": SubResource("StandardMaterial3D_ru06g"),
+"name": "lambert2_polySurfaceShape1018",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AADgvwAAAMAAAAAAAADgvwAAgL8AAAAAAAAwwAAAAMAAAAAAAAAwwAAAAMAAAAAAAADgvwAAgL8AAAAAAAAwwAAAgL8AAAAA/////////7//////////v/////////+//////////7//////////v/////////+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_1ef1y")
+
 [node name="Clou2CustomMission" type="Node3D" unique_id=1573584204]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 script = ExtResource("1_jg8fl")
 number_of_floors = 1
+min_loot = 1952
 
 [node name="Outside" type="Node3D" parent="." unique_id=512717957]
 
@@ -1988,10 +2031,19 @@ transform = Transform3D(-4.3711392e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711392e-08, -0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/street_Straße_Gerade1_25/Z_up_to_Y_up/street_gerade/fenster_tuer_2x_pPlane100/pPlaneShape168/StaticBody3D" unique_id=1822015946]
 shape = SubResource("ConvexPolygonShape3D_moaju")
 
+[node name="street_Straße_Gerade1_26" parent="Outside" unique_id=1197356578 instance=ExtResource("20_dpdhc")]
+transform = Transform3D(-4.3711392e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711392e-08, -0.87300795, 0.6069932, -2.9304836)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/street_Straße_Gerade1_26/Z_up_to_Y_up/street_gerade/fenster_tuer_2x_pPlane100/pPlaneShape168" parent_id_path=PackedInt32Array(1197356578, 262910393) index="0" unique_id=766103210]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/street_Straße_Gerade1_26/Z_up_to_Y_up/street_gerade/fenster_tuer_2x_pPlane100/pPlaneShape168/StaticBody3D" unique_id=349731531]
+shape = SubResource("ConvexPolygonShape3D_moaju")
+
 [node name="Car Schlachters" type="Node3D" parent="Outside" unique_id=480131230]
-transform = Transform3D(-4.3711392e-08, 0, 1, 0, 1, 0, -1, 0, -4.3711392e-08, -0.9205567, 0.8909367, -2.1902463)
+transform = Transform3D(-4.3711392e-08, 0, 1, 0, 1, 0, -1, 0, -4.3711392e-08, -0.39392048, 0.8909367, -2.1902463)
 script = ExtResource("7_l5ri7")
 object_type = 6
+metadata/_edit_group_ = true
 
 [node name="Z_up_to_Y_up" type="Node3D" parent="Outside/Car Schlachters" unique_id=533807644]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
@@ -2021,6 +2073,7 @@ unique_name = "Golden Lion Figure"
 loot_mesh = ExtResource("9_efmtr")
 generate_colliders = true
 interaction_point = Vector3(-2, 0, 0)
+metadata/_edit_group_ = true
 
 [node name="LootVisual" parent="Outside/Golden Lion Figure" unique_id=1576884537 instance=ExtResource("9_efmtr")]
 
@@ -2043,6 +2096,7 @@ value = 1000
 unique_name = "Emerald Necklace"
 loot_mesh = ExtResource("26_efmtr")
 generate_colliders = true
+metadata/_edit_group_ = true
 
 [node name="LootVisual" parent="Outside/Emerald Necklace" unique_id=687009017 instance=ExtResource("26_efmtr")]
 
@@ -2065,6 +2119,7 @@ value = 150
 unique_name = "Golden Clock"
 loot_mesh = ExtResource("11_kvi6l")
 generate_colliders = true
+metadata/_edit_group_ = true
 
 [node name="LootVisual" parent="Outside/Golden Clock" unique_id=1485692887 instance=ExtResource("11_kvi6l")]
 
@@ -2091,12 +2146,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36948204, 0)
 shape = SubResource("BoxShape3D_ala7q")
 
 [node name="Baum_Pinie_Klein_1919" parent="Outside" unique_id=1475654344 instance=ExtResource("14_0bag2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.666585, 1.0006198, -1.924597)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.666585, 0.9368218, -1.2875539)
+metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Outside/Baum_Pinie_Klein_1919" unique_id=1656078835]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Baum_Pinie_Klein_1919/StaticBody3D" unique_id=50886322]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36948204, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08269635, 0)
 shape = SubResource("BoxShape3D_ala7q")
 
 [node name="Boden4x4 [Wiese]_270" parent="Outside" unique_id=954677368 instance=ExtResource("34_vbcbx")]
@@ -3904,6 +3960,7 @@ unique_name = "War"
 loot_mesh = ExtResource("35_ru06g")
 generate_colliders = true
 object_type = 4
+metadata/_edit_group_ = true
 
 [node name="LootVisual" parent="Inside/Floor0/Painting - Chaos" unique_id=1259100441 instance=ExtResource("35_ru06g")]
 transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
@@ -3920,6 +3977,27 @@ input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor0/Painting - Chaos/StaticBody3D" unique_id=1707107515]
 shape = SubResource("BoxShape3D_622vx")
+
+[node name="Guard1" parent="Inside/Floor0" unique_id=468724566 instance=ExtResource("37_co6l6")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 5.684013, 3.5914478, 7.0703173)
+selected_interaction = 3
+character_speed = 0.8
+starting_floor = 1
+starts_inside = true
+unique_name = "Slinky Spider"
+hearing = 0.5
+character_model = ExtResource("38_y71cs")
+guard_sight_check_collision_mask = 3
+
+[node name="Guard2" parent="Inside/Floor0" unique_id=603260113 instance=ExtResource("37_co6l6")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -10.1275625, -3.1268663, -3.3795507)
+selected_interaction = 3
+character_speed = 0.8
+starts_inside = true
+unique_name = "Dan Roy's Brother"
+hearing = 0.5
+character_model = ExtResource("39_0g10l")
+guard_sight_check_collision_mask = 3
 
 [node name="Floor1" type="Node3D" parent="Inside" unique_id=1249423455]
 
@@ -7525,7 +7603,73 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1019/StaticBody3D" unique_id=112763005]
 shape = SubResource("BoxShape3D_eu85g")
 
-[node name="polySurfaceShape1020" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="2" unique_id=1663969741]
+[node name="polySurfaceShape1022" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="2" unique_id=1688211788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.000002, 0)
+mesh = SubResource("ArrayMesh_8ylyb")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1022" unique_id=725098366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1022/StaticBody3D" unique_id=793872402]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="polySurfaceShape1023" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="3" unique_id=2097730201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -5.000002, 0)
+mesh = SubResource("ArrayMesh_u3eo4")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1023" unique_id=874536687]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1023/StaticBody3D" unique_id=367412563]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="polySurfaceShape1024" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="4" unique_id=25531864]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.999996, -4.7683716e-07)
+mesh = SubResource("ArrayMesh_8ylyb")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1024" unique_id=1282184637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1024/StaticBody3D" unique_id=871914939]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="polySurfaceShape1025" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="5" unique_id=1500229717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -9.999996, -4.7683716e-07)
+mesh = SubResource("ArrayMesh_u3eo4")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1025" unique_id=240227454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1025/StaticBody3D" unique_id=890208848]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="polySurfaceShape1026" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="6" unique_id=1277767943]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14.999994, -4.7683716e-07)
+mesh = SubResource("ArrayMesh_8ylyb")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1026" unique_id=429890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1026/StaticBody3D" unique_id=394475243]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="polySurfaceShape1027" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="7" unique_id=1187276051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -14.999994, -4.7683716e-07)
+mesh = SubResource("ArrayMesh_u3eo4")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1027" unique_id=1116105921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1027/StaticBody3D" unique_id=411187440]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="polySurfaceShape1020" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="8" unique_id=1663969741]
 transform = Transform3D(1, 7.65236e-18, -4.2611323e-17, 7.65236e-18, 0.9375137, 0.34794822, 4.2611366e-17, -0.34794822, 0.9375137, 0, 9.812546, -1.0438461)
 mesh = SubResource("ArrayMesh_u3eo4")
 skeleton = NodePath("")
@@ -7536,7 +7680,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1020/StaticBody3D" unique_id=182154003]
 shape = SubResource("BoxShape3D_eu85g")
 
-[node name="polySurfaceShape1021" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="3" unique_id=1225632775]
+[node name="polySurfaceShape1021" type="MeshInstance3D" parent="Inside/Floor1/Boden4x4 [Wiese]_31/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748" parent_id_path=PackedInt32Array(1945684477, 91674103) index="9" unique_id=1225632775]
 transform = Transform3D(1, 7.65236e-18, -4.2611323e-17, 7.65236e-18, 0.9375137, 0.34794822, 4.2611366e-17, -0.34794822, 0.9375137, 3, 9.812546, -1.0438461)
 mesh = SubResource("ArrayMesh_u3eo4")
 skeleton = NodePath("")
@@ -7875,6 +8019,906 @@ metadata/_edit_group_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_66/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=759320942]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_270" parent="Inside/Floor1" unique_id=1030763543 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -2.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_270/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1030763543, 287769206) index="0" unique_id=1780456746]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_270/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=270878608]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_271" parent="Inside/Floor1" unique_id=830530345 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.523008, 0.63032526, -2.8804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_271/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(830530345, 287769206) index="0" unique_id=239503292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_271/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=72608067]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_272" parent="Inside/Floor1" unique_id=1632510578 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -2.8804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_272/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1632510578, 287769206) index="0" unique_id=891397349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_272/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2139511954]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_273" parent="Inside/Floor1" unique_id=1524218464 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -2.6804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_273/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1524218464, 287769206) index="0" unique_id=1819230963]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_273/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=660665820]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_274" parent="Inside/Floor1" unique_id=890815757 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -2.7804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_274/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(890815757, 287769206) index="0" unique_id=895054131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_274/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2051499039]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_275" parent="Inside/Floor1" unique_id=1707170993 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.523008, 0.63032526, -2.7804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_275/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1707170993, 287769206) index="0" unique_id=998616083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_275/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=955967812]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_276" parent="Inside/Floor1" unique_id=2072617023 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -2.7804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_276/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(2072617023, 287769206) index="0" unique_id=968910225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_276/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=391690630]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_277" parent="Inside/Floor1" unique_id=1010597658 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -2.4804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_277/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1010597658, 287769206) index="0" unique_id=127044104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_277/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1614922878]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_278" parent="Inside/Floor1" unique_id=1935532555 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -2.5804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_278/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1935532555, 287769206) index="0" unique_id=994405479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_278/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=300226680]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_279" parent="Inside/Floor1" unique_id=1894921257 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.523008, 0.63032526, -2.6804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_279/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1894921257, 287769206) index="0" unique_id=1484238561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_279/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=13200205]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_280" parent="Inside/Floor1" unique_id=1890953573 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.523008, 0.63032526, -2.4804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_280/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1890953573, 287769206) index="0" unique_id=1768822349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_280/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=334438926]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_281" parent="Inside/Floor1" unique_id=1669659585 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.523008, 0.63032526, -2.5804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_281/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1669659585, 287769206) index="0" unique_id=1040936539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_281/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1750756243]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_282" parent="Inside/Floor1" unique_id=2092023651 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -2.6804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_282/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(2092023651, 287769206) index="0" unique_id=461362745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_282/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2067208825]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_283" parent="Inside/Floor1" unique_id=225685220 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -2.4804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_283/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(225685220, 287769206) index="0" unique_id=666139312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_283/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=6914657]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_284" parent="Inside/Floor1" unique_id=1357984482 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -2.5804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_284/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1357984482, 287769206) index="0" unique_id=1966808279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_284/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1585870493]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_285" parent="Inside/Floor1" unique_id=1436176319 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -2.8804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_285/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1436176319, 287769206) index="0" unique_id=841504561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_285/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1335116439]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_286" parent="Inside/Floor1" unique_id=1560697190 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -2.8804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_286/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1560697190, 287769206) index="0" unique_id=381095640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_286/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=871435564]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_287" parent="Inside/Floor1" unique_id=1334459890 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -2.8804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_287/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1334459890, 287769206) index="0" unique_id=1204542940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_287/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1370884274]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_288" parent="Inside/Floor1" unique_id=1779737947 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -2.6804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_288/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1779737947, 287769206) index="0" unique_id=357852012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_288/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1027596365]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_289" parent="Inside/Floor1" unique_id=1007195016 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -2.7804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_289/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1007195016, 287769206) index="0" unique_id=187459820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_289/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1888148885]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_290" parent="Inside/Floor1" unique_id=1308958034 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -2.7804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_290/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1308958034, 287769206) index="0" unique_id=1248891968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_290/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=875799969]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_291" parent="Inside/Floor1" unique_id=1373086562 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -2.7804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_291/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1373086562, 287769206) index="0" unique_id=905763323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_291/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1095039857]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_292" parent="Inside/Floor1" unique_id=1765141926 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -2.4804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_292/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1765141926, 287769206) index="0" unique_id=2110487740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_292/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=612594860]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_293" parent="Inside/Floor1" unique_id=403216173 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -2.5804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_293/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(403216173, 287769206) index="0" unique_id=118502478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_293/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=911951747]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_294" parent="Inside/Floor1" unique_id=1065217596 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -2.6804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_294/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1065217596, 287769206) index="0" unique_id=909109101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_294/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1845228299]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_295" parent="Inside/Floor1" unique_id=26899321 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -2.4804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_295/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(26899321, 287769206) index="0" unique_id=1599786050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_295/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1764030482]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_296" parent="Inside/Floor1" unique_id=1682874864 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -2.5804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_296/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1682874864, 287769206) index="0" unique_id=1727982957]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_296/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=259892998]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_297" parent="Inside/Floor1" unique_id=995616019 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -2.6804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_297/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(995616019, 287769206) index="0" unique_id=661431411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_297/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1826676107]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_298" parent="Inside/Floor1" unique_id=1448551018 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -2.4804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_298/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1448551018, 287769206) index="0" unique_id=678360497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_298/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1417114856]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_299" parent="Inside/Floor1" unique_id=993009262 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -2.5804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_299/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(993009262, 287769206) index="0" unique_id=1929788876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_299/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1518749450]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_300" parent="Inside/Floor1" unique_id=4089059 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.3804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_300/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(4089059, 287769206) index="0" unique_id=785714495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_300/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1311815163]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_301" parent="Inside/Floor1" unique_id=1694861434 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.3804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_301/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1694861434, 287769206) index="0" unique_id=106413972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_301/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1826180924]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_302" parent="Inside/Floor1" unique_id=823561779 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.3804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_302/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(823561779, 287769206) index="0" unique_id=205306220]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_302/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1541367813]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_303" parent="Inside/Floor1" unique_id=1286761963 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.1804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_303/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1286761963, 287769206) index="0" unique_id=1718791381]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_303/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2066600116]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_304" parent="Inside/Floor1" unique_id=302345768 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.2804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_304/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(302345768, 287769206) index="0" unique_id=370992416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_304/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1691362392]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_305" parent="Inside/Floor1" unique_id=1826930195 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.2804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_305/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1826930195, 287769206) index="0" unique_id=379974949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_305/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1888936140]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_306" parent="Inside/Floor1" unique_id=1253899320 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.2804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_306/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1253899320, 287769206) index="0" unique_id=1643511972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_306/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=688213473]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_307" parent="Inside/Floor1" unique_id=553929683 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -2.9804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_307/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(553929683, 287769206) index="0" unique_id=643779421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_307/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=748142816]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_308" parent="Inside/Floor1" unique_id=1031228014 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.0804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_308/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1031228014, 287769206) index="0" unique_id=890196010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_308/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1451297514]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_309" parent="Inside/Floor1" unique_id=1267435544 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.1804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_309/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1267435544, 287769206) index="0" unique_id=1248820844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_309/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1475431794]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_310" parent="Inside/Floor1" unique_id=1420926826 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -2.9804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_310/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1420926826, 287769206) index="0" unique_id=1134698547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_310/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=879919613]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_311" parent="Inside/Floor1" unique_id=278198612 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.0804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_311/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(278198612, 287769206) index="0" unique_id=1955996723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_311/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=883990480]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_312" parent="Inside/Floor1" unique_id=349118810 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.1804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_312/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(349118810, 287769206) index="0" unique_id=655565446]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_312/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1444709473]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_313" parent="Inside/Floor1" unique_id=1625335952 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -2.9804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_313/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1625335952, 287769206) index="0" unique_id=280492932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_313/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=873597147]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_314" parent="Inside/Floor1" unique_id=609804188 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.0804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_314/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(609804188, 287769206) index="0" unique_id=562720396]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_314/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=640277741]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_315" parent="Inside/Floor1" unique_id=292995122 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.3804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_315/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(292995122, 287769206) index="0" unique_id=1176774728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_315/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1825439873]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_316" parent="Inside/Floor1" unique_id=294842101 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.3804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_316/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(294842101, 287769206) index="0" unique_id=988105356]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_316/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=162401425]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_317" parent="Inside/Floor1" unique_id=207374665 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.3804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_317/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(207374665, 287769206) index="0" unique_id=1215111990]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_317/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=296029579]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_318" parent="Inside/Floor1" unique_id=554803519 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.1804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_318/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(554803519, 287769206) index="0" unique_id=1865249115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_318/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1340055280]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_319" parent="Inside/Floor1" unique_id=870016402 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.2804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_319/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(870016402, 287769206) index="0" unique_id=1211679337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_319/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=958716502]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_320" parent="Inside/Floor1" unique_id=1869900035 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.2804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_320/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1869900035, 287769206) index="0" unique_id=668721870]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_320/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1985408889]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_321" parent="Inside/Floor1" unique_id=1417007284 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.2804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_321/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1417007284, 287769206) index="0" unique_id=1042632039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_321/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1233427956]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_322" parent="Inside/Floor1" unique_id=765815218 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -2.9804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_322/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(765815218, 287769206) index="0" unique_id=421696973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_322/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2090525508]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_323" parent="Inside/Floor1" unique_id=1542390986 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.0804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_323/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1542390986, 287769206) index="0" unique_id=251572309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_323/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=843587877]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_324" parent="Inside/Floor1" unique_id=52878516 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.1804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_324/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(52878516, 287769206) index="0" unique_id=1235675778]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_324/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1042027223]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_325" parent="Inside/Floor1" unique_id=1144821840 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -2.9804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_325/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1144821840, 287769206) index="0" unique_id=1147494307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_325/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=987434388]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_326" parent="Inside/Floor1" unique_id=1770608880 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.0804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_326/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1770608880, 287769206) index="0" unique_id=935954029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_326/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1318819294]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_327" parent="Inside/Floor1" unique_id=381723936 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.1804836)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_327/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(381723936, 287769206) index="0" unique_id=1466680443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_327/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1872753701]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_328" parent="Inside/Floor1" unique_id=815361329 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -2.9804835)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_328/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(815361329, 287769206) index="0" unique_id=669144944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_328/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1108512392]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_329" parent="Inside/Floor1" unique_id=300531744 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.0804832)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_329/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(300531744, 287769206) index="0" unique_id=399733449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_329/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1920181699]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_330" parent="Inside/Floor1" unique_id=466265749 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_330/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(466265749, 287769206) index="0" unique_id=154888042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_330/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=252052392]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_331" parent="Inside/Floor1" unique_id=1365854025 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_331/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1365854025, 287769206) index="0" unique_id=1711718980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_331/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1027715210]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_332" parent="Inside/Floor1" unique_id=1991604679 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_332/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1991604679, 287769206) index="0" unique_id=225276761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_332/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2059398939]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_333" parent="Inside/Floor1" unique_id=209428735 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.6804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_333/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(209428735, 287769206) index="0" unique_id=1597655496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_333/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=672948546]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_334" parent="Inside/Floor1" unique_id=1618860892 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.7804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_334/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1618860892, 287769206) index="0" unique_id=1398302244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_334/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1129751473]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_335" parent="Inside/Floor1" unique_id=1443520444 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.7804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_335/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1443520444, 287769206) index="0" unique_id=806077332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_335/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=171547044]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_336" parent="Inside/Floor1" unique_id=658241863 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.7804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_336/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(658241863, 287769206) index="0" unique_id=151224900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_336/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=852243644]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_337" parent="Inside/Floor1" unique_id=510892149 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.4804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_337/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(510892149, 287769206) index="0" unique_id=1421979566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_337/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1106029001]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_338" parent="Inside/Floor1" unique_id=497689550 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.423008, 0.63032526, -3.580483)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_338/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(497689550, 287769206) index="0" unique_id=530109125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_338/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=652421218]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_339" parent="Inside/Floor1" unique_id=20990557 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.6804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_339/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(20990557, 287769206) index="0" unique_id=1313437409]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_339/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=222072328]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_340" parent="Inside/Floor1" unique_id=401012975 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.4804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_340/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(401012975, 287769206) index="0" unique_id=1206374523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_340/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=849322373]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_341" parent="Inside/Floor1" unique_id=77142839 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.5230079, 0.63032526, -3.580483)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_341/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(77142839, 287769206) index="0" unique_id=1479101614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_341/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=379669001]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_342" parent="Inside/Floor1" unique_id=1814794486 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.6804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_342/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1814794486, 287769206) index="0" unique_id=225015714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_342/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=738887265]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_343" parent="Inside/Floor1" unique_id=1638480522 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.4804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_343/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1638480522, 287769206) index="0" unique_id=1234599900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_343/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=71988359]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_344" parent="Inside/Floor1" unique_id=487001274 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.623008, 0.63032526, -3.580483)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_344/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(487001274, 287769206) index="0" unique_id=129755279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_344/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=2055648669]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_345" parent="Inside/Floor1" unique_id=476525458 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_345/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(476525458, 287769206) index="0" unique_id=561636693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_345/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1214338178]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_346" parent="Inside/Floor1" unique_id=173327028 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_346/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(173327028, 287769206) index="0" unique_id=348619335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_346/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1734294079]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_347" parent="Inside/Floor1" unique_id=706478902 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.8804834)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_347/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(706478902, 287769206) index="0" unique_id=1920511743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_347/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=283231158]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_348" parent="Inside/Floor1" unique_id=587262183 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.6804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_348/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(587262183, 287769206) index="0" unique_id=225030547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_348/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1240144906]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_349" parent="Inside/Floor1" unique_id=2078583197 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.7804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_349/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(2078583197, 287769206) index="0" unique_id=665683151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_349/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1180469426]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_350" parent="Inside/Floor1" unique_id=757975120 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.7804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_350/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(757975120, 287769206) index="0" unique_id=1905421709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_350/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1599832805]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_351" parent="Inside/Floor1" unique_id=1687238921 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.7804825)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_351/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1687238921, 287769206) index="0" unique_id=1593685356]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_351/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=915521990]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_352" parent="Inside/Floor1" unique_id=347725322 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.4804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_352/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(347725322, 287769206) index="0" unique_id=1210142513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_352/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1393701213]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_353" parent="Inside/Floor1" unique_id=2111192649 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.723008, 0.63032526, -3.580483)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_353/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(2111192649, 287769206) index="0" unique_id=2051008862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_353/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1420427996]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_354" parent="Inside/Floor1" unique_id=1985949544 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.6804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_354/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1985949544, 287769206) index="0" unique_id=1483193716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_354/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1277025386]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_355" parent="Inside/Floor1" unique_id=183638319 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.4804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_355/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(183638319, 287769206) index="0" unique_id=1894924317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_355/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=630713352]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_356" parent="Inside/Floor1" unique_id=1960613016 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.823008, 0.63032526, -3.580483)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_356/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1960613016, 287769206) index="0" unique_id=1470853349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_356/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=429379848]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_357" parent="Inside/Floor1" unique_id=1133952182 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.6804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_357/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1133952182, 287769206) index="0" unique_id=196249127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_357/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1613518363]
+shape = SubResource("BoxShape3D_7q13l")
+
+[node name="Boden4x4 [Wiese]_358" parent="Inside/Floor1" unique_id=2089532649 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.4804833)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_358/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(2089532649, 287769206) index="0" unique_id=21567840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_358/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=388957299]
+shape = SubResource("BoxShape3D_eu85g")
+
+[node name="Boden4x4 [Wiese]_359" parent="Inside/Floor1" unique_id=1676252228 instance=ExtResource("34_vbcbx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.923008, 0.63032526, -3.580483)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor1/Boden4x4 [Wiese]_359/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018" parent_id_path=PackedInt32Array(1676252228, 287769206) index="0" unique_id=1236510676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor1/Boden4x4 [Wiese]_359/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1084036548]
 shape = SubResource("BoxShape3D_eu85g")
 
 [node name="Boden4x4 [Wiese]_67" parent="Inside/Floor1" unique_id=1372598650 instance=ExtResource("34_vbcbx")]
@@ -10006,6 +11050,7 @@ related_objects = [NodePath("../../Floor0/Camera3")]
 [editable path="Outside/Boden1x1 [GroberSchotter]_1061"]
 [editable path="Outside/street_Straße_Gerade1Schräg_26"]
 [editable path="Outside/street_Straße_Gerade1_25"]
+[editable path="Outside/street_Straße_Gerade1_26"]
 [editable path="Outside/Baum_Pinie_306"]
 [editable path="Outside/Baum_Pinie_Klein_1919"]
 [editable path="Outside/Boden4x4 [Wiese]_270"]
@@ -10434,6 +11479,96 @@ related_objects = [NodePath("../../Floor0/Camera3")]
 [editable path="Inside/Floor1/Boden4x4 [Wiese]_64"]
 [editable path="Inside/Floor1/Boden4x4 [Wiese]_65"]
 [editable path="Inside/Floor1/Boden4x4 [Wiese]_66"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_270"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_271"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_272"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_273"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_274"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_275"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_276"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_277"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_278"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_279"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_280"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_281"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_282"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_283"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_284"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_285"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_286"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_287"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_288"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_289"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_290"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_291"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_292"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_293"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_294"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_295"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_296"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_297"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_298"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_299"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_300"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_301"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_302"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_303"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_304"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_305"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_306"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_307"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_308"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_309"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_310"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_311"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_312"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_313"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_314"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_315"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_316"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_317"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_318"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_319"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_320"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_321"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_322"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_323"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_324"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_325"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_326"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_327"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_328"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_329"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_330"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_331"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_332"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_333"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_334"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_335"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_336"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_337"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_338"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_339"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_340"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_341"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_342"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_343"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_344"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_345"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_346"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_347"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_348"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_349"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_350"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_351"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_352"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_353"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_354"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_355"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_356"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_357"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_358"]
+[editable path="Inside/Floor1/Boden4x4 [Wiese]_359"]
 [editable path="Inside/Floor1/Boden4x4 [Wiese]_67"]
 [editable path="Inside/Floor1/Boden4x4 [Wiese]_68"]
 [editable path="Inside/Floor1/Boden4x4 [Wiese]_69"]

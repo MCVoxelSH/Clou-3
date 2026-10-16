@@ -41,13 +41,13 @@ func _setup_loot() -> void:
 	object_type = 4
 	
 	# Bereits vorhandenes automatisch erzeugtes Objekt entfernen
-	var old_visual := get_node_or_null("LootVisual")
+	var old_visual := get_node_or_null("Visual")
 	if old_visual:
 		old_visual.free()
 
 	# GLB/Scene instanziieren
 	var visual := loot_mesh.instantiate()
-	visual.name = "LootVisual"
+	visual.name = "Visual"
 
 	add_child(visual)
 	visual.owner = get_tree().edited_scene_root
@@ -81,9 +81,6 @@ func _create_area(model: Node3D) -> void:
 	if not area.mouse_exited.is_connected(exit_callable):
 		area.mouse_exited.connect(exit_callable, CONNECT_PERSIST)
 
-	area.scale = Vector3(0.1,0.1,0.1)
-	
-
 	var collision := CollisionShape3D.new()
 	collision.name = "CollisionShape3D"
 
@@ -94,6 +91,7 @@ func _create_area(model: Node3D) -> void:
 
 	collision.shape = result["shape"]
 	collision.position = Vector3.ZERO
+	collision.rotation = rotation
 
 	area.add_child(collision)
 	add_child(area)
@@ -110,7 +108,6 @@ func _create_static_body(model: Node3D) -> void:
 	var body := StaticBody3D.new()
 	body.name = "StaticBody3D"
 	body.input_ray_pickable = false
-	body.scale = Vector3(0.1,0.1,0.1)
 	var collision := CollisionShape3D.new()
 	collision.name = "CollisionShape3D"
 
@@ -121,6 +118,7 @@ func _create_static_body(model: Node3D) -> void:
 
 	collision.shape = result["shape"]
 	collision.position = Vector3.ZERO
+	collision.rotation = rotation
 
 	body.add_child(collision)
 	add_child(body)

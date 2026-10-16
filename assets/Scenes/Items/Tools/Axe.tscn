@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c43ocs4fanb6d"]
 
 [ext_resource type="Script" uid="uid://de4bv3cna3bye" path="res://assets/scripts/Tool.gd" id="1_clsmn"]
-[ext_resource type="PackedScene" uid="uid://d2m3pdpc3jom2" path="res://assets/Meshes/Low Poly Survival Tools/SM_Fire_Axe.glb" id="2_8ao3s"]
+[ext_resource type="PackedScene" uid="uid://cpfv453w0odty" path="res://Clou2/Clou2_unpack_new_textures/models/Items/Werkzeug/Axt_2021.glb" id="2_qypgc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_clsmn"]
 radius = 0.16894531
@@ -15,18 +15,23 @@ loudness = Array[float]([100.0, 100.0, 80.0])
 damaging = true
 item_type = 0
 
-[node name="SM_Fire_Axe" parent="." unique_id=266323216 instance=ExtResource("2_8ao3s")]
+[node name="Axt_2021" parent="." unique_id=234583805 instance=ExtResource("2_qypgc")]
+transform = Transform3D(-2.0478785e-07, 4.685, 0, -4.685, -2.0478785e-07, 0, 0, 0, 4.685, -0.05668239, 2.477666e-09, 0)
 
-[node name="SM_Fire_Axe" parent="SM_Fire_Axe" index="0" unique_id=989304867]
+[node name="pCylinderShape122" parent="Axt_2021/Z_up_to_Y_up/loc_6_axt/group65/pCylinder122" parent_id_path=PackedInt32Array(234583805, 459185526) index="0" unique_id=1120321346]
 layers = 5
 
-[node name="Area3D" type="Area3D" parent="SM_Fire_Axe" unique_id=1196545777]
+[node name="pCylinderShape123" parent="Axt_2021/Z_up_to_Y_up/loc_6_axt/group65/pCylinder123" parent_id_path=PackedInt32Array(234583805, 1579632036) index="0" unique_id=85803223]
+layers = 5
+
+[node name="Area3D" type="Area3D" parent="Axt_2021" unique_id=1196545777]
+transform = Transform3D(-9.330072e-09, -0.21344717, 0, 0.21344717, -9.330072e-09, 0, 0, 0, 0.21344717, 5.551115e-17, 0.012098695, 0)
 collision_layer = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Fire_Axe/Area3D" unique_id=1550141954]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Axt_2021/Area3D" unique_id=1550141954]
 shape = SubResource("CapsuleShape3D_clsmn")
 
-[connection signal="mouse_entered" from="SM_Fire_Axe/Area3D" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="SM_Fire_Axe/Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="mouse_entered" from="Axt_2021/Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Axt_2021/Area3D" to="." method="_on_area_3d_mouse_exited"]
 
-[editable path="SM_Fire_Axe"]
+[editable path="Axt_2021"]

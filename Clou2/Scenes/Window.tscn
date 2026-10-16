@@ -28,12 +28,14 @@ transform = Transform3D(1, 0, 6.82121e-13, 0, 1, 0, -5.5919713e-12, 0, 0.9999995
 shape = SubResource("BoxShape3D_di2n1")
 
 [node name="OutsideCheck" type="Area3D" parent="." unique_id=1191086551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013134405, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="OutsideCheck" unique_id=992811701]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012196302, 0, 0)
 shape = SubResource("BoxShape3D_8o7sn")
 
 [node name="InsideCheck" type="Area3D" parent="." unique_id=2101058853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018877402, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InsideCheck" unique_id=1432203158]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019807994, 0, 0)

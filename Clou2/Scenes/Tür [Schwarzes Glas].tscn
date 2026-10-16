@@ -4,17 +4,20 @@
 [ext_resource type="PackedScene" uid="uid://cg0s0m5forc8x" path="res://Clou2/Clou2_unpack_new_textures/models/Türen/Tür [SchwarzesGlas]_802.glb" id="2_nm33p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3hg32"]
-size = Vector3(1, 1.4467294, 25.51131)
+size = Vector3(0.453125, 1.4599609, 21.700195)
 
 [node name="Tür [Schwarzes Glas]" unique_id=612355611 instance=ExtResource("1_psi6m")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+animation_end = 4
 interaction_point = Vector3(0, 0, 1)
 
 [node name="Door" parent="." index="0" unique_id=308604268]
 transform = Transform3D(-0.06881343, 0, 2.0663205e-07, 0, 2.010108, 0, -1.421906e-08, 0, -0.99999994, -0.025021672, 1.4928321, 0.05480974)
 
 [node name="CollisionShape3D" parent="Door/Area3D" parent_id_path=PackedInt32Array(1625466342) index="0" unique_id=260253587]
-transform = Transform3D(1, 0, 4.5474735e-13, 0, 1, 0, -1.8189894e-12, 0, 0.9999996, -0.9630362, 1.0119383, 0.12336263)
+transform = Transform3D(1, 0, 4.5474735e-13, 0, 1, 0, -1.8189894e-12, 0, 0.99999976, -0.8881763, 0.98068833, 0.12336275)
 shape = SubResource("BoxShape3D_3hg32")
+debug_color = Color(2.2140146e-06, 0.6068595, 0.69488966, 1)
 
 [node name="Tür [SchwarzesGlas]_802" parent="Door" index="1" unique_id=697551530 instance=ExtResource("2_nm33p")]
 transform = Transform3D(-4.371139e-07, 0, -145.32, 0, 4.97, 0, 10, 0, -6.3521393e-06, 0, 0, 0)

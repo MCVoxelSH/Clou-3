@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://3a3tg5vcb4vm" path="res://assets/Scenes/Items/Tools/Crowbar.tscn" id="3_7msq8"]
 [ext_resource type="Script" uid="uid://brdaaktjp0ecx" path="res://assets/Scenes/Missions/bag.gd" id="3_7v5qx"]
 [ext_resource type="PackedScene" uid="uid://c43ocs4fanb6d" path="res://assets/Scenes/Items/Tools/Axe.tscn" id="4_7v5qx"]
-[ext_resource type="PackedScene" uid="uid://gounytm2f0bl" path="res://assets/Scenes/Items/Tools/pliers.tscn" id="6_uyv7r"]
+[ext_resource type="PackedScene" uid="uid://bnfrbr7j8bilv" path="res://assets/Scenes/Items/Tools/soldering_iron.tscn" id="4_uyv7r"]
 [ext_resource type="PackedScene" uid="uid://baelrphj8f8qr" path="res://assets/Scenes/Items/Tools/drill.tscn" id="7_i1uo5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wo13b"]
@@ -110,10 +110,11 @@ visible = false
 tool_efficencies = Array[float]([50.0, 0.0, 0.0])
 loudness = Array[float]([50.0, 50.0, 75.0])
 
-[node name="Axe" parent="Bag/SubViewport/Camera" unique_id=830975763 instance=ExtResource("4_7v5qx")]
+[node name="SolderingIron" parent="Bag/SubViewport/Camera" unique_id=443840832 instance=ExtResource("4_uyv7r")]
+process_mode = 1
 visible = false
 
-[node name="Soldering Iron" parent="Bag/SubViewport/Camera" unique_id=430073392 instance=ExtResource("6_uyv7r")]
+[node name="Axe" parent="Bag/SubViewport/Camera" unique_id=830975763 instance=ExtResource("4_7v5qx")]
 visible = false
 
 [node name="Drill" parent="Bag/SubViewport/Camera" unique_id=1009371699 instance=ExtResource("7_i1uo5")]
