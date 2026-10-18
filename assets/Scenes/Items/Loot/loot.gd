@@ -39,6 +39,7 @@ func _setup_loot() -> void:
 		return
 
 	object_type = 4
+	add_to_group("Interactable")
 	
 	# Bereits vorhandenes automatisch erzeugtes Objekt entfernen
 	var old_visual := get_node_or_null("Visual")

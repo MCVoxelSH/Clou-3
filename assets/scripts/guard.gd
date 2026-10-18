@@ -31,7 +31,7 @@ func _physics_process(_delta):
 					query.collision_mask = guard_sight_check_collision_mask
 					query.collide_with_areas = true
 					query.exclude = [burglar_area]
-
+					
 					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 					if(result):
 						if(result.collider.get_parent().is_in_group("Actor")):
@@ -47,12 +47,13 @@ func _physics_process(_delta):
 				query.collide_with_areas = true
 				query.exclude = [burglar_area]
 
+
 				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 				if(result):	
 					if(result.collider.get_parent().is_in_group("Interactable")):
 						if(result.collider.get_parent().object_type == 0 || result.collider.get_parent().object_type == 1):
-							if(result.collider.get_parent().anim_player.current_animation_position != 0):
-								get_parent().print_caught_message("open door was found at " +str(get_node("/root/Control").ticks) + " by " + unique_name && result.collider.get_parent().was_opened_by_burglar)
+							if(result.collider.get_parent().anim_player.current_animation_position != 0.0  && result.collider.get_parent().was_opened_by_burglar):
+								get_parent().print_caught_message("open object was found at " +str(get_node("/root/Control").ticks) + " by " + unique_name)
 								objects_in_sight_of_guard.remove_at(objects_in_sight_of_guard.find(object))							
 		
 		
@@ -195,7 +196,8 @@ func _on_body_or_area_entered(body_area):
 				query.collision_mask = guard_sight_check_collision_mask
 				query.collide_with_areas = true
 				query.exclude = [burglar_area]
-
+				
+				
 				var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 				if(result):
 					if(result.collider.get_parent().is_in_group("Actor")):

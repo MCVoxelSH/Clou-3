@@ -113,6 +113,8 @@ var play_idle_anim_rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	
+	Engine.max_physics_steps_per_frame = 5000
+	
 	play_idle_anim_rng.randomize()
 	#connect signals
 	$PauseMenu/CloseMissionMenu.button_up.connect(_on_close_mission_menu_button_up)
@@ -135,8 +137,8 @@ func _ready() -> void:
 	if(Global.execute_plan):
 		play = true
 		play_music("res://assets/Clou original files/Audio/Music/Track04.ogg")
-	#else:
-		#play_music("res://assets/Clou original files/Audio/Music/Track03.ogg")
+	else:
+		play_music(str(get_node(burglary_target).music_track.resource_path))
 	if(play):
 		pause = false
 		
@@ -215,7 +217,8 @@ func _process(delta: float) -> void:
 		
 			if(Input.is_action_just_released("switch_to_previous_interaction")):
 				active_burglar.selected_interaction -= 1
-				
+			
+			#CTRl+ALT
 			if(Input.is_action_just_released("finalize_guard_replay")):
 				active_burglar.finalize_guard_replay = true
 	
@@ -230,7 +233,10 @@ func _process(delta: float) -> void:
 
 	if(!burglar_switcher.shown):
 		if(Input.is_action_just_released("ui_focus_next")):
-			switch_to_actor(active_burglar_index + 1)
+			var index = active_burglar_index + 1
+			if(index > number_of_burglars + number_of_guards):
+				index = 1
+			switch_to_actor(index)
 		if(Input.is_action_just_pressed("switch_to_burglar1")):
 			switch_to_actor(1)
 		if(Input.is_action_just_pressed("switch_to_burglar2")):
@@ -379,7 +385,7 @@ func _unhandled_input(event: InputEvent):
 				#var modifier = 1
 				#
 				if(highlighted_object.object_type == 0 || highlighted_object.object_type == 1 || highlighted_object.object_type == 4 || highlighted_object.object_type == 6):
-					if (abs(dir.x) == 1.0):
+					if (is_equal_approx(abs(dir.x),1.0)):
 						if(active_burglar.global_position.x < highlighted_object.global_position.x):
 							dir *= -1
 					else:
@@ -985,6 +991,7 @@ func pause_animations():
 	var nodes = (
 	get_tree().get_nodes_in_group("Interactable")
 	+ get_tree().get_nodes_in_group("Actor")
+	+ get_tree().get_nodes_in_group("moving")
 	)
 
 	for node in nodes:
@@ -998,11 +1005,12 @@ func resume_animations():
 	var nodes = (
 	get_tree().get_nodes_in_group("Interactable")
 	+ get_tree().get_nodes_in_group("Actor")
+	+ get_tree().get_nodes_in_group("moving")
 	)
 	
 	for node in nodes:
 		if(node.anim_player):
-			if(node.previous_animation_position == node.anim_player.current_animation_position && node.anim_player.is_animation_active() && node.anim_player.current_animation_position != 0.0 && node.anim_player.current_animation_position != node.current_animation_clip_length && node.current_animation_clip != ""):#&& !node.anim_player.is_playing()
+			if(is_equal_approx(node.previous_animation_position,node.anim_player.current_animation_position) && node.anim_player.is_animation_active() && node.anim_player.current_animation_position != 0.0 && node.anim_player.current_animation_position != node.current_animation_clip_length && node.current_animation_clip != ""):#&& !node.anim_player.is_playing()
 				if(!backwards):
 					#var play_backwards = false if node.previous_animation_dir > 0 else true
 					if (node.previous_animation_dir > 0):
@@ -1039,7 +1047,9 @@ func check_if_there_are_last_ticks_in_the_future_infront(actor):
 			actor.last_ticks.remove_at(i)
 			actor.last_ticks_index -= 1
 
-func caught(message):
+func caught(message:String):
+	if(typeof(message) == TYPE_BOOL):
+		return
 	caught_message = message
 	if(typeof(caught_message)!= TYPE_BOOL):
 		if(previous_caught_message != caught_message):
@@ -1076,7 +1086,7 @@ func update_interactables(delta):
 	)	
 	for node in nodes:
 		if(node.anim_player):
-			if(node.anim_player.is_playing()):
+			if(node.anim_player.is_playing()):	
 				if(backwards):
 					#REMINDER this and line 1421 is work in progress, maybe the logic is not correct
 					#if(node.previous_animation_dir > 0):
@@ -1091,9 +1101,12 @@ func update_interactables(delta):
 						else:
 							node.anim_player.advance(delta)
 					else:
-						node.anim_player.advance(delta)
+						if(node.previous_animation_dir == 1 && delta > (node.current_animation_clip_length - node.anim_player.current_animation_position)):
+							node.anim_player.advance(node.current_animation_clip_length - node.anim_player.current_animation_position)
+						else:
+							node.anim_player.advance(delta)
 					#REMINDER this fixes an issue, but maybe it causes others
-					if(node.anim_player.current_animation_position == node.current_animation_clip_length):
+					if(is_equal_approx(node.anim_player.current_animation_position,node.current_animation_clip_length)):
 						node.anim_player.pause()
 				else:
 					#if(node.previous_animation_dir < 0):
@@ -1103,16 +1116,19 @@ func update_interactables(delta):
 							#node.anim_player.advance(1.0/node.opening_time)
 					#elif(node.previous_animation_dir > 0):
 					if(node.is_in_group("Actor")):
-						if(node.current_animation_clip == "move"):
-							node.anim_player.advance(delta)
+						#if(node.current_animation_clip == "move"):
+							#node.anim_player.advance(delta)
+						#else:
+						node.anim_player.advance(delta)
+					else:
+						if(node.previous_animation_dir == 1 && delta > (node.current_animation_clip_length - node.anim_player.current_animation_position)):
+							node.anim_player.advance(node.current_animation_clip_length - node.anim_player.current_animation_position)
 						else:
 							node.anim_player.advance(delta)
-					else:
-						node.anim_player.advance(delta)
 			
-								
-					if(node.anim_player.current_animation_position > node.current_animation_clip_length):
-						node.anim_player.seek(node.current_animation_clip_length)
+				if(node.name == "Schaukasten"):
+					print(node.anim_player.current_animation_position)					
+	
 		#if(node.was_opened_by_burglar):
 			#print(active_burglar.name + " waiting at position " + str(active_burglar.global_position) + ", id: " + str(active_burglar.id))
 			#print(node.name + ", ticks: " + str(ticks) + ", anim position: " + str(node.anim_player.current_animation_position) + " with slider value: " + str(previous_slider_value))
@@ -1125,6 +1141,8 @@ func update_interactables(delta):
 				#node.previous_animation_dir = (node.anim_player.current_animation_position - node.previous_animation_position)*actual_timescale #get_node("/root/Control").actual_timescale  * anim_player.get_playing_speed()
 
 func print_caught_message(message):
+	if(typeof(message) == TYPE_BOOL):
+		return
 	if(!backwards):
 		if(message):
 			caught(message)
@@ -1171,7 +1189,10 @@ func is_waiting(actor:Node3D):
 			return true
 
 func switch_to_actor(index: int):
-
+	
+	if(index > number_of_burglars + number_of_guards):
+		return
+	
 	if(selected_tool):
 		selected_tool.visible = false
 		selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_INHERIT
@@ -1225,6 +1246,7 @@ func switch_to_actor(index: int):
 
 func _on_skip_to_start_button_button_up() -> void:
 	if(pause && !burglar_switcher.shown):
+		#_on_load_plan_button_up()
 		_on_h_slider_value_changed(-100.0)
 		play_until_ticks = 0
 		RenderingServer.render_loop_enabled = false
@@ -1274,6 +1296,7 @@ func _on_load_plan_button_up() -> void:
 	get_tree().paused = false
 	Global.load_replay = true
 	Global.execute_plan = false
+	Global.musicProgress = audio_player.get_playback_position()
 	get_tree().reload_current_scene()
 	
 func _on_execute_plan_button_up() -> void:
@@ -1414,7 +1437,7 @@ func _on_burglar_switcher_button_up() -> void:
 
 func play_music(name: String):
 	audio_player.stream = load(name)
-	audio_player.play()
+	audio_player.play(Global.musicProgress)   
 
 func object_occupied(actor:Node3D, object):
 	if(object):
@@ -1437,7 +1460,7 @@ func replay_backwards(actor:Node3D):
 			else:
 				actor.object_that_is_being_interacted_with = get_node(str(actor.replay[actor.id][1]))
 			#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-			if(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
+			if(actor.replay[actor.id][3]== "last" && is_equal_approx(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position,get_node(str(actor.replay[actor.id][1])).current_animation_clip_length)):
 				get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, true, true)
 			elif(actor.replay[actor.id][3]== "last" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
 				get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, false, true)
@@ -1519,7 +1542,7 @@ func replay_backwards(actor:Node3D):
 						actor.show_text_bubble("That won't work")
 				elif(actor.replay[actor.id][2] == "open"):
 					#TODO I disabled most of this, is this a good idea?
-					if(object_occupied(actor, object) && (object.anim_player.current_animation_position != 0.0 && object.anim_player.current_animation_position != object.current_animation_clip_length)):
+					if(object_occupied(actor, object) && (object.anim_player.current_animation_position != 0.0 && !is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length))):
 						actor.object_that_is_being_interacted_with = null
 						actor.show_text_bubble("someone is already working here!")
 					else:
@@ -1571,7 +1594,7 @@ func replay_backwards(actor:Node3D):
 		actor.finished_working = false
 		#actor.is_opening = false
 		
-		if(!found_object or found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+		if(!found_object or is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length)):
 			for i in range(actor.id, 0, -1):
 				if(typeof(actor.replay[i][1]) == TYPE_VECTOR3):
 					if(!(actor.global_position.is_equal_approx(actor.replay[i][1]))):
@@ -1623,7 +1646,7 @@ func replay_backwards(actor:Node3D):
 		if(found_door_or_window):
 			if(actor.waiting_positions.size() > 0):
 				var object_being_waited_for = get_node(actor.waiting_positions[found_index][1])
-				if((object_being_waited_for.damage == object_durability && !actor.is_guard) || (actor.is_guard && !object_being_waited_for.was_opened_by_burglar)):
+				if(((object_being_waited_for.damage == object_durability || object_being_waited_for.object_type == 1) && !actor.is_guard) || (actor.is_guard && !object_being_waited_for.was_opened_by_burglar)):
 					#if(get_node(actor.waiting_positions[actor.waiting_positions.size()-1][1]).anim_player.current_animation_position != 0 && get_node(actor.waiting_positions[actor.waiting_positions.size()-1][1]).anim_player.is_playing):
 					#actor.is_opening = true
 					if(actor.waiting_positions.size()> 0):
@@ -1660,9 +1683,9 @@ func replay_backwards(actor:Node3D):
 					actor.previous_animation_position = actor.anim_player.current_animation_position
 					var play_open_anim := false
 					if(found_door_or_window):
-						if(found_window and get_node(actor.replay[actor.id][3]).anim_player.current_animation_position != get_node(actor.replay[actor.id][3]).current_animation_clip_length):
+						if(found_window and !is_equal_approx(get_node(actor.replay[actor.id][3]).anim_player.current_animation_position,get_node(actor.replay[actor.id][3]).current_animation_clip_length)):
 							play_open_anim = true
-						elif(!found_window and (found_door_or_window or get_node(actor.replay[actor.id][1].anim_player).current_animation_position != get_node(actor.replay[actor.id][1]).current_animation_clip_length)):
+						elif(!found_window and (found_door_or_window or !is_equal_approx(get_node(actor.replay[actor.id][1].anim_player).current_animation_position,get_node(actor.replay[actor.id][1]).current_animation_clip_length))):
 							play_open_anim = true
 					if(play_open_anim):
 						if(actor.current_animation_clip != "open"):
@@ -1671,8 +1694,8 @@ func replay_backwards(actor:Node3D):
 						if(found_waiting_position):
 							actor.play_animation("idle", true, true)
 						elif(actor.replay[actor.id][2] == "open"):
-							var found_object = get_node(actor.replay[actor.id][3]) if found_window else get_node(actor.replay[actor.id][1])
-							if(found_object.anim_player.current_animation_position == 0.0 || found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+							var found_object = get_node(str(actor.replay[actor.id][3])) if found_window else get_node(str(actor.replay[actor.id][1]))
+							if(found_object.anim_player.current_animation_position == 0.0 || is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length)):
 								actor.play_animation("open", true, true)	
 							else:
 								if(actor.current_animation_clip == ""):
@@ -1696,7 +1719,7 @@ func replay_forwards(actor:Node3D):
 				if(actor.replay[actor.id][3]== "first" && object.anim_player.current_animation_position == 0.0):
 					object.play_animation(object.animation_name, false, true)
 					#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
-				if(actor.replay[actor.id][3]== "first" && object.anim_player.current_animation_position == object.current_animation_clip_length):
+				if(actor.replay[actor.id][3]== "first" && is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length)):
 						object.play_animation(object.animation_name, true, true)
 				if(actor.replay[actor.id][3]== "last"):
 					if(actor.replay[actor.id][0] == ticks or actor.replay[actor.id][0] == -1):
@@ -1807,7 +1830,7 @@ func replay_forwards(actor:Node3D):
 				elif(actor.replay[actor.id][2] == "open"):
 					if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard || (get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
 						#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-						if(object_occupied(actor,object) && (object.anim_player.current_animation_position != 0.0 && object.anim_player.current_animation_position != object.current_animation_clip_length)):
+						if(object_occupied(actor,object) && (object.anim_player.current_animation_position != 0.0 && !is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length))):
 							actor.object_that_is_being_interacted_with = null
 						else:
 							actor.object_that_is_being_interacted_with = object 
@@ -1819,7 +1842,7 @@ func replay_forwards(actor:Node3D):
 									get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = false
 								#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
 							#TODO add object closing when open
-							elif(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length && (get_node(str(actor.replay[actor.id][1])).object_type == 0 || get_node(str(actor.replay[actor.id][1])).object_type == 3)):
+							elif(actor.replay[actor.id][3]== "first" && is_equal_approx(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position, get_node(str(actor.replay[actor.id][1])).current_animation_clip_length) && (get_node(str(actor.replay[actor.id][1])).object_type == 0 || get_node(str(actor.replay[actor.id][1])).object_type == 3)):
 									get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, true, true)
 									#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
 							#elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
@@ -1843,7 +1866,7 @@ func replay_forwards(actor:Node3D):
 					if(!play && !Global.load_replay && !forwards && !actor.is_guard):
 						if(get_node(str(actor.replay[actor.id][1])).object_type == 4):
 							actor.show_text_bubble(get_node(str(actor.replay[actor.id][1])).unique_name + "\nvalue: " + str(get_node(str(actor.replay[actor.id][1])).value) + "$" + "\nweight: " + str(get_node(str(actor.replay[actor.id][1])).weight) + "kg")
-						elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
+						elif(is_equal_approx(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position, get_node(str(actor.replay[actor.id][1])).current_animation_clip_length)):
 							actor.is_zoomed_onto_object = true
 							for obj in get_tree().get_nodes_in_group("Interactable"):
 								if(obj.owner.name == get_node("/root/Control").burglary_target_name):
@@ -1930,7 +1953,7 @@ func replay_forwards(actor:Node3D):
 			found_window = true
 			found_object = get_node(str(actor.replay[actor.id][3]))
 			window_is_occupied = object_occupied(actor, found_object)
-			if(get_node(actor.replay[actor.id][3]).anim_player.current_animation_position != get_node(actor.replay[actor.id][3]).current_animation_clip_length || window_is_occupied):
+			if(!is_equal_approx(get_node(actor.replay[actor.id][3]).anim_player.current_animation_position,get_node(actor.replay[actor.id][3]).current_animation_clip_length) || window_is_occupied):
 				found_door_or_window = true
 
 			if(actor.id == actor.maxid-1):
@@ -1958,7 +1981,7 @@ func replay_forwards(actor:Node3D):
 					object_is_passable = true
 				
 			if(object_is_passable):							
-				if((!found_object.anim_player.is_playing() && found_object.anim_player.current_animation_position != found_object.current_animation_clip_length) || found_waiting_position):
+				if((!found_object.anim_player.is_playing() && !is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length)) || found_waiting_position):
 					#print("playing animation at ticks " + str(ticks) + " and id " + str(active_burglar.id))
 					found_object.play_animation(found_object.animation_name, false, true)
 					if(found_waiting_position):
@@ -2004,7 +2027,7 @@ func replay_forwards(actor:Node3D):
 					#debug_file.store_line(str(ticks) + " ," + str(backwards))
 					
 						
-				elif(found_object.anim_player.current_animation_position != found_object.current_animation_clip_length || window_is_occupied):
+				elif(!is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length) || window_is_occupied):
 					#actor.is_opening = true
 					#debug_file.store_line(str(ticks) + " ," + str(backwards))
 					if(found_waiting_position):
@@ -2047,7 +2070,7 @@ func replay_forwards(actor:Node3D):
 							#actor.change_ticks = true
 							#actor.replay[actor.id+i][0] += 1
 					#actor.maxid +=1
-				elif(found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+				elif(is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length)):
 					#if(actor.change_ticks):
 					pass
 			else:
@@ -2056,19 +2079,23 @@ func replay_forwards(actor:Node3D):
 				move = false
 				#REMINDER this is probably not optimal, but actors need to be stopped from proceeding in some cases meaning the id (index) should not change
 				#actor.is_waiting = true
-				for i in range(actor.replay.size()-1 - actor.id):
-					actor.replay.erase(actor.replay.back())
+				
+				var found_specific_tick = true if actor.replay[actor.replay.size()-1][0] != -1 else false
+				
+				if(!found_specific_tick):
+					for i in range(actor.replay.size()-1 - actor.id):
+						actor.replay.erase(actor.replay.back())
 					
-				for i in range(25):
-					var parts = []
-					parts.append(-1)
-					parts.append(actor.global_position)
-					parts.append("idle")
-					actor.replay.append(parts.duplicate())
+					for i in range(25):
+						var parts = []
+						parts.append(-1)
+						parts.append(actor.global_position)
+						parts.append("idle")
+						actor.replay.append(parts.duplicate())
 
 
-				actor.maxid = actor.id+26
-				actor.currentid = actor.maxid
+					actor.maxid = actor.id+26
+					actor.currentid = actor.maxid
 					
 					
 				#if(!forwards && !play):
@@ -2080,7 +2107,7 @@ func replay_forwards(actor:Node3D):
 					#pause_animations()
 					
 		
-		if(!found_object or found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+		if(!found_object or is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length)):
 			offset = actor.mesh_root.global_position - actor.replay[actor.id][1]
 		else:
 			offset = actor.mesh_root.global_position - found_object.global_position
@@ -2115,9 +2142,9 @@ func replay_forwards(actor:Node3D):
 					actor.previous_animation_position = actor.anim_player.current_animation_position
 					var play_open_anim := false
 					if(found_door_or_window):
-						if(found_window and get_node(actor.replay[actor.id][3]).anim_player.current_animation_position != get_node(actor.replay[actor.id][3]).current_animation_clip_length):
+						if(found_window and !is_equal_approx(get_node(actor.replay[actor.id][3]).anim_player.current_animation_position,get_node(actor.replay[actor.id][3]).current_animation_clip_length)):
 							play_open_anim = true
-						elif(!found_window  and (typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3 or get_node(actor.replay[actor.id][1].anim_player).current_animation_position != get_node(actor.replay[actor.id][1]).current_animation_clip_length)):
+						elif(!found_window  and (typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3 or !is_equal_approx(get_node(actor.replay[actor.id][1].anim_player).current_animation_position,get_node(actor.replay[actor.id][1]).current_animation_clip_length))):
 							play_open_anim = true
 					if(play_open_anim):
 						if(actor.current_animation_clip != "open"):
@@ -2126,8 +2153,8 @@ func replay_forwards(actor:Node3D):
 						if(window_is_occupied):
 							actor.play_animation("idle", false, true)
 						elif(actor.replay[actor.id][2] == "open"):
-							var found_object = get_node(actor.replay[actor.id][3]) if found_window else get_node(actor.replay[actor.id][1])
-							if(found_object.anim_player.current_animation_position == 0.0 || found_object.anim_player.current_animation_position == found_object.current_animation_clip_length):
+							var found_object = get_node(str(actor.replay[actor.id][3])) if found_window else get_node(str(actor.replay[actor.id][1]))
+							if(found_object.anim_player.current_animation_position == 0.0 || is_equal_approx(found_object.anim_player.current_animation_position,found_object.current_animation_clip_length)):
 								actor.play_animation("open", false, true)	
 							else:
 								if(actor.current_animation_clip == ""):

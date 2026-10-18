@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var spotlight = $Spotlight
+var anim_player:AnimationPlayer
 
 @export_enum("Door", "Window", "Switch", "Container","Loot","other", "Car", "CameraOrLaser", "Alarm") var object_type
 
@@ -11,6 +12,12 @@ var base_albedos: Array = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	camera_pos_node = $CameraPosNode
+	
+	for c in get_children():
+		if(c is AnimationPlayer):
+			anim_player = c
+			anim_player.current_animation = "Take 001"
+			break
 	
 	for c in GlobalFunctions.get_all_children(self):
 		if(c is MeshInstance3D):
@@ -32,6 +39,11 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 		if(!area.get_parent().is_guard):
 			get_node("/root/Control").print_caught_message(area.get_parent().name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
 	
+
+func _physics_process(delta: float) -> void:
+	
+	if(anim_player):
+		anim_player.seek(float(get_node("/root/Control").ticks % int(anim_player.current_animation_length * 60)) / 60.0, true)
 
 func toggle_power_state() -> void:
 	if(process_mode == Node.PROCESS_MODE_DISABLED):

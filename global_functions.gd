@@ -3,9 +3,9 @@ extends Node
 @export var interaction_point: Vector3 = Vector3.ZERO
 
 func get_interaction_forward(obj: Node3D) -> Vector3:
-	var forward :Vector3= obj.basis * obj.interaction_point.normalized()
+	var forward :Vector3= obj.basis * obj.interaction_point
 	forward.y = 0.0
-	return forward.normalized()
+	return forward
 
 func get_all_children(node):
 	var nodes : Array = []

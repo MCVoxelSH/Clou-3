@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cnpuq42allfgj"]
+
+[ext_resource type="PackedScene" uid="uid://b1jmxyemyxe88" path="res://assets/Scenes/DoorClou2.tscn" id="1_k0kka"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3hg32"]
+size = Vector3(0.453125, 1.4599609, 21.700195)
+
+[node name="Tür" unique_id=612355611 instance=ExtResource("1_k0kka")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+animation_end = 5
+interaction_point = Vector3(0, 0, -10)
+
+[node name="Door" parent="." index="0" unique_id=308604268]
+transform = Transform3D(-1.6292068e-07, 0, -1, 0, 1, 0, 1, 0, -1.6292068e-07, 0, 1.4372401, 0.055)
+
+[node name="Area3D" parent="." index="1" unique_id=1625466342]
+transform = Transform3D(-4.371139e-08, 0, 0.06881343, 0, 2.010108, 0, -1, 0, -3.0079306e-09, -0.06649077, -0.50490326, -0.88455766)
+
+[node name="CollisionShape3D" parent="Area3D" index="0" unique_id=260253587]
+transform = Transform3D(1, 0, 4.5474735e-13, 0, 1, 0, -1.8189894e-12, 0, 0.99999976, -0.8881763, 0.98068833, 0.12336275)
+shape = SubResource("BoxShape3D_3hg32")
+debug_color = Color(2.2140146e-06, 0.6068595, 0.69488966, 1)
+
+[node name="OutsideCheck" parent="." index="2" unique_id=1191086551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.21489322)
+
+[node name="InsideCheck" parent="." index="3" unique_id=2101058853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0312078)

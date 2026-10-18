@@ -781,7 +781,7 @@ shape = SubResource("BoxShape3D_enxpb")
 debug_color = Color(0.30473602, 0.62631327, 0.13499859, 0.41960785)
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=340251172]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.50627947, 1.6825235, 7.0942307)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 2.842171e-15, 0.07899356, 0.25515866)
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=2113153545]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.0221131, -0.16515715, 0)

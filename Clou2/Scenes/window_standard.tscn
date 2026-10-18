@@ -35,7 +35,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019807994, 0, 0)
 shape = SubResource("BoxShape3D_8o7sn")
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=1374438171]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50627947, 1.6825235, 7.0942307)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.19123793, 0, 0)
 
 [node name="Area3D" type="StaticBody3D" parent="." unique_id=1625466342]
 transform = Transform3D(1, 0, 0, 0, 2.010108, 0, 0, 0, 0.06881343, -0.014101803, 0, 7.450581e-09)

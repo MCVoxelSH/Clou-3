@@ -446,7 +446,7 @@ func set_target_position(target_position: Vector3, record: bool):
 				comparision_position.y = mesh_root.global_position.y
 				
 			#if(!is_zoomed_onto_object):
-			if(mesh_root.global_position.distance_squared_to(comparision_position)>2):
+			if(mesh_root.global_position.distance_squared_to(comparision_position)>2 && !is_zoomed_onto_object):
 			
 				var first_vec = true
 				for v in path:
@@ -580,7 +580,7 @@ func set_target_position(target_position: Vector3, record: bool):
 							
 					#if is door or container
 					if((control.highlighted_object.object_type == 0 || control.highlighted_object.object_type == 3 ) && control.selected_tool == null):#(control.highlighted_object.object_type == 1 && inside)):
-						for j in range(control.highlighted_object.opening_time):
+						for j in range(control.highlighted_object.opening_time+1):
 							parts.clear()
 							parts.append(-1)
 							parts.append(str(control.highlighted_object.get_path()))	
@@ -643,7 +643,7 @@ func set_target_position(target_position: Vector3, record: bool):
 					
 					
 					if(control.highlighted_object.object_type == 2):
-						for j in range(control.highlighted_object.opening_time):
+						for j in range(control.highlighted_object.opening_time+1):
 							parts.clear()			
 							parts.append(-1)
 							parts.append(str(control.highlighted_object.get_path()))	
@@ -770,7 +770,7 @@ func load_replay():
 				parts = line.split(("|"))
 				var temp:Array
 				temp.append(int(parts[0]))
-				if(parts[2] == "move" || parts[2] == "movethroughwindow" || parts[2] == "moveinsidecar"):
+				if(parts[2] == "move" || parts[2] == "movethroughwindow" || parts[2] == "moveinsidecar" || parts[2] == "idle"):
 					var vec = string_to_vector3(parts[1])
 					temp.append(vec)
 				else:
@@ -941,6 +941,8 @@ func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 			name += "high"
 	
 	if clip == null:
+		if(!current_animation_clip):
+			return
 		clip = ANIMATIONS.get(current_animation_clip)
 		name = current_animation_clip
 	

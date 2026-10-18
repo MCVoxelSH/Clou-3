@@ -19,7 +19,7 @@ object_type = 0
 object_material = 0
 
 [node name="Door" type="Node3D" parent="." unique_id=308604268]
-transform = Transform3D(-1.1211131e-08, 0, -1, 0, 2.010108, 0, 0.06881343, 0, -1.6292068e-07, -0.8693336, 1.9338678, 0.05480974)
+transform = Transform3D(-1.6292068e-07, 0, -1, 0, 1, 0, 1, 0, -1.6292068e-07, -0.8693336, 1.9338678, 0.05480974)
 
 [node name="Area3D" type="StaticBody3D" parent="." unique_id=1625466342]
 transform = Transform3D(1, 0, 2.2974768e-06, 0, 2.010108, 0, 4.051955e-09, 0, 0.06881343, 0, 0, 7.450581e-09)

@@ -22,19 +22,25 @@ show_path = false
 is_guard = true
 
 [node name="Area3D2" type="Area3D" parent="Robot" parent_id_path=PackedInt32Array(2137937786) index="0" unique_id=2106648720]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0458031e-07, 0, 0.69260406)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0458031e-07, 0.33758223, 0.69260406)
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Robot/Area3D2" index="0" unique_id=669896763]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 1.0458031e-07, 0.6290839, -0.69260406)
 shape = SubResource("ConvexPolygonShape3D_tuw5j")
 
+[node name="RayCast3D" parent="Robot" parent_id_path=PackedInt32Array(2137937786) index="1" unique_id=1334004488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33758223, 0)
+
 [node name="SpotlightGuard" parent="Robot" parent_id_path=PackedInt32Array(2137937786) index="2" unique_id=1547308914 instance=ExtResource("3_tuw5j")]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0.33758223, 0)
 
 [node name="Plane" parent="Robot/SpotlightGuard" index="0" unique_id=1556755674]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6290839, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_tuw5j")
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1219912384) index="0" unique_id=828623892]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="TextBubble" parent="." index="4" unique_id=1432405381]
 visible = false

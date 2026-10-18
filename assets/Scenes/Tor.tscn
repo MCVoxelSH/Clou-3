@@ -1,0 +1,141 @@
+[gd_scene format=4 uid="uid://d2f6f5jama4tw"]
+
+[ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://assets/scripts/Interactable/interactable.gd" id="1_um2gd"]
+[ext_resource type="PackedScene" uid="uid://cru2vbt81e11w" path="res://Clou2/Clou2_unpack_new_textures/models/Tore/Tor_Klein [Rotbraun]_175.glb" id="2_sv6t5"]
+[ext_resource type="Texture2D" uid="uid://b03yv5rralj3r" path="res://Clou2/Clou2_unpack_new_textures/models/Tore/Tor_Klein [Rotbraun]_175_Image_1.png" id="3_um2gd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t4my8"]
+size = Vector3(0.056404382, 0.34113005, 0.25529283)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t6ydc"]
+size = Vector3(2.081543, 2.4047766, 0.13995689)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_enxpb"]
+size = Vector3(2.081543, 2.5798297, 0.13995689)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fdr27"]
+resource_name = "tor_1_anim_tor_1_lambert3_tuer_kShape27"
+cull_mode = 2
+albedo_texture = ExtResource("3_um2gd")
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0nje2"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, 0, 1, 1.0039907, 1e-05),
+"format": 34359742465,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAAACAAMA"),
+"name": "tor_1_anim_tor_1_lambert3_tuer_kShape27",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AAAAvwAAAL8AAAAAAAAAPwAAAL8AAAAAAAAAPwAAAD8AAAAAAAAAv4gFAT84t0Em")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rdysw"]
+resource_name = "Tor_Klein [Rotbraun]_175_tuer_kShape27"
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, 0, 1, 1.0039907, 1e-05),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAH8/AAAAAAAAfz8AAH0/AAAAAAAAAAAAAH8/AAB9PwAAAAAAAH0/"),
+"format": 34359742487,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUA"),
+"material": SubResource("StandardMaterial3D_fdr27"),
+"name": "tor_1_anim_tor_1_lambert3_tuer_kShape27",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AAAAvwAAAL8AAAAAAAAAPwAAAL8AAAAAAAAAPwAAAD8AAAAAAAAAvwAAAL8AAAAAAAAAPwAAAD8AAAAAAAAAv4gFAT84t0Em/////73/3r//////////v/////+9/96//////73/3r//////vf/ev/////98/76/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_0nje2")
+
+[node name="Tor_Klein [Rotbraun]_175" type="Node3D" unique_id=240671488 node_paths=PackedStringArray("related_objects") groups=["Interactable"]]
+script = ExtResource("1_um2gd")
+is_breakable = true
+lock_type = 0
+object_type = 0
+object_material = 1
+related_objects = [null]
+animation_end = 8
+interaction_point = Vector3(0, 0, 1)
+
+[node name="Area3D" type="StaticBody3D" parent="." unique_id=1461490372]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=61461900]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_t4my8")
+
+[node name="OutsideCheck" type="Area3D" parent="." unique_id=1237571566]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.0077352, -0.19429392, 0.011248417)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OutsideCheck" unique_id=781434182]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 1.6875362, 0.02949965)
+shape = SubResource("BoxShape3D_t6ydc")
+debug_color = Color(0, 0.65133226, 0.06976195, 0.41960785)
+
+[node name="InsideCheck" type="Area3D" parent="." unique_id=1278445991]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.0035609305, -0.17390554, -0.010178193)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InsideCheck" unique_id=577105127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09790039, 1.5936449, -0.06731275)
+shape = SubResource("BoxShape3D_enxpb")
+debug_color = Color(0.30473602, 0.62631327, 0.13499859, 0.41960785)
+
+[node name="CameraPosNode" type="Node3D" parent="." unique_id=763389714]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 2.6645353e-15, 0.07899356, 0.25515866)
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." unique_id=37239957]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.0221131, -0.16515715, 0)
+vertices = PackedVector3Array(-1, 0, -0.5, -1, 0, 0.5, -0.6, 0, 0.5, -0.6, 0, -0.5)
+affect_navigation_mesh = true
+
+[node name="NavigationObstacle3D2" type="NavigationObstacle3D" parent="." unique_id=1055024200]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.17, -0.165, 0)
+vertices = PackedVector3Array(-0.9, 0, -0.5, -0.9, 0, 0.5, -0.5, 0, 0.5, -0.5, 0, -0.5)
+affect_navigation_mesh = true
+
+[node name="Tor_Klein [Rotbraun]_175" parent="." unique_id=159102701 instance=ExtResource("2_sv6t5")]
+
+[node name="group72_rotatePivot_rz" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group72/group72_rotatePivot" parent_id_path=PackedInt32Array(159102701, 1495014356) index="0" unique_id=1803097208]
+transform = Transform3D(1, -1.4210855e-14, 7.1054274e-15, 1.4210855e-14, 1, -4.2619315e-22, -7.1054274e-15, 4.2619325e-22, 1, 0, 0, 0)
+
+[node name="pSphere44_rotatePivot_ry" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group72/group72_rotatePivot/group72_rotatePivot_rz/group72_rotatePivot_ry/group72_rotatePivot_rx/group72_scalePivotTranslate/group72_scalePivot/group72_pivot/pSphere44/pSphere44_rotatePivot/pSphere44_rotatePivot_rz" parent_id_path=PackedInt32Array(159102701, 986445805) index="0" unique_id=1744420555]
+transform = Transform3D(-0.99999857, -7.116059e-15, -0.0017453743, -7.116056e-15, 1, -8.925098e-18, 0.0017453743, 3.4950953e-18, -0.99999857, 0, 0, 0)
+
+[node name="pSphere44_scalePivot" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group72/group72_rotatePivot/group72_rotatePivot_rz/group72_rotatePivot_ry/group72_rotatePivot_rx/group72_scalePivotTranslate/group72_scalePivot/group72_pivot/pSphere44/pSphere44_rotatePivot/pSphere44_rotatePivot_rz/pSphere44_rotatePivot_ry/pSphere44_rotatePivot_rx/pSphere44_scalePivotTranslate" parent_id_path=PackedInt32Array(159102701, 1242115891) index="0" unique_id=448205607]
+transform = Transform3D(0.010000083, 7.4541956e-10, -1.13387144e-13, -8.74235e-10, 0.008526606, 3.5835826e-20, -1.008181e-13, 1.9653325e-20, -0.011246798, 0.21650635, 0, 0)
+
+[node name="tuer_k28_scalePivot" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group72/group72_rotatePivot/group72_rotatePivot_rz/group72_rotatePivot_ry/group72_rotatePivot_rx/group72_scalePivotTranslate/group72_scalePivot/group72_pivot/tuer_k28/tuer_k28_rotatePivot/tuer_k28_rotatePivot_rz/tuer_k28_rotatePivot_ry/tuer_k28_rotatePivot_rx/tuer_k28_scalePivotTranslate" parent_id_path=PackedInt32Array(159102701, 1852753799) index="0" unique_id=523230398]
+transform = Transform3D(0.13038467, 2.388656e-08, -3.5527133e-15, -1.139859e-08, 0.2732304, 5.385475e-16, -1.3979893e-15, 4.4408895e-16, -0.33134684, -0.5, -0.5, 0)
+
+[node name="tuer_kShape28" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group72/group72_rotatePivot/group72_rotatePivot_rz/group72_rotatePivot_ry/group72_rotatePivot_rx/group72_scalePivotTranslate/group72_scalePivot/group72_pivot/tuer_k28/tuer_k28_rotatePivot/tuer_k28_rotatePivot_rz/tuer_k28_rotatePivot_ry/tuer_k28_rotatePivot_rx/tuer_k28_scalePivotTranslate/tuer_k28_scalePivot/tuer_k28_pivot" parent_id_path=PackedInt32Array(159102701, 353280319) index="0" unique_id=1567491753]
+mesh = SubResource("ArrayMesh_rdysw")
+
+[node name="group73_rotatePivot_rz" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group73/group73_rotatePivot" parent_id_path=PackedInt32Array(159102701, 1811840183) index="0" unique_id=769949998]
+transform = Transform3D(1, -1.4210855e-14, 7.1054274e-15, 1.4210855e-14, 1, -4.2619315e-22, -7.1054274e-15, 4.2619325e-22, 1, 0, 0, 0)
+
+[node name="pSphere43_rotatePivot_ry" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group73/group73_rotatePivot/group73_rotatePivot_rz/group73_rotatePivot_ry/group73_rotatePivot_rx/group73_scalePivotTranslate/group73_scalePivot/group73_pivot/pSphere43/pSphere43_rotatePivot/pSphere43_rotatePivot_rz" parent_id_path=PackedInt32Array(159102701, 562165931) index="0" unique_id=1691067211]
+transform = Transform3D(-0.99999857, -7.116059e-15, -0.0017453743, -7.116056e-15, 1, -8.925098e-18, 0.0017453743, 3.4950953e-18, -0.99999857, 0, 0, 0)
+
+[node name="pSphere43_scalePivot" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group73/group73_rotatePivot/group73_rotatePivot_rz/group73_rotatePivot_ry/group73_rotatePivot_rx/group73_scalePivotTranslate/group73_scalePivot/group73_pivot/pSphere43/pSphere43_rotatePivot/pSphere43_rotatePivot_rz/pSphere43_rotatePivot_ry/pSphere43_rotatePivot_rx/pSphere43_scalePivotTranslate" parent_id_path=PackedInt32Array(159102701, 1184343212) index="0" unique_id=1728395895]
+transform = Transform3D(0.01080034, -8.0507184e-10, 1.022882e-12, 9.441957e-10, 0.009208948, 8.9257454e-20, 9.094948e-13, -1.2565006e-22, -0.012146825, 0.21650633, 0, 0)
+
+[node name="tuer_k27_scalePivot" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group73/group73_rotatePivot/group73_rotatePivot_rz/group73_rotatePivot_ry/group73_rotatePivot_rx/group73_scalePivotTranslate/group73_scalePivot/group73_pivot/tuer_k27/tuer_k27_rotatePivot/tuer_k27_rotatePivot_rz/tuer_k27_rotatePivot_ry/tuer_k27_rotatePivot_rx/tuer_k27_scalePivotTranslate" parent_id_path=PackedInt32Array(159102701, 1853829911) index="0" unique_id=1262768285]
+transform = Transform3D(0.13038467, 2.388656e-08, -3.5527133e-15, -1.139859e-08, 0.2732304, 5.385475e-16, -1.3979893e-15, 4.4408895e-16, -0.33134684, 0.5, -0.5, 0)
+
+[node name="tuer_kShape27" parent="Tor_Klein [Rotbraun]_175/Z_up_to_Y_up/Tor_Klein/tor_1_anim_tor_1_group1/group73/group73_rotatePivot/group73_rotatePivot_rz/group73_rotatePivot_ry/group73_rotatePivot_rx/group73_scalePivotTranslate/group73_scalePivot/group73_pivot/tuer_k27/tuer_k27_rotatePivot/tuer_k27_rotatePivot_rz/tuer_k27_rotatePivot_ry/tuer_k27_rotatePivot_rx/tuer_k27_scalePivotTranslate/tuer_k27_scalePivot/tuer_k27_pivot" parent_id_path=PackedInt32Array(159102701, 1033255223) index="0" unique_id=2058695245]
+mesh = SubResource("ArrayMesh_rdysw")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="area_entered" from="OutsideCheck" to="." method="_on_outside_check_area_entered"]
+[connection signal="mouse_entered" from="OutsideCheck" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="OutsideCheck" to="." method="_on_area_3d_mouse_exited"]
+[connection signal="area_entered" from="InsideCheck" to="." method="_on_inside_check_area_entered"]
+[connection signal="mouse_entered" from="InsideCheck" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="InsideCheck" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="Tor_Klein [Rotbraun]_175"]

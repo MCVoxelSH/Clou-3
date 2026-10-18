@@ -54,6 +54,7 @@ Item="tools or loot"
 burglar_in_burglar_switcher=""
 change_scene=""
 apply_to_navmesh=""
+moving="all objects that are animated and which are not interactable"
 
 [input]
 

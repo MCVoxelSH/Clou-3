@@ -119,7 +119,7 @@ func _ready() -> void:
 				current_animation_clip_length = clip.end / get_node("/root/Control/").FPS 
 				#do I need to make this longer like before (add a factor like 1.1 to it?)
 				#FIXME for less physics ticks this results in less opening_time which makes no sense, I kinda fixed this with the constant 60.0
-				opening_time = current_animation_clip_length * Engine.physics_ticks_per_second * 1.1
+				opening_time = ceil(current_animation_clip_length * Engine.physics_ticks_per_second)
 				anim_player.pause()
 				
 				var sum = 0.0
@@ -157,8 +157,10 @@ func _physics_process(delta: float) -> void:
 		var index = int(floor(control.hover_over_timer))
 		
 		if(previous_index != index):
-			var i := 0
+			
 			for c in get_all_children(related_objects[previous_index]):
+				var i := 0
+				
 				if(c.owner.name != "Spotlight" && c.name != "Spotlight"):
 					if(c is MeshInstance3D):
 						var count = c.get_surface_override_material_count()
@@ -170,8 +172,8 @@ func _physics_process(delta: float) -> void:
 		
 		previous_index = index
 		
-		var i := 0
 		for c in get_all_children(related_objects[index]):
+			var i := 0
 			if(c.owner.name != "Spotlight" && c.name != "Spotlight"):
 				if(c is MeshInstance3D):
 					var count = c.get_surface_override_material_count()
@@ -187,8 +189,9 @@ func _physics_process(delta: float) -> void:
 	elif(was_being_hovered_over):
 		
 		for obj in related_objects:
-			var i := 0	
 			for c in get_all_children(obj):
+				var i := 0	
+				
 				if(c.owner.name != "Spotlight" && c.name != "Spotlight"):
 					if(c is MeshInstance3D):
 						var count = c.get_surface_override_material_count()
@@ -197,6 +200,7 @@ func _physics_process(delta: float) -> void:
 							c.set_surface_override_material(j, mesh_material)
 							mesh_material.albedo_color = base_albedos[i][j] * 1.0
 						i += 1
+		was_being_hovered_over = false
 						
 func update_interactable(delta):
 	
@@ -238,7 +242,7 @@ func update_interactable(delta):
 	
 	
 	if(anim_player && (object_type == 0 ||  object_type == 1)):
-		if(is_breakable && anim_position == current_animation_clip_length && !control.pause):
+		if(is_breakable && is_equal_approx(anim_position,current_animation_clip_length) && !control.pause):
 			var min_distance= INF
 			for actor in get_tree().get_nodes_in_group("Actor"):
 				if((actor.is_guard && !was_opened_by_burglar) || (!actor.is_guard && was_opened_by_burglar)):
@@ -260,7 +264,7 @@ func update_interactable(delta):
 	
 			
 	if(anim_player && (object_type == 0 ||  object_type == 1)):	
-		if(previous_animation_position != current_animation_clip_length  && anim_position == current_animation_clip_length  && !control.pause && !control.backwards):
+		if(!is_equal_approx(previous_animation_position,current_animation_clip_length)  && is_equal_approx(anim_position,current_animation_clip_length)  && !control.pause && !control.backwards):
 			append_door_opening("forwards")
 			
 	
@@ -270,13 +274,14 @@ func update_interactable(delta):
 		return
 	
 	var clip = ANIMATIONS[current_animation_clip]
-
-	if (anim_position * get_node("/root/Control/").FPS >= clip.end && previous_animation_dir == 1) || (previous_animation_dir == -1 && anim_position *  get_node("/root/Control/").FPS <= clip.start):
+	#if(name == "Tür [Schwarzes Glas]"):
+		#print(anim_position * get_node("/root/Control/").FPS)
+	if (is_equal_approx(anim_position, current_animation_clip_length) && previous_animation_dir == 1) || (previous_animation_dir == -1 && is_equal_approx(anim_position, clip.end)):
 		if clip.loop:
 			if(!get_node("/root/Control/").backwards):
 				anim_player.seek(clip.start / get_node("/root/Control/").FPS, true)
 			else:
-				anim_player.seek(clip.end /  get_node("/root/Control/").FPS, true)
+				anim_player.seek(current_animation_clip_length, true)
 		else:
 			anim_player.pause()
 			current_animation_clip = ""			
@@ -480,19 +485,3 @@ func play_animation(name:String, backwards:bool, save_anim_direction:bool):
 	#var source = "Source:" + frame[0]["source"]
 	#var function = "Function:" + frame[0]["function"]
 	#print("%s - %s - %s" % [source,function,line])
-
-
-func _on_inside_check_mouse_entered() -> void:
-	pass # Replace with function body.
-
-
-func _on_inside_check_mouse_exited() -> void:
-	pass # Replace with function body.
-
-
-func _on_outside_check_mouse_entered() -> void:
-	pass # Replace with function body.
-
-
-func _on_outside_check_mouse_exited() -> void:
-	pass # Replace with function body.

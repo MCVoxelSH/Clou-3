@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://8futm6xbxjpu"]
+
+[ext_resource type="PackedScene" uid="uid://ceodpos6gilhc" path="res://Clou2/Scenes/Camera.tscn" id="1_ixksa"]
+
+[sub_resource type="Animation" id="Animation_ixksa"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.23381013, -0.537302, -0.21630947, 0.7809286)
+
+[sub_resource type="Animation" id="Animation_lj5bm"]
+resource_name = "Take 001"
+length = 16.0
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.06666667, 1, -0.41084683, -0.47139072, -0.33656186, 0.70407504, 8, 1, -0.5004483, -0.6816913, -0.17782173, 0.5032176, 16, 1, -0.41084683, -0.47139072, -0.33656186, 0.70407504)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k0w4g"]
+_data = {
+&"RESET": SubResource("Animation_ixksa"),
+&"Take 001": SubResource("Animation_lj5bm")
+}
+
+[node name="MovingCamera" unique_id=1060649190 instance=ExtResource("1_ixksa")]
+transform = Transform3D(0.32903346, 0.5890977, -0.7380384, -0.086591184, 0.79708594, 0.5976251, 0.9403398, -0.13273099, 0.31327868, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=1054809706]
+libraries/ = SubResource("AnimationLibrary_k0w4g")
+
+[editable path="cone ohne cone_2695"]
