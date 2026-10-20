@@ -53,14 +53,27 @@ var base_albedos = []
 
 var floor_disabled = false
 
+var is_ground_floor_window = false
+
 @export var animation_end := 0
 
 @export var interaction_point: Vector3
+
+var floor = 0
+
+@onready var control = get_node("/root/Control")
 
 var area:Node3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
+	if(object_type == 1):
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create($OutsideCheck.global_position, $OutsideCheck.global_position + (Vector3.DOWN *2.0))
+		var result = space_state.intersect_ray(query)
+		if(result):
+			is_ground_floor_window = true
+
 	match object_type:
 		1: animation_end = 8
 		2: animation_end = 8
@@ -140,7 +153,6 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 
-	var control = get_node("/root/Control")
 	#REMINDER this was a quick fix, maybe I should make it more efficient, since right now it double checks this
 	if(anim_player):
 		if anim_player.current_animation_position != 0.0 && was_opened_by_burglar:
@@ -220,16 +232,15 @@ func update_interactable(delta):
 		
 		if anim_position != 0.0 && was_opened_by_burglar:
 			if related_objects && (object_type == 0 || object_type == 1):
-				if !floor_disabled:
+				if(GlobalFunctions.find_currently_enabled_floor() > control.active_burglar.current_floor):
 					disable_floor()
 					floor_disabled = true
 		
 		if anim_position == 0.0 && previous_animation_position != 0.0:
 			if !control.active_burglar.inside:
 				if related_objects && (object_type == 0 || object_type == 1):
-					if(floor_disabled):
+					if(GlobalFunctions.find_currently_enabled_floor() < control.active_burglar.current_floor):
 						enable_floor()
-						floor_disabled = false
 					
 			close_door = false
 		if(close_door && !control.pause):
@@ -358,23 +369,25 @@ func append_door_opening(direction:String):
 
 func _on_inside_check_area_entered(area: Area3D) -> void:
 	if(area.get_parent().is_in_group("Actor")):
-		area.get_parent().inside = true
-		if(area.owner == get_node("/root/Control").active_burglar):
-			get_node("/root/Control").disable_spring_arm()
-		if(area.get_parent() == get_node("/root/Control").active_burglar):
-			if(!floor_disabled):
-				disable_floor()
-				floor_disabled = true
+		if(object_type != 1 || is_ground_floor_window):
+			area.get_parent().inside = true
+			if(area.owner == get_node("/root/Control").active_burglar):
+				get_node("/root/Control").disable_spring_arm()
+			if(area.get_parent() == get_node("/root/Control").active_burglar):
+				if(GlobalFunctions.find_currently_enabled_floor() > control.active_burglar.current_floor):
+					disable_floor()
+					floor_disabled = true
 	
 func _on_outside_check_area_entered(area: Area3D) -> void:
-	if(area.get_parent().is_in_group("Actor")):
-		area.get_parent().inside = false
-		if(area.owner == get_node("/root/Control").active_burglar):
-			get_node("/root/Control").enable_spring_arm()
-		if(area.get_parent() == get_node("/root/Control").active_burglar):
-			if(!floor_disabled):
-				disable_floor()
-				floor_disabled = true
+	if(object_type != 1 || is_ground_floor_window):
+		if(area.get_parent().is_in_group("Actor")):
+			area.get_parent().inside = false
+			if(area.owner == get_node("/root/Control").active_burglar):
+				get_node("/root/Control").enable_spring_arm()
+			if(area.get_parent() == get_node("/root/Control").active_burglar):
+				if(GlobalFunctions.find_currently_enabled_floor() > control.active_burglar.current_floor):
+					disable_floor()
+					floor_disabled = true
 			
 func replay_door_animation():	
 	#TODO this whole thing doesnt work yet	
@@ -411,11 +424,17 @@ func enable_floor():
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
 						continue
-				c.set_deferred("visible", true)
+				if(c.process_mode != ProcessMode.PROCESS_MODE_DISABLED):
+					#c.set_deferred("visible", true)
+					if(c is MeshInstance3D):
+						c.set_layer_mask_value(1, true)
+						c.set_layer_mask_value(3, true)
 				
 				if(c is CollisionObject3D):
 					c.collision_layer = 1
 		
+		get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i)).process_mode = Node.PROCESS_MODE_INHERIT
+
 		#get_node(str(related_objects[0])+"/Floor"+str(i)).process_mode = Node.PROCESS_MODE_ALWAYS
 		
 			#for c in get_all_children(get_node(str(related_objects[0])+"/Floor"+str(i))):
@@ -435,10 +454,16 @@ func disable_floor():
 				if(c.is_in_group("Interactable")):
 					if(c.object_type == 4):
 						continue
-				c.set_deferred("visible", false)
+				#c.set_deferred("visible", false)
+				if(c is MeshInstance3D):
+					c.set_layer_mask_value(1, false)
+					c.set_layer_mask_value(3, true)
 		
 				if(c is CollisionObject3D):
 					c.collision_layer = 2
+		
+		get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i)).process_mode = Node.PROCESS_MODE_DISABLED
+
 					
 		#get_node(str(related_objects[0])+"/Floor"+str(i)).process_mode = Node.PROCESS_MODE_DISABLED
 

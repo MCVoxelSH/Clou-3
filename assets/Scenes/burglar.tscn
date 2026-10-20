@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c43ocs4fanb6d" path="res://assets/Scenes/Items/Tools/Axe.tscn" id="4_7v5qx"]
 [ext_resource type="PackedScene" uid="uid://bnfrbr7j8bilv" path="res://assets/Scenes/Items/Tools/soldering_iron.tscn" id="4_uyv7r"]
 [ext_resource type="PackedScene" uid="uid://baelrphj8f8qr" path="res://assets/Scenes/Items/Tools/drill.tscn" id="7_i1uo5"]
+[ext_resource type="PackedScene" uid="uid://bp0lr35ip2spn" path="res://assets/Scenes/Items/Tools/lockpick.tscn" id="7_ky44y"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wo13b"]
 height = 2.7579346
@@ -23,7 +24,6 @@ disable_receive_shadows = true
 
 [node name="RobotBase" type="Marker3D" unique_id=916284773 groups=["Actor"]]
 script = ExtResource("1_ucjbi")
-character_speed = 1.0
 
 [node name="Robot" type="Node3D" parent="." unique_id=2137937786]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
@@ -120,6 +120,11 @@ visible = false
 
 [node name="Drill" parent="Bag/SubViewport/Camera" unique_id=1009371699 instance=ExtResource("7_i1uo5")]
 visible = false
+
+[node name="Lockpick" parent="Bag/SubViewport/Camera" unique_id=430073392 instance=ExtResource("7_ky44y")]
+visible = false
+tool_efficencies = Array[float]([50.0, 0.0, 0.0])
+loudness = Array[float]([10.0, 10.0, 10.0])
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Bag/SubViewport" unique_id=1023737730]
 layers = 4

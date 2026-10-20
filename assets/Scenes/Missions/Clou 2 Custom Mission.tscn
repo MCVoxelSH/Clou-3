@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://ceodpos6gilhc" path="res://Clou2/Scenes/Camera.tscn" id="20_l20mr"]
 [ext_resource type="Texture2D" uid="uid://c7uv1q8vj56jk" path="res://Clou2/Clou2_unpack_new_textures/models/Wände/Außenwände/W_A3_xxxx [Steine]_1163_0.png" id="23_63smi"]
 [ext_resource type="PackedScene" uid="uid://do8e1vhs0ky8t" path="res://assets/Scenes/Items/Loot/loot.tscn" id="24_focqe"]
+[ext_resource type="PackedScene" uid="uid://cg0s0m5forc8x" path="res://Clou2/Clou2_unpack_new_textures/models/Türen/Tür [SchwarzesGlas]_802.glb" id="25_0g10l"]
 [ext_resource type="PackedScene" uid="uid://cuptcctd3goqb" path="res://Clou2/Clou2_unpack_new_textures/models/Items/Beute/Diamantcollier_2692.glb" id="26_efmtr"]
 [ext_resource type="PackedScene" uid="uid://bbeugjalxphl7" path="res://Clou2/Clou2_unpack/models/Kisten/Kiste0.4 [Trouble]_2079.glb" id="26_ehcll"]
 [ext_resource type="PackedScene" uid="uid://c5vg06k5tqs6g" path="res://Clou2/Clou2_unpack/models/Kisten/Kiste0.4_1594.glb" id="27_2yd4f"]
@@ -47,36 +48,6 @@
 [ext_resource type="PackedScene" uid="uid://c1qknp3wtqnfw" path="res://Clou2/Clou2_unpack_new_textures/models/Characters/Wachmann_2765.glb" id="39_0g10l"]
 [ext_resource type="PackedScene" uid="uid://2k06cjel3jaa" path="res://Clou2/Scenes/timed_switch.tscn" id="40_gg6q6"]
 [ext_resource type="PackedScene" uid="uid://ycpm1top0hum" path="res://Clou2/Clou2_unpack_new_textures/models/Fischerboot_1017.glb" id="41_gg6q6"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_qv1rm"]
-size = Vector3(0.9699471, 0.13399053, 0.11603923)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1vjij"]
-size = Vector3(0.045823336, 0.04281199, 0.86178243)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_nqrqp"]
-size = Vector3(0.041066468, 0.046200126, 0.86178243)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_sw3p7"]
-size = Vector3(0.041066468, 0.04620012, 0.86178243)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7ewfm"]
-size = Vector3(0.0444656, 0.044866808, 0.86178243)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4tlhu"]
-size = Vector3(0.052275687, 0.3316325, 0.41137195)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_cwkno"]
-size = Vector3(0.33163255, 0.052275687, 0.5048159)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_k7nx7"]
-size = Vector3(0.052275658, 0.33163252, 0.5048159)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_yfh70"]
-size = Vector3(0.33163255, 0.052275687, 0.5048159)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_l20mr"]
-size = Vector3(0.52441335, 0.5057858, 0.18265331)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s6j21"]
 size = Vector3(0.25, 0.25, 0.001)
@@ -365,6 +336,36 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1ef1y")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qv1rm"]
+size = Vector3(0.9699471, 0.13399053, 0.11603923)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1vjij"]
+size = Vector3(0.045823336, 0.04281199, 0.86178243)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqrqp"]
+size = Vector3(0.041066468, 0.046200126, 0.86178243)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sw3p7"]
+size = Vector3(0.041066468, 0.04620012, 0.86178243)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ewfm"]
+size = Vector3(0.0444656, 0.044866808, 0.86178243)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4tlhu"]
+size = Vector3(0.052275687, 0.3316325, 0.41137195)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cwkno"]
+size = Vector3(0.33163255, 0.052275687, 0.5048159)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k7nx7"]
+size = Vector3(0.052275658, 0.33163252, 0.5048159)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yfh70"]
+size = Vector3(0.33163255, 0.052275687, 0.5048159)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l20mr"]
+size = Vector3(0.52441335, 0.5057858, 0.18265331)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fofgm"]
 size = Vector3(0.25, 0.25, 0.001)
@@ -1165,311 +1166,6 @@ min_loot = 1952
 music_track = ExtResource("2_y71cs")
 
 [node name="Outside" type="Node3D" parent="." unique_id=512717957]
-
-[node name="Wasser" parent="Outside" unique_id=1877870136 instance=ExtResource("2_5bkp2")]
-
-[node name="Wasser2" parent="Outside" unique_id=1760218128 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser3" parent="Outside" unique_id=1779051790 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser4" parent="Outside" unique_id=140142303 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.381903e-08, 1.8026999)
-
-[node name="Wasser5" parent="Outside" unique_id=927859550 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser6" parent="Outside" unique_id=785911353 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser7" parent="Outside" unique_id=1583098017 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser8" parent="Outside" unique_id=1529370883 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9557774e-07, 4.2063)
-
-[node name="Wasser9" parent="Outside" unique_id=895740098 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser73" parent="Outside" unique_id=575072833 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
-
-[node name="Wasser74" parent="Outside" unique_id=480615988 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser75" parent="Outside" unique_id=18484702 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser76" parent="Outside" unique_id=1354927729 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -8.381903e-08, 1.8026999)
-
-[node name="Wasser77" parent="Outside" unique_id=757386815 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser78" parent="Outside" unique_id=1574959292 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser79" parent="Outside" unique_id=187061713 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser80" parent="Outside" unique_id=245597043 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.9557774e-07, 4.2063)
-
-[node name="Wasser81" parent="Outside" unique_id=2129635829 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser10" parent="Outside" unique_id=966536632 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, 0, 0)
-
-[node name="Wasser11" parent="Outside" unique_id=151338566 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser12" parent="Outside" unique_id=1468090385 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser13" parent="Outside" unique_id=1309578196 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -8.381903e-08, 1.8026999)
-
-[node name="Wasser14" parent="Outside" unique_id=541503784 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser15" parent="Outside" unique_id=497504763 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser16" parent="Outside" unique_id=512529496 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser17" parent="Outside" unique_id=2056521610 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.9557774e-07, 4.2063)
-
-[node name="Wasser18" parent="Outside" unique_id=796041844 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser19" parent="Outside" unique_id=1089882664 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, 0, 0)
-
-[node name="Wasser20" parent="Outside" unique_id=605919351 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser21" parent="Outside" unique_id=1521847152 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser22" parent="Outside" unique_id=1327947348 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -8.381903e-08, 1.8026999)
-
-[node name="Wasser23" parent="Outside" unique_id=805115899 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser24" parent="Outside" unique_id=948239533 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser25" parent="Outside" unique_id=1634607445 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser26" parent="Outside" unique_id=396666008 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.9557774e-07, 4.2063)
-
-[node name="Wasser27" parent="Outside" unique_id=353895435 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser28" parent="Outside" unique_id=2030906246 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, 0, 0)
-
-[node name="Wasser29" parent="Outside" unique_id=868203352 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser30" parent="Outside" unique_id=1479009596 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser31" parent="Outside" unique_id=582125061 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -8.381903e-08, 1.8026999)
-
-[node name="Wasser32" parent="Outside" unique_id=2137693725 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser33" parent="Outside" unique_id=2126338740 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser34" parent="Outside" unique_id=17551001 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser35" parent="Outside" unique_id=465512845 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.9557774e-07, 4.2063)
-
-[node name="Wasser36" parent="Outside" unique_id=717982936 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser37" parent="Outside" unique_id=105181024 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, 0, 0)
-
-[node name="Wasser38" parent="Outside" unique_id=932881395 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser39" parent="Outside" unique_id=181088576 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser40" parent="Outside" unique_id=307625460 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -8.381903e-08, 1.8026999)
-
-[node name="Wasser41" parent="Outside" unique_id=1952017298 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser42" parent="Outside" unique_id=1418708639 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser43" parent="Outside" unique_id=680477445 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser44" parent="Outside" unique_id=1833144609 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.9557774e-07, 4.2063)
-
-[node name="Wasser45" parent="Outside" unique_id=258316556 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser46" parent="Outside" unique_id=730335386 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, 0, 0)
-
-[node name="Wasser47" parent="Outside" unique_id=183604702 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser48" parent="Outside" unique_id=895183831 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser49" parent="Outside" unique_id=1045887568 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -8.381903e-08, 1.8026999)
-
-[node name="Wasser50" parent="Outside" unique_id=2105983836 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser51" parent="Outside" unique_id=1062186514 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser52" parent="Outside" unique_id=285048873 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser53" parent="Outside" unique_id=459909635 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.9557774e-07, 4.2063)
-
-[node name="Wasser54" parent="Outside" unique_id=1368934249 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser55" parent="Outside" unique_id=1229546436 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, 0, 0)
-
-[node name="Wasser56" parent="Outside" unique_id=813736748 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser57" parent="Outside" unique_id=474310839 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser58" parent="Outside" unique_id=1740611807 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -8.381903e-08, 1.8026999)
-
-[node name="Wasser59" parent="Outside" unique_id=1724146721 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser60" parent="Outside" unique_id=1568598728 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser61" parent="Outside" unique_id=1445071250 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser62" parent="Outside" unique_id=1752866674 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.9557774e-07, 4.2063)
-
-[node name="Wasser63" parent="Outside" unique_id=1586273782 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -2.2351742e-07, 4.8071995)
-
-[node name="Wasser64" parent="Outside" unique_id=1606973163 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, 0, 0)
-
-[node name="Wasser65" parent="Outside" unique_id=1750349579 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -2.7939677e-08, 0.60089993)
-
-[node name="Wasser66" parent="Outside" unique_id=1917418560 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -5.5879354e-08, 1.2017999)
-
-[node name="Wasser67" parent="Outside" unique_id=308076861 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -8.381903e-08, 1.8026999)
-
-[node name="Wasser68" parent="Outside" unique_id=1398431574 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.1175871e-07, 2.4035997)
-
-[node name="Wasser69" parent="Outside" unique_id=549412830 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.3969839e-07, 3.0044997)
-
-[node name="Wasser70" parent="Outside" unique_id=1040710465 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.6763806e-07, 3.6053998)
-
-[node name="Wasser71" parent="Outside" unique_id=151147881 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.9557774e-07, 4.2063)
-
-[node name="Wasser72" parent="Outside" unique_id=1523912782 instance=ExtResource("2_5bkp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -2.2351742e-07, 4.8071995)
-
-[node name="WassertankHafen_984" parent="Outside" unique_id=1909392418 instance=ExtResource("4_got18")]
-transform = Transform3D(-4.3711392e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711392e-08, -0.34453213, 0.21157594, 2.2641706)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder19/pCylinderShape19" parent_id_path=PackedInt32Array(1909392418, 1184201755) index="0" unique_id=1203012492]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18677202, 9.0152025e-07, 0.25914863)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder19/pCylinderShape19/StaticBody3D" unique_id=948642647]
-shape = SubResource("BoxShape3D_qv1rm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder24/pCylinderShape24" parent_id_path=PackedInt32Array(1909392418, 1677946313) index="0" unique_id=1351665654]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29383063, 0.09554321, -0.3508271)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder24/pCylinderShape24/StaticBody3D" unique_id=1108672056]
-shape = SubResource("BoxShape3D_1vjij")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder25/pCylinderShape25" parent_id_path=PackedInt32Array(1909392418, 2082739318) index="0" unique_id=407315423]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5372783, 0.11282082, -0.3508271)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder25/pCylinderShape25/StaticBody3D" unique_id=426928367]
-shape = SubResource("BoxShape3D_nqrqp")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder26/pCylinderShape26" parent_id_path=PackedInt32Array(1909392418, 2023326379) index="0" unique_id=1774251468]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.53406906, -0.1310847, -0.3508271)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder26/pCylinderShape26/StaticBody3D" unique_id=1159590732]
-shape = SubResource("BoxShape3D_sw3p7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder27/pCylinderShape27" parent_id_path=PackedInt32Array(1909392418, 206202226) index="0" unique_id=1349636359]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29248658, -0.11118983, -0.3508271)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder27/pCylinderShape27/StaticBody3D" unique_id=412797339]
-shape = SubResource("BoxShape3D_7ewfm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane1/pPlaneShape1" parent_id_path=PackedInt32Array(1909392418, 1212447081) index="0" unique_id=1302165284]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25683093, 7.748604e-07, 0.26198104)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane1/pPlaneShape1/StaticBody3D" unique_id=1568470918]
-shape = SubResource("BoxShape3D_4tlhu")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane2/pPlaneShape2" parent_id_path=PackedInt32Array(1909392418, 2009415164) index="0" unique_id=1234994763]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41579112, 0.15896097, 0.308703)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane2/pPlaneShape2/StaticBody3D" unique_id=1181961683]
-shape = SubResource("BoxShape3D_cwkno")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane3/pPlaneShape3" parent_id_path=PackedInt32Array(1909392418, 902321191) index="0" unique_id=474084161]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5747513, 7.748604e-07, 0.308703)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane3/pPlaneShape3/StaticBody3D" unique_id=266194292]
-shape = SubResource("BoxShape3D_k7nx7")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane4/pPlaneShape4" parent_id_path=PackedInt32Array(1909392418, 1785074345) index="0" unique_id=2077559727]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41579112, -0.15895942, 0.308703)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane4/pPlaneShape4/StaticBody3D" unique_id=425538213]
-shape = SubResource("BoxShape3D_yfh70")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane5/pPlaneShape5" parent_id_path=PackedInt32Array(1909392418, 2143527985) index="0" unique_id=1165748181]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39825326, 7.748604e-07, 0.5524347)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane5/pPlaneShape5/StaticBody3D" unique_id=172314519]
-shape = SubResource("BoxShape3D_l20mr")
 
 [node name="W_A3_x [Hafen]_972" parent="Outside" unique_id=1932793570 instance=ExtResource("3_crfib")]
 transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, -0.34261334, 0, 1.2279582)
@@ -6565,6 +6261,313 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -1.5, 5e-06)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Boden4x4 [Wiese]_269/Z_up_to_Y_up/bodenel_4x4_snapper_innen/bodenel_1/polySurface748/polySurfaceShape1018/StaticBody3D" unique_id=1173417199]
 shape = SubResource("BoxShape3D_eu85g")
 
+[node name="Water" type="Node3D" parent="Outside" unique_id=1377381738]
+
+[node name="Wasser" parent="Outside/Water" unique_id=917415358 instance=ExtResource("2_5bkp2")]
+
+[node name="Wasser2" parent="Outside/Water" unique_id=241041161 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser3" parent="Outside/Water" unique_id=1622600035 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser4" parent="Outside/Water" unique_id=1036016317 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.381903e-08, 1.8026999)
+
+[node name="Wasser5" parent="Outside/Water" unique_id=536589828 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser6" parent="Outside/Water" unique_id=2070665099 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser7" parent="Outside/Water" unique_id=670761599 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser8" parent="Outside/Water" unique_id=1954686347 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9557774e-07, 4.2063)
+
+[node name="Wasser9" parent="Outside/Water" unique_id=622442561 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser73" parent="Outside/Water" unique_id=297326971 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
+
+[node name="Wasser74" parent="Outside/Water" unique_id=1032267934 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser75" parent="Outside/Water" unique_id=1732015931 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser76" parent="Outside/Water" unique_id=158555067 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -8.381903e-08, 1.8026999)
+
+[node name="Wasser77" parent="Outside/Water" unique_id=596227269 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser78" parent="Outside/Water" unique_id=657536754 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser79" parent="Outside/Water" unique_id=988337721 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser80" parent="Outside/Water" unique_id=501052287 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -1.9557774e-07, 4.2063)
+
+[node name="Wasser81" parent="Outside/Water" unique_id=621372812 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser10" parent="Outside/Water" unique_id=65354241 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, 0, 0)
+
+[node name="Wasser11" parent="Outside/Water" unique_id=1925805166 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser12" parent="Outside/Water" unique_id=1173928101 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser13" parent="Outside/Water" unique_id=615158619 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -8.381903e-08, 1.8026999)
+
+[node name="Wasser14" parent="Outside/Water" unique_id=697526962 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser15" parent="Outside/Water" unique_id=175872397 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser16" parent="Outside/Water" unique_id=125201893 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser17" parent="Outside/Water" unique_id=1209503517 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -1.9557774e-07, 4.2063)
+
+[node name="Wasser18" parent="Outside/Water" unique_id=1089343064 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6009001, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser19" parent="Outside/Water" unique_id=1308070625 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, 0, 0)
+
+[node name="Wasser20" parent="Outside/Water" unique_id=1964491069 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser21" parent="Outside/Water" unique_id=1162641123 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser22" parent="Outside/Water" unique_id=89746529 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -8.381903e-08, 1.8026999)
+
+[node name="Wasser23" parent="Outside/Water" unique_id=1966899201 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser24" parent="Outside/Water" unique_id=1371836757 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser25" parent="Outside/Water" unique_id=846240223 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser26" parent="Outside/Water" unique_id=227295708 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -1.9557774e-07, 4.2063)
+
+[node name="Wasser27" parent="Outside/Water" unique_id=1241390117 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2018002, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser28" parent="Outside/Water" unique_id=1364743868 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, 0, 0)
+
+[node name="Wasser29" parent="Outside/Water" unique_id=1829692127 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser30" parent="Outside/Water" unique_id=623765787 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser31" parent="Outside/Water" unique_id=962521804 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -8.381903e-08, 1.8026999)
+
+[node name="Wasser32" parent="Outside/Water" unique_id=2105644105 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser33" parent="Outside/Water" unique_id=1098845664 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser34" parent="Outside/Water" unique_id=344083129 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser35" parent="Outside/Water" unique_id=992292405 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -1.9557774e-07, 4.2063)
+
+[node name="Wasser36" parent="Outside/Water" unique_id=372581656 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8027003, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser37" parent="Outside/Water" unique_id=1825011442 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, 0, 0)
+
+[node name="Wasser38" parent="Outside/Water" unique_id=1534284542 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser39" parent="Outside/Water" unique_id=770766309 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser40" parent="Outside/Water" unique_id=535914447 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -8.381903e-08, 1.8026999)
+
+[node name="Wasser41" parent="Outside/Water" unique_id=1384452789 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser42" parent="Outside/Water" unique_id=512875441 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser43" parent="Outside/Water" unique_id=1120247227 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser44" parent="Outside/Water" unique_id=1463050746 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -1.9557774e-07, 4.2063)
+
+[node name="Wasser45" parent="Outside/Water" unique_id=326292706 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4036005, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser46" parent="Outside/Water" unique_id=1267888467 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, 0, 0)
+
+[node name="Wasser47" parent="Outside/Water" unique_id=1938750800 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser48" parent="Outside/Water" unique_id=1789885583 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser49" parent="Outside/Water" unique_id=1525213454 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -8.381903e-08, 1.8026999)
+
+[node name="Wasser50" parent="Outside/Water" unique_id=1504419105 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser51" parent="Outside/Water" unique_id=651535067 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser52" parent="Outside/Water" unique_id=845283807 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser53" parent="Outside/Water" unique_id=946837889 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -1.9557774e-07, 4.2063)
+
+[node name="Wasser54" parent="Outside/Water" unique_id=862808363 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0045006, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser55" parent="Outside/Water" unique_id=478204203 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, 0, 0)
+
+[node name="Wasser56" parent="Outside/Water" unique_id=331762765 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser57" parent="Outside/Water" unique_id=641714481 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser58" parent="Outside/Water" unique_id=61325275 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -8.381903e-08, 1.8026999)
+
+[node name="Wasser59" parent="Outside/Water" unique_id=852349240 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser60" parent="Outside/Water" unique_id=79059042 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser61" parent="Outside/Water" unique_id=1568229075 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser62" parent="Outside/Water" unique_id=1653583396 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -1.9557774e-07, 4.2063)
+
+[node name="Wasser63" parent="Outside/Water" unique_id=784987 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6054008, -2.2351742e-07, 4.8071995)
+
+[node name="Wasser64" parent="Outside/Water" unique_id=282036794 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, 0, 0)
+
+[node name="Wasser65" parent="Outside/Water" unique_id=566660922 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -2.7939677e-08, 0.60089993)
+
+[node name="Wasser66" parent="Outside/Water" unique_id=1397723323 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -5.5879354e-08, 1.2017999)
+
+[node name="Wasser67" parent="Outside/Water" unique_id=486617656 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -8.381903e-08, 1.8026999)
+
+[node name="Wasser68" parent="Outside/Water" unique_id=1604868125 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.1175871e-07, 2.4035997)
+
+[node name="Wasser69" parent="Outside/Water" unique_id=1224546514 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.3969839e-07, 3.0044997)
+
+[node name="Wasser70" parent="Outside/Water" unique_id=873405080 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.6763806e-07, 3.6053998)
+
+[node name="Wasser71" parent="Outside/Water" unique_id=198065175 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -1.9557774e-07, 4.2063)
+
+[node name="Wasser72" parent="Outside/Water" unique_id=1879883423 instance=ExtResource("2_5bkp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.206302, -2.2351742e-07, 4.8071995)
+
+[node name="WassertankHafen_984" parent="Outside/Water" unique_id=1909392418 instance=ExtResource("4_got18")]
+transform = Transform3D(-4.3711392e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711392e-08, -0.34453213, 0.21157594, 2.2641706)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder19/pCylinderShape19" parent_id_path=PackedInt32Array(1909392418, 1184201755) index="0" unique_id=1319437556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18677202, 9.0152025e-07, 0.25914863)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder19/pCylinderShape19/StaticBody3D" unique_id=1135920026]
+shape = SubResource("BoxShape3D_qv1rm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder24/pCylinderShape24" parent_id_path=PackedInt32Array(1909392418, 1677946313) index="0" unique_id=145493795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29383063, 0.09554321, -0.3508271)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder24/pCylinderShape24/StaticBody3D" unique_id=1013378097]
+shape = SubResource("BoxShape3D_1vjij")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder25/pCylinderShape25" parent_id_path=PackedInt32Array(1909392418, 2082739318) index="0" unique_id=2048150591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5372783, 0.11282082, -0.3508271)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder25/pCylinderShape25/StaticBody3D" unique_id=1731890776]
+shape = SubResource("BoxShape3D_nqrqp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder26/pCylinderShape26" parent_id_path=PackedInt32Array(1909392418, 2023326379) index="0" unique_id=1703857819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.53406906, -0.1310847, -0.3508271)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder26/pCylinderShape26/StaticBody3D" unique_id=1707449779]
+shape = SubResource("BoxShape3D_sw3p7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder27/pCylinderShape27" parent_id_path=PackedInt32Array(1909392418, 206202226) index="0" unique_id=919154333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29248658, -0.11118983, -0.3508271)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pCylinder27/pCylinderShape27/StaticBody3D" unique_id=711826097]
+shape = SubResource("BoxShape3D_7ewfm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane1/pPlaneShape1" parent_id_path=PackedInt32Array(1909392418, 1212447081) index="0" unique_id=1719189923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25683093, 7.748604e-07, 0.26198104)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane1/pPlaneShape1/StaticBody3D" unique_id=992737429]
+shape = SubResource("BoxShape3D_4tlhu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane2/pPlaneShape2" parent_id_path=PackedInt32Array(1909392418, 2009415164) index="0" unique_id=1035495273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41579112, 0.15896097, 0.308703)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane2/pPlaneShape2/StaticBody3D" unique_id=1934296163]
+shape = SubResource("BoxShape3D_cwkno")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane3/pPlaneShape3" parent_id_path=PackedInt32Array(1909392418, 902321191) index="0" unique_id=1602140890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5747513, 7.748604e-07, 0.308703)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane3/pPlaneShape3/StaticBody3D" unique_id=985986311]
+shape = SubResource("BoxShape3D_k7nx7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane4/pPlaneShape4" parent_id_path=PackedInt32Array(1909392418, 1785074345) index="0" unique_id=798935335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41579112, -0.15895942, 0.308703)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane4/pPlaneShape4/StaticBody3D" unique_id=1251965606]
+shape = SubResource("BoxShape3D_yfh70")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane5/pPlaneShape5" parent_id_path=PackedInt32Array(1909392418, 2143527985) index="0" unique_id=1680466207]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39825326, 7.748604e-07, 0.5524347)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outside/Water/WassertankHafen_984/Z_up_to_Y_up/WassertankHafen/group7/pPlane5/pPlaneShape5/StaticBody3D" unique_id=183868215]
+shape = SubResource("BoxShape3D_l20mr")
+
 [node name="Inside" type="Node3D" parent="." unique_id=1753696501]
 
 [node name="Floor0" type="Node3D" parent="Inside" unique_id=461990903]
@@ -7898,18 +7901,25 @@ shape = SubResource("BoxShape3D_ju1hk")
 [node name="Tür [Schwarzes Glas]" parent="Inside/Floor0" unique_id=612355611 node_paths=PackedStringArray("related_objects") instance=ExtResource("11_qv1rm")]
 transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -1.378153, 0.195331, 0.9323112)
 related_objects = [NodePath("../../..")]
+interaction_point = Vector3(0, 0, 10)
+
+[node name="Tür [SchwarzesGlas]_802" parent="Inside/Floor0/Tür [Schwarzes Glas]/Door" parent_id_path=PackedInt32Array(612355611, 308604268) index="0" unique_id=697551530 instance=ExtResource("25_0g10l")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="WindowClou2WindowStandard" parent="Inside/Floor0" unique_id=2029039624 node_paths=PackedStringArray("related_objects") instance=ExtResource("13_7ewfm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3770878, 0.39142448, 2.6775696)
+damage = 0
 related_objects = [null]
+animation_end = 0
 
 [node name="WindowClou2WindowStandard2" parent="Inside/Floor0" unique_id=1044961286 node_paths=PackedStringArray("related_objects") instance=ExtResource("13_7ewfm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3767427, 0.393, 2.435)
+damage = 0
 related_objects = [NodePath("../../..")]
+animation_end = 0
 
 [node name="TreppeBretter [Eisen]_581" parent="Inside/Floor0" unique_id=904881244 instance=ExtResource("13_nqrqp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.997989, 0.6876759, 0.08687973)
-script = ExtResource("16_4tlhu")
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor0/TreppeBretter [Eisen]_581/Z_up_to_Y_up/stiege_trittbretter/group30/pCylinder2/pCylinderShape2" parent_id_path=PackedInt32Array(904881244, 426727874) index="0" unique_id=1974526171]
@@ -7939,6 +7949,7 @@ shape = SubResource("ConvexPolygonShape3D_lcdja")
 
 [node name="Area3D" type="Area3D" parent="Inside/Floor0/TreppeBretter [Eisen]_581" unique_id=382436894]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.30600977, -0.35236415, 0.30089474)
+script = ExtResource("16_4tlhu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor0/TreppeBretter [Eisen]_581/Area3D" unique_id=1621184460]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9598389, 1.5741663, 0.51929283)
@@ -7957,8 +7968,6 @@ affect_navigation_mesh = true
 
 [node name="TreppeBretter [Eisen]_580" parent="Inside/Floor0" unique_id=1082565818 instance=ExtResource("13_nqrqp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.997989, 0.3003757, 0.57607955)
-script = ExtResource("16_4tlhu")
-floor = 1
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Inside/Floor0/TreppeBretter [Eisen]_580/Z_up_to_Y_up/stiege_trittbretter/group30/pCylinder2/pCylinderShape2" parent_id_path=PackedInt32Array(1082565818, 426727874) index="0" unique_id=596712074]
@@ -7988,6 +7997,8 @@ shape = SubResource("ConvexPolygonShape3D_cwkno")
 
 [node name="Area3D" type="Area3D" parent="Inside/Floor0/TreppeBretter [Eisen]_580" unique_id=1648220432]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.29999995, 0.4, -0.70000005)
+script = ExtResource("16_4tlhu")
+floor = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Inside/Floor0/TreppeBretter [Eisen]_580/Area3D" unique_id=385112095]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9598389, 1.5741663, 0.51929283)
@@ -11978,7 +11989,6 @@ related_objects = [NodePath("../../Floor0/Camera3")]
 [connection signal="mouse_entered" from="Inside/Floor0/Painting - Chaos/Area3D" to="Inside/Floor0/Painting - Chaos" method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Inside/Floor0/Painting - Chaos/Area3D" to="Inside/Floor0/Painting - Chaos" method="_on_area_3d_mouse_exited"]
 
-[editable path="Outside/WassertankHafen_984"]
 [editable path="Outside/Boden1x1 [GroberSchotter]_1014"]
 [editable path="Outside/Boden1x1 [GroberSchotter]_1015"]
 [editable path="Outside/Boden1x1 [GroberSchotter]_1016"]
@@ -12463,6 +12473,7 @@ related_objects = [NodePath("../../Floor0/Camera3")]
 [editable path="Outside/Boden4x4 [Wiese]_267"]
 [editable path="Outside/Boden4x4 [Wiese]_268"]
 [editable path="Outside/Boden4x4 [Wiese]_269"]
+[editable path="Outside/Water/WassertankHafen_984"]
 [editable path="Inside/Floor0/Boden1x1 [HellesBlech]_2533"]
 [editable path="Inside/Floor0/Boden1x1 [HellesBlech]_2546"]
 [editable path="Inside/Floor0/Boden1x1 [HellesBlech]_2547"]
@@ -12605,6 +12616,7 @@ related_objects = [NodePath("../../Floor0/Camera3")]
 [editable path="Inside/Floor0/Boden1x1 [HellesBlech]_2683"]
 [editable path="Inside/Floor0/Container_Groß [neo]_1313"]
 [editable path="Inside/Floor0/Container_Groß [Rostig]_1022"]
+[editable path="Inside/Floor0/Tür [Schwarzes Glas]"]
 [editable path="Inside/Floor0/TreppeBretter [Eisen]_581"]
 [editable path="Inside/Floor0/TreppeBretter [Eisen]_580"]
 [editable path="Inside/Floor0/W_A3_xffx [Steine]_987"]

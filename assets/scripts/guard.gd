@@ -28,7 +28,7 @@ func _physics_process(_delta):
 					var space_state = get_world_3d().direct_space_state
 								
 					var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,object.global_position)
-					query.collision_mask = guard_sight_check_collision_mask
+					#query.collision_mask = guard_sight_check_collision_mask
 					query.collide_with_areas = true
 					query.exclude = [burglar_area]
 					
@@ -43,7 +43,7 @@ func _physics_process(_delta):
 				var space_state = get_world_3d().direct_space_state
 							
 				var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,object.global_position)
-				query.collision_mask = guard_sight_check_collision_mask
+				#query.collision_mask = guard_sight_check_collision_mask
 				query.collide_with_areas = true
 				query.exclude = [burglar_area]
 
@@ -193,7 +193,7 @@ func _on_body_or_area_entered(body_area):
 				var space_state = get_world_3d().direct_space_state
 							
 				var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.get_parent().global_position)
-				query.collision_mask = guard_sight_check_collision_mask
+				#query.collision_mask = guard_sight_check_collision_mask
 				query.collide_with_areas = true
 				query.exclude = [burglar_area]
 				
@@ -208,7 +208,7 @@ func _on_body_or_area_entered(body_area):
 			var space_state = get_world_3d().direct_space_state
 						
 			var query = PhysicsRayQueryParameters3D.create(mesh_root.global_position,body_area.get_parent().global_position)
-			query.collision_mask = guard_sight_check_collision_mask
+			#query.collision_mask = guard_sight_check_collision_mask
 			query.collide_with_areas = true
 			query.exclude = [burglar_area]
 

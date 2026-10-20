@@ -21,6 +21,7 @@ const FPS:= 24.0
 
 @export var burglary_target:NodePath
 @onready var burglary_target_name:StringName = get_node(burglary_target).name
+var burglary_target_node:Node3D
 
 @onready var min_loot = get_node(burglary_target).min_loot
 
@@ -113,6 +114,8 @@ var play_idle_anim_rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	
+	burglary_target_node = get_node(burglary_target)
+	
 	Engine.max_physics_steps_per_frame = 5000
 	
 	play_idle_anim_rng.randomize()
@@ -144,45 +147,47 @@ func _ready() -> void:
 		
 		
 	for actor in get_tree().get_nodes_in_group("Actor"):
-		if(!actor.is_guard):
-			number_of_burglars += 1
-			actor.filepath_addon = str(number_of_burglars)
-			var mesh = actor.mesh_root.duplicate()
-			mesh.set_script(load("res://assets/Scenes/Items/item.gd"))
-			var area = actor.burglar_area.duplicate()
-			area.input_ray_pickable = true
-			area.mouse_entered.connect(mesh._on_area_3d_mouse_entered)
-			area.mouse_exited.connect(mesh._on_area_3d_mouse_exited)
-			mesh.add_child(area)
-			mesh.add_to_group("burglar_in_burglar_switcher")
-			
-			for c in mesh.get_all_children(mesh):
-				if(c is MeshInstance3D):
-					var count = c.get_surface_override_material_count()
-					for i in range(count):
-						var mesh_material = c.get_active_material(i).duplicate()
-						mesh_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-						c.set_surface_override_material(i, mesh_material)
-						c.layers = 2
-						
+		#REMINDER this needs to be changed later, as burglars will probably not be in the main scene under "Control" anymore
+		if(actor.get_parent() == self || actor.is_guard):
+			if(!actor.is_guard):
+				number_of_burglars += 1
+				actor.filepath_addon = str(number_of_burglars)
+				var mesh = actor.mesh_root.duplicate()
+				mesh.set_script(load("res://assets/Scenes/Items/item.gd"))
+				var area = actor.burglar_area.duplicate()
+				area.input_ray_pickable = true
+				area.mouse_entered.connect(mesh._on_area_3d_mouse_entered)
+				area.mouse_exited.connect(mesh._on_area_3d_mouse_exited)
+				mesh.add_child(area)
+				mesh.add_to_group("burglar_in_burglar_switcher")
+				
+				for c in mesh.get_all_children(mesh):
+					if(c is MeshInstance3D):
+						var count = c.get_surface_override_material_count()
+						for i in range(count):
+							var mesh_material = c.get_active_material(i).duplicate()
+							mesh_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+							c.set_surface_override_material(i, mesh_material)
+							c.layers = 2
 							
-			mesh.scale *= 0.4
-			mesh.visible = false
-			burglar_switcher.get_child(0).get_child(0).add_child(mesh)
-		else:
-			if(actor.owner.name != burglary_target_name):
-				actor.visible = false
-				actor.process_mode = Node.PROCESS_MODE_DISABLED
-				continue
+								
+				mesh.scale *= 0.4
+				mesh.visible = false
+				burglar_switcher.get_child(0).get_child(0).add_child(mesh)
 			else:
-				number_of_guards += 1
-				actor.filepath_addon = str(number_of_burglars + number_of_guards)
-			actor.reparent(self)
+				if(actor.owner.name != burglary_target_name):
+					actor.visible = false
+					actor.process_mode = Node.PROCESS_MODE_DISABLED
+					continue
+				else:
+					number_of_guards += 1
+					actor.filepath_addon = str(number_of_burglars + number_of_guards)
+				actor.reparent(self)
+				
+				if(actor.record_guard):
+					guards_are_recording = true
 			
-			if(actor.record_guard):
-				guards_are_recording = true
-		
-		actor.load_replay()
+			actor.load_replay()
 
 		
 	#if(play):
@@ -407,6 +412,7 @@ func _unhandled_input(event: InputEvent):
 					closest_point_on_navmesh = highlighted_object.global_position + dir
 
 				active_burglar.set_target_position(closest_point_on_navmesh,true)
+				$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button_Red_Playing.png"))
 				pause = false
 				play = false
 				
@@ -520,6 +526,7 @@ func _unhandled_input(event: InputEvent):
 		#closest_point_on_navmesh_for_query = closest_point_on_navmesh
 		if(highlighted_object == null):
 			active_burglar.set_target_position(closest_point_on_navmesh,true)
+			$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button_Red_Playing.png"))
 			if(debug_mode):
 				$DebugSphere.global_position = closest_point_on_navmesh
 			pause = false
@@ -605,7 +612,7 @@ func do_replay():
 	if(!pause):
 		if(backwards && ticks > 0):
 			ticks -= 1
-		elif((burglar_moved || play || Global.load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
+		elif((burglar_moved || (play && (recording || active_burglar.id != active_burglar.replay.size()-1)) || Global.load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
 			ticks += 1
 		else:
 			pause_recording()
@@ -839,11 +846,11 @@ func check_and_fix_id():
 
 
 func _on_h_slider_value_changed(value: float) -> void:
-	
-		
+			
 	if(burglar_switcher.shown || active_burglar.bag.shown):
 		$SliderBackground/HSlider.set_value_no_signal(previous_slider_value)
 		return
+		
 	#if(selected_tool):
 		#$SliderBackground/HSlider.set_value_no_signal(previous_slider_value)
 		#return
@@ -879,8 +886,9 @@ func _on_h_slider_value_changed(value: float) -> void:
 	if(active_burglar.is_zoomed_onto_object):
 		active_burglar.is_zoomed_onto_object = false
 		for object in get_tree().get_nodes_in_group("Interactable"):
-			if(object.object_type != 4):
-				object.area.process_mode = Node.PROCESS_MODE_INHERIT
+			if(object.owner.name == get_node("/root/Control").burglary_target_name):
+				if(object.object_type != 4):
+						object.area.process_mode = Node.PROCESS_MODE_INHERIT
 		camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
 		camera_base.global_rotation = active_burglar.camera_rotation_before_zoom_onto_object
 		spring_arm.spring_length = spring_arm_length_before_zoom_in
@@ -931,6 +939,12 @@ func _on_h_slider_value_changed(value: float) -> void:
 			pause = false
 			#for actor in get_tree().get_nodes_in_group("Actor"):
 				#actor.is_waiting = false
+				
+			play = false
+			recording = false
+			$PauseButton.set_button_icon(load("res://assets/Textures/GUI/Record_Button.png"))
+			$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button.png"))	
+				
 			resume_animations()
 				
 	
@@ -956,6 +970,24 @@ func _on_play_button_button_up() -> void:
 		pause = false
 		was_backwards = false
 		was_forwards = false
+		
+		if(recording):
+			$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button_Red_Playing.png"))
+			if(active_burglar.replay.size()-1 != active_burglar.id):
+				if(active_burglar.replay[active_burglar.id][2] != "move"):
+					play_until_ticks = ticks - 1
+					for i in range (active_burglar.id, active_burglar.replay.size()):
+						if(active_burglar.replay[i][0] == -1):
+							play_until_ticks += 1
+						else:
+							play_until_ticks += 1
+							break
+				else:
+					for i in range (active_burglar.id, active_burglar.replay.size()-1):
+						active_burglar.replay.pop_back()
+						active_burglar.replay[active_burglar.id][0] = ticks
+						active_burglar.maxid = active_burglar.id+1
+						active_burglar.currentid = active_burglar.maxid
 
 
 func _on_pause_button_button_up() -> void:
@@ -965,9 +997,11 @@ func _on_pause_button_button_up() -> void:
 		
 		if(!recording):
 			$PauseButton.set_button_icon(load("res://assets/Textures/GUI/Record_Button.png"))
+			$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button.png"))
 			pause_recording()
 		else:
 			$PauseButton.set_button_icon(load("res://assets/Textures/GUI/Pause_Button.png"))
+			$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button_Red.png"))
 	
 
 func pause_recording():
@@ -976,6 +1010,8 @@ func pause_recording():
 			play = false
 			pause = true
 			pause_animations()
+			if(recording):
+				$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button_Red.png"))
 				
 func rotate_actor(actor,offset):	
 	offset.y = 0
@@ -1124,10 +1160,7 @@ func update_interactables(delta):
 						if(node.previous_animation_dir == 1 && delta > (node.current_animation_clip_length - node.anim_player.current_animation_position)):
 							node.anim_player.advance(node.current_animation_clip_length - node.anim_player.current_animation_position)
 						else:
-							node.anim_player.advance(delta)
-			
-				if(node.name == "Schaukasten"):
-					print(node.anim_player.current_animation_position)					
+							node.anim_player.advance(delta)					
 	
 		#if(node.was_opened_by_burglar):
 			#print(active_burglar.name + " waiting at position " + str(active_burglar.global_position) + ", id: " + str(active_burglar.id))
@@ -1571,6 +1604,8 @@ func replay_backwards(actor:Node3D):
 			actor.mesh_root.visible = true
 				
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
+			if(actor.id == 0 or actor.replay[actor.id-1][2] != "movethroughwindow"):
+				actor.inside = !actor.inside
 			found_window = true
 			found_object = get_node(str(actor.replay[actor.id][3]))
 			if(actor.id == actor.maxid-1):
@@ -1667,8 +1702,15 @@ func replay_backwards(actor:Node3D):
 				#actor.id -=1
 				#actor.currentid = actor.id- 1
 			#actor.is_opening = false
-			actor.is_opening = false		
-			actor.global_position = actor.replay[actor.id][1]
+			actor.is_opening = false
+			
+			if(found_window and !found_object.is_ground_floor_window):
+				offset = actor.mesh_root.global_position - found_object.global_position
+				actor.show_text_bubble("I am not gonna jump out the window!")	
+			else:		
+				actor.global_position = actor.replay[actor.id][1]
+				if(!debug_mode && actor.global_position.distance_squared_to(burglary_target_node.mission_center.global_position if burglary_target_node.mission_center else 0.0) > burglary_target_node.max_distance_squared_from_mission):
+					actor.show_text_bubble("I'm moving too far away from the mission")
 			
 		rotate_actor(actor,offset)
 		actor.progress_bar.visible = false
@@ -1691,7 +1733,7 @@ func replay_backwards(actor:Node3D):
 						if(actor.current_animation_clip != "open"):
 							actor.play_animation("open", true, true)
 					else:
-						if(found_waiting_position):
+						if(found_waiting_position || (found_window and (window_is_occupied or !get_node(actor.replay[actor.id][3]).is_ground_floor_window))):
 							actor.play_animation("idle", true, true)
 						elif(actor.replay[actor.id][2] == "open"):
 							var found_object = get_node(str(actor.replay[actor.id][3])) if found_window else get_node(str(actor.replay[actor.id][1]))
@@ -1766,8 +1808,8 @@ func replay_forwards(actor:Node3D):
 					if(tool.tool_efficencies[object.lock_type]):
 						for alarm in get_tree().get_nodes_in_group("Alarm"):
 							if(alarm.damage != object_durability && !alarm.is_off):
-								for obj_path in alarm.related_objects_string_array:
-									if(str(obj_path) == str(actor.replay[actor.id][1])):
+								for obj in alarm.related_objects:
+									if(obj == get_node(actor.replay[actor.id][1])):
 										print_caught_message("caught by " +alarm.name)
 						if(!object_occupied(actor, object) && object.damage != object_durability):
 							actor.finished_working = false
@@ -1950,6 +1992,8 @@ func replay_forwards(actor:Node3D):
 			found_object = get_node(actor.waiting_positions[found_index][1])
 		
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
+			if(actor.id == actor.replay.size()-1 or actor.replay[actor.id+1][2] != "movethroughwindow"):
+				actor.inside = !actor.inside
 			found_window = true
 			found_object = get_node(str(actor.replay[actor.id][3]))
 			window_is_occupied = object_occupied(actor, found_object)
@@ -2127,7 +2171,16 @@ func replay_forwards(actor:Node3D):
 				actor.is_opening = false
 				actor.id +=1
 				actor.currentid = actor.id + 1
-			actor.global_position = actor.replay[actor.id][1]
+				
+				
+			if(found_window and !found_object.is_ground_floor_window):
+				offset = actor.mesh_root.global_position - found_object.global_position
+				actor.show_text_bubble("I am not gonna jump out the window!")				
+			else:	 
+				actor.global_position = actor.replay[actor.id][1]
+				if(!debug_mode &&  actor.global_position.distance_squared_to(burglary_target_node.mission_center.global_position if burglary_target_node.mission_center else 0.0) > burglary_target_node.max_distance_squared_from_mission):
+					actor.show_text_bubble("I'm moving too far away from the mission")
+					_on_pause_button_button_up()
 		
 		rotate_actor(actor,offset)
 		
@@ -2150,7 +2203,7 @@ func replay_forwards(actor:Node3D):
 						if(actor.current_animation_clip != "open"):
 							actor.play_animation("open", false, true)
 					else:
-						if(window_is_occupied):
+						if(found_window and (window_is_occupied or !get_node(actor.replay[actor.id][3]).is_ground_floor_window)):
 							actor.play_animation("idle", false, true)
 						elif(actor.replay[actor.id][2] == "open"):
 							var found_object = get_node(str(actor.replay[actor.id][3])) if found_window else get_node(str(actor.replay[actor.id][1]))

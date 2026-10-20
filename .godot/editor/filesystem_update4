@@ -1,4 +1,2 @@
 res://assets/Scenes/Missions/Clothing Store.tscn
 res://assets/Shaders/distance_fog.gdshader
-res://assets/scripts/control.gd
-res://assets/scripts/Interactable/interactable.gd

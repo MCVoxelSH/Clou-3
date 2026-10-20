@@ -1,4 +1,6 @@
 Node3D
+CSGSphere3D
+RayCast3D
 AnimationPlayer
 CollisionShape3D
 Area3D
@@ -10,5 +12,3 @@ Camera3D
 MeshInstance3D
 MultiplayerSpawner
 GridMap
-CanvasLayer
-DirectionalLight3D

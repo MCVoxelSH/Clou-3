@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bp0lr35ip2spn"]
+
+[ext_resource type="PackedScene" uid="uid://bbrk7i63co31c" path="res://assets/Scenes/Items/Tools/tool.tscn" id="1_350fg"]
+[ext_resource type="PackedScene" uid="uid://4k3tpnyl402e" path="res://Clou2/Clou2_unpack/models/Items/Werkzeug/Dietrich_2704.glb" id="2_obsk3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_on5tr"]
+radius = 0.18896484
+height = 0.50390625
+
+[node name="Lockpick" unique_id=430073392 instance=ExtResource("1_350fg")]
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(261024409) index="0" unique_id=287201691]
+shape = SubResource("CapsuleShape3D_on5tr")
+
+[node name="Dietrich_2704" parent="." index="1" unique_id=286344482 instance=ExtResource("2_obsk3")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="pCylinderShape4" parent="Dietrich_2704/Z_up_to_Y_up/Dietrich/pCylinder4" parent_id_path=PackedInt32Array(286344482, 467205863) index="0" unique_id=2063364943]
+layers = 5
+
+[editable path="Dietrich_2704"]

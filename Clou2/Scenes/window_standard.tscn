@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://dlk0osyitr8af" path="res://assets/scripts/Interactable/interactable.gd" id="1_di2n1"]
 [ext_resource type="PackedScene" uid="uid://ykuj2ds8r2t4" path="res://Clou2/Clou2_unpack/models/Fenster/FensterStandard[Beleuchtet]_646.glb" id="2_di2n1"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8o7sn"]
-size = Vector3(0.024414063, 0.21679688, 0.13995689)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_di2n1"]
 size = Vector3(0.095703125, 0.08650099, 1.9161377)
 
@@ -20,19 +17,8 @@ interaction_point = Vector3(1, 0, 0)
 [node name="FensterStandard[Beleuchtet]_646" parent="." unique_id=1873923067 instance=ExtResource("2_di2n1")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 
-[node name="OutsideCheck" type="Area3D" parent="." unique_id=1191086551]
+[node name="OutsideCheck" type="Node3D" parent="." unique_id=1032953585]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013134405, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OutsideCheck" unique_id=992811701]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012196302, 0, 0)
-shape = SubResource("BoxShape3D_8o7sn")
-
-[node name="InsideCheck" type="Area3D" parent="." unique_id=2101058853]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018877402, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InsideCheck" unique_id=1432203158]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019807994, 0, 0)
-shape = SubResource("BoxShape3D_8o7sn")
 
 [node name="CameraPosNode" type="Node3D" parent="." unique_id=1374438171]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.19123793, 0, 0)
@@ -45,11 +31,5 @@ collision_layer = 2
 transform = Transform3D(1, 0, 5.4178858e-12, 0, 1, 0, -5.4178884e-12, 0, 0.9999995, 0.007715948, 0.0033134324, -0.031715915)
 shape = SubResource("BoxShape3D_di2n1")
 
-[connection signal="area_entered" from="OutsideCheck" to="." method="_on_outside_check_area_entered"]
-[connection signal="mouse_entered" from="OutsideCheck" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="OutsideCheck" to="." method="_on_area_3d_mouse_exited"]
-[connection signal="area_entered" from="InsideCheck" to="." method="_on_inside_check_area_entered"]
-[connection signal="mouse_entered" from="InsideCheck" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="InsideCheck" to="." method="_on_area_3d_mouse_exited"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

@@ -47,7 +47,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0059723407, -0.022406962, 0
 shape = SubResource("BoxShape3D_7y4f6")
 
 [node name="CameraPosNode" type="Node3D" parent="." index="1" unique_id=291855855]
-transform = Transform3D(1, 0, 0, 0, 0.9933808, 0.1148678, 0, -0.1148678, 0.9933808, -0.0039914357, 0.3757334, 0.87641263)
+transform = Transform3D(-0.9999999, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.9999999, -1.2270568e-09, 0, -0.25436556)
 
 [node name="Alarmanlage_169" parent="." index="2" unique_id=213377401 instance=ExtResource("3_ohhww")]
 

@@ -39,9 +39,6 @@ transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6290839, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_tuw5j")
 
-[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1219912384) index="0" unique_id=828623892]
-debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
-
 [node name="TextBubble" parent="." index="4" unique_id=1432405381]
 visible = false
 

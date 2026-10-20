@@ -30,9 +30,12 @@ _data = {
 }
 
 [node name="MovingCamera" unique_id=1060649190 instance=ExtResource("1_ixksa")]
-transform = Transform3D(0.32903346, 0.5890977, -0.7380384, -0.086591184, 0.79708594, 0.5976251, 0.9403398, -0.13273099, 0.31327868, 0, 0, 0)
+transform = Transform3D(0.32903346, 0.5890977, -0.73803836, -0.086591184, 0.79708594, 0.597625, 0.9403398, -0.13273099, 0.31327865, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=1054809706]
+active = false
 libraries/ = SubResource("AnimationLibrary_k0w4g")
+
+[connection signal="area_exited" from="Spotlight/Area3D" to="." method="_on_area_3d_area_exited"]
 
 [editable path="cone ohne cone_2695"]

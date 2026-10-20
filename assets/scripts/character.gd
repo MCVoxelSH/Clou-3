@@ -27,7 +27,7 @@ const ANIMATIONS := {
 	"break": {"start": 1374, "end": 1383, "loop": true, "loop_start": 1374, "loop_end": 1380}
 }
 
-@export var character_speed := 10.0
+@export var character_speed := 1.0
 @export var max_capacity = 40.0
 var current_carrying_weight = 0.0
 @export var show_path := true

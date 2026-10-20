@@ -18,7 +18,11 @@ func enable_floor():
 						c.floor_disabled = false
 						
 				if(c.process_mode != ProcessMode.PROCESS_MODE_DISABLED):
-					c.set_deferred("visible", true)
+					#c.set_deferred("visible", true)
+					if(c is MeshInstance3D):
+						c.set_layer_mask_value(1, true)
+						c.set_layer_mask_value(3, true)
+						
 				
 			if(c is CollisionObject3D):
 				c.collision_layer = 1
@@ -29,7 +33,7 @@ func enable_floor():
 			#c.set_deferred("disabled", false)
 			#for ch in c.get_children():
 				#ch.set_deferred("disabled", false)
-		#
+		get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i)).process_mode = Node.PROCESS_MODE_INHERIT
 	
 func disable_floor():
 	if(!(get_node("/root/Control").active_burglar.inside)):
@@ -43,7 +47,10 @@ func disable_floor():
 						continue					
 					elif(c.object_type == 0 || c.object_type == 1):
 						c.floor_disabled = true
-				c.set_deferred("visible", false)
+				#c.set_deferred("visible", false)
+				if(c is MeshInstance3D):
+					c.set_layer_mask_value(1, false)
+					c.set_layer_mask_value(3, true)
 		
 			if(c is CollisionObject3D):
 				c.collision_layer = 2
@@ -54,6 +61,8 @@ func disable_floor():
 			#for ch in c.get_children():
 				#ch.set_deferred("disabled", true)
 			#c.set_deferred("disabled", true)
+		
+		get_node("/root/Control/"+str(get_node("/root/Control").burglary_target)+"/Inside/Floor"+str(i)).process_mode = Node.PROCESS_MODE_DISABLED
 			
 		#get_node("/root/Control/NavigationRegion3D/"+related_objects[0]+"/Floor").set_deferred("disabled", true)
 

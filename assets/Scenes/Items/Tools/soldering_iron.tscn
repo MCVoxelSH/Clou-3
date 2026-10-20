@@ -11,6 +11,7 @@ height = 0.08203125
 script = ExtResource("1_xahre")
 tool_efficencies = Array[float]([0.0, 0.0, 50.0])
 loudness = Array[float]([0.0, 10.0, 0.0])
+damaging = true
 item_type = 0
 
 [node name="electric_kit_2702" parent="." unique_id=1239852199 instance=ExtResource("2_v3nyt")]
