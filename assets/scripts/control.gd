@@ -8,7 +8,7 @@ extends Node3D
 #I disabled skip_to_start_or_end because of this and instead enabled "skipping steps" for the slider and froze the frame for a moment, this works pretty well right now aswell 
 #FIXME when going through doors then scrolling back and the door suddenly is not open anymore the system doesn't account for this case yet
 #REMINDER I was currently working on timed switches, they probably aren't fleshed out yet, I am pretty sure it has problems like the one that doors had with fast rewinding and fast forwarding at the exact point in time where the object toggles
-
+#REMINDER currently the camera zooms onto objects when a burglar is inspecting them, even if it's not the active burglar
 const FPS:= 24.0
 
 @export var debug_mode = false
@@ -107,6 +107,7 @@ var first_person_mode = false
 var direction_changed = false
 
 var skip_to_start_or_end = false
+var schedule_replay_save = false
 #var debug_file2 = FileAccess.open("user://debug2.txt", FileAccess.WRITE)
 
 #decides wether to play idle anim or not
@@ -116,7 +117,7 @@ func _ready() -> void:
 	
 	burglary_target_node = get_node(burglary_target)
 	
-	Engine.max_physics_steps_per_frame = 5000
+	Engine.max_physics_steps_per_frame = 1000
 	
 	play_idle_anim_rng.randomize()
 	#connect signals
@@ -230,11 +231,13 @@ func _process(delta: float) -> void:
 	if(Input.is_action_just_pressed("first_person_mode")):
 		spring_arm_length_before_zoom_in = spring_arm.spring_length
 		spring_arm.spring_length = 0.0
+		active_burglar.mesh_root.visible = false
 		first_person_mode = true
 
 	if(Input.is_action_just_released("first_person_mode")):
 		spring_arm.spring_length = spring_arm_length_before_zoom_in
 		first_person_mode = false
+		active_burglar.mesh_root.visible = true
 
 	if(!burglar_switcher.shown):
 		if(Input.is_action_just_released("ui_focus_next")):
@@ -330,8 +333,24 @@ func _physics_process(delta: float) -> void:
 			if(skip_to_start_or_end && ticks == play_until_ticks):
 				skip_to_start_or_end = false
 				
+			if(schedule_replay_save):
+				var all_burglars_are_at_final_replay_position = true
+				for actor in get_tree().get_nodes_in_group("Actor"):
+					if(!actor.is_guard && !actor.replay.is_empty()):
+						if(actor.id != actor.replay.size()-1):
+							all_burglars_are_at_final_replay_position = false
+				
+				if(all_burglars_are_at_final_replay_position):		
+					schedule_replay_save = false
+					_save_replay()	
+					RenderingServer.render_loop_enabled = true
+					_on_h_slider_value_changed(0.0)
+					_on_play_button_button_up()
+					_on_pause_button_button_up()	
+				
 			if(!skip_to_start_or_end):
 				break
+		
 	else:
 		pause_animations()
 	
@@ -612,7 +631,7 @@ func do_replay():
 	if(!pause):
 		if(backwards && ticks > 0):
 			ticks -= 1
-		elif((burglar_moved || (play && (recording || active_burglar.id != active_burglar.replay.size()-1)) || Global.load_replay || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
+		elif((burglar_moved || (play && (recording || active_burglar.id != active_burglar.replay.size()-1 || schedule_replay_save)) || Global.load_replay || Global.execute_plan || forwards|| active_burglar.is_opening || active_burglar.is_waiting) && !backwards && !was_backwards):
 			ticks += 1
 		else:
 			pause_recording()
@@ -892,6 +911,7 @@ func _on_h_slider_value_changed(value: float) -> void:
 		camera_base.global_position = active_burglar.camera_position_before_zoom_onto_object
 		camera_base.global_rotation = active_burglar.camera_rotation_before_zoom_onto_object
 		spring_arm.spring_length = spring_arm_length_before_zoom_in
+		active_burglar.object_that_is_being_interacted_with = null
 		active_burglar.mesh_root.visible = true
 	
 	#value went from negative to 0 or above
@@ -974,7 +994,7 @@ func _on_play_button_button_up() -> void:
 		if(recording):
 			$PlayButton.set_button_icon(load("res://assets/Textures/GUI/Play_Button_Red_Playing.png"))
 			if(active_burglar.replay.size()-1 != active_burglar.id):
-				if(active_burglar.replay[active_burglar.id][2] != "move"):
+				if(!active_burglar.replay.is_empty() and active_burglar.replay[active_burglar.id][2] != "move"):
 					play_until_ticks = ticks - 1
 					for i in range (active_burglar.id, active_burglar.replay.size()):
 						if(active_burglar.replay[i][0] == -1):
@@ -1226,6 +1246,9 @@ func switch_to_actor(index: int):
 	if(index > number_of_burglars + number_of_guards):
 		return
 	
+	if(active_burglar.is_zoomed_onto_object || active_burglar.bag.shown):
+		return
+	
 	if(selected_tool):
 		selected_tool.visible = false
 		selected_tool.area.process_mode = ProcessMode.PROCESS_MODE_INHERIT
@@ -1280,16 +1303,16 @@ func switch_to_actor(index: int):
 func _on_skip_to_start_button_button_up() -> void:
 	if(pause && !burglar_switcher.shown):
 		#_on_load_plan_button_up()
-		_on_h_slider_value_changed(-100.0)
+		_on_h_slider_value_changed(-1000.0)
 		play_until_ticks = 0
 		RenderingServer.render_loop_enabled = false
 		#skip_to_start_or_end = true
 
 func _on_skip_to_end_button_button_up() -> void:
-	if(active_burglar.id != active_burglar.maxid -1 && active_burglar.maxid != 0  && pause && !burglar_switcher.shown):
+	if(active_burglar.id != active_burglar.replay.size()-1 && !active_burglar.replay.is_empty() && pause && !burglar_switcher.shown):
 		if(active_burglar.replay[active_burglar.replay.size()-1][0] != -1):
 			_on_play_button_button_up()
-			_on_h_slider_value_changed(100.0)
+			_on_h_slider_value_changed(1000.0)
 			play_until_ticks = active_burglar.replay[active_burglar.replay.size()-1][0]
 			RenderingServer.render_loop_enabled = false
 	#skip_to_start_or_end = true
@@ -1351,13 +1374,21 @@ func _on_quit_mission_button_up() -> void:
 		quit_plan()
 	
 func _on_quit_mission_confirmation_dialog_confirmed_button_up():
-	_on_save_plan_button_up()	
+	_on_save_plan_button_up()
 	quit_plan()
 
 func _on_quit_mission_confirmation_dialog_canceled_button_up():
 	quit_plan()
 	
 func _on_save_plan_button_up() -> void:
+	recording = false
+	schedule_replay_save = true
+	RenderingServer.render_loop_enabled = false
+	_on_close_mission_menu_button_up()
+	_on_h_slider_value_changed(100.0)
+	_on_play_button_button_up()
+
+func _save_replay() -> void:
 	for actor in get_tree().get_nodes_in_group("Actor"):
 		if(!actor.is_guard && !guards_are_recording):
 			actor.save_replay()
@@ -1507,7 +1538,7 @@ func replay_backwards(actor:Node3D):
 						#is alarm
 						if(related_object.object_type == 8 || related_object.object_type == 9):
 							related_object.is_off = false	
-		if(actor.replay[actor.id][2]== "takeend"):
+		if(actor.replay[actor.id][2]== "takeend" and actor.replay[actor.id][3]):
 			if(!get_node(str(actor.replay[actor.id][1])).visible):
 				get_node(str(actor.replay[actor.id][1])).process_mode = Node.PROCESS_MODE_ALWAYS
 				get_node(str(actor.replay[actor.id][1])).visible = true
@@ -1575,10 +1606,10 @@ func replay_backwards(actor:Node3D):
 						actor.show_text_bubble("That won't work")
 				elif(actor.replay[actor.id][2] == "open"):
 					#TODO I disabled most of this, is this a good idea?
-					if(object_occupied(actor, object) && (object.anim_player.current_animation_position != 0.0 && !is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length))):
+					if(object_occupied(actor, object)): #&& (object.anim_player.current_animation_position != 0.0 && !is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length))):
 						actor.object_that_is_being_interacted_with = null
 						actor.show_text_bubble("someone is already working here!")
-					else:
+					elif(actor.replay[actor.id][4]):
 						actor.object_that_is_being_interacted_with = object
 					#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
 					#TODO ??? why does it check for object type 1 and 2, I added to allow it when going through windows from the inside, does it work?
@@ -1595,19 +1626,24 @@ func replay_backwards(actor:Node3D):
 				#actor.is_opening = true
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
 		
+		actor.is_zoomed_onto_object = false
+		
 		var found_object: Node3D
 		
-		if(actor.replay[actor.id][2] != "idle"):
-			actor.text_bubble.visible = false
+		#if(actor.replay[actor.id][2] != "idle"):
+			#actor.text_bubble.visible = false
 				
 		if(actor.replay[actor.id][2] != "moveinsidecar"):
 			actor.mesh_root.visible = true
 				
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
-			if(actor.id == 0 or actor.replay[actor.id-1][2] != "movethroughwindow"):
-				actor.inside = !actor.inside
+	
 			found_window = true
 			found_object = get_node(str(actor.replay[actor.id][3]))
+			
+			if(found_object.is_ground_floor_window && (found_object.damage == object_durability || actor.inside)&& (actor.id == 0 or actor.replay[actor.id-1][2] != "movethroughwindow")):
+				actor.inside = actor.replay[actor.id][4]
+			
 			if(actor.id == actor.maxid-1):
 				actor.object_that_is_being_interacted_with = null
 			elif(actor.replay[actor.id + 1][2] != "movethroughwindow"):
@@ -1778,7 +1814,12 @@ func replay_forwards(actor:Node3D):
 			var can_pick_up = true
 			if(!get_node(str(actor.replay[actor.id][1])).visible):
 				can_pick_up = false
-				#actor.show_text_bubble("someone already picked it up")
+				actor.show_text_bubble("someone already picked it up")
+				for i in range(actor.id,actor.id-actor.pickup_time,-1):
+					if(actor.replay[i][2] == "takestart" or actor.replay[i][2] == "takeend"):
+						actor.replay[i][3] = false
+					else:
+						break
 			if((actor.current_carrying_weight + get_node(str(actor.replay[actor.id][1])).weight) > actor.max_capacity):
 				can_pick_up = false
 				if(get_node(str(actor.replay[actor.id][1])).visible):
@@ -1787,7 +1828,13 @@ func replay_forwards(actor:Node3D):
 				can_pick_up = false
 				if(get_node(str(actor.replay[actor.id][1])).visible):
 					actor.show_text_bubble("it doesn't fit in the car anymore")
+			if(!actor.is_inspecting):
+				can_pick_up = false
+				actor.show_text_bubble("I can't see anything from the outside")
 			if(can_pick_up):
+				for i in range(actor.replay.size()-1,actor.id-1,-1):
+					if(actor.replay[i][2] == "takestart" or actor.replay[i][2] == "takeend"):
+						actor.replay[i][3] = true
 				cash += get_node(str(actor.replay[actor.id][1])).value
 				actor.current_carrying_weight += get_node(str(actor.replay[actor.id][1])).weight
 				selected_car.current_load += get_node(str(actor.replay[actor.id][1])).weight
@@ -1809,7 +1856,7 @@ func replay_forwards(actor:Node3D):
 						for alarm in get_tree().get_nodes_in_group("Alarm"):
 							if(alarm.damage != object_durability && !alarm.is_off):
 								for obj in alarm.related_objects:
-									if(obj == get_node(actor.replay[actor.id][1])):
+									if(obj == get_node(str(actor.replay[actor.id][1]))):
 										print_caught_message("caught by " +alarm.name)
 						if(!object_occupied(actor, object) && object.damage != object_durability):
 							actor.finished_working = false
@@ -1872,22 +1919,32 @@ func replay_forwards(actor:Node3D):
 				elif(actor.replay[actor.id][2] == "open"):
 					if(get_node(str(actor.replay[actor.id][1])).damage == 10000 || actor.is_guard || (get_node(str(actor.replay[actor.id][1])).object_type == 1 && actor.inside)):
 						#get_node(str(actor.replay[actor.id][1])).anim_player.current_animation = "Action"
-						if(object_occupied(actor,object) && (object.anim_player.current_animation_position != 0.0 && !is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length))):
+						if(object_occupied(actor,object)): #&& (object.anim_player.current_animation_position != 0.0 && !is_equal_approx(object.anim_player.current_animation_position,object.current_animation_clip_length))):
 							actor.object_that_is_being_interacted_with = null
-						else:
-							actor.object_that_is_being_interacted_with = object 
-							if(actor.replay[actor.id][3]== "first" && get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
-								object.play_animation(object.animation_name, false, true)
-								if(!actor.is_guard):
-									get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = true
+							actor.show_text_bubble("someone is already working here!")
+							for i in range(actor.id, actor.replay.size()):
+								if(actor.replay[i][2] == "open"):
+									actor.replay[i][4] = false
 								else:
-									get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = false
-								#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
-							#TODO add object closing when open
-							elif(actor.replay[actor.id][3]== "first" && is_equal_approx(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position, get_node(str(actor.replay[actor.id][1])).current_animation_clip_length) && (get_node(str(actor.replay[actor.id][1])).object_type == 0 || get_node(str(actor.replay[actor.id][1])).object_type == 3)):
-									get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, true, true)
-									#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
-							#elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
+									break
+						else:
+							if(actor.replay[actor.id][3]== "first"):
+								for i in range(actor.id, actor.replay.size()):
+									if(actor.replay[i][2] == "open"):
+										actor.replay[i][4] = true
+								actor.object_that_is_being_interacted_with = object 
+								if(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == 0.0):
+									object.play_animation(object.animation_name, false, true)
+									if(!actor.is_guard):
+										get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = true
+									else:
+										get_node(str(actor.replay[actor.id][1])).was_opened_by_burglar = false
+									#get_node(str(actor.replay[actor.id][1])).append_door_opening("forwards")
+								#TODO add object closing when open
+								elif(is_equal_approx(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position, get_node(str(actor.replay[actor.id][1])).current_animation_clip_length) && (get_node(str(actor.replay[actor.id][1])).object_type == 0 || get_node(str(actor.replay[actor.id][1])).object_type == 3)):
+										get_node(str(actor.replay[actor.id][1])).play_animation(get_node(str(actor.replay[actor.id][1])).animation_name, true, true)
+										#get_node(str(actor.replay[actor.id][1])).append_door_opening("backwards")		
+								#elif(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
 						#if door is already open or being opened while trying to go trough it, delete the opening record
 						#TODO this is not working currently
 						#elif(is_object_occupied || get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position == get_node(str(actor.replay[actor.id][1])).current_animation_clip_length):
@@ -1905,34 +1962,43 @@ func replay_forwards(actor:Node3D):
 						#get_node(str(actor.replay[actor.id][1])).anim_player.advance(delta)
 		
 				elif(actor.replay[actor.id][2] == "inspect"):
+					var inspected_object = get_node(str(actor.replay[actor.id][1]))
+					var is_open = inspected_object.object_type != 4 and is_equal_approx(inspected_object.anim_player.current_animation_position, inspected_object.current_animation_clip_length)
+					if(is_open):
+						actor.is_inspecting = true
+						actor.object_that_is_being_interacted_with = inspected_object
+					else:
+						if(!actor.is_guard):
+							actor.show_text_bubble("The object is not opened!")
 					if(!play && !Global.load_replay && !forwards && !actor.is_guard):
-						if(get_node(str(actor.replay[actor.id][1])).object_type == 4):
-							actor.show_text_bubble(get_node(str(actor.replay[actor.id][1])).unique_name + "\nvalue: " + str(get_node(str(actor.replay[actor.id][1])).value) + "$" + "\nweight: " + str(get_node(str(actor.replay[actor.id][1])).weight) + "kg")
-						elif(is_equal_approx(get_node(str(actor.replay[actor.id][1])).anim_player.current_animation_position, get_node(str(actor.replay[actor.id][1])).current_animation_clip_length)):
-							actor.is_zoomed_onto_object = true
-							for obj in get_tree().get_nodes_in_group("Interactable"):
-								if(obj.owner.name == get_node("/root/Control").burglary_target_name):
-									if(obj.object_type != 4):
-										obj.area.process_mode = Node.PROCESS_MODE_DISABLED
-										#elif(obj.object_type == 1):
-											#obj.area.process_mode = Node.PROCESS_MODE_DISABLED
-											
-							if(!camera_base.global_position.is_equal_approx(get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position)):
-								actor.camera_position_before_zoom_onto_object = camera_base.global_position
-								actor.camera_rotation_before_zoom_onto_object = camera_base.global_rotation
-								spring_arm_length_before_zoom_in = spring_arm.spring_length
-							spring_arm.spring_length = zoom_in_spring_arm_length
-							camera_base.global_position = get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_position
-							camera_base.global_rotation = get_node(str(actor.replay[actor.id][1])).zoom_in_position.global_rotation
-							active_burglar.mesh_root.visible = false
-							
+						if(inspected_object.object_type == 4):
+							actor.show_text_bubble(inspected_object.unique_name + "\nvalue: " + str(inspected_object.value) + "$" + "\nweight: " + str(inspected_object.weight) + "kg")
+						elif(is_open):
+							if(actor == active_burglar):
+								actor.is_zoomed_onto_object = true
+								for obj in get_tree().get_nodes_in_group("Interactable"):
+									if(obj.owner.name == get_node("/root/Control").burglary_target_name):
+										if(obj.object_type != 4):
+											obj.area.process_mode = Node.PROCESS_MODE_DISABLED
+											#elif(obj.object_type == 1):
+												#obj.area.process_mode = Node.PROCESS_MODE_DISABLED
+												
+								if(!camera_base.global_position.is_equal_approx(inspected_object.zoom_in_position.global_position)):
+									actor.camera_position_before_zoom_onto_object = camera_base.global_position
+									actor.camera_rotation_before_zoom_onto_object = camera_base.global_rotation
+									spring_arm_length_before_zoom_in = spring_arm.spring_length
+								spring_arm.spring_length = zoom_in_spring_arm_length
+								camera_base.global_position = inspected_object.zoom_in_position.global_position
+								camera_base.global_rotation = inspected_object.zoom_in_position.global_rotation
+								active_burglar.mesh_root.visible = false
+							active_burglar.object_that_is_being_interacted_with = inspected_object
 						else:
 							actor.show_text_bubble("The object is not opened!")
 					elif(actor.is_guard):
 						#TODO not done, need to differnetiate two interaction types
-						if(!get_node(str(actor.replay[actor.id][1])).visible):
+						if(!inspected_object.visible):
 							print_caught_message("missing object found at " + str(ticks)+" by "+ actor.unique_name)
-						if(get_node(str(actor.replay[actor.id][1])).damaged):
+						if(inspected_object.damaged):
 							print_caught_message("opened object found at " + str(ticks)+" by "+ actor.unique_name)
 				elif(actor.replay[actor.id][2] == "look at"):
 					if(get_node(str(actor.replay[actor.id][1])).damage > 0):
@@ -1940,18 +2006,22 @@ func replay_forwards(actor:Node3D):
 	
 	elif(typeof(actor.replay[actor.id][1]) == TYPE_VECTOR3):
 		
-		if(actor.replay[actor.id][2] == "moveinsidecar" || actor.is_zoomed_onto_object):
+		
+		if(actor.id + 1< actor.replay.size()-1 and typeof(actor.replay[actor.id+2][1]) == TYPE_VECTOR3):
+			actor.is_inspecting = false
+						
+		if(actor.replay[actor.id][2] == "moveinsidecar" || (actor.is_zoomed_onto_object && actor == active_burglar)):
 			actor.mesh_root.visible = false
 		else:
 			actor.mesh_root.visible = true			
 		
-		if(actor.replay[actor.id][2] != "idle"):
-			actor.text_bubble.visible = false
+		#if(actor.replay[actor.id][2] != "idle"):
+			#actor.text_bubble.visible = false
 		actor.finished_working = false
 		
 		var space_state = get_world_3d().direct_space_state
 			
-		var to = actor.global_position +((actor.replay[actor.id][1] - actor.global_position)*8.0)
+		var to = actor.global_position +((actor.replay[actor.id][1] - actor.global_position)*6.0)
 			
 		var query = PhysicsRayQueryParameters3D.create(actor.global_position,to)
 		query.collide_with_areas = true
@@ -1992,10 +2062,12 @@ func replay_forwards(actor:Node3D):
 			found_object = get_node(actor.waiting_positions[found_index][1])
 		
 		if(actor.replay[actor.id][2] == "movethroughwindow"):
-			if(actor.id == actor.replay.size()-1 or actor.replay[actor.id+1][2] != "movethroughwindow"):
-				actor.inside = !actor.inside
 			found_window = true
 			found_object = get_node(str(actor.replay[actor.id][3]))
+			
+			if(found_object.is_ground_floor_window && (found_object.damage == object_durability || actor.inside) && (actor.id == actor.replay.size()-1 or actor.replay[actor.id+1][2] != "movethroughwindow")):
+				actor.inside = !actor.replay[actor.id][4]
+			
 			window_is_occupied = object_occupied(actor, found_object)
 			if(!is_equal_approx(get_node(actor.replay[actor.id][3]).anim_player.current_animation_position,get_node(actor.replay[actor.id][3]).current_animation_clip_length) || window_is_occupied):
 				found_door_or_window = true
@@ -2124,7 +2196,10 @@ func replay_forwards(actor:Node3D):
 				#REMINDER this is probably not optimal, but actors need to be stopped from proceeding in some cases meaning the id (index) should not change
 				#actor.is_waiting = true
 				
-				var found_specific_tick = true if actor.replay[actor.replay.size()-1][0] != -1 else false
+				var found_specific_tick = false
+				for j in range(actor.id, actor.replay.size()):
+					if(actor.replay[j][0] != -1):
+						found_specific_tick = true
 				
 				if(!found_specific_tick):
 					for i in range(actor.replay.size()-1 - actor.id):

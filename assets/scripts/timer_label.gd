@@ -8,10 +8,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	if(!get_node("/root/Control/").debug_mode):
+	#if(!get_node("/root/Control/").debug_mode):
 		text = get_time_as_string()
-	else:
-		text = str(get_node("/root/Control/").ticks)
+	#else:
+		#text = str(get_node("/root/Control/").ticks)
 	
 func calculate_minutes():
 	return  floor((get_node("/root/Control/").ticks/time_divisor)/60)

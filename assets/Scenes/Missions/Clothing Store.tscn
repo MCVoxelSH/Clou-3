@@ -3378,11 +3378,14 @@ transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -
 visible = false
 
 [node name="Lichtstrahl1" parent="Inside/Floor0/Interactables/LightBarrier/Spotlight/Z_up_to_Y_up" parent_id_path=PackedInt32Array(719711699, 1433674003, 1528647666) index="0" unique_id=1015198342]
-transform = Transform3D(-1, 6.039832e-07, 1.4823077e-21, -1.509958e-07, -4, -4.3711395e-08, -6.6002357e-15, -1.7484558e-07, 1, -2.247, -7.557, -0.103)
+transform = Transform3D(-1, 5.5868446e-07, 1.4823077e-21, -1.509958e-07, -3.7, -4.3711395e-08, -6.6002357e-15, -1.6173216e-07, 1, -2.247, -7.022, -0.103)
 
 [node name="Area3D" parent="Inside/Floor0/Interactables/LightBarrier/Spotlight" index="1" unique_id=1099508075]
 process_mode = 4
-transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor0/Interactables/LightBarrier/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor0/Interactables/LightBarrier" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -3399,17 +3402,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="Switch" parent="Inside/Floor0/Interactables" unique_id=1353067391 node_paths=PackedStringArray("related_objects") instance=ExtResource("30_701lw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0623236, 0.1, -0.1)
 ticks_to_reset = 0
-related_objects = [NodePath("../../../Floor1/Interactables/LightBarriers/LightBarrier19"), NodePath("../LightBarrier")]
-
-[node name="Switch2" parent="Inside/Floor0/Interactables" unique_id=34305253 node_paths=PackedStringArray("related_objects") instance=ExtResource("30_701lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7857769, 0.1, -0.1)
-ticks_to_reset = 0
-related_objects = [NodePath("../LightBarrier"), NodePath("../../../Floor1/Interactables/LightBarriers/LightBarrier"), NodePath("../../../Floor1/Interactables/LightBarriers/LightBarrier2")]
-
-[node name="Switch3" parent="Inside/Floor0/Interactables" unique_id=620111536 node_paths=PackedStringArray("related_objects") instance=ExtResource("30_701lw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5554936, 0.1, -0.1)
-ticks_to_reset = 0
-related_objects = [NodePath("../LightBarrier"), NodePath("../../../Floor1/Interactables/LightBarriers/LightBarrier"), NodePath("../../../Floor1/Interactables/LightBarriers/LightBarrier2")]
+related_objects = [NodePath("../LightBarrier"), NodePath("../../../Floor1/Interactables/LightBarriers/LightBarrier13")]
 
 [node name="Desk" type="Node3D" parent="Inside/Floor0/Interactables" unique_id=2056198497 groups=["Interactable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3341752, 0.09229791, 0.10166249)
@@ -5332,6 +5325,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 process_mode = 4
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
 
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
+
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
 
@@ -5351,6 +5347,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier2/Spotlight" parent_id_path=PackedInt32Array(785530243, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
 
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier2/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
+
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier2" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
 
@@ -5360,30 +5359,35 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000005, 0, 0,
 [node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier2/Lichtschranke_mech_2697/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27/StaticBody3D" parent_id_path=PackedInt32Array(785530243, 1227791669) index="0" unique_id=789169958]
 transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 0, 0, 0.044182956)
 
-[node name="LightBarrier3" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1331213601 instance=ExtResource("45_701lw")]
-transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.2627269, 0.85, 2.0155878)
-script = ExtResource("44_wcsr3")
-object_type = null
+[node name="LightBarrier13" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=26287515 instance=ExtResource("45_701lw")]
+transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.6422726, 0.85, 0.34831488)
 metadata/_edit_group_ = true
 
-[node name="Lichtstrahl1" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier3/Spotlight/Z_up_to_Y_up" parent_id_path=PackedInt32Array(1331213601, 1433674003, 1528647666) index="0" unique_id=1015198342]
-transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3711395e-08, -6.6002357e-15, -8.742279e-08, 1, -2.247, -3.857, -0.103)
+[node name="Lichtstrahl1" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Spotlight/Z_up_to_Y_up" parent_id_path=PackedInt32Array(26287515, 1433674003, 1528647666) index="0" unique_id=1015198342]
+transform = Transform3D(-1, 1.509958e-07, 1.4823077e-21, -1.509958e-07, -1, -4.3711395e-08, -6.6002357e-15, -4.3711395e-08, 1, -2.247, -1.972, -0.103)
 
-[node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier3/Spotlight" parent_id_path=PackedInt32Array(1331213601, 1433674003) index="1" unique_id=1099508075]
-transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+[node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Spotlight" parent_id_path=PackedInt32Array(26287515, 1433674003) index="1" unique_id=1099508075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003000021, 0.013000011, 0.07576072)
 
-[node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier3" index="1" unique_id=1381064270]
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
+
+[node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
 
-[node name="Lichtschranke_mech_2697" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier3" index="3" unique_id=337162434]
-transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000005, 0, 0, 0.36290407)
+[node name="Lichtschranke_mech_2696" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13" index="2" unique_id=497946842]
+transform = Transform3D(-1.0000001, 0, -8.742279e-08, 0, 1.0000001, 0, 8.7422904e-08, 0, -1.0000021, 0.0010000169, 0, -0.046349168)
 
-[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier3/Lichtschranke_mech_2697/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27/StaticBody3D" parent_id_path=PackedInt32Array(1331213601, 1227791669) index="0" unique_id=789169958]
+[node name="Lichtschranke_mech_2697" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13" index="3" unique_id=337162434]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000005, 0, 0, 0.23433709)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Lichtschranke_mech_2697/Z_up_to_Y_up/Lichtschranke_mech/group21/pPlane27/pPlaneShape27/StaticBody3D" parent_id_path=PackedInt32Array(26287515, 1227791669) index="0" unique_id=789169958]
 transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 0, 0, 0.044182956)
 
 [node name="LightBarrier4" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=341847499 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.2627269, 0.85, 1.5155877)
 script = ExtResource("44_wcsr3")
+offset = 20
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5392,6 +5396,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier4/Spotlight" parent_id_path=PackedInt32Array(341847499, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier4/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier4" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5405,6 +5412,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier5" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1145677824 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -1.6780769, 0.85, 1.6689886)
 script = ExtResource("44_wcsr3")
+offset = 50
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5413,6 +5421,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier5/Spotlight" parent_id_path=PackedInt32Array(1145677824, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier5/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier5" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5426,6 +5437,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier11" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=429907764 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -2.2160907, 0.85, 1.6689886)
 script = ExtResource("44_wcsr3")
+offset = 25
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5434,6 +5446,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier11/Spotlight" parent_id_path=PackedInt32Array(429907764, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier11/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier11" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5447,6 +5462,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier12" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1462164343 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -0.47975314, 0.85, 1.6689886)
 script = ExtResource("44_wcsr3")
+offset = 10
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5455,6 +5471,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier12/Spotlight" parent_id_path=PackedInt32Array(1462164343, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier12/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier12" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5468,6 +5487,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier6" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1812949665 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -1.0662862, 0.85, 1.6689886)
 script = ExtResource("44_wcsr3")
+offset = 0
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5476,6 +5496,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier6/Spotlight" parent_id_path=PackedInt32Array(1812949665, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier6/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier6" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5489,6 +5512,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier7" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=81714057 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.8082877, 0.85, 1.5189886)
 script = ExtResource("44_wcsr3")
+offset = 60
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5497,6 +5521,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier7/Spotlight" parent_id_path=PackedInt32Array(81714057, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier7/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier7" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5510,6 +5537,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier8" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1995578310 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.8082877, 0.85, 2.0189886)
 script = ExtResource("44_wcsr3")
+offset = 0
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5518,6 +5546,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier8/Spotlight" parent_id_path=PackedInt32Array(1995578310, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier8/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier8" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5531,6 +5562,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier9" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1567667789 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -0.6582878, 0.85, 2.0189886)
 script = ExtResource("44_wcsr3")
+offset = 15
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5539,6 +5571,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier9/Spotlight" parent_id_path=PackedInt32Array(1567667789, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier9/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier9" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5552,6 +5587,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier10" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=2106901580 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -0.6582878, 0.85, 1.5189886)
 script = ExtResource("44_wcsr3")
+offset = 20
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5560,6 +5596,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier10/Spotlight" parent_id_path=PackedInt32Array(2106901580, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier10/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier10" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5573,6 +5612,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier14" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1358936803 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.2627269, 0.85, 0.97588646)
 script = ExtResource("44_wcsr3")
+offset = 25
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5581,6 +5621,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier14/Spotlight" parent_id_path=PackedInt32Array(1358936803, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier14/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier14" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5594,6 +5637,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier15" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=940551015 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -1.6780769, 0.85, 1.1292874)
 script = ExtResource("44_wcsr3")
+offset = 50
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5602,6 +5646,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier15/Spotlight" parent_id_path=PackedInt32Array(940551015, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier15/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier15" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5615,6 +5662,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier16" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1521574319 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -2.2160907, 0.85, 1.1292874)
 script = ExtResource("44_wcsr3")
+offset = 90
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5623,6 +5671,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier16/Spotlight" parent_id_path=PackedInt32Array(1521574319, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier16/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier16" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5636,6 +5687,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier17" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=568962737 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -0.47975314, 0.85, 1.1292874)
 script = ExtResource("44_wcsr3")
+offset = 120
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5644,6 +5696,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier17/Spotlight" parent_id_path=PackedInt32Array(568962737, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier17/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier17" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5657,6 +5712,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier18" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=640039338 instance=ExtResource("45_701lw")]
 transform = Transform3D(1, 0, -3.5527137e-15, 0, 0.99999994, 0, -3.5527137e-15, 0, 1.0000001, -1.0662862, 0.85, 1.1292874)
 script = ExtResource("44_wcsr3")
+offset = 60
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5665,6 +5721,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier18/Spotlight" parent_id_path=PackedInt32Array(640039338, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier18/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier18" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5678,6 +5737,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier19" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=126272144 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -1.8082877, 0.85, 0.9792874)
 script = ExtResource("44_wcsr3")
+offset = 30
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5686,6 +5746,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier19/Spotlight" parent_id_path=PackedInt32Array(126272144, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier19/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier19" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5699,6 +5762,7 @@ transform = Transform3D(1, 3.5527137e-15, 2.1175824e-22, -3.5527137e-15, 1, 3.55
 [node name="LightBarrier22" parent="Inside/Floor1/Interactables/LightBarriers" unique_id=1583949083 instance=ExtResource("45_701lw")]
 transform = Transform3D(-4.3711385e-08, 0, -1.0000001, 0, 0.99999994, 0, 1, 0, -4.3711395e-08, -0.6582878, 0.85, 0.9792874)
 script = ExtResource("44_wcsr3")
+offset = 0
 object_type = null
 metadata/_edit_group_ = true
 
@@ -5707,6 +5771,9 @@ transform = Transform3D(-1, 3.019916e-07, 1.4823077e-21, -1.509958e-07, -2, -4.3
 
 [node name="Area3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier22/Spotlight" parent_id_path=PackedInt32Array(1583949083, 1433674003) index="1" unique_id=1099508075]
 transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, 0, 0, 2, -0.003000021, 0.013000011, 0.07576072)
+
+[node name="CollisionShape3D" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier22/Spotlight/Area3D" index="0" unique_id=1024528967]
+debug_color = Color(0.79, 0.43634337, 0.16589999, 1)
 
 [node name="CameraPosNode" parent="Inside/Floor1/Interactables/LightBarriers/LightBarrier22" index="1" unique_id=1381064270]
 transform = Transform3D(2.7707127e-08, 0.9750285, -0.22208196, 2.7463528e-08, 0.22208202, 0.9750284, 1.0000004, -3.3114375e-08, -2.0624462e-08, -0.105282456, 0.23134114, 0.08749467)
@@ -5723,13 +5790,19 @@ ticks_to_reset = 0
 related_objects = [NodePath("../../../Floor0/Interactables/LightBarrier"), NodePath("../LightBarriers/LightBarrier"), NodePath("../LightBarriers/LightBarrier2")]
 
 [node name="MovingCamera" parent="Inside/Floor1/Interactables" unique_id=73907009 instance=ExtResource("22_pbrd7")]
+process_mode = 4
 transform = Transform3D(0.7313907, 0.43726462, -0.5233233, -0.07630691, 0.8150372, 0.5743616, 0.67767644, -0.38014948, 0.6294769, -1.0324055, 1.0215898, 1.4674819)
+visible = false
 
 [node name="MovingCamera2" parent="Inside/Floor1/Interactables" unique_id=1599598230 instance=ExtResource("22_pbrd7")]
+process_mode = 4
 transform = Transform3D(-0.9403399, 0.13273114, -0.31327862, -0.07630691, 0.8150372, 0.5743616, 0.33156958, 0.5640005, -0.7562836, -1.681914, 1.0193973, 1.5912043)
+visible = false
 
 [node name="MovingCamera3" parent="Inside/Floor1/Interactables" unique_id=144045394 instance=ExtResource("22_pbrd7")]
+process_mode = 4
 transform = Transform3D(0.33156958, 0.5640005, -0.7562836, -0.07630693, 0.8150373, 0.5743616, 0.94033986, -0.13273118, 0.31327865, -2.1871474, 1.0173243, 1.5313312)
+visible = false
 
 [node name="Schaukasten" type="Node3D" parent="Inside/Floor1" unique_id=1424270411 groups=["Interactable"]]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.3149357, 0.8, 1.7993042)
@@ -7919,10 +7992,10 @@ radius = 5.0
 [editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier2/Spotlight"]
 [editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier2/Lichtschranke_mech_2696"]
 [editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier2/Lichtschranke_mech_2697"]
-[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier3"]
-[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier3/Spotlight"]
-[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier3/Lichtschranke_mech_2696"]
-[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier3/Lichtschranke_mech_2697"]
+[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier13"]
+[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Spotlight"]
+[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Lichtschranke_mech_2696"]
+[editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier13/Lichtschranke_mech_2697"]
 [editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier4"]
 [editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier4/Spotlight"]
 [editable path="Inside/Floor1/Interactables/LightBarriers/LightBarrier4/Lichtschranke_mech_2696"]

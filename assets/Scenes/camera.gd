@@ -60,7 +60,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 			var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 			if(result):
 				if(result.collider.get_parent().is_in_group("Actor")):
-					get_node("/root/Control").print_caught_message(area.get_parent().name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
+					get_node("/root/Control").print_caught_message(area.get_parent().unique_name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
 	
  
 func _on_area_3d_area_exited(area):
@@ -90,7 +90,7 @@ func _physics_process(delta: float) -> void:
 					var result = space_state.intersect_ray(query)#actor.ray.get_collider()	
 					if(result):
 						if(result.collider.get_parent().is_in_group("Actor")):
-							get_node("/root/Control").print_caught_message(object.get_parent().name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
+							get_node("/root/Control").print_caught_message(object.get_parent().unique_name + " caught at " +str(get_node("/root/Control/").ticks) + " by " + name)
 		
 func toggle_power_state() -> void:
 	if(area.process_mode == Node.PROCESS_MODE_DISABLED):

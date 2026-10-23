@@ -71,6 +71,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.427493, 0.42749307, 0.42749307, 1)
 
+[node name="Timer" type="Timer" parent="TextBubble" unique_id=1181329021]
+process_callback = 0
+wait_time = 0.5
+
 [node name="Bag" type="SubViewportContainer" parent="." unique_id=1771894895]
 process_mode = 4
 light_mask = 2

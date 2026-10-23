@@ -69,6 +69,7 @@ var is_opening = false
 var is_waiting = false
 
 var is_zoomed_onto_object = false
+var is_inspecting = false
 
 @onready var ray = $Robot/RayCast3D
 #var area:Node3D
@@ -105,6 +106,9 @@ var last_ticks = 0
 var check_last_ticks = false
 
 var last_ticks_index = -1
+
+var text_bubble_reset_at_ticks = 0
+var text_bubble_show_ticks_amount = 30
 
 @onready var mesh_root = $Robot
 var mesh_root_bone: Node3D
@@ -183,6 +187,9 @@ func _ready():
 
 func _physics_process(_delta):
 	
+	if(control.ticks == text_bubble_reset_at_ticks || control.ticks == text_bubble_reset_at_ticks -text_bubble_show_ticks_amount -1):
+		text_bubble.visible = false
+	
 	burglar_area.global_position = mesh_root_bone.global_position
 	
 	if current_animation_clip == "":
@@ -213,7 +220,7 @@ func _physics_process(_delta):
 	progress_bar.global_position = get_viewport().get_camera_3d().unproject_position(global_transform.origin)
 	#$TextBubble/TextBubbleBackground.global_position = get_viewport().get_camera_3d().unproject_position(global_transform.origin)
 	$TextBubble.global_position = get_viewport().get_camera_3d().unproject_position(global_transform.origin)
-	#FIXME this seems unoptimized, you actually just have to do it once every time the progress bar pops up
+	#FIXME this seems unoptimized, you actually just savhave to do it once every time the progress bar pops up
 	progress_bar.global_position += Vector2(-250,-150)
 	#$TextBubble/TextBubbleBackground.global_position += Vector2(-125,-250)
 	$TextBubble.global_position += Vector2(-125,-250)
@@ -574,6 +581,7 @@ func set_target_position(target_position: Vector3, record: bool):
 								parts.append("takestart")
 							else:
 								parts.append("takeend")
+							parts.append(true)
 							replay.append(parts.duplicate())
 							ticks_at_position+=1
 							currentid +=1
@@ -592,6 +600,8 @@ func set_target_position(target_position: Vector3, record: bool):
 								parts.append("last")
 							else:
 								parts.append("intermediate")
+							#object is not occupied?
+							parts.append(true)
 							replay.append(parts.duplicate())
 							ticks_at_position+=1
 							currentid +=1
@@ -776,7 +786,12 @@ func load_replay():
 				else:
 					temp.append(StringName(parts[1]))
 				if(parts.size() == 3):
-					temp.append(parts[2])	
+					if(parts[2] == "true"):
+						temp.append(true)
+					elif(parts[2] == "false"):
+						temp.append(false)
+					else:
+						temp.append(parts[2])	
 				if(parts.size() >= 4):
 					temp.append(parts[2])	
 					if(parts[2] == "move" || parts[2] == "movethroughwindow" || parts[2] == "moveinsidecar" || parts[2] == "use" ||parts[2] == "open" || parts[2] == "wait"):
@@ -848,12 +863,14 @@ func calculate_breaking_time()->float:
 			#(300 - control.highlighted_object.damage - control.selected_tool.tool_efficencies[control.highlighted_object.lock_type])
 
 	return 0
-		
+			
 
 func show_text_bubble(text:String):
 	$TextBubble.size = Vector2.ZERO
 	$TextBubble.text = text
 	$TextBubble.visible = true
+	var dir = 1 if !control.backwards else -1
+	text_bubble_reset_at_ticks = control.ticks + (text_bubble_show_ticks_amount*dir)
 
 func _quadratic_bezier(p0: Vector3, p1: Vector3, p2: Vector3, t: float):
 	var q0 = p0.lerp(p1, t)
@@ -904,7 +921,15 @@ func save_replay():
 		
 		#for e in replay:
 		#	f.store_line("%d %s" % [e.tick, e.action])
+		#var i = 0
+		
+		#var cut_off_replay_at_end = !replay.is_empty() and replay[replay.size()-1][0] != -1
 		for l in replay:
+			#if(i == id && cut_off_replay_at_end):
+				#l[0] = control.ticks
+				#for j in range(i, replay.size()):
+					#replay.pop_back()
+				
 			if(l.size() == 5):
 				f.store_line(str(l[0]) + "|" + str(l[1])+"|" + str(l[2])+"|" + str(l[3])+"|" + str(l[4]))
 			elif(l.size() == 4):
@@ -913,6 +938,11 @@ func save_replay():
 				f.store_line(str(l[0]) + "|" + str(l[1])+ "|" + str(l[2]))
 			else:
 				f.store_line(str(l[0]) + "|" + str(l[1]))
+				
+			#if(i == id && cut_off_replay_at_end):
+				#break
+			#i+= 1
+			
 		f.close()
 		var g:FileAccess
 		if(!is_guard):
